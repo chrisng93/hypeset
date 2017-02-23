@@ -1,0 +1,8 @@
+{
+  "name": "hypeset",
+  "version": "1.0.0",
+  "description": "Clothing news and sales aggregator",
+  "author": "Chris Ng",
+  "license": "MIT",
+  "dependencies": {}
+}
