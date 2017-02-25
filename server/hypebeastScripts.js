@@ -8,6 +8,7 @@ const moment = require('moment');
 
 const now = moment().subtract(1, 'days').unix();
 
+// TODO: change latestArticleDate logic
 const parseHypebeastArticles = (articles = [], page = 1, latestArticleDate = now - 3) => {
   let continueParsing = true;
   request(`https://hypebeast.com/news/page/${page}`, (err, res) => {
@@ -21,14 +22,15 @@ const parseHypebeastArticles = (articles = [], page = 1, latestArticleDate = now
         article.url = post.attribs['data-permalink'];
 
         const thumbnailElement = $(`#${post.attribs.id} .img-responsive`)[0];
-        article.imgUrl = thumbnailElement.attribs.src;
-
-        const authorElement = $(`#${post.attribs.id} .article-author`)[0] || $(`#${post.attribs.id} .author`)[0];
-        if (!authorElement) {
-          console.log(page)
+        if (thumbnailElement) {
+          article.imgUrl = thumbnailElement.attribs.src;
         }
-        article.author = authorElement.children[0].data;
-        article.authorUrl = authorElement.attribs.href;
+
+        const authorElement = $(`#${post.attribs.id} .article-author`)[0];
+        if (authorElement) {
+          article.author = authorElement.children[0].data;
+          article.authorUrl = authorElement.attribs.href;
+        }
 
         let timeElement = $(`#${post.attribs.id} .timeago`)[0];
         let pst;
@@ -40,6 +42,7 @@ const parseHypebeastArticles = (articles = [], page = 1, latestArticleDate = now
         }
         article.date = moment(pst, 'YYYY-MM-DD').unix();
 
+        // TODO: find out how to parse article brand
         // article.brand
 
         if (moment(latestArticleDate).diff(article.date, 'seconds') < 0) {
@@ -55,4 +58,4 @@ const parseHypebeastArticles = (articles = [], page = 1, latestArticleDate = now
   });
 };
 
-parseHypebeastArticles();
+module.exports = { parseHypebeastArticles };

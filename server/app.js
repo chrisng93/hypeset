@@ -14,7 +14,8 @@ app.get('/*', (req, res) => {
   res.status(404).send('Route not found');
 });
 
-require('./script.js');
+require('./hypebeastScripts.js');
+require('./redditScripts.js');
 
 app.listen(process.env.PORT, () => {
   console.log(`Listening on ${process.env.PORT}...`);
