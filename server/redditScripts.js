@@ -43,6 +43,7 @@ const grabLatestFmfArticles = () => {
   r.getSubreddit('frugalmalefashion')
     .getNew({limit: 100})
     .forEach((post) => {
+      // add clause to skip if date is past latest grab date
       const updatedPost = {
         id: post.id,
         title: post.title,
