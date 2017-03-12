@@ -3,9 +3,15 @@
  */
 import models from '../../models';
 
-function authenticate(req, res) {
+async function authenticate(req, res) {
   const { username, password } = req.body;
-  res.send();
+  const user = await models.User.find({ where: { username } });
+  const valid = user.validatePassword(password);
+
+  if (!valid) {
+    return res.status(403).send();
+  }
+  res.status(200).send();
 }
 
 module.exports = { authenticate };
