@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Backend for Hypeset",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "author": "Chris Ng",
   "license": "MIT",
