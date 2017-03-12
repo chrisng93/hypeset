@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     email: DataTypes.STRING,
   }, {
+    classMethods: {
+      findById: function(id) {
+        return this.find({ where: { id } });
+      }
+    },
     instanceMethods: {
       generateHash: password => bcrypt.hashSync(password, bcrypt.genSaltSync(8)),
       validatePassword: function(password) {
