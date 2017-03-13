@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const TYPES = ['Article', 'Sale'];
+  const TYPES = ['News', 'Sale'];
 
   const Info = sequelize.define('Info', {
     type: {
@@ -41,6 +41,12 @@ module.exports = (sequelize, DataTypes) => {
         Info.belongsToMany(m.User, { through: 'InfoUser', foreignKey: 'infoId' });
         Info.belongsTo(m.Site);
       },
+      findNews: function() {
+        return this.find({ where: { type: TYPES[0] } });
+      },
+      findSales: function() {
+        return this.find({ where: { type: TYPES[1] } });
+      }
     },
   });
   return Info;

@@ -3,6 +3,7 @@
  */
 import jwt from 'jsonwebtoken';
 import m from '../../models';
+import { retrieveNews } from '../../scripts/news/retrieveNews';
 
 async function authenticate(req, res) {
   const { username, password } = req.body;
@@ -25,4 +26,10 @@ async function authenticate(req, res) {
     res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
-module.exports = { authenticate };
+
+async function test(req, res) {
+  retrieveNews();
+  res.send();
+}
+
+module.exports = { authenticate, test };
