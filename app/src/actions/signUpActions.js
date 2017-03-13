@@ -1,6 +1,7 @@
 /**
  * Created by chrisng on 3/12/17.
  */
+import { push } from 'react-router-redux';
 import * as actionTypes from '../constants/actionTypes';
 
 function signUpSuccess(payload) {
@@ -34,6 +35,7 @@ export default function signUp(payload) {
         if (!json.success) {
           return dispatch(signUpFailure(json));
         }
+        dispatch(push('/news'));
         return dispatch(signUpSuccess(json));
       })
       .catch((err) => {

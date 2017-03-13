@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import * as actions from '../../actions';
 import SignUp from './presenter';
 
-function mapStateToProps() {
+function mapStateToProps(state) {
   return {};
 }
 

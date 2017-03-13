@@ -5,7 +5,7 @@ import { push } from 'react-router-redux';
 import * as actions from '../../actions';
 import SignIn from './presenter';
 
-function mapStateToProps() {
+function mapStateToProps(state) {
   return {};
 }
 
