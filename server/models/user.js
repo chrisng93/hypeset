@@ -32,7 +32,7 @@ module.exports = (Sequelize, DataTypes) => {
       validatePassword: function(password) {
         return bcrypt.compareSync(password, this.password);
       },
-    }
+    },
   });
 
   User.beforeValidate((usr) => {

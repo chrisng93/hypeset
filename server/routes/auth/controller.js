@@ -19,10 +19,10 @@ async function authenticate(req, res) {
 
     const token = jwt.sign({ user: {...user.dataValues} }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
     console.log(`User ${user.id} successfully authenticated`);
-    res.status(200).send({ success: true, token });
+    res.status(200).send({ success: true, token, user });
   } catch(err) {
     console.log(`Error authenticating username ${username}`);
-    res.status(500).send({ success: false, error: err.errors });
+    res.status(500).send({ success: false, message: err.toString() });
   }
 }
 

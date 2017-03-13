@@ -1,6 +1,7 @@
 /**
  * Created by chrisng on 3/12/17.
  */
+import jwt from 'jsonwebtoken';
 import models from '../../models';
 
 // TODO: permissions
@@ -8,11 +9,12 @@ async function createUser(req, res) {
   const { username, password, email } = req.body;
   try {
     const user = await models.User.create({ username, password, email });
+    const token = jwt.sign({ user: {...user.dataValues} }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
     console.log(`Created user ${user.id}`);
-    res.status(201).send({ success: true, user });
+    res.status(201).send({ success: true, token, user });
   } catch(err) {
-    console.log(`Error creating user: ${err.errors}`);
-    res.status(500).send({ success: false, errors: err.errors });
+    console.log(`Error creating user: ${err.errors[0].message}`);
+    res.status(500).send({ success: false, message: err.errors[0].message });
   }
 }
 
@@ -29,7 +31,7 @@ async function retrieveUser(req, res) {
     res.status(200).send({ success: true, user });
   } catch(err) {
     console.log(`Error retrieving user ${id}: ${err.errors[0].message}`);
-    res.status(500).send({ success: false, errors: err.errors });
+    res.status(500).send({ success: false, message: err.errors });
   }
 }
 
@@ -45,7 +47,7 @@ async function updateUser(req, res) {
     res.status(200).send({ success: true });
   } catch(err) {
     console.log(`Error updating user ${id}: ${err.errors[0].message}`);
-    res.status(500).send({ success: false, errors: err.errors });
+    res.status(500).send({ success: false, message: err.errors });
   }
 }
 
@@ -61,7 +63,7 @@ async function deleteUser(req, res) {
     res.status(200).send({ success: true });
   } catch(err) {
     console.log(`Error deleting user ${id}: ${err.errors[0].message}`);
-    res.status(500).send({ success: false, errors: err.errors });
+    res.status(500).send({ success: false, message: err.errors });
   }
 }
 
