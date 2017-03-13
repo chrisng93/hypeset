@@ -2,12 +2,12 @@
  * Created by chrisng on 3/12/17.
  */
 import jwt from 'jsonwebtoken';
-import models from '../../models';
+import m from '../../models';
 import { sendCrudError } from '../../utils/commonErrorHandling';
 
 async function createUser(req, res) {
   try {
-    const user = await models.User.create(req.body);
+    const user = await m.User.create(req.body);
     const token = jwt.sign({ user: {...user.dataValues} }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
     console.log(`Created user ${user.username}`);
     res.status(201).send({ success: true, token, user });
@@ -20,7 +20,7 @@ async function retrieveUser(req, res) {
   const { username } = req.params;
   try {
     // TODO: don't get all of fields - only necessary ones
-    const user = await models.User.findByUsername(username);
+    const user = await m.User.findByUsername(username);
     if (!user) {
       console.error(`User ${username} not found`);
       return res.status(404).send({ success: false, message: 'User not found' });
@@ -40,7 +40,7 @@ async function updateUser(req, res) {
   }
 
   try {
-    const user = await models.User.findByUsername(username);
+    const user = await m.User.findByUsername(username);
     if (!user) {
       console.error(`User ${username} not found`);
       return res.status(404).send({ success: false, message: 'User not found' });
@@ -61,7 +61,7 @@ async function deleteUser(req, res) {
   }
 
   try {
-    const user = await models.User.findByUsername(username);
+    const user = await m.User.findByUsername(username);
     if (!user) {
       console.error(`User ${username} not found`);
       return res.status(404).send({ success: false, message: 'User not found' });

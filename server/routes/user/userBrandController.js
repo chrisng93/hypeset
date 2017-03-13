@@ -1,19 +1,40 @@
 /**
  * Created by chrisng on 3/12/17.
  */
-import models from '../../models';
+import m from '../../models';
 
-async function updateBrands(req, res) {
+async function updateOwnBrands(req, res) {
   const { brands } = req.body;
   try {
-    const user = models.User.findById(req.user.id);
-    brands.forEach(brand => {
-      user.setBrand(brand);
-    });
+    const user = await m.User.findById(req.user.id);
+    for (let i = 0; i < brands.length; i++) {
+      const brand = await m.Brand.findByName(brands[i]);
+      if (brand) {
+        user.setBrands(brand);
+      }
+    }
+    res.status(200).send({ success: true });
   } catch(err) {
-    console.error(`Error updating brands for user ${user.id}: ${JSON.stringify(err)}`);
+    console.error(`Error updating brands for user ${req.user.id}: ${JSON.stringify(err)}`);
     res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
 
-module.exports = { updateBrands };
+async function deleteOwnBrands(req, res) {
+  const { brands } = req.body;
+  try {
+    const user = await m.User.findById(req.user.id);
+    for (let i = 0; i < brands.length; i++) {
+      const brand = await m.Brand.findByName(brands[i]);
+      if (brand) {
+        user.removeBrand(brand);
+      }
+    }
+    res.status(200).send({ success: true });
+  } catch(err) {
+    console.error(`Error deleting brands for user ${req.user.id}: ${JSON.stringify(err)}`);
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
+  }
+}
+
+module.exports = { updateOwnBrands, deleteOwnBrands };

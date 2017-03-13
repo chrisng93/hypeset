@@ -19,8 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
   }, {
     classMethods: {
-      associate: (models) => {
-        User.belongsToMany(models.Brand, { through: models.UserBrand, foreignKey: 'name' });
+      associate: (m) => {
+        User.belongsToMany(m.Brand, { through: 'UserBrand', foreignKey: 'userId' });
       },
       findById: function(id) {
         return this.find({ where: { id } });

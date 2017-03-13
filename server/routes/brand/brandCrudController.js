@@ -1,12 +1,12 @@
 /**
  * Created by chrisng on 3/12/17.
  */
-import models from '../../models';
+import m from '../../models';
 import { sendCrudError } from '../../utils/commonErrorHandling';
 
 async function createBrand(req, res) {
   try {
-    const brand = await models.Brand.create(req.body);
+    const brand = await m.Brand.create(req.body);
     console.log(`Created brand ${brand.name}`);
     res.status(201).send({ success: true, brand });
   } catch(err) {
@@ -17,7 +17,7 @@ async function createBrand(req, res) {
 async function retrieveBrand(req, res) {
   const { name } = req.params;
   try {
-    const brand = await models.Brand.findByName(name);
+    const brand = await m.Brand.findByName(name);
     if (!brand) {
       console.error(`Brand ${name} not found`);
       return res.status(404).send({ success: false, message: `Brand ${name} not found` });
@@ -37,7 +37,7 @@ async function updateBrand(req, res) {
   }
 
   try {
-    const brand = await models.Brand.findByName(name);
+    const brand = await m.Brand.findByName(name);
     if (!brand) {
       console.error(`Brand ${name} not found`);
       return res.status(404).send({ success: false, message: `Brand ${name} not found` });
@@ -58,7 +58,7 @@ async function deleteBrand(req, res) {
   }
 
   try {
-    const brand = await models.Brand.findByName(name);
+    const brand = await m.Brand.findByName(name);
     if (!brand) {
       console.error(`Brand ${name} not found`);
       return res.status(404).send({ success: false, message: `Brand ${name} not found` });

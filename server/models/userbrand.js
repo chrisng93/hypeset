@@ -1,26 +1,17 @@
 module.exports = (sequelize, DataTypes) => {
   const UserBrand = sequelize.define('UserBrand', {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    brandName: {
+    userId: {
       type: DataTypes.STRING,
       allowNull: false,
-      primaryKey: true,
     },
-    username: {
+    brandId: {
       type: DataTypes.STRING,
       allowNull: false,
-      primaryKey: true,
     },
   }, {
     classMethods: {
-      associate: (models) => {
+      associate: (m) => {
         // associations can be defined here
-        models.User.belongsToMany(models.Brand, { through: UserBrand, foreignKey: 'name' });
-        models.Brand.belongsToMany(models.User, { through: UserBrand, foreignKey: 'username' });
       },
     },
   });

@@ -3,8 +3,8 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
   }, {
     classMethods: {
-      associate: (models) => {
-        Brand.belongsToMany(models.User, { through: models.UserBrand, foreignKey: 'username' });
+      associate: (m) => {
+        Brand.belongsToMany(m.User, { through: 'UserBrand', foreignKey: 'brandId' });
       },
       findById: function(id) {
         return this.find({ where: { id } });

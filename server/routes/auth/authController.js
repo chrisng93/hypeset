@@ -2,12 +2,12 @@
  * Created by chrisng on 3/12/17.
  */
 import jwt from 'jsonwebtoken';
-import models from '../../models';
+import m from '../../models';
 
 async function authenticate(req, res) {
   const { username, password } = req.body;
   try {
-    const user = await models.User.findByUsername(username);
+    const user = await m.User.findByUsername(username);
     if (!user) {
       return res.status(404).send({ success: false, message: 'User not found' });
     }

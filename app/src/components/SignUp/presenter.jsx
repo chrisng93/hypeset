@@ -17,6 +17,7 @@ export default class SignUp extends Component {
     this.setState(updatedState);
   }
 
+  // TODO: form validation
   render() {
     const { onSignUp } = this.props;
     const { username, password, email } = this.state;
