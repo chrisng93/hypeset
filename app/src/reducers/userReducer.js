@@ -5,26 +5,14 @@ import { fromJS,  Map } from 'immutable';
 import * as actionTypes from '../constants/actionTypes';
 
 const initialState = fromJS({
-  user: {
-    role: '',
-    id: '',
-    username: '',
-    email: '',
-    updatedAt: '',
-    createdAt: '',
-    firstName: '',
-    lastName: '',
-  },
+  user: {},
   token: '',
-  error: {
-    status: false,
-    message: '',
-  },
+  error: {},
 });
 
-export default function auth(state = initialState, action) {
-  const { payload } = action;
-  switch (action.type) {
+export default function user(state = initialState, action) {
+  const { type, payload } = action;
+  switch (type) {
     case actionTypes.AUTH_SUCCESS:
       return state.set('user', payload.user)
         .set('token', payload.token)
@@ -34,6 +22,15 @@ export default function auth(state = initialState, action) {
         .set('token', '')
         .setIn(['error', 'status'], true)
         .setIn(['error', 'message'], payload.message);
+
+    case actionTypes.SIGNUP_SUCCESS:
+      return state.set('user', payload.user)
+        .set('token', payload.token)
+        .set('error', new Map());
+    case actionTypes.SIGNUP_FAILURE:
+      return state.setIn(['error', 'status'], true)
+        .setIn(['error', 'message'], payload.message);
+
     default:
       return state;
   }

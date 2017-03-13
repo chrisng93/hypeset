@@ -18,7 +18,7 @@ function authFailure(payload) {
 }
 
 export default function auth(payload) {
-  return function(dispatch) {
+  return (dispatch) => {
     const options = {
       method: 'POST',
       headers: {
@@ -38,7 +38,7 @@ export default function auth(payload) {
       })
       .catch((err) => {
         console.error(`Error authenticating user: ${err}`);
-        dispatch(authFailure(err));
+        return dispatch(authFailure(err));
       });
   };
 }
