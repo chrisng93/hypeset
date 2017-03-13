@@ -39,6 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       associate: (m) => {
         Info.belongsToMany(m.Brand, { through: 'InfoBrand', foreignKey: 'infoId' });
         Info.belongsToMany(m.User, { through: 'InfoUser', foreignKey: 'infoId' });
+        Info.belongsTo(m.Site);
       },
     },
   });
