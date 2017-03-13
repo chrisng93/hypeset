@@ -1,10 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
-  const UserBrand = sequelize.define('UserBrand', {
-    userId: {
+  const InfoUser = sequelize.define('InfoUser', {
+    infoId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    brandId: {
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -15,5 +15,5 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
   });
-  return UserBrand;
+  return InfoUser;
 };

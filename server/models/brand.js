@@ -1,10 +1,15 @@
 module.exports = (sequelize, DataTypes) => {
   const Brand = sequelize.define('Brand', {
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
+    },
   }, {
     classMethods: {
       associate: (m) => {
         Brand.belongsToMany(m.User, { through: 'UserBrand', foreignKey: 'brandId' });
+        Brand.belongsToMany(m.Info, { through: 'InfoBrand', foreignKey: 'brandId' });
       },
       findById: function(id) {
         return this.find({ where: { id } });

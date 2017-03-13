@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const UserBrand = sequelize.define('UserBrand', {
-    userId: {
+  const InfoBrand = sequelize.define('InfoBrand', {
+    infoId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -15,5 +15,5 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
   });
-  return UserBrand;
+  return InfoBrand;
 };

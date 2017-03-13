@@ -8,19 +8,31 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM,
       values: ROLES,
       defaultValue: ROLES[1],
+      allowNull: false,
     },
     username: {
       type: DataTypes.STRING,
+      allowNull: false,
       unique: true,
     },
-    password: DataTypes.STRING,
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
-    email: DataTypes.STRING,
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: true,
+      },
+    },
   }, {
     classMethods: {
       associate: (m) => {
         User.belongsToMany(m.Brand, { through: 'UserBrand', foreignKey: 'userId' });
+        User.belongsToMany(m.Info, { through: 'InfoUser', foreignKey: 'userId' });
       },
       findById: function(id) {
         return this.find({ where: { id } });
