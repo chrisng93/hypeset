@@ -3,15 +3,15 @@
  */
 
 export default function signUp(payload) {
-  console.log(payload)
   const options = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Accept: 'application/json',
     },
     body: JSON.stringify(payload),
   };
-  fetch(`${process.env.API_URL}/api/user/create`, options)
+  fetch(`${process.env.API_URL}/api/user`, options)
     .then(response => response.json())
     .then((json) => {
       console.log(json)

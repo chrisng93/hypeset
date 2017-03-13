@@ -6,12 +6,12 @@ const config = require('./src/constants/config.js');
 
 let HOST;
 config.HOST === 'http://localhost' ? HOST = '0.0.0.0' : HOST = config.HOST;
-const PORT = config.PORT || '8000';
+const PORT = config.PORT || '8888';
 
 module.exports = {
   entry: [
     `webpack-dev-server/client?http://${HOST}:${PORT}`,
-    './src/presenter.jsx',
+    './src/index.jsx',
   ],
   devtool: 'source-map',
   output: {
@@ -38,7 +38,7 @@ module.exports = {
   plugins: [
     new webpack.NoErrorsPlugin(),
     new CopyWebpackPlugin([
-      { from: './index.html' },
+      { from: './public/index.html' },
     ]),
     new webpack.ProvidePlugin({
       fetch: 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch',

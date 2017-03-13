@@ -1,5 +1,5 @@
-import auth from './auth';
-import signUp from './signUp';
+import auth from './authActions';
+import signUp from './signUpActions';
 
 module.exports = {
   auth,
