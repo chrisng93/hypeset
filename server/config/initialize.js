@@ -1,9 +1,11 @@
-const bodyParser = require('body-parser');
+import bodyParser from 'body-parser';
 
 module.exports = (app, express) => {
-  // Add middleware as deemed necessary
+  // body parser for getting info from post and/or url params
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
+
+  // enable cors
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');

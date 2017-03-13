@@ -1,18 +1,22 @@
 import express from 'express';
 import env from 'dotenv';
+import checkPath from './utils/checkPath';
+import verifyToken from './utils/verifyToken';
 
 const app = express();
 
-// Load env variables
+// load env variables
 env.config({ path: './.env' });
 
-// Initial config static assets
+// initial config static assets
 require('./config/initialize')(app, express);
 
-// Set up db
+// set up db
 require('./models');
 
-// Set up routes
+// set up routes
+app.all('*', checkPath);
+app.all('*', verifyToken);
 require('./routes/routes')(app);
 
 app.get('/*', (req, res) => {
@@ -26,3 +30,5 @@ require('./redditScripts.js');
 app.listen(process.env.PORT, () => {
   console.log(`Listening on ${process.env.PORT}...`);
 });
+
+module.exports = app;

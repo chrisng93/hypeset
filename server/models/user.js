@@ -1,21 +1,31 @@
 'use strict';
 import bcrypt from 'bcrypt-nodejs';
 
-module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
+module.exports = (Sequelize, DataTypes) => {
+  const ROLES = ['Admin', 'User'];
+
+  const User = Sequelize.define('User', {
+    role: {
+      type: DataTypes.ENUM,
+      values: ROLES,
+      defaultValue: ROLES[1],
+    },
     username: {
       type: DataTypes.STRING,
       unique: true,
     },
     password: DataTypes.STRING,
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
     email: DataTypes.STRING,
   }, {
     classMethods: {
       findById: function(id) {
         return this.find({ where: { id } });
-      }
+      },
+      findByUsername: function(username) {
+        return this.find({ where: { username } });
+      },
     },
     instanceMethods: {
       generateHash: password => bcrypt.hashSync(password, bcrypt.genSaltSync(8)),
@@ -28,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
   User.beforeValidate((usr) => {
     const hashSaltPassword = usr.generateHash(usr.password);
     usr.password = hashSaltPassword;
-    return sequelize.Promise.resolve(usr);
+    return Sequelize.Promise.resolve(usr);
   });
 
   return User;

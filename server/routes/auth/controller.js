@@ -1,17 +1,29 @@
 /**
  * Created by chrisng on 3/12/17.
  */
+import jwt from 'jsonwebtoken';
 import models from '../../models';
 
 async function authenticate(req, res) {
   const { username, password } = req.body;
-  const user = await models.User.find({ where: { username } });
-  const valid = user.validatePassword(password);
+  try {
+    const user = await models.User.findByUsername(username);
+    if (!user) {
+      return res.status(403).send({ success: false, message: 'Username not found' });
+    }
 
-  if (!valid) {
-    return res.status(403).send();
+    const valid = user.validatePassword(password);
+    if (!valid) {
+      return res.status(403).send({ success: false, message: 'Incorrect password combination' });
+    }
+
+    const token = jwt.sign({ user: {...user.dataValues} }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
+    console.log(`User ${user.id} successfully authenticated`);
+    res.status(200).send({ success: true, token });
+  } catch(err) {
+    console.log(`Error authenticating username ${username}`);
+    res.status(500).send({ success: false, error: err.errors });
   }
-  res.status(200).send();
 }
 
 module.exports = { authenticate };
