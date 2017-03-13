@@ -14,3 +14,7 @@ export default class Test extends Component {
     );
   }
 }
+
+Test.propTypes = {
+
+};

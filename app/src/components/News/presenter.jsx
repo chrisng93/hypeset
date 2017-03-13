@@ -14,3 +14,7 @@ export default class News extends Component {
     );
   }
 }
+
+News.propTypes = {
+
+};

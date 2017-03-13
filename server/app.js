@@ -1,7 +1,6 @@
 import express from 'express';
 import env from 'dotenv';
-import checkPath from './utils/checkPath';
-import verifyToken from './utils/verifyToken';
+import { checkPath, verifyToken } from './utils/authMiddleware';
 
 const app = express();
 

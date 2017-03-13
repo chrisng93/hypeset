@@ -9,7 +9,7 @@ async function authenticate(req, res) {
   try {
     const user = await models.User.findByUsername(username);
     if (!user) {
-      return res.status(403).send({ success: false, message: 'Username not found' });
+      return res.status(404).send({ success: false, message: 'User not found' });
     }
 
     const valid = user.validatePassword(password);
@@ -21,9 +21,8 @@ async function authenticate(req, res) {
     console.log(`User ${user.id} successfully authenticated`);
     res.status(200).send({ success: true, token, user });
   } catch(err) {
-    console.log(`Error authenticating username ${username}`);
-    res.status(500).send({ success: false, message: err.toString() });
+    console.error(`Error authenticating username ${username}`);
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
-
 module.exports = { authenticate };

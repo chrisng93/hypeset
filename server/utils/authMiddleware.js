@@ -3,6 +3,22 @@
  */
 import jwt from 'jsonwebtoken';
 
+function checkPath(req, res, next) {
+  const nonSecurePaths = ['/auth'];
+  const nonSecurePosts = ['/api/user'];
+
+  if (req.method === 'OPTIONS') {
+    req.unsecured = true;
+    return next();
+  }
+
+  if (nonSecurePaths.indexOf(req.path) >= 0 || (req.method === 'POST' && nonSecurePosts.indexOf(req.path) >= 0)) {
+    req.unsecured = true;
+    return next();
+  }
+  return next();
+}
+
 function getToken(req) {
   if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
     return req.headers.authorization.split(' ')[1];
@@ -12,7 +28,7 @@ function getToken(req) {
   return null;
 }
 
-export default function verifyToken(req, res, next) {
+function verifyToken(req, res, next) {
   if (req.unsecured) {
     return next();
   }
@@ -30,3 +46,5 @@ export default function verifyToken(req, res, next) {
     return next();
   });
 }
+
+module.exports = { checkPath, verifyToken };

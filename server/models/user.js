@@ -1,10 +1,9 @@
-'use strict';
 import bcrypt from 'bcrypt-nodejs';
 
-module.exports = (Sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   const ROLES = ['Admin', 'User'];
 
-  const User = Sequelize.define('User', {
+  const User = sequelize.define('User', {
     role: {
       type: DataTypes.ENUM,
       values: ROLES,
@@ -20,6 +19,9 @@ module.exports = (Sequelize, DataTypes) => {
     email: DataTypes.STRING,
   }, {
     classMethods: {
+      associate: (models) => {
+        User.belongsToMany(models.Brand, { through: models.UserBrand, foreignKey: 'name' });
+      },
       findById: function(id) {
         return this.find({ where: { id } });
       },
@@ -38,7 +40,7 @@ module.exports = (Sequelize, DataTypes) => {
   User.beforeValidate((usr) => {
     const hashSaltPassword = usr.generateHash(usr.password);
     usr.password = hashSaltPassword;
-    return Sequelize.Promise.resolve(usr);
+    return sequelize.Promise.resolve(usr);
   });
 
   return User;
