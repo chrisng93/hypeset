@@ -1,6 +1,7 @@
 /**
  * Created by chrisng on 3/13/17.
  */
+import moment from 'moment';
 
 function findLps(string) {
   const result = [];
@@ -88,4 +89,10 @@ function findTag(node, tag, result = []) {
   return result;
 }
 
-module.exports = { findBrands, findClass, findTag };
+function formatDate(date) {
+  date[0] = moment().month(date[0]).format('MM');
+  date[1] = date[1].split('').slice(0, date[1].length - 1).join('');
+  return date.join('-');
+}
+
+module.exports = { findBrands, findClass, findTag, formatDate };

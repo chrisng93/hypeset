@@ -6,7 +6,7 @@ import cheerio from 'cheerio';
 import moment from 'moment';
 import { findBrands } from '../../utils/scriptHelpers';
 
-const parseHypebeastNews = (articles = [], availableBrands, page = 1, latestArticleDate) => {
+function parseHypebeastNews(articles = [], availableBrands, page = 1, latestArticleDate) {
   return new Promise((resolve) => {
     let continueParsing = true;
     request(`${process.env.HYPEBEAST_URL}/news/page/${page}`, (err, res) => {
@@ -43,11 +43,9 @@ const parseHypebeastNews = (articles = [], availableBrands, page = 1, latestArti
                 article.blurb = blurbElement.children[0].data.trim();
               }
 
-              if (moment(latestArticleDate).diff(article.date, 'seconds') < 0) {
-                articles.push(article);
-              } else {
-                continueParsing = false;
-              }
+              moment(latestArticleDate).diff(article.date, 'seconds') < 0 ? articles.push(article) : continueParsing = false;
+            } else if (moment(latestArticleDate).diff(article.date, 'seconds') < 0) {
+              continueParsing = false;
             }
           }
         }
@@ -58,6 +56,6 @@ const parseHypebeastNews = (articles = [], availableBrands, page = 1, latestArti
       resolve(articles);
     });
   });
-};
+}
 
 module.exports = { parseHypebeastNews };

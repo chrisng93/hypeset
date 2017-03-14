@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       findSales: function() {
         return this.find({ where: { type: TYPES[1] } });
-      }
+      },
     },
   });
   return Info;
