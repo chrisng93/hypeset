@@ -1,7 +1,7 @@
 import React, { Component, PropTypes as T } from 'react';
 import Nav from '../Nav';
 
-export default class News extends Component {
+export default class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -11,12 +11,12 @@ export default class News extends Component {
     return (
       <div>
         <Nav />
-        Hello
+        Profile page
       </div>
     );
   }
 }
 
-News.propTypes = {
+Profile.propTypes = {
 
 };

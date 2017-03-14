@@ -9,6 +9,8 @@ import App from './components/App';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import News from './components/News';
+import Sales from './components/Sales';
+import Profile from './components/Profile';
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
@@ -21,6 +23,8 @@ ReactDOM.render(
         <Route path="/" component={SignIn} />
         <Route path="/signup" component={SignUp} />
         <Route path="/news" component={News} />
+        <Route path="/sales" component={Sales} />
+        <Route path="/profile" component={Profile} />
       </Route>
     </Router>
   </Provider>,
