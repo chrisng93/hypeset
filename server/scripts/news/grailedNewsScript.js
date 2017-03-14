@@ -16,7 +16,7 @@ const initialArticleState = {
   news: [],
 };
 
-function parseGrailedArticles(articles = initialArticleState, availableBrands = ['needles'], page = 1, latestArticleDate = xago) {
+async function parseGrailedArticles(articles = initialArticleState, availableBrands = ['needles'], page = 1, latestArticleDate = xago) {
   return new Promise((resolve) => {
     let continueParsing = true;
     request(`${process.env.GRAILED_URL}/drycleanonly?page=${page}`, (err, res) => {
@@ -34,21 +34,18 @@ function parseGrailedArticles(articles = initialArticleState, availableBrands = 
 
         // separate parsing for weekend reading, the best #grailfits of the week, and staff picks
         const titleWords = article.title.split(' ');
-        if (titleWords.length > 1 && titleWords.slice(0, 2).join('') === 'Weekend Reading') {
+        if (titleWords.length > 1 && titleWords.slice(0, 2).join(' ') === 'Weekend Reading:') {
           articles.weekendReading.push(article);
-        } else if (titleWords.length > 5 && titleWords.slice(0, 7).join('') === 'The Best #GrailFits Of The Week') {
+        } else if (titleWords.length > 5 && titleWords.slice(0, 7).join(' ') === 'The Best #GrailFits Of The Week') {
           articles.grailFits.push(article);
-        } else if (titleWords.length > 1 && titleWords.slice(0, 2).join('') === 'Staff Picks') {
+        } else if (titleWords.length > 1 && titleWords.slice(0, 2).join(' ') === 'Staff Picks:') {
           articles.staffPicks.push(article);
         } else {
           const brands = findBrands(article.title, availableBrands);
           if (brands) {
             article.brands = brands;
-            articles.news.push(article);
+            moment(latestArticleDate).diff(article.date, 'seconds') < 0 ? articles.news.push(article) : continueParsing = false;
           }
-        }
-        if (moment(latestArticleDate).diff(article.date, 'seconds') < 0) {
-          continueParsing = false;
         }
       });
       if (continueParsing) {

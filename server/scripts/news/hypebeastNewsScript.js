@@ -6,7 +6,7 @@ import cheerio from 'cheerio';
 import moment from 'moment';
 import { findBrands } from '../../utils/scriptHelpers';
 
-function parseHypebeastNews(articles = [], availableBrands, page = 1, latestArticleDate) {
+async function parseHypebeastNews(articles = [], availableBrands, page = 1, latestArticleDate) {
   return new Promise((resolve) => {
     let continueParsing = true;
     request(`${process.env.HYPEBEAST_URL}/news/page/${page}`, (err, res) => {
@@ -44,8 +44,6 @@ function parseHypebeastNews(articles = [], availableBrands, page = 1, latestArti
               }
 
               moment(latestArticleDate).diff(article.date, 'seconds') < 0 ? articles.push(article) : continueParsing = false;
-            } else if (moment(latestArticleDate).diff(article.date, 'seconds') < 0) {
-              continueParsing = false;
             }
           }
         }
