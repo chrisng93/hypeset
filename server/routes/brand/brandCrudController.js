@@ -10,7 +10,7 @@ async function createBrand(req, res) {
     console.log(`Created brand ${brand.name}`);
     res.status(201).send({ success: true, brand });
   } catch(err) {
-    sendCrudError('creating', err, res);
+    sendCrudError('creating', 'brand', err, res);
   }
 }
 
@@ -26,7 +26,7 @@ async function retrieveBrand(req, res) {
     console.log(`Retrieve brand ${name}`);
     res.status(200).send({ success: true, brand });
   } catch(err) {
-    sendCrudError('retrieving', err, res);
+    sendCrudError('retrieving', 'brand', err, res);
   }
 }
 
@@ -47,7 +47,7 @@ async function updateBrand(req, res) {
     console.log(`Updated brand ${name}`);
     res.status(200).send({ success: true, brand });
   } catch(err) {
-    sendCrudError('updating', err, res);
+    sendCrudError('updating', 'brand', err, res);
   }
 }
 
@@ -67,7 +67,7 @@ async function deleteBrand(req, res) {
     await brand.destroy({ force: true });
     res.status(200).send({ success: true });
   } catch(err) {
-    sendCrudError('deleting', err, res);
+    sendCrudError('deleting', 'brand', err, res);
   }
 }
 

@@ -10,9 +10,10 @@ async function createUser(req, res) {
     const user = await m.User.create(req.body);
     const token = jwt.sign({ user: {...user.dataValues} }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
     console.log(`Created user ${user.username}`);
+    console.log('user', user)
     res.status(201).send({ success: true, token, user });
   } catch(err) {
-    sendCrudError('creating', err, res);
+    sendCrudError('creating', 'user', err, res);
   }
 }
 
@@ -29,7 +30,7 @@ async function retrieveUser(req, res) {
     console.log(`Retrieved user ${username}`);
     res.status(200).send({ success: true, user });
   } catch(err) {
-    sendCrudError('retrieving', err, res);
+    sendCrudError('retrieving', 'user', err, res);
   }
 }
 
@@ -50,7 +51,7 @@ async function updateUser(req, res) {
     console.log(`Updated user ${username}`);
     res.status(200).send({ success: true, user });
   } catch(err) {
-    sendCrudError('updating', err, res);
+    sendCrudError('updating', 'user', err, res);
   }
 }
 
@@ -70,7 +71,7 @@ async function deleteUser(req, res) {
     await user.destroy({ force: true });
     res.status(200).send({ success: true });
   } catch(err) {
-    sendCrudError('deleting', err, res);
+    sendCrudError('deleting', 'user', err, res);
   }
 }
 
