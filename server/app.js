@@ -8,7 +8,7 @@ const app = express();
 env.config({ path: './.env' });
 
 // initial config static assets
-require('./config/initialize')(app, express);
+require('./config/initialize')(app);
 
 // set up db
 require('./models');

@@ -8,14 +8,16 @@ export default class UserInfo extends Component {
 
   render() {
     const { user, routeToEditUser } = this.props;
-    const fields = ['username', 'password', 'firstName', 'lastName', 'email'];
     return (
       <div className="user-info">
         <div className="username">
           Username: {user.username}
         </div>
         <div className="password">
-          Password: {user.password}
+          Password: **********
+        </div>
+        <div className="email">
+          Email: {user.email}
         </div>
         <div className="first-name">
           First name: {user.firstName}
@@ -23,10 +25,7 @@ export default class UserInfo extends Component {
         <div className="last-name">
           Last name: {user.lastName}
         </div>
-        <div className="email">
-          Email: {user.email}
-        </div>
-        <input type="button" value="Edit user" onClick={routeToEditUser} />
+        <input type="button" value="Edit info" onClick={routeToEditUser} />
       </div>
     );
   }

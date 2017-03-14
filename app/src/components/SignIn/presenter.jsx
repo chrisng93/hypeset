@@ -11,6 +11,13 @@ export default class SignIn extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { isAuthenticated, routeToNews } = nextProps;
+    if (isAuthenticated) {
+      routeToNews();
+    }
+  }
+
   handleInputChange(e, field) {
     const updatedState = {};
     updatedState[field] = e.target.value;
@@ -43,4 +50,6 @@ export default class SignIn extends Component {
 SignIn.propTypes = {
   onAuth: T.func,
   routeToSignUp: T.func,
+  routeToNews: T.func,
+  isAuthenticated: T.boolean,
 };

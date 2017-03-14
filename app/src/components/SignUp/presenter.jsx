@@ -13,6 +13,13 @@ export default class SignUp extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { isAuthenticated, routeToNews } = nextProps;
+    if (isAuthenticated) {
+      routeToNews();
+    }
+  }
+
   handleInputChange(e, field) {
     const updatedState = {};
     updatedState[field] = e.target.value;
@@ -27,11 +34,11 @@ export default class SignUp extends Component {
       <form className="sign-up-form">
         <label className="username">
           Username:
-          <input type="text" name="username" value={username} onChange={e => this.handleInputChange(e, 'username')} required />
+          <input type="text" name="username" value={username} onChange={e => this.handleInputChange(e, 'username')} />
         </label>
         <label className="password">
           Password:
-          <input type="password" name="password" value={password} onChange={e => this.handleInputChange(e, 'password')} required />
+          <input type="password" name="password" value={password} onChange={e => this.handleInputChange(e, 'password')} />
         </label>
         <label className="email">
           Email:
@@ -53,4 +60,6 @@ export default class SignUp extends Component {
 
 SignUp.propTypes = {
   onSignUp: T.func,
+  routeToNews: T.func,
+  isAuthenticated: T.boolean,
 };

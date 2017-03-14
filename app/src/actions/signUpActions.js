@@ -3,6 +3,7 @@
  */
 import { push } from 'react-router-redux';
 import * as actionTypes from '../constants/actionTypes';
+import { createHeaders, request } from '../utils/request';
 
 function signUpSuccess(payload) {
   return {
@@ -22,10 +23,7 @@ export default function signUp(payload) {
   return (dispatch) => {
     const options = {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
+      headers: createHeaders(),
       body: JSON.stringify(payload),
     };
 
@@ -35,7 +33,6 @@ export default function signUp(payload) {
         if (!json.success) {
           return dispatch(signUpFailure(json));
         }
-        dispatch(push('/news'));
         return dispatch(signUpSuccess(json));
       })
       .catch((err) => {
