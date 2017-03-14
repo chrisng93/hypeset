@@ -4,6 +4,7 @@
 import moment from 'moment';
 import m from '../../models';
 import { parseHypebeastNews } from './hypebeastNewsScript';
+import { parseGrailedNews } from './grailedNewsScript';
 
 const now = moment().subtract(1, 'days').unix();
 
@@ -14,8 +15,9 @@ async function retrieveNews() {
   const availableBrands = brandModels.map((model) => {
     return model.getDataValue('name');
   });
-  const hypebeastNews = await parseHypebeastNews([], availableBrands, 1, now - 10);
-  // call grailed news parser
+  // const hypebeastNews = await parseHypebeastNews([], availableBrands, 1, now - 10);
+  // const grailedNews = await parseGrailedNews([], availableBrands, 1, now - 10);
+  // when inserting, check for duplicates
 }
 
 module.exports = { retrieveNews };

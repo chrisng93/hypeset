@@ -9,7 +9,7 @@ import { findBrands } from '../../utils/scriptHelpers';
 const parseHypebeastNews = (articles = [], availableBrands, page = 1, latestArticleDate) => {
   return new Promise((resolve) => {
     let continueParsing = true;
-    request(`https://hypebeast.com/news/page/${page}`, (err, res) => {
+    request(`${process.env.HYPEBEAST_URL}/news/page/${page}`, (err, res) => {
       const $ = cheerio.load(res.body);
       $('.post-box').each((postIndex, post) => {
         const category = $(`#${post.attribs.id} .category`)[0];
@@ -22,6 +22,7 @@ const parseHypebeastNews = (articles = [], availableBrands, page = 1, latestArti
           if (article.title && article.url) {
             const brands = findBrands(article.title, availableBrands);
             if (brands) {
+              article.brands = brands;
               const thumbnailElement = $(`#${post.attribs.id} .img-responsive`)[0];
               if (thumbnailElement) {
                 article.imgUrl = thumbnailElement.attribs.src;

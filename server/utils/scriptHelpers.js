@@ -61,4 +61,31 @@ function findBrands(title, availableBrands) {
   return brands.length ? brands : null;
 }
 
-module.exports = { findBrands };
+function findClass(node, cls, result = []) {
+  if (!node || !node.children) {
+    return result;
+  }
+  if (node.attribs && node.attribs.class === cls) {
+    result.push(node);
+  }
+  for (let i = 0; i < node.children.length; i++) {
+    findClass(node.children[i], cls, result);
+  }
+  return result;
+}
+
+function findTag(node, tag, result = []) {
+  if (!node || !node.children) {
+    return result;
+  }
+  // console.log(node.name)
+  if (node.name && node.name === tag) {
+    result.push(node);
+  }
+  for (let i = 0; i < node.children.length; i++) {
+    findTag(node.children[i], tag, result);
+  }
+  return result;
+}
+
+module.exports = { findBrands, findClass, findTag };
