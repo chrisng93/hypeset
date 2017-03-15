@@ -9,7 +9,7 @@ import { findBrands, findTag } from '../../utils/scriptHelpers';
 const now = moment().subtract(1, 'days').unix();
 const xago = moment().subtract(8, 'days').unix();
 
-async function parseGrailedSpecificArticles(type, articles, availableBrands) {
+export async function parseGrailedSpecificArticles(type, articles, availableBrands) {
   const validArticles = [];
   let parseFunction;
   if (type === 'Weekend Reading') {
@@ -87,5 +87,3 @@ const insertNew = (array, additions) => {
   }
   return array;
 };
-
-module.exports = { parseGrailedSpecificArticles };

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from '../../actions';
-import { allBrandsSelector, userBrandsSelector, availableBrandsSelector } from '../../selectors/brandSelectors';
+import { userBrandsSelector, availableBrandsSelector } from '../../selectors/brandSelectors';
 import { tokenSelector } from '../../selectors/userSelectors';
 import EditBrands from './presenter';
 

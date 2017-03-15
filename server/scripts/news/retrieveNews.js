@@ -9,7 +9,7 @@ import { parseGrailedSpecificArticles } from './grailedSpecificArticlesScript';
 
 const now = moment().subtract(5, 'days').unix();
 
-async function retrieveNews() {
+export async function retrieveNews() {
   // TODO: get latest news article from database and use that as the starting time
   // const latestNews = await m.Info.findNews();
   const brandModels = await m.Brand.findAll();
@@ -34,5 +34,3 @@ async function retrieveNews() {
   // when inserting, check for duplicates
   // insert hypebeastNews, grailedArticles[news], grailedWeekendReading, grailedGrailFits, grailedStaffPicks
 }
-
-module.exports = { retrieveNews };

@@ -4,7 +4,7 @@
 import request from 'request';
 import cheerio from 'cheerio';
 import moment from 'moment';
-import {findBrands, findClass, findTag, formatDate} from '../../utils/scriptHelpers';
+import { findBrands, findClass, findTag, formatDate } from '../../utils/scriptHelpers';
 
 const now = moment().subtract(1, 'days').unix();
 const xago = moment().subtract(8, 'days').unix();
@@ -16,7 +16,7 @@ const initialArticleState = {
   news: [],
 };
 
-async function parseGrailedArticles(articles = initialArticleState, availableBrands = ['needles'], page = 1, latestArticleDate = xago) {
+export async function parseGrailedArticles(articles = initialArticleState, availableBrands = ['needles'], page = 1, latestArticleDate = xago) {
   return new Promise((resolve) => {
     let continueParsing = true;
     request(`${process.env.GRAILED_URL}/drycleanonly?page=${page}`, (err, res) => {
@@ -55,5 +55,3 @@ async function parseGrailedArticles(articles = initialArticleState, availableBra
     });
   });
 }
-
-module.exports = { parseGrailedArticles };

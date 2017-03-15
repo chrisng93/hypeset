@@ -9,7 +9,7 @@ export default class EditBrands extends Component {
 
   render() {
     const { availableBrands, userBrands, addBrand, removeBrand, token } = this.props;
-    // TODO: make dropdown with brands that user doesn't have - click on these to add
+    // TODO: make dropdown with available brands
     return (
       <div className="brands">
         <div className="dropdown">

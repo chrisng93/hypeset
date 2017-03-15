@@ -1,13 +1,29 @@
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import UserInfo from './presenter';
+import React, { PropTypes as T } from 'react';
 
-function mapStateToProps(state) {
-  return {};
+export default function UserInfo({ user, routeToEditUser }) {
+  return (
+    <div className="user-info">
+      <div className="username">
+        Username: {user.username}
+      </div>
+      <div className="password">
+        Password: **********
+      </div>
+      <div className="email">
+        Email: {user.email}
+      </div>
+      <div className="first-name">
+        First name: {user.firstName}
+      </div>
+      <div className="last-name">
+        Last name: {user.lastName}
+      </div>
+      <input type="button" value="Edit info" onClick={routeToEditUser} />
+    </div>
+  );
 }
 
-function mapDispatchToProps(dispatch) {
-  return {};
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserInfo);
+UserInfo.propTypes = {
+  user: T.object,
+  routeToEditUser: T.func,
+};
