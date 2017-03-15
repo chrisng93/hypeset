@@ -1,9 +1,8 @@
 /**
  * Created by chrisng on 3/12/17.
  */
-import { push } from 'react-router-redux';
 import * as actionTypes from '../constants/actionTypes';
-import { createHeaders, request } from '../utils/request';
+import { createHeaders } from '../utils/request';
 
 function signUpSuccess(payload) {
   return {

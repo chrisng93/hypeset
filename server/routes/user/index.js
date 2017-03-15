@@ -12,6 +12,7 @@ userRouter.get('/:username', (req, res) => userCrudController.retrieveUser(req, 
 userRouter.put('/:username', (req, res) => userCrudController.updateUser(req, res));
 userRouter.delete('/:username', (req, res) => userCrudController.deleteUser(req, res));
 
+userRouter.get('/me/brand', (req, res) => userBrandController.getOwnBrands(req, res));
 userRouter.put('/me/brand', (req, res) => userBrandController.updateOwnBrands(req, res));
 userRouter.delete('/me/brand', (req, res) => userBrandController.deleteOwnBrands(req, res));
 

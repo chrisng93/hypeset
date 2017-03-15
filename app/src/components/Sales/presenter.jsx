@@ -1,5 +1,4 @@
 import React, { Component, PropTypes as T } from 'react';
-import Nav from '../Nav';
 
 export default class Sales extends Component {
   constructor(props) {
@@ -10,7 +9,6 @@ export default class Sales extends Component {
   render() {
     return (
       <div>
-        <Nav />
         Sales page
       </div>
     );

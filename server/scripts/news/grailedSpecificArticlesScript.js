@@ -60,7 +60,7 @@ async function parseStaffPicksArticle(article, availableBrands) {
   })
 }
 
-function parseDataListings(article, classSelector, availableBrands, resolve) {
+const parseDataListings = (article, classSelector, availableBrands, resolve) => {
   request(article.url, (err, res) => {
     const $ = cheerio.load(res.body);
     const validBrands = [];
@@ -77,15 +77,15 @@ function parseDataListings(article, classSelector, availableBrands, resolve) {
     article.brands = validBrands;
     validBrands.length > 0 ? resolve(article) : resolve(null);
   });
-}
+};
 
-function insertNew(array, additions) {
+const insertNew = (array, additions) => {
   for (let i = 0; i < additions.length; i++) {
     if (array.indexOf(additions[i]) < 0) {
       array.push(additions[i]);
     }
   }
   return array;
-}
+};
 
 module.exports = { parseGrailedSpecificArticles };

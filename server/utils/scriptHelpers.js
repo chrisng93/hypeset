@@ -3,7 +3,7 @@
  */
 import moment from 'moment';
 
-function findLps(string) {
+const findLps = (string) => {
   const result = [];
   result.push(0);
   let j = 0;
@@ -23,9 +23,9 @@ function findLps(string) {
     }
   }
   return result;
-}
+};
 
-function foundSubstring(string, target) {
+const foundSubstring = (string, target) => {
   // using Knuth-Morris-Pratt (KMP) substring search
   const lps = findLps(target);
   let i = 0; // counter for outer for loop going through string
@@ -51,18 +51,18 @@ function foundSubstring(string, target) {
     }
   }
   return false;
-}
+};
 
 // TODO: find a more efficient way to do this?
-function findBrands(title, availableBrands) {
+const findBrands = (title, availableBrands) => {
   title = title.toLowerCase();
   const brands = availableBrands.filter((brand) => {
     return foundSubstring(title, brand.toLowerCase());
   });
   return brands.length ? brands : null;
-}
+};
 
-function findClass(node, cls, result = []) {
+const findClass = (node, cls, result = []) => {
   if (!node || !node.children) {
     return result;
   }
@@ -73,9 +73,9 @@ function findClass(node, cls, result = []) {
     findClass(node.children[i], cls, result);
   }
   return result;
-}
+};
 
-function findTag(node, tag, result = []) {
+const findTag = (node, tag, result = []) => {
   if (!node || !node.children) {
     return result;
   }
@@ -87,12 +87,12 @@ function findTag(node, tag, result = []) {
     findTag(node.children[i], tag, result);
   }
   return result;
-}
+};
 
-function formatDate(date) {
+const formatDate = (date) => {
   date[0] = moment().month(date[0]).format('MM');
   date[1] = date[1].split('').slice(0, date[1].length - 1).join('');
   return date.join('-');
-}
+};
 
 module.exports = { findBrands, findClass, findTag, formatDate };

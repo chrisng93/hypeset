@@ -1,9 +1,14 @@
+import { isUnique } from '../utils/databaseHelpers';
+
 module.exports = (sequelize, DataTypes) => {
   const Brand = sequelize.define('Brand', {
     name: {
       type: DataTypes.STRING,
       unique: true,
       allowNull: false,
+      validate: {
+        isUnique: isUnique('Brand', 'name'),
+      },
     },
   }, {
     classMethods: {

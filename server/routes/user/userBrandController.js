@@ -3,6 +3,16 @@
  */
 import m from '../../models';
 
+async function getOwnBrands(req, res) {
+  try {
+    const user = await m.User.find({ where: { id: req.user.id }, include: [{ model: m.Brand }] });
+    res.status(200).send({ success: true, brands: user.Brands });
+  } catch(err) {
+    console.error(`Error retrieving brands for user ${req.user.id}: ${JSON.stringify(err)}`);
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
+  }
+}
+
 async function updateOwnBrands(req, res) {
   const { brands } = req.body;
   try {
@@ -54,4 +64,4 @@ async function deleteOwnBrands(req, res) {
   }
 }
 
-module.exports = { updateOwnBrands, deleteOwnBrands };
+module.exports = { getOwnBrands, updateOwnBrands, deleteOwnBrands };

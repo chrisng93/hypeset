@@ -1,8 +1,8 @@
 /**
  * Created by chrisng on 3/11/17.
  */
-import { push } from 'react-router-redux';
 import * as actionTypes from '../constants/actionTypes.js';
+import { createHeaders } from '../utils/request';
 
 function authSuccess(payload) {
   return {
@@ -22,10 +22,7 @@ export default function auth(payload) {
   return (dispatch) => {
     const options = {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
+      headers: createHeaders(),
       body: JSON.stringify(payload),
     };
 

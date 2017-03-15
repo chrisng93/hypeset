@@ -1,5 +1,4 @@
 import React, { Component, PropTypes as T } from 'react';
-import Nav from '../Nav';
 import UserInfo from '../UserInfo';
 
 export default class Profile extends Component {
@@ -9,11 +8,12 @@ export default class Profile extends Component {
   }
 
   render() {
+    const { routeToEditBrands } = this.props;
     return (
       <div className="profile">
-        <Nav />
         Profile Page
         <UserInfo {...this.props} />
+        <button onClick={routeToEditBrands}>Edit brands</button>
       </div>
     );
   }
@@ -21,4 +21,5 @@ export default class Profile extends Component {
 
 Profile.propTypes = {
   user: T.object,
+  routeToEditBrands: T.func,
 };

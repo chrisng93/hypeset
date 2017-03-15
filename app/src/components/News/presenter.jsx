@@ -1,5 +1,4 @@
 import React, { Component, PropTypes as T } from 'react';
-import Nav from '../Nav';
 
 export default class News extends Component {
   constructor(props) {
@@ -10,7 +9,6 @@ export default class News extends Component {
   render() {
     return (
       <div>
-        <Nav />
         Hello
       </div>
     );

@@ -3,7 +3,7 @@
  */
 import jwt from 'jsonwebtoken';
 
-function checkPath(req, res, next) {
+const checkPath = (req, res, next) => {
   const nonSecurePaths = ['/auth'];
   const nonSecurePosts = ['/api/user'];
 
@@ -12,18 +12,18 @@ function checkPath(req, res, next) {
     return next();
   }
   return next();
-}
+};
 
-function getToken(req) {
+const getToken = (req) => {
   if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
     return req.headers.authorization.split(' ')[1];
   } else if (req.query && req.query.token) {
     return req.query.token;
   }
   return null;
-}
+};
 
-function verifyToken(req, res, next) {
+const verifyToken = (req, res, next) => {
   if (req.unsecured) {
     return next();
   }
@@ -40,6 +40,6 @@ function verifyToken(req, res, next) {
     req.user = decoded.user;
     return next();
   });
-}
+};
 
 module.exports = { checkPath, verifyToken };

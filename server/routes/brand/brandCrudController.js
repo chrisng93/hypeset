@@ -14,6 +14,16 @@ async function createBrand(req, res) {
   }
 }
 
+async function retrieveAllBrands(req, res) {
+  try {
+    const brands = await m.Brand.findAll();
+    console.log('Retrieved all brands');
+    res.status(200).send({ success: true, brands });
+  } catch(err) {
+    sendCrudError('retrieving', 'brands', err, res);
+  }
+}
+
 async function retrieveBrand(req, res) {
   const { name } = req.params;
   try {
@@ -71,4 +81,4 @@ async function deleteBrand(req, res) {
   }
 }
 
-module.exports = { createBrand, retrieveBrand, updateBrand, deleteBrand };
+module.exports = { createBrand, retrieveAllBrands, retrieveBrand, updateBrand, deleteBrand };
