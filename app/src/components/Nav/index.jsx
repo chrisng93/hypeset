@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { push } from 'react-router-redux';
+import { pathnameSelector } from '../../selectors/routingSelectors';
 import Nav from './presenter';
 
 function mapStateToProps(state) {
   return {
-    currentLocation: state.routing.pathname,
+    currentLocation: pathnameSelector(state),
   };
 }
 

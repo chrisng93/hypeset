@@ -1,15 +1,13 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { push } from 'react-router-redux';
-import { toJS } from 'immutable';
-
+import { isAuthenticatedSelector } from '../../selectors/userSelectors';
 import * as actions from '../../actions';
 import SignIn from './presenter';
 
 function mapStateToProps(state) {
-  const userState = state.user.toJS();
   return {
-    isAuthenticated: userState.isAuthenticated,
+    isAuthenticated: isAuthenticatedSelector(state),
   };
 }
 

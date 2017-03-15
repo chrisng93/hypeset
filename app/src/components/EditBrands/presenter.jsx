@@ -8,26 +8,33 @@ export default class EditBrands extends Component {
   }
 
   render() {
-    const { allBrands, userBrands, addBrand, removeBrand, token } = this.props;
+    const { availableBrands, userBrands, addBrand, removeBrand, token } = this.props;
+    // TODO: make dropdown with brands that user doesn't have - click on these to add
     return (
-      <div>
-        Edit Brands
-        {allBrands.map((brand, key) => {
-          return (
-            <div key={key}>
-              {brand.name}
-              <input type="button" value="Add brand to favorites" onClick={() => addBrand({ token, brands: [brand.name] })} />
-            </div>
-          );
-        })}
-        {userBrands.map((brand, key) => {
-          return (
-            <div key={key}>
-              {brand.name}
-              <input type="button" value="Remove brand from favorites" onClick={() => removeBrand({ token, brands: [brand.name] })} />
-            </div>
-          );
-        })}
+      <div className="brands">
+        <div className="dropdown">
+          Add brands:
+          {availableBrands.map((brand, key) => {
+            return (
+              <div key={key}>
+                {brand.name}
+                <input type="button" value="Add brand to favorites" onClick={() => addBrand({ token, brands: [brand.name] })} />
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="following">
+          Following:
+          {userBrands.map((brand, key) => {
+            return (
+              <div key={key}>
+                {brand.name}
+                <input type="button" value="Remove brand from favorites" onClick={() => removeBrand({ token, brands: [brand.name] })} />
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }
@@ -38,7 +45,7 @@ EditBrands.propTypes = {
   getUserBrands: T.func,
   addBrand: T.func,
   removeBrand: T.func,
-  allBrands: T.array,
+  availableBrands: T.array,
   userBrands: T.array,
   token: T.string,
 };

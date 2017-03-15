@@ -1,13 +1,12 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { push } from 'react-router-redux';
-import { toJS } from 'immutable';
+import { userSelector } from '../../selectors/userSelectors'
 import Profile from './presenter';
 
 function mapStateToProps(state) {
-  const userState = state.user.toJS();
   return {
-    user: userState.user,
+    user: userSelector(state),
   };
 }
 

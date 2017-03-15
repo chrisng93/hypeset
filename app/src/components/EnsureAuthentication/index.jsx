@@ -1,12 +1,11 @@
 import { connect } from 'react-redux';
-import { toJS } from 'immutable';
 import { push } from 'react-router-redux';
+import { isAuthenticatedSelector } from '../../selectors/userSelectors';
 import EnsureAuthentication from './presenter';
 
 function mapStateToProps(state) {
-  const user = state.user.toJS();
   return {
-    isAuthenticated: user.isAuthenticated,
+    isAuthenticated: isAuthenticatedSelector(state),
   };
 }
 

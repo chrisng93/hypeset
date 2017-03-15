@@ -44,7 +44,7 @@ export default class EditUser extends Component {
     // TODO: message saying that you've successfully updated the user
     // TODO: form validation
     // TODO: error message handling
-    const { user } = this.props;
+    const { user, routeToProfile } = this.props;
     const { password, firstName, lastName, email } = this.state;
     return (
       <div className="edit-user">
@@ -68,6 +68,7 @@ export default class EditUser extends Component {
           <input type="text" name="last-name" value={lastName} placeholder={user.lastName} onChange={e => this.handleInputChange(e, 'lastName')} />
         </div>
         <input type="button" value="Submit changes" onClick={this.submitForm} />
+        <input type="button" value="Cancel" onClick={routeToProfile} />
       </div>
     );
   }
@@ -77,4 +78,5 @@ EditUser.propTypes = {
   user: T.object,
   token: T.string,
   onEditUser: T.func,
+  routeToProfile: T.func,
 };

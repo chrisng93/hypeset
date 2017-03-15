@@ -1,15 +1,15 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from '../../actions';
+import { allBrandsSelector, userBrandsSelector, availableBrandsSelector } from '../../selectors/brandSelectors';
+import { tokenSelector } from '../../selectors/userSelectors';
 import EditBrands from './presenter';
 
 function mapStateToProps(state) {
-  const brandState = state.brand.toJS();
-  const userState = state.user.toJS();
   return {
-    allBrands: brandState.allBrands,
-    userBrands: brandState.userBrands,
-    token: userState.token,
+    availableBrands: availableBrandsSelector(state),
+    userBrands: userBrandsSelector(state),
+    token: tokenSelector(state),
   };
 }
 
