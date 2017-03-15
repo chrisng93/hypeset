@@ -10,12 +10,12 @@ export async function retrieveBrands() {
   const grailedBrands = await parseGrailedDesigners();
   const allBrands = hbxBrands.concat(grailedBrands.brandNames);
   const brandPopularity = grailedBrands.brandPopularity;
+
   for (let i = 0; i < allBrands.length; i++) {
     await m.Brand.checkOrCreate(allBrands[i]);
-    // const found = await m.Brand.find({ where: { name: { $iLike: allBrands[i] } } });
-    // if (!found) {
-    //   await m.Brand.create({ name: allBrands[i] });
-    // }
   }
-  // insert into db if doens't exist
+  for (let i = 0; i < brandPopularity.length; i++) {
+    const brand = await m.Brand.findByName(brandPopularity[i].name);
+    await m.BrandPopularity.create({ brandId: brand.id, brandName: brand.name, count: brandPopularity[i].count });
+  }
 }
