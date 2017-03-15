@@ -23,7 +23,7 @@ async function updateOwnBrands(req, res) {
       const brand = await m.Brand.findByName(brands[i]);
       if (brand) {
         user.addBrand(brand);
-        successfulInserts.push(brands[i]);
+        successfulInserts.push(brand);
       } else {
         failedInserts.push(brands[i]);
       }

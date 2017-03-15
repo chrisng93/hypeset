@@ -11,7 +11,7 @@ module.exports = (app) => {
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     // intercept OPTIONS method
     if (req.method === 'OPTIONS') {
-      return res.send(200);
+      return res.status(200).send();
     }
 
     next();

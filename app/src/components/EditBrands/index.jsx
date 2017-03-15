@@ -17,6 +17,8 @@ function mapDispatchToProps(dispatch) {
   return {
     getAllBrands: bindActionCreators(actions.getAllBrands, dispatch),
     getUserBrands: bindActionCreators(actions.getUserBrands, dispatch),
+    addBrand: bindActionCreators(actions.addBrand, dispatch),
+    removeBrand: bindActionCreators(actions.removeBrand, dispatch),
   };
 }
 

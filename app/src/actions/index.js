@@ -1,7 +1,7 @@
 import auth from './authActions';
 import signUp from './signUpActions';
 import editUser from './editUserActions';
-import { getAllBrands, getUserBrands } from './brandActions';
+import { getAllBrands, getUserBrands, addBrand, removeBrand } from './brandActions';
 
 module.exports = {
   auth,
@@ -9,4 +9,6 @@ module.exports = {
   editUser,
   getAllBrands,
   getUserBrands,
+  addBrand,
+  removeBrand,
 };

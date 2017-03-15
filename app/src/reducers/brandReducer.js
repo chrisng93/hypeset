@@ -31,6 +31,18 @@ export default function brand(state = initialState, action) {
         .setIn(['error', 'status'], true)
         .setIn(['error', 'message'], payload.message);
 
+    case actionTypes.ADD_BRAND_SUCCESS:
+      return state.set('userBrands', state.get('userBrands').concat([...payload.successfulInserts]));
+    case actionTypes.ADD_BRAND_FAILURE:
+      return state.setIn(['error', 'status'], true)
+        .setIn(['error', 'message'], payload.message);
+
+    case actionTypes.REMOVE_BRAND_SUCCESS:
+      return state.set('userBrands', state.get('userBrands').filter(brandModel => payload.successfulDeletes.indexOf(brandModel.name) < 0));
+    case actionTypes.REMOVE_BRAND_FAILURE:
+      return state.setIn(['error', 'status'], true)
+        .setIn(['error', 'message'], payload.message);
+
     default:
       return state;
   }

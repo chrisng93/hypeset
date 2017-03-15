@@ -8,18 +8,24 @@ export default class EditBrands extends Component {
   }
 
   render() {
-    const { allBrands, userBrands } = this.props;
+    const { allBrands, userBrands, addBrand, removeBrand, token } = this.props;
     return (
       <div>
         Edit Brands
         {allBrands.map((brand, key) => {
           return (
-            <div key={key}>{brand.name}</div>
+            <div key={key}>
+              {brand.name}
+              <input type="button" value="Add brand to favorites" onClick={() => addBrand({ token, brands: [brand.name] })} />
+            </div>
           );
         })}
         {userBrands.map((brand, key) => {
           return (
-            <div key={key}>{brand.name}</div>
+            <div key={key}>
+              {brand.name}
+              <input type="button" value="Remove brand from favorites" onClick={() => removeBrand({ token, brands: [brand.name] })} />
+            </div>
           );
         })}
       </div>
@@ -30,6 +36,8 @@ export default class EditBrands extends Component {
 EditBrands.propTypes = {
   getAllBrands: T.func,
   getUserBrands: T.func,
+  addBrand: T.func,
+  removeBrand: T.func,
   allBrands: T.array,
   userBrands: T.array,
   token: T.string,
