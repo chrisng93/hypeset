@@ -56,9 +56,7 @@ const foundSubstring = (string, target) => {
 // TODO: find a more efficient way to do this?
 const findBrands = (title, availableBrands) => {
   title = title.toLowerCase();
-  const brands = availableBrands.filter((brand) => {
-    return foundSubstring(title, brand.toLowerCase());
-  });
+  const brands = availableBrands.filter(brand => foundSubstring(title, brand.toLowerCase()));
   return brands.length ? brands : null;
 };
 

@@ -20,6 +20,22 @@ function getNewsFailure(payload) {
 
 export default function getNews(payload) {
   return (dispatch) => {
+    const options = {
+      method: 'GET',
+      headers: createHeaders(payload.token),
+    };
 
+    return fetch(`${process.env.API_URL}/api/me/news`, options)
+      .then(response => response.json())
+      .then((json) => {
+        if (!json.success) {
+          return dispatch(getNewsFailure(json));
+        }
+        return dispatch(getNewsSuccess(json));
+      })
+      .catch((err) => {
+        console.error(`Error getting news: ${err}`);
+        return dispatch(getNewsFailure(err));
+      })
   };
 }

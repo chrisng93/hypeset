@@ -13,9 +13,9 @@ export async function retrieveNews() {
   // TODO: update latestArticleDate w/ latest news article from database
   // const latestNews = await m.Info.findNews();
   const grailed = await m.Site.find({ where: { name: 'Grailed' } });
-
   const hypebeast = await m.Site.find({ where: { name: 'Hypebeast' } });
   const brandModels = await m.Brand.findAll();
+  console.log(brandModels)
   const availableBrands = brandModels.map(model => model.name);
   const initialGrailedState = {
     weekendReading: [],
@@ -33,11 +33,13 @@ export async function retrieveNews() {
 
   for (let i = 0; i < allNews.length; i++) {
     const curr = allNews[i];
-    const news = await m.Info.updateOrCreate(curr, 'News');
-
-    for (let j = 0; j < curr.brands.length; j++) {
-      const brand = await m.Brand.findByName(curr.brands[j]);
-      news.addBrand(brand);
+    const found = await m.Info.find({ where: { url: curr.url } });
+    if (!found) {
+      const news = await m.Info.create({ ...curr, type: 'News' });
+      for (let j = 0; j < curr.brands.length; j++) {
+        const brand = await m.Brand.findByName(curr.brands[j]);
+        news.addBrand(brand);
+      }
     }
   }
 }

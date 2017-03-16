@@ -29,8 +29,8 @@ async function authenticate(req, res) {
 }
 
 async function test(req, res) {
+  // await retrieveBrands();
   retrieveNews();
-  // retrieveBrands();
   res.send();
 }
 

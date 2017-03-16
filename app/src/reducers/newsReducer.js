@@ -5,16 +5,19 @@ import { fromJS, List, Map } from 'immutable';
 import * as actionTypes from '../constants/actionTypes';
 
 const initialState = fromJS({
-
+  news: new List(),
+  error: new Map(),
 });
 
 export default function news(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case actionTypes.GET_NEWS_SUCCESS:
-      return state;
+      return state.set('news', payload.news)
+        .set('error', new Map());
     case actionTypes.GET_NEWS_FAILURE:
-      return state;
+      return state.setIn(['error', 'status'], true)
+        .setIn(['error', 'message'], payload.message);
 
     default:
       return state;
