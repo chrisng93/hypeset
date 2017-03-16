@@ -1,7 +1,7 @@
 import bodyParser from 'body-parser';
 
 module.exports = (app) => {
-  // body parser for getting info from post and/or url params
+  // body parser for getting me from post and/or url params
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
 

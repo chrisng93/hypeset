@@ -89,7 +89,7 @@ export function getUserBrands(payload) {
       headers: createHeaders(payload.token),
     };
 
-    fetch(`${process.env.API_URL}/api/user/me/brand`, options)
+    fetch(`${process.env.API_URL}/api/me/brand`, options)
       .then(response => response.json())
       .then((json) => {
         if (!json.success) {
@@ -112,7 +112,7 @@ export function addBrand(payload) {
       body: JSON.stringify({ brands: payload.brands }),
     };
 
-    fetch(`${process.env.API_URL}/api/user/me/brand`, options)
+    fetch(`${process.env.API_URL}/api/me/brand`, options)
       .then(response => response.json())
       .then((json) => {
         if (!json.success) {
@@ -135,7 +135,7 @@ export function removeBrand(payload) {
       body: JSON.stringify({ brands: payload.brands }),
     };
 
-    fetch(`${process.env.API_URL}/api/user/me/brand`, options)
+    fetch(`${process.env.API_URL}/api/me/brand`, options)
       .then(response => response.json())
       .then((json) => {
         if (!json.success) {

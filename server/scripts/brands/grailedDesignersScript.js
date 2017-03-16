@@ -24,6 +24,7 @@ export async function parseGrailedDesigners() {
         const brandPopularity = hypeDesignersData.brandPopularity;
         resolve({ brandNames, brandPopularity })
       } else {
+        // TODO: if this happens, error out or call parsedGraileDesigners again or something
         resolve({ brandNames: [], brandPopularity: [] });
       }
     });
