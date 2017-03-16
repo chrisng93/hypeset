@@ -19,7 +19,7 @@ async function authenticate(req, res) {
       return res.status(403).send({ success: false, message: 'Incorrect password combination' });
     }
 
-    const token = jwt.sign({ user: {...user.dataValues} }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
+    const token = jwt.sign({ user: { ...user.dataValues } }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
     console.log(`User ${user.id} successfully authenticated`);
     res.status(200).send({ success: true, token, user });
   } catch(err) {
@@ -29,8 +29,8 @@ async function authenticate(req, res) {
 }
 
 async function test(req, res) {
-  // retrieveNews();
-  retrieveBrands();
+  retrieveNews();
+  // retrieveBrands();
   res.send();
 }
 

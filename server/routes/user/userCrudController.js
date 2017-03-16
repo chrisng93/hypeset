@@ -10,7 +10,6 @@ async function createUser(req, res) {
     const user = await m.User.create(req.body);
     const token = jwt.sign({ user: {...user.dataValues} }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
     console.log(`Created user ${user.username}`);
-    console.log('user', user)
     res.status(201).send({ success: true, token, user });
   } catch(err) {
     sendCrudError('creating', 'user', err, res);

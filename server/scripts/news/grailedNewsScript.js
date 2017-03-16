@@ -6,24 +6,14 @@ import cheerio from 'cheerio';
 import moment from 'moment';
 import { findBrands, findClass, findTag, formatDate } from '../../utils/scriptHelpers';
 
-const now = moment().subtract(1, 'days').unix();
-const xago = moment().subtract(8, 'days').unix();
-
-const initialArticleState = {
-  weekendReading: [],
-  grailFits: [],
-  staffPicks: [],
-  news: [],
-};
-
-export async function parseGrailedArticles(articles = initialArticleState, availableBrands = ['needles'], page = 1, latestArticleDate = xago) {
+export async function parseGrailedArticles(articles, availableBrands, page = 1, latestArticleDate, grailedId) {
   return new Promise((resolve) => {
     let continueParsing = true;
     request(`${process.env.GRAILED_URL}/drycleanonly?page=${page}`, (err, res) => {
       const $ = cheerio.load(res.body);
       $('.tertiary-articles-row').each((rowIndex, row) => {
         const article = {};
-        article.site = 'grailed';
+        article.SiteId = grailedId;
         article.title = findTag(row, 'h1')[0].children[0].data.trim();
         const date = formatDate(findTag(row, 'h4')[0].children[0].data.trim().split(' '));
         article.date = moment(date, 'MM-DD-YYYY').unix();
@@ -49,7 +39,7 @@ export async function parseGrailedArticles(articles = initialArticleState, avail
         }
       });
       if (continueParsing) {
-        resolve(parseGrailedArticles(articles, availableBrands, page + 1, latestArticleDate));
+        resolve(parseGrailedArticles(articles, availableBrands, page + 1, latestArticleDate, grailedId));
       }
       resolve(articles);
     });

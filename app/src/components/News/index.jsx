@@ -3,7 +3,9 @@ import { bindActionCreators } from 'redux';
 import News from './presenter';
 
 function mapStateToProps(state) {
-  return {};
+  return {
+
+  };
 }
 
 function mapDispatchToProps(dispatch) {

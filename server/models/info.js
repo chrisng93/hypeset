@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isUrl: true,
       },
+      unique: true,
     },
     date: {
       type: DataTypes.DATE,
@@ -30,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         isUrl: true,
       },
     },
-    siteId: {
+    SiteId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -40,6 +41,15 @@ module.exports = (sequelize, DataTypes) => {
         Info.belongsToMany(m.Brand, { through: 'InfoBrand', foreignKey: 'infoId' });
         Info.belongsToMany(m.User, { through: 'InfoUser', foreignKey: 'infoId' });
         Info.belongsTo(m.Site);
+      },
+      updateOrCreate: function(article, type) {
+        return this.find({ where: { url: article.url } })
+          .then((info) => {
+            if (info) {
+              return info.update({ ...article, type });
+            }
+            return this.create({ ...article, type });
+          });
       },
       findNews: function() {
         return this.find({ where: { type: TYPES[0] } });

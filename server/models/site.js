@@ -18,6 +18,9 @@ module.exports = (sequelize, DataTypes) => {
       associate: (m) => {
         Site.hasMany(m.Info);
       },
+      findByName: function(name) {
+        return this.find({ where: { name } });
+      },
     },
   });
   return Site;

@@ -6,7 +6,7 @@ import cheerio from 'cheerio';
 import moment from 'moment';
 import { findBrands } from '../../utils/scriptHelpers';
 
-export async function parseHypebeastNews(articles = [], availableBrands, page = 1, latestArticleDate) {
+export async function parseHypebeastNews(articles = [], availableBrands, page = 1, latestArticleDate, hypebeastId) {
   return new Promise((resolve) => {
     let continueParsing = true;
     request(`${process.env.HYPEBEAST_URL}/news/page/${page}`, (err, res) => {
@@ -15,7 +15,7 @@ export async function parseHypebeastNews(articles = [], availableBrands, page = 
         const category = $(`#${post.attribs.id} .category`)[0];
         if ((category.attribs.title === 'Footwear' || category.attribs.title === 'Fashion') && continueParsing) {
           const article = {};
-          article.site = 'hypebeast';
+          article.SiteId = hypebeastId;
           article.title = post.attribs['data-title'];
           article.url = post.attribs['data-permalink'];
 
@@ -49,7 +49,7 @@ export async function parseHypebeastNews(articles = [], availableBrands, page = 
         }
       });
       if (continueParsing) {
-        resolve(parseHypebeastNews(articles, availableBrands, page + 1, latestArticleDate));
+        resolve(parseHypebeastNews(articles, availableBrands, page + 1, latestArticleDate, hypebeastId));
       }
       resolve(articles);
     });
