@@ -7,14 +7,11 @@ export default function Article({ article }) {
         <img src={article.imgUrl} />
       </div>
       <div className="info-container">
-        <div className="title-container">
-          <h1 className="title">{article.title}</h1>
-          <p className="date">{article.date}</p>
+        <div className="title">
+          <a href={article.url} target="_blank">{article.title}</a>
         </div>
-        <div className="body-container">
-          <p className="blurb">{article.blurb}</p>
-          <a href={article.url} target="_blank">Click here to check out the article</a>
-        </div>
+        <div className="date">{article.date}</div>
+        <div className="blurb">{article.blurb}</div>
       </div>
     </div>
   );

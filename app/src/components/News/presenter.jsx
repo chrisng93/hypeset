@@ -9,8 +9,7 @@ export default class News extends Component {
 
   render() {
     return (
-      <div>
-        News Page
+      <div className="news">
         {this.props.news.map((news, key) => <Article article={news} key={key} /> )}
       </div>
     );
