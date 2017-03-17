@@ -20,7 +20,7 @@ export async function retrieveBrands() {
   const latestBrandsByPopularity = await m.BrandPopularity.find({ order: 'batch DESC' });
   let batch = 0;
   if (latestBrandsByPopularity) {
-    batch = latestBrandsByPopularity.batch++;
+    batch = latestBrandsByPopularity.batch += 1;
   }
 
   for (let i = 0; i < brandPopularity.length; i++) {
