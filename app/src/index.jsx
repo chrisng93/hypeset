@@ -19,6 +19,9 @@ import EditBrands from './components/EditBrands';
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
 
+// import stylesheets
+require ('./stylesheets/app.scss');
+
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>

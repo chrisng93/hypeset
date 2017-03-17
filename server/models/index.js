@@ -15,12 +15,15 @@ const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } = process.env;
 let sequelize;
 const pgConnectionString = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`;
 
-pg.connect(pgConnectionString, (error, client) => {
-  const baseTables = ['brand', 'info', 'site', 'user'];
+pg.connect(pgConnectionString, (dbConnectError, client) => {
+  // const baseTables = ['brand', 'info', 'site', 'user'];
   // create the db and ignore any errors (for example if it already exists)
-  client.query(`CREATE DATABASE ${DB_NAME}`, (err) => {
-    if (err && err.code === '42P04') console.log('Database already exists');
-    if (!err) console.log('Database created');
+  if (dbConnectError) {
+    throw new Error(`Error connecting to the database: ${dbConnectError}`);
+  }
+  client.query(`CREATE DATABASE ${DB_NAME}`, (createDbError) => {
+    if (createDbError && createDbError.code === '42P04') console.log('Database already exists');
+    if (!createDbError) console.log('Database created');
 
     sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
       host: DB_HOST,

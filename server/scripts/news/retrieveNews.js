@@ -15,7 +15,6 @@ export async function retrieveNews() {
   const grailed = await m.Site.find({ where: { name: 'Grailed' } });
   const hypebeast = await m.Site.find({ where: { name: 'Hypebeast' } });
   const brandModels = await m.Brand.findAll();
-  console.log(brandModels)
   const availableBrands = brandModels.map(model => model.name);
   const initialGrailedState = {
     weekendReading: [],

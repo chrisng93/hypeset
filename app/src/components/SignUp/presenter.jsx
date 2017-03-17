@@ -7,8 +7,6 @@ export default class SignUp extends Component {
       username: '',
       password: '',
       email: '',
-      firstName: '',
-      lastName: '',
     };
     this.handleInputChange = this.handleInputChange.bind(this);
   }
@@ -28,32 +26,22 @@ export default class SignUp extends Component {
 
   // TODO: form validation
   render() {
-    const { onSignUp } = this.props;
+    const { onSignUp, routeToSignIn } = this.props;
     const { username, password, email, firstName, lastName } = this.state;
     return (
-      <form className="sign-up-form">
-        <label className="username">
-          Username:
-          <input type="text" name="username" value={username} onChange={e => this.handleInputChange(e, 'username')} />
-        </label>
-        <label className="password">
-          Password:
-          <input type="password" name="password" value={password} onChange={e => this.handleInputChange(e, 'password')} />
-        </label>
-        <label className="email">
-          Email:
-          <input type="email" name="email" value={email} onChange={e => this.handleInputChange(e, 'email')} />
-        </label>
-        <label className="first-name">
-          First Name:
-          <input type="text" name="first-name" value={firstName} onChange={e => this.handleInputChange(e, 'firstName')} />
-        </label>
-        <label className="last-name">
-          Last Name:
-          <input type="text" name="last-name" value={lastName} onChange={e => this.handleInputChange(e, 'lastName')} />
-        </label>
-        <input type="button" value="Sign up" onClick={() => onSignUp({ username, password, email, firstName, lastName })} />
-      </form>
+      <div className="sign-up">
+        <img src={require('../../../assets/intro-bg4.jpg')} className="bg" />
+        <div className="sign-up-container">
+          <div className="title">hypeset</div>
+          <form className="sign-up-form">
+            <input type="text" className="username" name="username" placeholder="Username" value={username} onChange={e => this.handleInputChange(e, 'username')} />
+            <input type="password" className="password" name="password" placeholder="Password" value={password} onChange={e => this.handleInputChange(e, 'password')} />
+            <input type="email" className="email" name="email" placeholder="Email" value={email} onChange={e => this.handleInputChange(e, 'email')} />
+            <button type="button" value="Sign up" onClick={() => onSignUp({ username, password, email, firstName, lastName })}>Sign Up</button>
+          </form>
+          <div onClick={routeToSignIn}>Already have an account? <span className="link">Sign in</span></div>
+        </div>
+      </div>
     );
   }
 }
@@ -61,5 +49,6 @@ export default class SignUp extends Component {
 SignUp.propTypes = {
   onSignUp: T.func,
   routeToNews: T.func,
+  routeToSignIn: T.func,
   isAuthenticated: T.boolean,
 };

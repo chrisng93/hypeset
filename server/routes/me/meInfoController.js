@@ -9,7 +9,6 @@ async function getOwnNews(req, res) {
     let news = [];
     const user = await m.User.find({ where: { id: req.user.id }, include: [{ model: m.Brand }] });
     for (let i = 0; i < user.Brands.length; i++) {
-      console.log(user.Brands[i].name)
       const relevantArticles = await m.Info.findAll({ where: { type: 'News' }, include: [{ model: m.Brand, where: { id: user.Brands[i].id } }, { model: m.Site }] })
       news = news.concat(relevantArticles);
     }

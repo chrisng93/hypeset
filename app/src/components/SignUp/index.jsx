@@ -15,6 +15,7 @@ function mapDispatchToProps(dispatch) {
   return {
     onSignUp: bindActionCreators(actions.signUp, dispatch),
     routeToNews: () => dispatch(push('/news')),
+    routeToSignIn: () => dispatch(push('/signin')),
   };
 }
 

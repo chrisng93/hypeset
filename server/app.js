@@ -24,6 +24,7 @@ app.get('/*', (req, res) => {
 
 app.listen(process.env.PORT, () => {
   console.log(`Listening on ${process.env.PORT}...`);
+  require('./scripts/cronScript');
 });
 
 module.exports = app;

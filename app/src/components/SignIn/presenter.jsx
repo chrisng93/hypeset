@@ -29,19 +29,17 @@ export default class SignIn extends Component {
     const { onAuth, routeToSignUp } = this.props;
     const { username, password } = this.state;
     return (
-      <div>
-        <div className="sign-in-form">
-          <div className="username">
-            Username
-            <input type="text" value={username} onChange={e => this.handleInputChange(e, 'username')} />
-          </div>
-          <div className="password">
-            Password
-            <input type="password" value={password} onChange={e => this.handleInputChange(e, 'password')} />
-          </div>
-          <button type="button" onClick={() => onAuth({ username, password })}>Click here to sign in</button>
+      <div className="sign-in">
+        <img src={require('../../../assets/intro-bg4.jpg')} className="bg" />
+        <div className="form-container">
+          <div className="title">hypeset</div>
+          <form className="sign-in-form">
+            <input type="text" className="username" value={username} placeholder="Username" onChange={e => this.handleInputChange(e, 'username')} />
+            <input type="password" className="password" value={password} placeholder="Password" onChange={e => this.handleInputChange(e, 'password')} />
+            <button type="button" onClick={() => onAuth({ username, password })}>Sign in</button>
+          </form>
+          <div onClick={routeToSignUp}>Don't have an account? <span className="link">Sign up</span></div>
         </div>
-        <button type="button" onClick={routeToSignUp}>Click here to sign up</button>
       </div>
     );
   }

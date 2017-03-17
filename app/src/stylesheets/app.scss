@@ -1,0 +1,27 @@
+@import './signin.scss';
+@import './signup.scss';
+@import './news.scss';
+@import './sales.scss';
+@import './profile.scss';
+@import './notfound.scss';
+
+html *
+{
+  font-family: 'Ubuntu', sans-serif;
+}
+
+img.bg {
+  // fill background
+  min-height: 100%;
+  min-width: 1024px;
+
+  // proportionate scaling
+  width: 100%;
+  height: auto;
+
+  // positioning
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}

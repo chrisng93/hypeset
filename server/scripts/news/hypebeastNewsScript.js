@@ -13,7 +13,7 @@ export async function parseHypebeastNews(articles = [], availableBrands, page = 
       const $ = cheerio.load(res.body);
       $('.post-box').each((postIndex, post) => {
         const category = $(`#${post.attribs.id} .category`)[0];
-        if ((category.attribs.title === 'Footwear' || category.attribs.title === 'Fashion') && continueParsing) {
+        if (category && (category.attribs.title === 'Footwear' || category.attribs.title === 'Fashion') && continueParsing) {
           const article = {};
           article.SiteId = hypebeastId;
           article.title = post.attribs['data-title'];
@@ -36,7 +36,7 @@ export async function parseHypebeastNews(articles = [], availableBrands, page = 
               } else {
                 pst = new Date(timeElement.attribs.datetime);
               }
-              article.date = moment(pst, 'YYYY-MM-DD hh:mm').unix();
+              article.date = moment(pst, 'YYYY-MM-DD hh:mm');
 
               const blurbElement = $(`#${post.attribs.id} .post-box-excerpt p`)[0];
               if (blurbElement) {
