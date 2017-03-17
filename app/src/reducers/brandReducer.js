@@ -7,6 +7,7 @@ import * as actionTypes from '../constants/actionTypes';
 const initialState = fromJS({
   allBrands: new List(),
   userBrands: new List(),
+  brandsByPopularity: new List(),
   error: {
     status: '',
     message: '',
@@ -28,6 +29,13 @@ export default function brand(state = initialState, action) {
       return state.set('userBrands', payload.brands);
     case actionTypes.GET_USER_BRANDS_FAILURE:
       return state.set('userBrands', new List())
+        .setIn(['error', 'status'], true)
+        .setIn(['error', 'message'], payload.message);
+
+    case actionTypes.GET_BRANDS_BY_POPULARITY_SUCCESS:
+      return state.set('brandsByPopularity', payload.brandsByPopularity);
+    case actionTypes.GET_BRANDS_BY_POPULARITY_FAILURE:
+      return state.set('brandsByPopularity', new List())
         .setIn(['error', 'status'], true)
         .setIn(['error', 'message'], payload.message);
 

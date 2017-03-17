@@ -4,6 +4,8 @@ div.news {
   margin: 40px 100px 0 100px;
 
   div.news-container {
+    flex: 4;
+
     div.article {
       display: flex;
       flex-direction: row;
@@ -31,9 +33,9 @@ div.news {
         }
 
         img:hover {
-          transform: scale(1);
-          -moz-transform: scale(1);
-          -webkit-transform: scale(1);
+          transform: scale(0.9);
+          -moz-transform: scale(0.9);
+          -webkit-transform: scale(0.9);
         }
       }
 
@@ -71,9 +73,42 @@ div.news {
     }
   }
 
-  div.filter {
-    div.header {
-      font-size: 18px;
+  div.filter-container {
+    display: flex;
+    flex: 1;
+
+    div.filter {
+      width: 100%;
+      height: 100%;
+      background-color: #eeeeee;
+      border: 1px solid #dcdcdc;
+      border-radius: 3px;
+      margin-left: 40px;
+      padding: 20px 0 0 20px;
+
+      div.header {
+        font-size: 24px;
+        font-weight: 500;
+        margin-bottom: 20px;
+      }
+
+      div.title {
+        font-size: 20px;
+        font-weight: 400;
+        margin-bottom: 8px;
+      }
+
+      div.news-brands {
+        margin-bottom: 16px;
+      }
+
+      div.checkbox {
+        margin-bottom: 4px;
+
+        span.info {
+          font-size: 16px;
+        }
+      }
     }
   }
 }

@@ -10,12 +10,22 @@ export async function retrieveBrands() {
   const grailedBrands = await parseGrailedDesigners();
   const allBrands = hbxBrands.concat(grailedBrands.brandNames);
   const brandPopularity = grailedBrands.brandPopularity;
+  console.log('Finished retrieving brands..');
 
   for (let i = 0; i < allBrands.length; i++) {
     await m.Brand.checkOrCreate(allBrands[i]);
   }
+  console.log('Finished inserting brands into db..');
+
+  const latestBrandsByPopularity = await m.BrandPopularity.find({ order: 'batch DESC' });
+  let batch = 0;
+  if (latestBrandsByPopularity) {
+    batch = latestBrandsByPopularity.batch++;
+  }
+
   for (let i = 0; i < brandPopularity.length; i++) {
     const brand = await m.Brand.findByName(brandPopularity[i].name);
-    await m.BrandPopularity.create({ brandId: brand.id, brandName: brand.name, count: brandPopularity[i].count });
+    await m.BrandPopularity.create({ BrandId: brand.id, brandName: brand.name, count: brandPopularity[i].count, batch });
   }
+  console.log('Finished inserting into brand popularities table..');
 }

@@ -1,10 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
   const InfoBrand = sequelize.define('InfoBrand', {
-    infoId: {
+    InfoId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    brandId: {
+    BrandId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

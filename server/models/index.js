@@ -60,6 +60,10 @@ pg.connect(pgConnectionString, (dbConnectError, client) => {
 
     db.sequelize = sequelize;
     db.Sequelize = Sequelize;
+
+    // populate table with Grailed and Hypebeast sites
+    db.Site.findOrCreate({ where: { name: 'Grailed' }, defaults: { name: 'Grailed', url: process.env.GRAILED_URL } });
+    db.Site.findOrCreate({ where: { name: 'Hypebeast' }, defaults: { name: 'Hypebeast', url: process.env.HYPEBEAST_URL } });
   });
 });
 

@@ -2,13 +2,14 @@ import React, { Component, PropTypes as T } from 'react';
 
 export default class EditBrands extends Component {
   componentWillMount() {
-    const { getAllBrands, getUserBrands, token } = this.props;
+    const { getAllBrands, getUserBrands, getBrandsByPopularity, token } = this.props;
     getAllBrands({ token });
     getUserBrands({ token });
+    getBrandsByPopularity({ token, limit: 20 });
   }
 
   render() {
-    const { availableBrands, userBrands, addBrand, removeBrand, token } = this.props;
+    const { availableBrands, userBrands, popularBrands, addBrand, removeBrand, token } = this.props;
     // TODO: make dropdown with available brands
     return (
       <div className="brands">
@@ -23,7 +24,10 @@ export default class EditBrands extends Component {
             );
           })}
         </div>
-
+        <div className="popular">
+          Popular brands:
+          {popularBrands.map((brand, key) => <div key={key}>{brand.brandName}</div>)}
+        </div>
         <div className="following">
           Following:
           {userBrands.map((brand, key) => {
@@ -47,5 +51,6 @@ EditBrands.propTypes = {
   removeBrand: T.func,
   availableBrands: T.array,
   userBrands: T.array,
+  popularBrands: T.array,
   token: T.string,
 };

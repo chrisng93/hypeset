@@ -1,10 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
   const InfoUser = sequelize.define('InfoUser', {
-    infoId: {
+    InfoId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    userId: {
+    UserId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

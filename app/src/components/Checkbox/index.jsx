@@ -17,12 +17,12 @@ export default class Checkbox extends Component {
   }
 
   render() {
-    const { info, clickHandler } = this.props;
+    const { info } = this.props;
     const { isChecked } = this.state;
     return (
       <div className="checkbox">
         <input type="checkbox" checked={isChecked} onChange={this.changeHandler} />
-        {info}
+        <span className="info">{info}</span>
       </div>
     );
   }

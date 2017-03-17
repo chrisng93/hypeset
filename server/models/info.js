@@ -38,8 +38,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (m) => {
-        Info.belongsToMany(m.Brand, { through: 'InfoBrand', foreignKey: 'infoId' });
-        Info.belongsToMany(m.User, { through: 'InfoUser', foreignKey: 'infoId' });
+        Info.belongsToMany(m.Brand, { through: 'InfoBrand', foreignKey: 'InfoId' });
+        Info.belongsToMany(m.User, { through: 'InfoUser', foreignKey: 'InfoId' });
         Info.belongsTo(m.Site);
       },
       updateOrCreate: function(article, type) {
@@ -50,12 +50,6 @@ module.exports = (sequelize, DataTypes) => {
             }
             return this.create({ ...article, type });
           });
-      },
-      findNews: function() {
-        return this.find({ where: { type: TYPES[0] } });
-      },
-      findSales: function() {
-        return this.find({ where: { type: TYPES[1] } });
       },
     },
   });

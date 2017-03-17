@@ -1,7 +1,7 @@
 import auth from './authActions';
 import signUp from './signUpActions';
 import editUser from './editUserActions';
-import { getAllBrands, getUserBrands, addBrand, removeBrand } from './brandActions';
+import { getAllBrands, getUserBrands, getBrandsByPopularity, addBrand, removeBrand } from './brandActions';
 import getNews from './newsActions';
 
 module.exports = {
@@ -10,6 +10,7 @@ module.exports = {
   editUser,
   getAllBrands,
   getUserBrands,
+  getBrandsByPopularity,
   addBrand,
   removeBrand,
   getNews,

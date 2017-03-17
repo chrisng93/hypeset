@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (m) => {
-        Brand.belongsToMany(m.User, { through: 'UserBrand', foreignKey: 'brandId' });
-        Brand.belongsToMany(m.Info, { through: 'InfoBrand', foreignKey: 'brandId' });
+        Brand.belongsToMany(m.User, { through: 'UserBrand', foreignKey: 'BrandId' });
+        Brand.belongsToMany(m.Info, { through: 'InfoBrand', foreignKey: 'BrandId' });
         Brand.hasMany(m.BrandPopularity);
       },
       findById: function(id) {

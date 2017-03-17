@@ -16,6 +16,11 @@ export const userBrandsSelector = createSelector(
   brandState => brandState.userBrands
 );
 
+export const brandsByPopularitySelector = createSelector(
+  brandStateSelector,
+  brandState => brandState.brandsByPopularity
+);
+
 export const brandErrorSelector = createSelector(
   brandStateSelector,
   brandState => brandState.error

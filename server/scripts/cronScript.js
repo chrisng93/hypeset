@@ -5,17 +5,17 @@ import cron from 'cron';
 import { retrieveBrands } from './brands/retrieveBrands';
 import { retrieveNews } from './news/retrieveNews';
 
-export default function runScripts() {
-  const CronJob = cron.CronJob;
-  const job = new CronJob('* * 01 * * *', onStart, null, true, 'America/Los_Angeles');
-  job.start();
-};
+// export default function runScripts() {
+//   const CronJob = cron.CronJob;
+//   const job = new CronJob('* * 01 * * *', onStart, null, true, 'America/Los_Angeles');
+//   job.start();
+// };
 
-async function onStart() {
+async function runScripts() {
   console.log('Started web scraping scripts..');
   await retrieveBrands();
   await retrieveNews();
-  console.log('Done with web scraping scripts..')
+  console.log('Finished web scraping scripts..')
 }
 
 runScripts();

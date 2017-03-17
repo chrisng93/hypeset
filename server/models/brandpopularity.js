@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const BrandPopularity = sequelize.define('BrandPopularity', {
-    brandId: {
+    BrandId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     date: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
+    },
+    batch: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
   }, {
     classMethods: {

@@ -1,20 +1,15 @@
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { push } from 'react-router-redux';
-import { userSelector } from '../../selectors/userSelectors'
-import Profile from './presenter';
+import React, { Component, PropTypes as T } from 'react';
+import ProfileNav from '../ProfileNav';
 
-function mapStateToProps(state) {
-  return {
-    user: userSelector(state),
-  };
+export default function Profile({ children }) {
+  return (
+    <div className="profile">
+      <ProfileNav />
+      <div className="content">
+        {children}
+      </div>
+    </div>
+  );
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    routeToEditUser: () => dispatch(push('/profile/edit')),
-    routeToEditBrands: () => dispatch(push('/profile/brands')),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+Profile.propTypes = {};

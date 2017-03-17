@@ -24,7 +24,6 @@ export default class News extends Component {
     } else {
       newState[field] = this.state[field].filter(stateInfo => stateInfo !== info);
     }
-    console.log(isFilteredOut, this.state.filteredOutBrands, newState)
     this.setState(newState);
   }
 
@@ -34,7 +33,7 @@ export default class News extends Component {
     return (
       <div className="news">
         <div className="news-container">
-        {this.props.news.filter(news => {
+        {this.props.news.filter((news) => {
           for (let i = 0; i < news.Brands.length; i++) {
             if (filteredOutBrands.indexOf(news.Brands[i].name) >= 0) {
               return false;
@@ -43,15 +42,17 @@ export default class News extends Component {
           return filteredOutSites.indexOf(news.Site.name) < 0;
         }).map((news, key) => <Article article={news} key={key} /> )}
         </div>
-        <div className="filter">
-          <div className="header">Filter</div>
-          <div className="news-brands">
-            Brands
-            {newsBrands.map((brand, key) => <Checkbox info={brand} clickHandler={(brandName, isFilteredOut) => this.changeFilteredOutState(brandName, isFilteredOut, 'filteredOutBrands')} />)}
-          </div>
-          <div className="news-sites">
-            Sites
-            {newsSites.map((site, key) => <Checkbox info={site} clickHandler={(brandName, isFilteredOut) => this.changeFilteredOutState(site, isFilteredOut, 'filteredOutSites')} />)}
+        <div className="filter-container">
+          <div className="filter">
+            <div className="header">Filters</div>
+            <div className="news-brands">
+              <div className="title">Brands</div>
+              {newsBrands.map((brand, key) => <Checkbox info={brand} clickHandler={(brandName, isFilteredOut) => this.changeFilteredOutState(brandName, isFilteredOut, 'filteredOutBrands')} />)}
+            </div>
+            <div className="news-sites">
+              <div className="title">Sites</div>
+              {newsSites.map((site, key) => <Checkbox info={site} clickHandler={(brandName, isFilteredOut) => this.changeFilteredOutState(site, isFilteredOut, 'filteredOutSites')} />)}
+            </div>
           </div>
         </div>
       </div>

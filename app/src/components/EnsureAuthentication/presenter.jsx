@@ -5,7 +5,6 @@ export default class EnsureAuthentication extends Component {
   componentWillMount() {
     const { isAuthenticated, routeToSignIn } = this.props;
     if (!isAuthenticated) {
-      console.log('route to sign in')
       routeToSignIn();
     }
   }

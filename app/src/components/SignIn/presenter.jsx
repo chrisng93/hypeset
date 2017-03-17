@@ -30,7 +30,7 @@ export default class SignIn extends Component {
     const { username, password } = this.state;
     return (
       <div className="sign-in">
-        <img src={require('../../../assets/intro-bg4.jpg')} className="bg" />
+        <img src={require('../../../assets/intro-bg1.jpg')} className="bg" />
         <div className="form-container">
           <div className="title">hypeset</div>
           <form className="sign-in-form">

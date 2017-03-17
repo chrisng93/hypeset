@@ -32,6 +32,20 @@ function getUserBrandsFailure(payload) {
   };
 }
 
+function getBrandsByPopularitySuccess(payload) {
+  return {
+    type: actionTypes.GET_BRANDS_BY_POPULARITY_SUCCESS,
+    payload,
+  }
+}
+
+function getBrandsByPopularityFailure(payload) {
+  return {
+    type: actionTypes.GET_BRANDS_BY_POPULARITY_FAILURE,
+    payload,
+  }
+}
+
 function addBrandSuccess(payload) {
   return {
     type: actionTypes.ADD_BRAND_SUCCESS,
@@ -102,6 +116,29 @@ export function getUserBrands(payload) {
         return dispatch(getUserBrandsFailure(err));
       });
   };
+}
+
+export function getBrandsByPopularity(payload) {
+  return (dispatch) => {
+    const options = {
+      method: 'GET',
+      headers: createHeaders(payload.token),
+    };
+
+    fetch(`${process.env.API_URL}/api/analytics/brand/popularity/${payload.limit}`, options)
+      .then(response => response.json())
+      .then((json) => {
+        console.log('JSON', json)
+        if (!json.success) {
+          return dispatch(getBrandsByPopularityFailure(json));
+        }
+        return dispatch(getBrandsByPopularitySuccess(json));
+      })
+      .catch((err) => {
+        console.error(`Error getting brands by popularity: ${err}`);
+        return dispatch(getBrandsByPopularityFailure(err));
+      });
+  }
 }
 
 export function addBrand(payload) {

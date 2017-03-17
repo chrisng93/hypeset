@@ -1,0 +1,51 @@
+div.profile {
+  display: flex;
+  flex-direction: row;
+  margin: 40px 100px 0 100px;
+
+  div.profile-nav {
+    flex: 1;
+
+    div.title {
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 14px;
+    }
+
+    div.edit-user, div.edit-brands {
+      font-size: 20px;
+      font-weight: 400;
+      margin: 0 0 6px 8px;
+    }
+  }
+
+  div.content {
+    flex: 5;
+
+    div.user-info {
+      div {
+        display: flex;
+        width: 400px;
+        height: 30px;
+        font-size: 20px;
+        margin-bottom: 12px;
+
+        span.field {
+          align-self: flex-end;
+        }
+
+        span.value {
+          align-self: flex-start;
+        }
+      }
+
+      input {
+
+      }
+    }
+
+    button {
+
+    }
+  }
+}
