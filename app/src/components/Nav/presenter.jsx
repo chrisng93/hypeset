@@ -7,13 +7,17 @@ export default class Nav extends Component {
   }
 
   render() {
-    const { routeToNews, routeToSales, routeToProfile, currentLocation } = this.props;
+    const { routeToNews, routeToSales, routeToProfile, onLogout } = this.props;
     // TODO: bold div based on currentLocation
     return (
       <div className="nav">
-        <div className="nav-news" onClick={routeToNews}>News</div>
-        <div className="nav-sales" onClick={routeToSales}>Sales</div>
-        <div className="nav-profile" onClick={routeToProfile}>Profile</div>
+        <div className="title"><span>hypeset</span></div>
+        <div className="routes">
+          <div className="nav-news" onClick={routeToNews}>News</div>
+          <div className="nav-sales" onClick={routeToSales}>Sales</div>
+          <div className="nav-profile" onClick={routeToProfile}>Profile</div>
+          <div className="logout" onClick={onLogout}>Log out</div>
+        </div>
       </div>
     );
   }

@@ -8,7 +8,6 @@ import { retrieveNews } from './news/retrieveNews';
 export default function runScripts() {
   const CronJob = cron.CronJob;
   const job = new CronJob('* * 01 * * *', onStart, null, true, 'America/Los_Angeles');
-  console.log('Starting..');
   job.start();
 };
 

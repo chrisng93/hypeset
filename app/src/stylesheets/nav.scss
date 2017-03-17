@@ -1,0 +1,43 @@
+div.nav {
+  display: flex;
+  flex-direction: column;
+
+  div.title {
+    display: flex;
+    background-color: #000000;
+    padding: 10px 0 5px 0;
+
+    span {
+      font-size: 40px;
+      font-weight: 500;
+      letter-spacing: 6px;
+      color: #ffffff;
+      margin: 0 auto 0 auto;
+    }
+  }
+
+  div.routes {
+    display: flex;
+    flex-direction: row;
+    background-color: #000000;
+    height: 40px;
+    width: 100%;
+
+    div {
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      color: #ffffff;
+      margin: auto 0 auto 30px;
+    }
+
+    div.nav-news {
+      margin-left: 30px;
+    }
+
+    div.logout {
+      margin-left: auto;
+      margin-right: 30px;
+    }
+  }
+}

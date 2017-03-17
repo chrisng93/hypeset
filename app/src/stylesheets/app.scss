@@ -1,5 +1,6 @@
 @import './signin.scss';
 @import './signup.scss';
+@import './nav.scss';
 @import './news.scss';
 @import './sales.scss';
 @import './profile.scss';
@@ -8,6 +9,11 @@
 html *
 {
   font-family: 'Ubuntu', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
 }
 
 img.bg {
