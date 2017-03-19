@@ -1,0 +1,33 @@
+div.filter {
+  width: 100%;
+  height: 100%;
+  background-color: #eeeeee;
+  border: 1px solid #dcdcdc;
+  border-radius: 3px;
+  margin-left: 40px;
+  padding: 20px 0 0 20px;
+
+  div.header {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  div.title {
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 8px;
+  }
+
+  div.sales-brands {
+    margin-bottom: 16px;
+  }
+
+  div.checkbox {
+    margin-bottom: 4px;
+
+    span.info {
+      font-size: 16px;
+    }
+  }
+}
