@@ -49,23 +49,32 @@ export default class EditUser extends Component {
     return (
       <div className="edit-user">
         <div className="username">
-          Username: {user.username}
+          <span className="field">Username:</span>
+          <span className="value">{user.username}</span>
         </div>
         <div className="password">
-          Password:
-          <input type="password" name="password" value={password} placeholder="**********" onChange={e => this.handleInputChange(e, 'password')} />
+          <span className="field">Password:</span>
+          <span className="value">
+            <input type="password" name="password" value={password} placeholder="**********" onChange={e => this.handleInputChange(e, 'password')} />
+          </span>
         </div>
         <div className="email">
-          Email:
-          <input type="email" name="email" value={email} placeholder={user.email} onChange={e => this.handleInputChange(e, 'email')} />
+          <span className="field">Email:</span>
+          <span className="value">
+            <input type="email" name="email" value={email} placeholder={user.email} onChange={e => this.handleInputChange(e, 'email')} />
+          </span>
         </div>
         <div className="first-name">
-          First name:
-          <input type="text" name="first-name" value={firstName} placeholder={user.firstName} onChange={e => this.handleInputChange(e, 'firstName')} />
+          <span className="field">First name:</span>
+          <span className="value">
+            <input type="text" name="first-name" value={firstName} placeholder={user.firstName} onChange={e => this.handleInputChange(e, 'firstName')} />
+          </span>
         </div>
         <div className="last-name">
-          Last name:
-          <input type="text" name="last-name" value={lastName} placeholder={user.lastName} onChange={e => this.handleInputChange(e, 'lastName')} />
+          <span className="field">Last name:</span>
+          <span className="value">
+            <input type="text" name="last-name" value={lastName} placeholder={user.lastName} onChange={e => this.handleInputChange(e, 'lastName')} />
+          </span>
         </div>
         <input type="button" value="Submit changes" onClick={this.submitForm} />
         <input type="button" value="Cancel" onClick={routeToProfile} />

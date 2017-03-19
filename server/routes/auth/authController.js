@@ -3,8 +3,7 @@
  */
 import jwt from 'jsonwebtoken';
 import m from '../../models';
-import { retrieveNews } from '../../scripts/news/retrieveNews';
-import { retrieveBrands } from '../../scripts/brands/retrieveBrands';
+import { parseRedditFmf } from '../../scripts/sales/redditFmfScript';
 
 async function authenticate(req, res) {
   const { username, password } = req.body;
@@ -29,8 +28,7 @@ async function authenticate(req, res) {
 }
 
 async function test(req, res) {
-  // await retrieveBrands();
-  retrieveNews();
+  await parseRedditFmf();
   res.send();
 }
 

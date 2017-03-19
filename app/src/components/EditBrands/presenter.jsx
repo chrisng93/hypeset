@@ -15,7 +15,7 @@ export default class EditBrands extends Component {
       <div className="brands">
         <div className="dropdown">
           Add brands:
-          {availableBrands.map((brand, key) => {
+          {availableBrands.sort((a, b) => a > b).map((brand, key) => {
             return (
               <div key={key}>
                 {brand.name}
@@ -30,7 +30,7 @@ export default class EditBrands extends Component {
         </div>
         <div className="following">
           Following:
-          {userBrands.map((brand, key) => {
+          {userBrands.sort((a, b) => a > b).map((brand, key) => {
             return (
               <div key={key}>
                 {brand.name}

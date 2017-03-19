@@ -8,6 +8,7 @@ import SignUp from './components/SignUp';
 import News from './components/News';
 import Sales from './components/Sales';
 import Profile from './components/Profile';
+import UserInfo from './components/UserInfo';
 import EditUser from './components/EditUser';
 import EditBrands from './components/EditBrands';
 
@@ -21,7 +22,7 @@ const routes = (
       <Route path="/news" component={News} />
       <Route path="/sales" component={Sales} />
       <Route path="/profile" component={Profile}>
-        <IndexRoute component={EditUser} />
+        <IndexRoute component={UserInfo} />
         <Route path="/profile/edit" component={EditUser} />
         <Route path="/profile/brands" component={EditBrands} />
       </Route>

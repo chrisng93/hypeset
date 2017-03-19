@@ -12,5 +12,6 @@ meRouter.put('/brand', (req, res) => meBrandController.updateOwnBrands(req, res)
 meRouter.delete('/brand', (req, res) => meBrandController.deleteOwnBrands(req, res));
 
 meRouter.get('/news', (req, res) => meInfoController.getOwnNews(req, res));
+meRouter.get('/sales', (req, res) => meInfoController.getOwnSales(req, res));
 
 module.exports = meRouter;

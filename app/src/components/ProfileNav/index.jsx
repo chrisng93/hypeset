@@ -9,6 +9,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    routeToUserInfo: () => dispatch(push('/profile')),
     routeToEditUser: () => dispatch(push('/profile/edit')),
     routeToEditBrands: () => dispatch(push('/profile/brands')),
   };

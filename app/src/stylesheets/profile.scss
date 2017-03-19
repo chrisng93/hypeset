@@ -12,7 +12,7 @@ div.profile {
       margin-bottom: 14px;
     }
 
-    div.edit-user, div.edit-brands {
+    div.edit-user-nav, div.edit-brands-nav {
       font-size: 20px;
       font-weight: 400;
       margin: 0 0 6px 8px;
@@ -31,21 +31,40 @@ div.profile {
         margin-bottom: 12px;
 
         span.field {
-          align-self: flex-end;
+          width: 150px;
+          margin-right: 10px;
+          text-align: right;
         }
 
         span.value {
-          align-self: flex-start;
+          width: 150px;
+          margin-right: auto;
         }
       }
 
       input {
-
+        height: 30px;
+        width: 150px;
+        background-color: #eeeeee;
+        border: 1px solid #dcdcdc;
+        border-radius: 3px;
+        font-size: 16px;
+        text-align: center;
+        margin-left: 75px;
       }
     }
 
-    button {
+    div.edit-user {
 
+    }
+
+    div.brands {
+      display: flex;
+      flex-direction: row;
+
+      div {
+        flex: 1;
+      }
     }
   }
 }

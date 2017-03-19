@@ -6,7 +6,6 @@ import { tokenSelector } from '../../selectors/userSelectors';
 import EditBrands from './presenter';
 
 function mapStateToProps(state) {
-  console.log(brandsByPopularitySelector(state))
   return {
     availableBrands: availableBrandsSelector(state),
     userBrands: userBrandsSelector(state),

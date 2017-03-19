@@ -3,6 +3,8 @@
  */
 import moment from 'moment';
 
+const condense = string => string.replace(/[^a-z0-9]/gi,'');
+
 const findLps = (string) => {
   const result = [];
   result.push(0);
@@ -54,9 +56,9 @@ const foundSubstring = (string, target) => {
 };
 
 // TODO: find a more efficient way to do this?
-const findBrands = (title, availableBrands) => {
+export const findBrands = (title, availableBrands) => {
   title = title.toLowerCase();
-  const brands = availableBrands.filter(brand => foundSubstring(title, brand.toLowerCase()));
+  const brands = availableBrands.filter(brand => foundSubstring(condense(title), condense(brand.toLowerCase())));
   return brands.length ? brands : null;
 };
 
@@ -73,7 +75,7 @@ const findClass = (node, cls, result = []) => {
   return result;
 };
 
-const findTag = (node, tag, result = []) => {
+export const findTag = (node, tag, result = []) => {
   if (!node || !node.children) {
     return result;
   }
@@ -87,10 +89,8 @@ const findTag = (node, tag, result = []) => {
   return result;
 };
 
-const formatDate = (date) => {
+export const formatDate = (date) => {
   date[0] = moment().month(date[0]).format('MM');
   date[1] = date[1].split('').slice(0, date[1].length - 1).join('');
   return date.join('-');
 };
-
-module.exports = { findBrands, findClass, findTag, formatDate };

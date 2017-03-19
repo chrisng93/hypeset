@@ -1,29 +1,19 @@
-import React, { PropTypes as T } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { push } from 'react-router-redux';
+import { userSelector } from '../../selectors/userSelectors';
+import UserInfo from './presenter';
 
-export default function UserInfo({ user, routeToEditUser }) {
-  return (
-    <div className="user-info">
-      <div className="username">
-        <span className="field">Username: </span><span className="value">{user.username}</span>
-      </div>
-      <div className="password">
-        <span className="field">Password: </span><span className="value">**********</span>
-      </div>
-      <div className="email">
-        <span className="field">Email: </span><span className="value">{user.email}</span>
-      </div>
-      <div className="first-name">
-        <span className="field">First name: </span><span className="value">{user.firstName}</span>
-      </div>
-      <div className="last-name">
-        <span className="field">Last name: </span><span className="value">{user.lastName}</span>
-      </div>
-      <input type="button" value="Edit info" onClick={routeToEditUser} />
-    </div>
-  );
+function mapStateToProps(state) {
+  return {
+    user: userSelector(state),
+  };
 }
 
-UserInfo.propTypes = {
-  user: T.object,
-  routeToEditUser: T.func,
-};
+function mapDispatchToProps(dispatch) {
+  return {
+    routeToEditUser: () => dispatch(push('/profile/edit')),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserInfo);
