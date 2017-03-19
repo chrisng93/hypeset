@@ -15,8 +15,10 @@ export default function runScripts() {
 async function onStart() {
   console.log('Started web scraping scripts..');
   await retrieveBrands();
-  await retrieveSales();
-  await retrieveNews();
+  const brandModels = await m.Brand.findAll();
+  const availableBrands = brandModels.map(model => model.name);
+  await retrieveSales(availableBrands);
+  await retrieveNews(availableBrands);
   console.log('Finished web scraping scripts..')
 }
 

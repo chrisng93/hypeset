@@ -7,18 +7,13 @@ import { parseHypebeastNews } from './hypebeastNewsScript';
 import { parseGrailedArticles } from './grailedNewsScript';
 import { parseGrailedSpecificArticles } from './grailedSpecificArticlesScript';
 
-export async function retrieveNews() {
+export async function retrieveNews(availableBrands) {
   const latestNews = await m.Info.find({ where: { type: 'News' }, order: 'date DESC' });
   let latestNewsDate = null;
-  if (!latestNews) {
-    latestNewsDate = moment().subtract(30, 'days');
-  } else {
-    latestNewsDate = latestNews.date;
-  }
+  latestNews ? latestNewsDate = latestNews.date : latestNewsDate = moment().subtract(30, 'days');
   const grailed = await m.Site.find({ where: { name: 'Grailed' } });
   const hypebeast = await m.Site.find({ where: { name: 'Hypebeast' } });
-  const brandModels = await m.Brand.findAll();
-  const availableBrands = brandModels.map(model => model.name);
+
   const initialGrailedState = {
     weekendReading: [],
     grailFits: [],
@@ -32,6 +27,7 @@ export async function retrieveNews() {
   const grailedGrailFits = await parseGrailedSpecificArticles('Grail Fits', grailedArticles.grailFits, availableBrands);
   const grailedStaffPicks = await parseGrailedSpecificArticles('Staff Picks', grailedArticles.staffPicks, availableBrands);
   const allNews = hypebeastNews.concat(grailedArticles.news).concat(grailedWeekendReading).concat(grailedGrailFits).concat(grailedStaffPicks);
+  console.log('Finished parsing Hypebeast and Grailed news');
 
   for (let i = 0; i < allNews.length; i++) {
     const curr = allNews[i];

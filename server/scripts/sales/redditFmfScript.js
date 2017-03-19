@@ -28,11 +28,11 @@ const findLink = (url) => {
   });
 };
 
-export async function retrieveRedditFmfSales(r, sales = [], latestSaleDate, availableBrands, redditId) {
+export async function retrieveRedditFmfSales(r, sales = [], latestSaleDate, availableBrands, redditId, offset = null) {
   return new Promise((resolve) => {
     let continueSearching = true;
     r.getSubreddit('frugalmalefashion')
-      .getNew({ limit: 100 })
+      .getNew({ limit: 100, after: offset })
       .forEach((post) => {
         const sale = {
           title: post.title,
@@ -40,14 +40,16 @@ export async function retrieveRedditFmfSales(r, sales = [], latestSaleDate, avai
           blurb: post.selftext,
           permalink: post.permalink,
           date: moment.unix(post.created_utc).format(),
-          thumbnail: post.thumbnail,
           SiteId: redditId,
         };
-        if (moment(latestSaleDate).diff(sale.date, 'seconds')) {
+        if (moment(latestSaleDate).diff(moment(sale.date), 'seconds') > 0) {
           continueSearching = false;
           return;
         }
 
+        if (post.thumbnail.slice(0, 4) === 'http') {
+          sale.imgUrl = post.thumbnail;
+        }
         if (sale.url === `${process.env.REDDIT_URL}${sale.permalink}`) {
           sale.url = findLink(sale.url);
         }
@@ -59,10 +61,12 @@ export async function retrieveRedditFmfSales(r, sales = [], latestSaleDate, avai
         const brandsViaTitle = findBrands(sale.title, availableBrands) || [];
         sale.brands = eliminateDuplicates(brandsViaLink.concat(brandsViaTitle));
         sales.push(sale);
+
+        offset = post.name;
       })
       .then(() => {
         if (continueSearching) {
-          resolve(retrieveRedditFmfSales(r, sales, latestSaleDate, availableBrands, redditId));
+          resolve(retrieveRedditFmfSales(r, sales, latestSaleDate, availableBrands, redditId, offset));
         }
         resolve(sales);
       });

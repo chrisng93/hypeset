@@ -29,11 +29,11 @@ export default class News extends Component {
 
   render() {
     const { filteredOutBrands, filteredOutSites } = this.state;
-    const { newsBrands, newsSites } = this.props;
+    const { news, newsBrands, newsSites } = this.props;
     return (
       <div className="news">
         <div className="news-container">
-        {this.props.news.filter((news) => {
+        {news.filter((news) => {
           for (let i = 0; i < news.Brands.length; i++) {
             if (filteredOutBrands.indexOf(news.Brands[i].name) >= 0) {
               return false;
@@ -47,11 +47,11 @@ export default class News extends Component {
             <div className="header">Filters</div>
             <div className="news-brands">
               <div className="title">Brands</div>
-              {newsBrands.map((brand, key) => <Checkbox info={brand} clickHandler={(brandName, isFilteredOut) => this.changeFilteredOutState(brandName, isFilteredOut, 'filteredOutBrands')} />)}
+              {newsBrands.map((brand, key) => <Checkbox key={key} info={brand} clickHandler={(brandName, isFilteredOut) => this.changeFilteredOutState(brandName, isFilteredOut, 'filteredOutBrands')} />)}
             </div>
             <div className="news-sites">
               <div className="title">Sites</div>
-              {newsSites.map((site, key) => <Checkbox info={site} clickHandler={(brandName, isFilteredOut) => this.changeFilteredOutState(site, isFilteredOut, 'filteredOutSites')} />)}
+              {newsSites.map((site, key) => <Checkbox key={key} info={site} clickHandler={(brandName, isFilteredOut) => this.changeFilteredOutState(site, isFilteredOut, 'filteredOutSites')} />)}
             </div>
           </div>
         </div>

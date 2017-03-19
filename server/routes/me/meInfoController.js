@@ -24,7 +24,8 @@ async function getOwnSales(req, res) {
     let sales = [];
     const user = await m.User.find({ where: { id: req.user.id }, include: [{ model: m.Brand }] });
     for (let i = 0; i < user.Brands.length; i++) {
-      const relevantArticles = await m.Info.findAll({ where: { type: 'Sale' }, include: [{ model: m.Brand, where: { id: user.Brands[i].id } }, { model: m.Site }] })
+      // const relevantArticles = await m.Info.findAll({ where: { type: 'Sale' }, include: [{ model: m.Brand, where: { id: user.Brands[i].id } }, { model: m.Site }] })
+      const relevantArticles = await m.Info.findAll({ where: { type: 'Sale' }, include: [{ model: m.Brand }, { model: m.Site }] })
       sales = sales.concat(relevantArticles);
     }
     res.status(200).send({ success: true, sales });

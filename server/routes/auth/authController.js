@@ -30,14 +30,20 @@ async function authenticate(req, res) {
 }
 
 async function test(req, res) {
-  // await retrieveBrands();
-  // await retrieveNews();
-  await retrieveSales();
-  // const sales = await m.Info.findAll({ where: { type: 'Sale' } });
-  // for (let i = 0; i < sales.length; i++) {
-  //   sales[i].destroy();
-  // }
-  res.send();
+  try {
+    // await retrieveBrands();
+    // await retrieveNews();
+    const brandModels = await m.Brand.findAll();
+    const availableBrands = brandModels.map(model => model.name);
+    await retrieveSales(availableBrands);
+    // const sales = await m.Info.findAll({ where: { type: 'Sale' } });
+    // for (let i = 0; i < sales.length; i++) {
+    //   sales[i].destroy();
+    // }
+  } catch(err) {
+    console.log(err)
+  }
+  res.send()
 }
 
 module.exports = { authenticate, test };
