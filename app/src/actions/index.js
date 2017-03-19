@@ -3,6 +3,7 @@ import signUp from './signUpActions';
 import editUser from './editUserActions';
 import { getAllBrands, getUserBrands, getBrandsByPopularity, addBrand, removeBrand } from './brandActions';
 import getNews from './newsActions';
+import getSales from './salesActions';
 
 module.exports = {
   auth,
@@ -14,4 +15,5 @@ module.exports = {
   addBrand,
   removeBrand,
   getNews,
+  getSales,
 };

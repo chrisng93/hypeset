@@ -33,7 +33,6 @@ export async function retrieveNews() {
   const grailedStaffPicks = await parseGrailedSpecificArticles('Staff Picks', grailedArticles.staffPicks, availableBrands);
   const allNews = hypebeastNews.concat(grailedArticles.news).concat(grailedWeekendReading).concat(grailedGrailFits).concat(grailedStaffPicks);
 
-  console.log(hypebeastNews)
   for (let i = 0; i < allNews.length; i++) {
     const curr = allNews[i];
     let news = await m.Info.find({ where: { url: curr.url } });

@@ -5,8 +5,6 @@
 import request from 'request';
 import cheerio from 'cheerio';
 import moment from 'moment';
-import snoowrap from 'snoowrap';
-import m from '../../models';
 import { findBrands } from '../../utils/scriptHelpers';
 
 const eliminateDuplicates = (array) => {
@@ -30,46 +28,43 @@ const findLink = (url) => {
   });
 };
 
-async function handlePost(post, availableBrands) {
-  if (post.url === `${process.env.REDDIT_URL}${post.permalink}`) {
-    post.url = findLink(post.url);
-  }
-  if (!post.url) {
-    return;
-  }
+export async function retrieveRedditFmfSales(r, sales = [], latestSaleDate, availableBrands, redditId) {
+  return new Promise((resolve) => {
+    let continueSearching = true;
+    r.getSubreddit('frugalmalefashion')
+      .getNew({ limit: 100 })
+      .forEach((post) => {
+        const sale = {
+          title: post.title,
+          url: post.url,
+          blurb: post.selftext,
+          permalink: post.permalink,
+          date: moment.unix(post.created_utc).format(),
+          thumbnail: post.thumbnail,
+          SiteId: redditId,
+        };
+        if (moment(latestSaleDate).diff(sale.date, 'seconds')) {
+          continueSearching = false;
+          return;
+        }
 
-  const brandsViaLink = findBrands(post.url, availableBrands);
-  const brandsViaTitle = findBrands(post.title, availableBrands);
-  let brands = eliminateDuplicates(brandsViaLink.concat(brandsViaTitle));
-  if (brands) {
-    await m.Info.updateOrCreate(post, 'Sale');
-  }
-}
+        if (sale.url === `${process.env.REDDIT_URL}${sale.permalink}`) {
+          sale.url = findLink(sale.url);
+        }
+        if (!sale.url) {
+          return null;
+        }
 
-export async function parseRedditFmf() {
-  const r = new snoowrap({
-    userAgent: 'chris',
-    clientId: process.env.REDDIT_CLIENT_ID,
-    clientSecret: process.env.REDDIT_CLIENT_SECRET,
-    refreshToken: process.env.REDDIT_REFRESH_TOKEN,
+        const brandsViaLink = findBrands(sale.url, availableBrands) || [];
+        const brandsViaTitle = findBrands(sale.title, availableBrands) || [];
+        sale.brands = eliminateDuplicates(brandsViaLink.concat(brandsViaTitle));
+        sales.push(sale);
+      })
+      .then(() => {
+        if (continueSearching) {
+          resolve(retrieveRedditFmfSales(r, sales, latestSaleDate, availableBrands, redditId));
+        }
+        resolve(sales);
+      });
   });
-  let availableBrands = await m.Brand.findAll();
-  availableBrands = availableBrands.map(brand => brand.name);
-  const reddit = await m.Site.find({ where: { name: 'Reddit' } });
-
-  r.getSubreddit('frugalmalefashion')
-    .getNew({ limit: 100 })
-    .forEach((post) => {
-      // TODO: add clause to skip if date is past latest grab date
-      const updatedPost = {
-        title: post.title,
-        url: post.url,
-        blurb: post.selftext,
-        permalink: post.permalink,
-        date: moment.unix(post.created_utc).format(),
-        thumbnail: post.thumbnail,
-        SiteId: reddit.id,
-      };
-      handlePost(updatedPost, availableBrands);
-    });
 }

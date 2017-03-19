@@ -4,7 +4,7 @@
 import cron from 'cron';
 import { retrieveBrands } from './brands/retrieveBrands';
 import { retrieveNews } from './news/retrieveNews';
-import { parseRedditFmf } from './sales/redditFmfScript';
+import { retrieveSales } from './sales/retrieveSales';
 
 export default function runScripts() {
   const CronJob = cron.CronJob;
@@ -14,8 +14,8 @@ export default function runScripts() {
 
 async function onStart() {
   console.log('Started web scraping scripts..');
-  // await parseRedditFmf();
   await retrieveBrands();
+  await retrieveSales();
   await retrieveNews();
   console.log('Finished web scraping scripts..')
 }

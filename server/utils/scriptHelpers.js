@@ -62,7 +62,7 @@ export const findBrands = (title, availableBrands) => {
   return brands.length ? brands : null;
 };
 
-const findClass = (node, cls, result = []) => {
+export const findClass = (node, cls, result = []) => {
   if (!node || !node.children) {
     return result;
   }
@@ -79,7 +79,6 @@ export const findTag = (node, tag, result = []) => {
   if (!node || !node.children) {
     return result;
   }
-  // console.log(node.name)
   if (node.name && node.name === tag) {
     result.push(node);
   }

@@ -3,7 +3,9 @@
  */
 import jwt from 'jsonwebtoken';
 import m from '../../models';
-import { parseRedditFmf } from '../../scripts/sales/redditFmfScript';
+import { retrieveSales } from '../../scripts/sales/retrieveSales';
+import { retrieveBrands } from '../../scripts/brands/retrieveBrands';
+import { retrieveNews } from '../../scripts/news/retrieveNews';
 
 async function authenticate(req, res) {
   const { username, password } = req.body;
@@ -28,7 +30,13 @@ async function authenticate(req, res) {
 }
 
 async function test(req, res) {
-  await parseRedditFmf();
+  // await retrieveBrands();
+  // await retrieveNews();
+  await retrieveSales();
+  // const sales = await m.Info.findAll({ where: { type: 'Sale' } });
+  // for (let i = 0; i < sales.length; i++) {
+  //   sales[i].destroy();
+  // }
   res.send();
 }
 
