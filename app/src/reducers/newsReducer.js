@@ -3,6 +3,7 @@
  */
 import { fromJS, List, Map } from 'immutable';
 import * as actionTypes from '../constants/actionTypes';
+import { formatDates } from '../utils/dateUtils';
 
 const initialState = fromJS({
   news: new List(),
@@ -17,7 +18,7 @@ export default function news(state = initialState, action) {
     case actionTypes.GET_ALL_NEWS_FETCHING:
       return state.set('isFetchingAllNews', true);
     case actionTypes.GET_ALL_NEWS_SUCCESS:
-      return state.set('news', state.get('news').concat(new List(payload.news)))
+      return state.set('news', state.get('news').concat(new List(formatDates(payload.news))))
         .set('isFetchingAllNews', false)
         .set('error', new Map());
     case actionTypes.GET_ALL_NEWS_FAILURE:
@@ -28,7 +29,7 @@ export default function news(state = initialState, action) {
     case actionTypes.GET_OWN_NEWS_FETCHING:
       return state.set('isFetchingOwnNews', true);
     case actionTypes.GET_OWN_NEWS_SUCCESS:
-      return state.set('news', state.get('news').concat(new List(payload.news)))
+      return state.set('news', state.get('news').concat(new List(formatDates(payload.news))))
         .set('isFetchingOwnNews', false)
         .set('error', new Map());
     case actionTypes.GET_OWN_NEWS_FAILURE:

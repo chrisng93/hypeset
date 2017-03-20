@@ -19,8 +19,9 @@ export async function retrieveSales(availableBrands) {
     refreshToken: process.env.REDDIT_REFRESH_TOKEN,
   });
 
+  console.log('Starting to retrieve sales..');
   const sales = await retrieveRedditFmfSales(r, [], latestSaleDate, availableBrands, reddit.id);
-  console.log('Finished finding Reddit sales');
+  console.log('Finished retrieving sales..');
 
   for (let i = 0; i < sales.length; i++) {
     if (sales[i]) {

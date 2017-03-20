@@ -3,6 +3,7 @@
  */
 import { createSelector } from 'reselect';
 import { toJS } from 'immutable';
+import { isAuthenticatedSelector } from './userSelectors';
 import { userBrandsSelector } from './brandSelectors';
 
 const newsStateSelector = state => state.news.toJS();
@@ -10,8 +11,9 @@ const newsStateSelector = state => state.news.toJS();
 export const newsSelector = createSelector(
   newsStateSelector,
   userBrandsSelector,
-  (newsState, userBrands) => {
-    if (userBrands.length) {
+  isAuthenticatedSelector,
+  (newsState, userBrands, isAuthenticated) => {
+    if (isAuthenticated) {
       const userBrandNames = userBrands.map(brand => brand.name);
       return newsState.news.filter((news) => {
         for (let i = 0; i < news.Brands.length; i++) {

@@ -37,10 +37,10 @@ async function logout(req, res) {
 async function test(req, res) {
   try {
     await retrieveBrands();
-    await retrieveNews();
-    await retrieveSales();
-    // const brandModels = await m.Brand.findAll();
-    // const availableBrands = brandModels.map(model => model.name);
+    const brandModels = await m.Brand.findAll();
+    const availableBrands = brandModels.map(model => model.name);
+    await retrieveNews(availableBrands);
+    await retrieveSales(availableBrands);
     // await retrieveSales(availableBrands);
     // const sales = await m.Info.findAll({ where: { type: 'Sale' } });
     // for (let i = 0; i < sales.length; i++) {

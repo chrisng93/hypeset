@@ -16,7 +16,11 @@ async function createBrand(req, res) {
 
 async function retrieveAllBrands(req, res) {
   try {
-    const brands = await m.Brand.findAll({ attributes: ['name'], order: 'name DESC' });
+    const query = {
+      attributes: ['name', 'condensedName'],
+      order: [[m.sequelize.fn('lower', m.sequelize.col('name')), 'ASC']],
+    };
+    const brands = await m.Brand.findAll(query);
     console.log('Retrieved all brands');
     res.status(200).send({ success: true, brands });
   } catch(err) {

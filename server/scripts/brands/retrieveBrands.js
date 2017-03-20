@@ -6,6 +6,7 @@ import { parseHbxDesigners } from './hbxDesignersScript';
 import { parseGrailedDesigners } from './grailedDesignersScript';
 
 export async function retrieveBrands() {
+  console.log('Started retrieving brands..');
   const hbxBrands = await parseHbxDesigners();
   const grailedBrands = await parseGrailedDesigners();
   const allBrands = hbxBrands.concat(grailedBrands.brandNames);

@@ -3,7 +3,7 @@
  */
 import moment from 'moment';
 
-const condense = string => string.replace(/[^a-z0-9]/gi,'');
+export const condense = string => string.replace(/[^a-z0-9+]/gi, '');
 
 const findLps = (string) => {
   const result = [];

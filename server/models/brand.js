@@ -10,11 +10,11 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isUnique: isUnique('Brand', 'name'),
       },
-      condensedName: {
-        type: DataTypes.STRING,
-        unique: true,
-        allowNull: false,
-      },
+    },
+    condensedName: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
     },
   }, {
     classMethods: {
@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         return this.find({ attributes: { include: ['name'], exclude: ['createdAt', 'updatedAt'] }, where: { name: { $iLike: name } } });
       },
       checkOrCreate: function(name) {
-        const condensedName = condense(name);
+        const condensedName = condense(name).toLowerCase();
         return this.find({ attributes: { include: ['name'], exclude: ['createdAt', 'updatedAt'] }, where: { condensedName: { $iLike: condensedName } } })
           .then((found) => {
             if (found) {

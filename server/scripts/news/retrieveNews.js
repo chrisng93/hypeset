@@ -21,13 +21,14 @@ export async function retrieveNews(availableBrands) {
     news: [],
   };
 
+  console.log('Started to retrieve news..');
   const hypebeastNews = await parseHypebeastNews([], availableBrands, 1, latestNewsDate, hypebeast.id);
   const grailedArticles = await parseGrailedArticles(initialGrailedState, availableBrands, 1, latestNewsDate, grailed.id);
   const grailedWeekendReading = await parseGrailedSpecificArticles('Weekend Reading', grailedArticles.weekendReading, availableBrands);
   const grailedGrailFits = await parseGrailedSpecificArticles('Grail Fits', grailedArticles.grailFits, availableBrands);
   const grailedStaffPicks = await parseGrailedSpecificArticles('Staff Picks', grailedArticles.staffPicks, availableBrands);
   const allNews = hypebeastNews.concat(grailedArticles.news).concat(grailedWeekendReading).concat(grailedGrailFits).concat(grailedStaffPicks);
-  console.log('Finished parsing Hypebeast and Grailed news');
+  console.log('Finished retrieving news..');
 
   for (let i = 0; i < allNews.length; i++) {
     const curr = allNews[i];

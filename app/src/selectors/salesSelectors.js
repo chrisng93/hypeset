@@ -3,6 +3,7 @@
  */
 import { createSelector } from 'reselect';
 import { toJS } from 'immutable';
+import { isAuthenticatedSelector } from './userSelectors';
 import { userBrandsSelector } from './brandSelectors';
 
 const salesStateSelector = state => state.sales.toJS();
@@ -10,8 +11,9 @@ const salesStateSelector = state => state.sales.toJS();
 export const salesSelector = createSelector(
   salesStateSelector,
   userBrandsSelector,
-  (salesState, userBrands) => {
-    if (userBrands.length) {
+  isAuthenticatedSelector,
+  (salesState, userBrands, isAuthenticated) => {
+    if (isAuthenticated) {
       const userBrandNames = userBrands.map(brand => brand.name);
       return salesState.sales.filter((sales) => {
         for (let i = 0; i < sales.Brands.length; i++) {
