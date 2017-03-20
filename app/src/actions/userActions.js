@@ -4,6 +4,8 @@
 import { push } from 'react-router-redux';
 import * as actionTypes from '../constants/actionTypes.js';
 import { createHeaders } from '../utils/requestUtils';
+import { resetNews } from './newsActions';
+import { resetSales } from './salesActions';
 
 function authFetching() {
   return {
@@ -144,6 +146,8 @@ export function logout(payload) {
     return fetch(`${process.env.API_URL}/auth/logout`, options)
       .then(response => response.json())
       .then((json) => {
+        dispatch(resetNews());
+        dispatch(resetSales());
         dispatch(push('/signin'));
         if (!json.success) {
           return dispatch(logoutFailure(json));
@@ -152,6 +156,8 @@ export function logout(payload) {
       })
       .catch((err) => {
         console.error(`Error signing up user: ${err}`);
+        dispatch(resetNews());
+        dispatch(resetSales());
         dispatch(push('/signin'));
         return dispatch(logoutFailure(err));
       });

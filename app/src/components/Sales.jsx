@@ -10,6 +10,7 @@ const propTypes = {
   salesSites: T.array.isRequired,
   isFetchingAllSales: T.bool.isRequired,
   isFetchingOwnSales: T.bool.isRequired,
+  getAllSales: T.func.isRequired,
   getOwnSales: T.func.isRequired,
 };
 

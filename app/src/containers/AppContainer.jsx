@@ -1,7 +1,7 @@
 /**
  * Created by chrisng on 3/20/17.
  */
-import React, { PropTypes as T } from 'react';
+import React, { Component, PropTypes as T } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux';
@@ -28,25 +28,33 @@ const propTypes = {
   routeToSignIn: T.func.isRequired,
 };
 
-function AppContainer(props) {
-  const { children, isAuthenticated, token, pathname, getAllBrands, getAllNews, getAllSales,
-    getUserBrands, getOwnNews, getOwnSales, onLogout, routeToNews, routeToSales, routeToProfile, routeToSignIn } = props;
-  const navProps = { isAuthenticated, token, pathname, onLogout, routeToNews, routeToSales, routeToProfile, routeToSignIn };
-  if (isAuthenticated) {
-    getUserBrands({ token });
-    getOwnNews({ token, offset: 0 });
-    getOwnSales({ token, offset: 0 });
-  } else {
-    getAllNews({ offset: 0 });
-    getAllSales({ offset: 0 });
+class AppContainer extends Component {
+  componentWillReceiveProps(nextProps) {
+    const { getAllBrands, getAllNews, getAllSales, getUserBrands, getOwnNews, getOwnSales } = this.props;
+    if (nextProps.isAuthenticated === this.props.isAuthenticated) {
+      return;
+    }
+    if (nextProps.isAuthenticated) {
+      getUserBrands({ token: nextProps.token });
+      getOwnNews({ token: nextProps.token, offset: 0 });
+      getOwnSales({ token: nextProps.token, offset: 0 });
+    } else {
+      getAllNews({ offset: 0 });
+      getAllSales({ offset: 0 });
+    }
+    getAllBrands();
   }
-  getAllBrands();
-  return (
-    <div id="app">
-      <Nav {...navProps} />
-      {children}
-    </div>
-  );
+
+  render() {
+    const { children, isAuthenticated, token, pathname, onLogout, routeToNews, routeToSales, routeToProfile, routeToSignIn } = this.props;
+    const navProps = { isAuthenticated, token, pathname, onLogout, routeToNews, routeToSales, routeToProfile, routeToSignIn };
+    return(
+      <div id="app">
+        <Nav {...navProps} />
+        {children}
+      </div>
+    );
+  }
 }
 
 function mapStateToProps(state) {

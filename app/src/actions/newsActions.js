@@ -44,6 +44,12 @@ function getOwnNewsFailure(payload) {
   };
 }
 
+export function resetNews() {
+  return {
+    type: actionTypes.RESET_NEWS,
+  }
+}
+
 export function getAllNews(payload) {
   return (dispatch) => {
     dispatch(getAllNewsFetching());

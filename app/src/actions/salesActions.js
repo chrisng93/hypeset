@@ -44,6 +44,12 @@ function getOwnSalesFailure(payload) {
   }
 }
 
+export function resetSales() {
+  return {
+    type: actionTypes.RESET_SALES,
+  }
+}
+
 export function getAllSales(payload) {
   return (dispatch) => {
     dispatch(getAllSalesFetching());

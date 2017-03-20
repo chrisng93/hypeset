@@ -14,6 +14,7 @@ const propTypes = {
   salesSites: T.array.isRequired,
   isFetchingAllSales: T.bool.isRequired,
   isFetchingOwnSales: T.bool.isRequired,
+  getAllSales: T.func.isRequired,
   getOwnSales: T.func.isRequired,
 };
 
@@ -37,6 +38,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    getAllSales: bindActionCreators(actions.getAllSales, dispatch),
     getOwnSales: bindActionCreators(actions.getOwnSales, dispatch),
   };
 }

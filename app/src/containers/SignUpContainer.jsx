@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import { push } from 'react-router-redux';
 import { isAuthenticatedSelector } from '../selectors/userSelectors';
 import * as actions from '../actions';
+import { resetNews } from '../actions/newsActions';
+import { resetSales } from '../actions/salesActions';
 import SignUp from '../components/SignUp';
 
 const propTypes = {
@@ -11,6 +13,8 @@ const propTypes = {
   onSignUp: T.func.isRequired,
   routeToNews: T.func.isRequired,
   routeToSignIn: T.func.isRequired,
+  resetNews: T.func.isRequired,
+  resetSales: T.func.isRequired,
 };
 
 function SignUpContainer(props) {
@@ -30,6 +34,8 @@ function mapDispatchToProps(dispatch) {
     onSignUp: bindActionCreators(actions.signUp, dispatch),
     routeToNews: () => dispatch(push('/news')),
     routeToSignIn: () => dispatch(push('/signin')),
+    resetNews: () => dispatch(resetNews()),
+    resetSales: () => dispatch(resetSales()),
   };
 }
 

@@ -36,6 +36,9 @@ export default function news(state = initialState, action) {
         .setIn(['error', 'status'], true)
         .setIn(['error', 'message'], payload.message);
 
+    case actionTypes.RESET_NEWS:
+      return state.set('news', new List());
+
     default:
       return state;
   }

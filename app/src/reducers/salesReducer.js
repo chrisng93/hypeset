@@ -36,6 +36,9 @@ export default function sales(state = initialState, action) {
         .setIn(['error', 'status'], true)
         .setIn(['error', 'message'], payload.message);
 
+    case actionTypes.RESET_SALES:
+      return state.set('sales', new List());
+
     default:
       return state;
   }

@@ -5,6 +5,8 @@ const propTypes = {
   onSignUp: T.func.isRequired,
   routeToNews: T.func.isRequired,
   routeToSignIn: T.func.isRequired,
+  resetNews: T.func.isRequired,
+  resetSales: T.func.isRequired,
 };
 
 export default class SignUp extends Component {
@@ -19,8 +21,10 @@ export default class SignUp extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { isAuthenticated, routeToNews } = nextProps;
+    const { isAuthenticated, routeToNews, resetNews, resetSales } = nextProps;
     if (isAuthenticated) {
+      resetNews();
+      resetSales();
       routeToNews();
     }
   }

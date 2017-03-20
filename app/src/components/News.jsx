@@ -10,6 +10,7 @@ const propTypes = {
   newsSites: T.array.isRequired,
   isFetchingAllNews: T.bool.isRequired,
   isFetchingOwnNews: T.bool.isRequired,
+  getAllNews: T.func.isRequired,
   getOwnNews: T.func.isRequired,
 };
 

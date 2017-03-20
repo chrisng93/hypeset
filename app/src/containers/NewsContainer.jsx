@@ -14,6 +14,7 @@ const propTypes = {
   newsSites: T.array.isRequired,
   isFetchingAllNews: T.bool.isRequired,
   isFetchingOwnNews: T.bool.isRequired,
+  getAllNews: T.func.isRequired,
   getOwnNews: T.func.isRequired,
 };
 
@@ -37,6 +38,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    getAllNews: bindActionCreators(actions.getAllNews, dispatch),
     getOwnNews: bindActionCreators(actions.getOwnNews, dispatch),
   };
 }
