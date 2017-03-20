@@ -7,10 +7,11 @@ async function getInfo(userId, type, offset, limit) {
   const user = await m.User.find({ where: { id: userId }, include: [{ model: m.Brand }] });
   const brandIds = user.Brands.map(brand => brand.id);
   const query = {
+    attributes: { exclude: ['createdAt', 'updatedAt'] },
     where: { type },
     include: [
-      { model: m.Brand, where: { id: { $in: brandIds } } },
-      { model: m.Site },
+      { model: m.Brand, attributes: ['name'], where: { id: { $in: brandIds } } },
+      { model: m.Site, attributes: ['name'] },
     ],
     order: 'date DESC',
     // limit,

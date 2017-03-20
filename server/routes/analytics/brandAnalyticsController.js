@@ -6,7 +6,12 @@ import { sendCrudError } from '../../utils/commonErrorHandling';
 
 async function retrieveBrandsByPopularity(req, res) {
   try {
-    const brandsByPopularity = await m.BrandPopularity.findAll({ order: [[{ raw: 'batch DESC, count DESC' }]], limit: req.params.limit });
+    const query = {
+      attributes: ['brandName', 'count', 'date'],
+      order: [[{ raw: 'batch DESC, count DESC' }]],
+      limit: req.params.limit,
+    };
+    const brandsByPopularity = await m.BrandPopularity.findAll(query);
     console.log('Retrieved brands by popularity');
     res.status(200).send({ success: true, brandsByPopularity });
   } catch(err) {

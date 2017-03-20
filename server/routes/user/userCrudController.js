@@ -19,7 +19,6 @@ async function createUser(req, res) {
 async function retrieveUser(req, res) {
   const { username } = req.params;
   try {
-    // TODO: don't get all of fields - only necessary ones
     const user = await m.User.findByUsername(username);
     if (!user) {
       console.error(`User ${username} not found`);

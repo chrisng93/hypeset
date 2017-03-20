@@ -24,14 +24,14 @@ module.exports = (sequelize, DataTypes) => {
         Brand.hasMany(m.BrandPopularity);
       },
       findById: function(id) {
-        return this.find({ where: { id } });
+        return this.find({ attributes: { include: ['name'], exclude: ['createdAt', 'updatedAt'] }, where: { id } });
       },
       findByName: function(name) {
-        return this.find({ where: { name: { $iLike: name } } });
+        return this.find({ attributes: { include: ['name'], exclude: ['createdAt', 'updatedAt'] }, where: { name: { $iLike: name } } });
       },
       checkOrCreate: function(name) {
         const condensedName = condense(name);
-        return this.find({ where: { condensedName: { $iLike: condensedName } } })
+        return this.find({ attributes: { include: ['name'], exclude: ['createdAt', 'updatedAt'] }, where: { condensedName: { $iLike: condensedName } } })
           .then((found) => {
             if (found) {
               return found;

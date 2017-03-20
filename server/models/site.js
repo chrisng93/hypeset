@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         Site.hasMany(m.Info);
       },
       findByName: function(name) {
-        return this.find({ where: { name } });
+        return this.find({ attributes: { exclude: ['createdAt', 'updatedAt'] }, where: { name } });
       },
     },
   });

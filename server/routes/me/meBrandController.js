@@ -5,7 +5,12 @@ import m from '../../models';
 
 async function getOwnBrands(req, res) {
   try {
-    const user = await m.User.find({ where: { id: req.user.id }, include: [{ model: m.Brand }] });
+    const query = {
+      attributes: { exclude: ['password', 'createdAt', 'updatedAt'] },
+      where: { id: req.user.id },
+      include: [{ model: m.Brand, attributes: ['name'] }],
+    };
+    const user = await m.User.find(query);
     res.status(200).send({ success: true, brands: user.Brands });
   } catch(err) {
     console.error(`Error retrieving brands for user ${req.user.id}: ${JSON.stringify(err)}`);

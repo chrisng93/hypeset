@@ -36,10 +36,10 @@ module.exports = (sequelize, DataTypes) => {
         User.belongsToMany(m.Info, { through: 'InfoUser', foreignKey: 'UserId' });
       },
       findById: function(id) {
-        return this.find({ where: { id } });
+        return this.find({ attributes: { exclude: ['password', 'createdAt', 'updatedAt'] }, where: { id } });
       },
       findByUsername: function(username) {
-        return this.find({ where: { username } });
+        return this.find({ attributes: { exclude: ['password', 'createdAt', 'updatedAt'] }, where: { username } });
       },
     },
     instanceMethods: {

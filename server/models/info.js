@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
         Info.belongsTo(m.Site);
       },
       updateOrCreate: function(article, type) {
-        return this.find({ where: { url: article.url } })
+        return this.find({ attributes: { exclude: ['createdAt', 'updatedAt'] }, where: { url: article.url } })
           .then((info) => {
             if (info) {
               return info.update({ ...article, type });
