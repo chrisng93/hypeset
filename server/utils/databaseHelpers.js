@@ -3,7 +3,7 @@
  */
 import m from '../models';
 
-const isUnique = (modelName, field) => {
+export const isUnique = (modelName, field) => {
   return (value, next) => {
     const query = {};
     const model = m[modelName];
@@ -17,5 +17,3 @@ const isUnique = (modelName, field) => {
       });
   };
 };
-
-module.exports = { isUnique };

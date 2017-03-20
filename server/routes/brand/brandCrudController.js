@@ -16,7 +16,7 @@ async function createBrand(req, res) {
 
 async function retrieveAllBrands(req, res) {
   try {
-    const brands = await m.Brand.findAll({ attributes: ['name'] });
+    const brands = await m.Brand.findAll({ attributes: ['name'], order: 'name DESC' });
     console.log('Retrieved all brands');
     res.status(200).send({ success: true, brands });
   } catch(err) {

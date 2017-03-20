@@ -8,18 +8,8 @@ import { pathnameSelector } from '../selectors/routingSelectors';
 import EnsureAuthentication from '../components/EnsureAuthentication';
 
 const propTypes = {
-  isAuthenticated: T.bool.isRequired,
-  token: T.string.isRequired,
-  pathname: T.string.isRequired,
   children: T.node.isRequired,
-  getUserBrands: T.func.isRequired,
-  getNews: T.func.isRequired,
-  getSales: T.func.isRequired,
-  onLogout: T.func.isRequired,
-  routeToSignIn: T.func.isRequired,
-  routeToNews: T.func.isRequired,
-  routeToSales: T.func.isRequired,
-  routeToProfile: T.func.isRequired,
+  isAuthenticated: T.bool.isRequired,
 };
 
 function EnsureAuthenticationContainer(props) {
@@ -31,22 +21,11 @@ function EnsureAuthenticationContainer(props) {
 function mapStateToProps(state) {
   return {
     isAuthenticated: isAuthenticatedSelector(state),
-    token: tokenSelector(state),
-    pathname: pathnameSelector(state),
   };
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
-  return {
-    getUserBrands: bindActionCreators(actions.getUserBrands, dispatch),
-    getNews: bindActionCreators(actions.getNews, dispatch),
-    getSales: bindActionCreators(actions.getSales, dispatch),
-    onLogout: bindActionCreators(actions.logout, dispatch),
-    routeToSignIn: () => dispatch(push('/signin')),
-    routeToNews: () => dispatch(push('/news')),
-    routeToSales: () => dispatch(push('/sales')),
-    routeToProfile: () => dispatch(push('/profile')),
-  };
+function mapDispatchToProps(dispatch) {
+  return {};
 }
 
 EnsureAuthenticationContainer.propTypes = propTypes;

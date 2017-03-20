@@ -35,18 +35,10 @@ div.nav {
       line-height: 40px;
     }
 
-    span.underline {
-      height: 0px;
-    }
-
     div.nav-news:hover, div.nav-sales:hover, div.nav-profile:hover {
       -moz-transition: all 0.2s;
       -webkit-transition: all 0.2s;
       transition: all 0.2s;
-
-      span.underline {
-        height: 10px;
-      }
     }
 
     div:hover {
@@ -55,6 +47,10 @@ div.nav {
 
     div.logout {
       margin-left: auto;
+    }
+
+    div.hidden {
+      display: none;
     }
 
     div.selected {

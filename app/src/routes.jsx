@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import App from './components/App';
+import AppContainer from './containers/AppContainer';
 import NotFoundContainer from './containers/NotFoundContainer';
 import EnsureAuthenticationContainer from './containers/EnsureAuthenticationContainer';
 import SignInContainer from './containers/SignInContainer';
@@ -13,14 +13,14 @@ import EditUser from './components/EditUser';
 import EditBrands from './components/EditBrands';
 
 const routes = (
-  <Route path="/" component={App}>
-    <IndexRoute component={EnsureAuthenticationContainer} />
+  <Route path="/" component={AppContainer}>
+    <IndexRoute component={NewsContainer} />
     <Route path="/signin" component={SignInContainer} />
     <Route path="/signup" component={SignUpContainer} />
-    <Route path="/" component={EnsureAuthenticationContainer}>
-      <IndexRoute component={NewsContainer} />
-      <Route path="/news" component={NewsContainer} />
-      <Route path="/sales" component={SalesContainer} />
+    <Route path="/news" component={NewsContainer} />
+    <Route path="/sales" component={SalesContainer} />
+    <Route path="/profile" component={EnsureAuthenticationContainer}>
+      <IndexRoute component={ProfileContainer} />
       <Route path="/profile" component={ProfileContainer}>
         <IndexRoute component={UserInfo} />
         <Route path="/profile/edit" component={EditUser} />

@@ -1,39 +1,23 @@
 import React, { Component, PropTypes as T } from 'react';
-import Nav from './Nav';
 
 const propTypes = {
+  children: T.node.isRequired,
   isAuthenticated: T.bool.isRequired,
-  token: T.string.isRequired,
-  pathname: T.string.isRequired,
-  children: T.node,
-  getUserBrands: T.func.isRequired,
-  getNews: T.func.isRequired,
-  getSales: T.func.isRequired,
-  onLogout: T.func.isRequired,
-  routeToSignIn: T.func.isRequired,
-  routeToNews: T.func.isRequired,
-  routeToSales: T.func.isRequired,
-  routeToProfile: T.func.isRequired,
 };
 
 export default class EnsureAuthentication extends Component {
   componentWillMount() {
-    const { isAuthenticated, token, routeToSignIn, getUserBrands, getNews, getSales } = this.props;
+    const { isAuthenticated, routeToSignIn } = this.props;
     if (!isAuthenticated) {
       return routeToSignIn();
     }
-    getUserBrands({ token });
-    getNews({ token, offset: 0 });
-    getSales({ token, offset: 0 });
   }
 
   render() {
-    const { isAuthenticated, token, pathname, children, onLogout, routeToNews, routeToSales, routeToProfile } = this.props;
-    const navProps = { token, pathname, onLogout, routeToNews, routeToSales, routeToProfile };
+    const { isAuthenticated, children } = this.props;
     if (isAuthenticated) {
       return (
         <div className="container">
-          <Nav {...navProps} />
           {children}
         </div>
       );

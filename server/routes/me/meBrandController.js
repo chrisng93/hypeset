@@ -9,6 +9,7 @@ async function getOwnBrands(req, res) {
       attributes: { exclude: ['password', 'createdAt', 'updatedAt'] },
       where: { id: req.user.id },
       include: [{ model: m.Brand, attributes: ['name'] }],
+      order: 'name DESC',
     };
     const user = await m.User.find(query);
     res.status(200).send({ success: true, brands: user.Brands });
