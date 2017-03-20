@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from '../actions';
 import { tokenSelector } from '../selectors/userSelectors';
-import { newsSelector, newsBrandsSelector, newsSitesSelector } from '../selectors/newsSelectors';
+import { newsSelector, newsBrandsSelector, newsSitesSelector, isFetchingNewsSelector } from '../selectors/newsSelectors';
 import News from '../components/News';
 
 const propTypes = {
@@ -11,6 +11,7 @@ const propTypes = {
   news: T.array.isRequired,
   newsBrands: T.array.isRequired,
   newsSites: T.array.isRequired,
+  isFetchingNews: T.bool.isRequired,
   getNews: T.func.isRequired,
 };
 
@@ -26,6 +27,7 @@ function mapStateToProps(state) {
     news: newsSelector(state),
     newsBrands: newsBrandsSelector(state),
     newsSites: newsSitesSelector(state),
+    isFetchingNews: isFetchingNewsSelector(state),
   };
 }
 

@@ -7,6 +7,7 @@ const propTypes = {
   news: T.array.isRequired,
   newsBrands: T.array.isRequired,
   newsSites: T.array.isRequired,
+  isFetchingNews: T.bool.isRequired,
   getNews: T.func.isRequired,
 };
 
@@ -26,8 +27,8 @@ export default class News extends Component {
   }
 
   componentWillMount() {
-    const { news } = this.props;
-    if (news.length === 0) {
+    const { news, isFetchingNews } = this.props;
+    if (news.length === 0 && !isFetchingNews) {
       this.retrieveNews();
     }
     const visibleArray = news.slice(0, 10);
