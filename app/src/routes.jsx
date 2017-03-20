@@ -1,33 +1,33 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import EnsureAuthentication from './components/EnsureAuthentication';
 import App from './components/App';
-import NotFound from './components/NotFound';
-import SignIn from './components/SignIn';
-import SignUp from './components/SignUp';
-import News from './components/News';
-import Sales from './components/Sales';
-import Profile from './components/Profile';
+import NotFoundContainer from './containers/NotFoundContainer';
+import EnsureAuthenticationContainer from './containers/EnsureAuthenticationContainer';
+import SignInContainer from './containers/SignInContainer';
+import SignUpContainer from './containers/SignUpContainer';
+import NewsContainer from './containers/NewsContainer';
+import SalesContainer from './containers/SalesContainer';
+import ProfileContainer from './containers/ProfileContainer';
 import UserInfo from './components/UserInfo';
 import EditUser from './components/EditUser';
 import EditBrands from './components/EditBrands';
 
 const routes = (
   <Route path="/" component={App}>
-    <IndexRoute component={EnsureAuthentication} />
-    <Route path="/signin" component={SignIn} />
-    <Route path="/signup" component={SignUp} />
-    <Route path="/" component={EnsureAuthentication}>
-      <IndexRoute component={News} />
-      <Route path="/news" component={News} />
-      <Route path="/sales" component={Sales} />
-      <Route path="/profile" component={Profile}>
+    <IndexRoute component={EnsureAuthenticationContainer} />
+    <Route path="/signin" component={SignInContainer} />
+    <Route path="/signup" component={SignUpContainer} />
+    <Route path="/" component={EnsureAuthenticationContainer}>
+      <IndexRoute component={NewsContainer} />
+      <Route path="/news" component={NewsContainer} />
+      <Route path="/sales" component={SalesContainer} />
+      <Route path="/profile" component={ProfileContainer}>
         <IndexRoute component={UserInfo} />
         <Route path="/profile/edit" component={EditUser} />
         <Route path="/profile/brands" component={EditBrands} />
       </Route>
     </Route>
-    <Route path="*" component={NotFound} />
+    <Route path="*" component={NotFoundContainer} />
   </Route>
 );
 

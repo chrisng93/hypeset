@@ -15,9 +15,9 @@ export default class Nav extends Component {
     this.selectTab = this.selectTab.bind(this);
   }
 
-  selectTab(tab, func) {
+  selectTab(tab, routingFunc) {
     this.setState({ selected: tab });
-    func();
+    routingFunc();
   }
 
   render() {

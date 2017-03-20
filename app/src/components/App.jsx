@@ -4,7 +4,8 @@ const propTypes = {
   children: T.node,
 };
 
-export default function App({ children }) {
+export default function App(props) {
+  const { children } = props;
   return (
     <div id="app">
       {children}

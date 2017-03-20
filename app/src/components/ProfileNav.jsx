@@ -6,7 +6,8 @@ const propTypes = {
   routeToEditBrands: T.func.isRequired,
 };
 
-export default function ProfileNav({ routeToUserInfo, routeToEditUser, routeToEditBrands }) {
+export default function ProfileNav(props) {
+  const { routeToUserInfo, routeToEditUser, routeToEditBrands } = props;
   return (
     <div className="profile-nav">
       <div className="title" onClick={routeToUserInfo}>Profile</div>

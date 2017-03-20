@@ -11,7 +11,7 @@ const PORT = config.PORT || '8888';
 module.exports = {
   entry: [
     `webpack-dev-server/client?http://${HOST}:${PORT}`,
-    './src/presenter.jsx',
+    './src/index.jsx',
   ],
   devtool: 'source-map',
   output: {

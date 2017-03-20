@@ -1,6 +1,6 @@
 import React, { Component, PropTypes as T } from 'react';
-import ArticleItem from '../ArticleItem';
-import Checkbox from '../Checkbox';
+import ArticleItem from './ArticleItem';
+import Checkbox from './Checkbox';
 
 const propTypes = {
   token: T.string.isRequired,

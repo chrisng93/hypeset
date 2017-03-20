@@ -1,7 +1,7 @@
 import React, { Component, PropTypes as T } from 'react';
 
 const propTypes = {
-  isAuthenticated: T.boolean.isRequired,
+  isAuthenticated: T.bool.isRequired,
   onAuth: T.func.isRequired,
   routeToSignUp: T.func.isRequired,
   routeToNews: T.func.isRequired,
@@ -37,7 +37,7 @@ export default class SignIn extends Component {
     const { username, password } = this.state;
     return (
       <div className="sign-in">
-        <img src={require('../../../assets/intro-bg1.jpg')} className="bg" />
+        <img src={require('../../assets/intro-bg1.jpg')} className="bg" />
         <div className="form-container">
           <div className="title">hypeset</div>
           <form className="sign-in-form">

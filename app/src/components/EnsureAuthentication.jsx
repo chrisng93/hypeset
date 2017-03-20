@@ -1,10 +1,13 @@
 import React, { Component, PropTypes as T } from 'react';
-import Nav from '../Nav';
+import Nav from './Nav';
 
 const propTypes = {
-  isAuthenticated: T.boolean.isRequired,
-  children: T.node.isRequired,
+  isAuthenticated: T.bool.isRequired,
+  children: T.node,
   routeToSignIn: T.func.isRequired,
+  routeToNews: T.func.isRequired,
+  routeToSales: T.func.isRequired,
+  routeToProfile: T.func.isRequired,
 };
 
 export default class EnsureAuthentication extends Component {
@@ -16,12 +19,13 @@ export default class EnsureAuthentication extends Component {
   }
 
   render() {
-    const { isAuthenticated } = this.props;
+    const { isAuthenticated, children, routeToNews, routeToSales, routeToProfile } = this.props;
+    const navProps = { routeToNews, routeToSales, routeToProfile };
     if (isAuthenticated) {
       return (
         <div className="container">
-          <Nav />
-          {this.props.children}
+          <Nav {...navProps} />
+          {children}
         </div>
       );
     }

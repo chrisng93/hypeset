@@ -1,10 +1,11 @@
 import React, { Component, PropTypes as T } from 'react';
 
 const propTypes = {
-  user: T.object.isRequired,
-  token: T.string.isRequired,
-  onEditUser: T.func.isRequired,
-  routeToProfile: T.func.isRequired,
+  // don't have .isRequired because React doesn't recognize the props when you use React.cloneElement
+  user: T.object,
+  token: T.string,
+  onEditUser: T.func,
+  routeToProfile: T.func,
 };
 
 export default class EditUser extends Component {

@@ -1,11 +1,12 @@
 import React, { PropTypes as T } from 'react';
 
 const propTypes = {
-  user: T.object.isRequired,
-  routeToEditUser: T.func.isRequired,
+  user: T.object,
+  routeToEditUser: T.func,
 };
 
-export default function UserInfo({ user, routeToEditUser }) {
+export default function UserInfo(props) {
+  const { user, routeToEditUser } = props;
   return (
     <div className="user-info">
       <div className="username">

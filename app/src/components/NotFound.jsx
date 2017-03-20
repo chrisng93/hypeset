@@ -4,7 +4,8 @@ const propTypes = {
   routeToHome: T.func.isRequired
 };
 
-export default function NotFound({ routeToHome }) {
+export default function NotFound(props) {
+  const { routeToHome } = props;
   return (
     <div className="not-found">
       <div>Route not found. Please go back to home page.</div>
