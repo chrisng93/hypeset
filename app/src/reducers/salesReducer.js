@@ -6,17 +6,22 @@ import * as actionTypes from '../constants/actionTypes';
 
 const initialState = fromJS({
   sales: new List(),
+  isFetchingSales: false,
   error: new Map(),
 });
 
 export default function sales(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
+    case actionTypes.GET_SALES_FETCHING:
+      return state.set('isFetchingSales', true);
     case actionTypes.GET_SALES_SUCCESS:
       return state.set('sales', state.get('sales').concat(new List(payload.sales)))
+        .set('isFetchingSales', false)
         .set('error', new Map());
     case actionTypes.GET_SALES_FAILURE:
-      return state.setIn(['error', 'status'], true)
+      return state.set('isFetchingSales', false)
+        .setIn(['error', 'status'], true)
         .setIn(['error', 'message'], payload.message);
 
     default:

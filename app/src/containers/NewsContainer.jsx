@@ -9,7 +9,6 @@ import News from '../components/News';
 const propTypes = {
   token: T.string.isRequired,
   news: T.array.isRequired,
-  brands: T.array.isRequired,
   newsBrands: T.array.isRequired,
   newsSites: T.array.isRequired,
   getNews: T.func.isRequired,

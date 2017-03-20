@@ -3,7 +3,11 @@ import Nav from './Nav';
 
 const propTypes = {
   isAuthenticated: T.bool.isRequired,
+  token: T.string.isRequired,
   children: T.node,
+  getUserBrands: T.func.isRequired,
+  getNews: T.func.isRequired,
+  getSales: T.func.isRequired,
   routeToSignIn: T.func.isRequired,
   routeToNews: T.func.isRequired,
   routeToSales: T.func.isRequired,
@@ -12,10 +16,13 @@ const propTypes = {
 
 export default class EnsureAuthentication extends Component {
   componentWillMount() {
-    const { isAuthenticated, routeToSignIn } = this.props;
+    const { isAuthenticated, token, routeToSignIn, getUserBrands, getNews, getSales } = this.props;
     if (!isAuthenticated) {
-      routeToSignIn();
+      return routeToSignIn();
     }
+    getUserBrands({ token });
+    getNews({ token, offset: 0 });
+    getSales({ token, offset: 0 });
   }
 
   render() {

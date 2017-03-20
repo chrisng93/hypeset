@@ -1,13 +1,18 @@
 import React, { Component, PropTypes as T } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux';
-import { isAuthenticatedSelector } from '../selectors/userSelectors';
-import { pathnameSelector } from '../selectors/routingSelectors';
+import * as actions from '../actions';
+import { isAuthenticatedSelector, tokenSelector } from '../selectors/userSelectors';
 import EnsureAuthentication from '../components/EnsureAuthentication';
 
 const propTypes = {
   isAuthenticated: T.bool.isRequired,
-  children: T.node,
+  token: T.string.isRequired,
+  children: T.node.isRequired,
+  getUserBrands: T.func.isRequired,
+  getNews: T.func.isRequired,
+  getSales: T.func.isRequired,
   routeToSignIn: T.func.isRequired,
   routeToNews: T.func.isRequired,
   routeToSales: T.func.isRequired,
@@ -23,19 +28,21 @@ function EnsureAuthenticationContainer(props) {
 function mapStateToProps(state) {
   return {
     isAuthenticated: isAuthenticatedSelector(state),
-    currentLocation: pathnameSelector(state),
+    token: tokenSelector(state),
   };
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
   return {
-    currentURL: ownProps.location.pathname,
+    getUserBrands: bindActionCreators(actions.getUserBrands, dispatch),
+    getNews: bindActionCreators(actions.getNews, dispatch),
+    getSales: bindActionCreators(actions.getSales, dispatch),
+    // TODO: onLogout: bindActionCreators(actions.logout, dispatch),
+    onLogout: () => dispatch(push('/signin')),
     routeToSignIn: () => dispatch(push('/signin')),
     routeToNews: () => dispatch(push('/news')),
     routeToSales: () => dispatch(push('/sales')),
     routeToProfile: () => dispatch(push('/profile')),
-    onLogout: () => dispatch(push('/signin')),
-    // onLogout: bindActionCreators(actions.logout, dispatch),
   };
 }
 

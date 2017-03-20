@@ -15,7 +15,6 @@ const propTypes = {
   user: T.object.isRequired,
   onEditUser: T.func.isRequired,
   getAllBrands: T.func.isRequired,
-  getUserBrands: T.func.isRequired,
   addBrand: T.func.isRequired,
   removeBrand: T.func.isRequired,
   routeToProfile: T.func.isRequired,
@@ -43,7 +42,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getAllBrands: bindActionCreators(actions.getAllBrands, dispatch),
-    getUserBrands: bindActionCreators(actions.getUserBrands, dispatch),
     getBrandsByPopularity: bindActionCreators(actions.getBrandsByPopularity, dispatch),
     addBrand: bindActionCreators(actions.addBrand, dispatch),
     removeBrand: bindActionCreators(actions.removeBrand, dispatch),

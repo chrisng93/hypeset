@@ -39,6 +39,11 @@ export const salesSitesSelector = createSelector(
   }
 );
 
+export const isFetchingSalesSelector = createSelector(
+  salesStateSelector,
+  salesState => salesState.isFetchingSales
+);
+
 export const salesErrorSelector = createSelector(
   salesStateSelector,
   salesState => salesState.error

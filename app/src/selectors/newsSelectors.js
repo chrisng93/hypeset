@@ -12,11 +12,13 @@ export const newsSelector = createSelector(
   userBrandsSelector,
   (newsState, userBrands) => {
     return newsState.news.filter((news) => {
+      const userBrandNames = userBrands.map(brand => brand.name);
       for (let i = 0; i < news.Brands.length; i++) {
-        if (userBrands.indexOf(news.Brands[i]) < 0) {
+        if (userBrandNames.indexOf(news.Brands[i].name) < 0) {
           return false;
         }
       }
+      return true;
     });
   }
 );
@@ -47,6 +49,11 @@ export const newsSitesSelector = createSelector(
     }
     return sites;
   }
+);
+
+export const isFetchingNewsSelector = createSelector(
+  newsStateSelector,
+  newsState => newsState.isFetchingNews
 );
 
 export const newsErrorSelector = createSelector(

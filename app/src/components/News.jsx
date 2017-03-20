@@ -63,15 +63,17 @@ export default class News extends Component {
     const newState = {};
     newState[field] = null;
     isFilteredOut ? newState[field] = this.state[field].concat(info) : newState[field] = this.state[field].filter(stateInfo => stateInfo !== info);
-    this.filterResults(news);
+    field === 'filteredOutBrands' ? this.filterResults(news, newState.filteredOutBrands) : this.filterResults(news, this.state.filteredOutBrands, newState.filteredOutSites)
     this.setState(newState);
   }
 
-  filterResults(news) {
-    const { filteredOutBrands, filteredOutSites, visibleOffset } = this.state;
+  filterResults(news, filteredOutBrands = this.state.filteredOutBrands, filteredOutSites = this.state.filteredOutSites) {
+    const { visibleOffset } = this.state;
     const validNews = news.filter((row) => {
-      if (filteredOutBrands.indexOf(row.Brands.name) >= 0) {
-        return false;
+      for (let i = 0; i < row.Brands.length; i++) {
+        if (filteredOutBrands.indexOf(row.Brands[i].name) >= 0) {
+          return false;
+        }
       }
       return filteredOutSites.indexOf(row.Site.name) < 0;
     });

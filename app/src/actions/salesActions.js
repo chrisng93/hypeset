@@ -4,6 +4,12 @@
 import * as actionTypes from '../constants/actionTypes.js';
 import { createHeaders } from '../utils/requestUtils';
 
+function getSalesFetching() {
+  return {
+    type: actionTypes.GET_SALES_FETCHING,
+  }
+}
+
 function getSalesSuccess(payload) {
   return {
     type: actionTypes.GET_SALES_SUCCESS,
@@ -20,6 +26,7 @@ function getSalesFailure(payload) {
 
 export default function getSales(payload) {
   return (dispatch) => {
+    dispatch(getSalesFetching());
     const options = {
       method: 'GET',
       headers: createHeaders(payload.token),

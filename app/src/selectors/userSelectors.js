@@ -21,6 +21,21 @@ export const isAuthenticatedSelector = createSelector(
   userState => userState.isAuthenticated
 );
 
+export const isFetchingAuth = createSelector(
+  userStateSelector,
+  userState => userState.isFetchingAuth
+);
+
+export const isFetchingSignup = createSelector(
+  userStateSelector,
+  userState => userState.isFetchingSignup
+);
+
+export const isFetchingEditUser = createSelector(
+  userStateSelector,
+  userState => userState.isFetchingEditUser
+);
+
 export const userErrorSelector = createSelector(
   userStateSelector,
   userState => userState.error

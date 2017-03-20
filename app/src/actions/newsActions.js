@@ -4,6 +4,12 @@
 import * as actionTypes from '../constants/actionTypes.js';
 import { createHeaders } from '../utils/requestUtils';
 
+function getNewsFetching() {
+  return {
+    type: actionTypes.GET_NEWS_FETCHING,
+  };
+}
+
 function getNewsSuccess(payload) {
   return {
     type: actionTypes.GET_NEWS_SUCCESS,
@@ -20,6 +26,7 @@ function getNewsFailure(payload) {
 
 export default function getNews(payload) {
   return (dispatch) => {
+    dispatch(getNewsFetching());
     const options = {
       method: 'GET',
       headers: createHeaders(payload.token),

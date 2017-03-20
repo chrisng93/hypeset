@@ -4,6 +4,12 @@
 import * as actionTypes from '../constants/actionTypes.js';
 import { createHeaders } from '../utils/requestUtils';
 
+function getAllBrandsFetching() {
+  return {
+    type: actionTypes.GET_ALL_BRANDS_FETCHING,
+  }
+}
+
 function getAllBrandsSuccess(payload) {
   return {
     type: actionTypes.GET_ALL_BRANDS_SUCCESS,
@@ -16,6 +22,12 @@ function getAllBrandsFailure(payload) {
     type: actionTypes.GET_ALL_BRANDS_FAILURE,
     payload,
   };
+}
+
+function getUserBrandsFetching() {
+  return {
+    type: actionTypes.GET_USER_BRANDS_FETCHING,
+  }
 }
 
 function getUserBrandsSuccess(payload) {
@@ -32,6 +44,12 @@ function getUserBrandsFailure(payload) {
   };
 }
 
+function getBrandsByPopularityBrandsFetching() {
+  return {
+    type: actionTypes.GET_BRANDS_BY_POPULARITY_FETCHING,
+  }
+}
+
 function getBrandsByPopularitySuccess(payload) {
   return {
     type: actionTypes.GET_BRANDS_BY_POPULARITY_SUCCESS,
@@ -43,6 +61,12 @@ function getBrandsByPopularityFailure(payload) {
   return {
     type: actionTypes.GET_BRANDS_BY_POPULARITY_FAILURE,
     payload,
+  }
+}
+
+function addBrandFetching() {
+  return {
+    type: actionTypes.ADD_BRAND_FETCHING,
   }
 }
 
@@ -58,6 +82,12 @@ function addBrandFailure(payload) {
     type: actionTypes.ADD_BRAND_FAILURE,
     payload,
   };
+}
+
+function removeBrandFetching() {
+  return {
+    type: actionTypes.REMOVE_BRAND_FETCHING,
+  }
 }
 
 function removeBrandSuccess(payload) {
@@ -76,6 +106,7 @@ function removeBrandFailure(payload) {
 
 export function getAllBrands(payload) {
   return (dispatch) => {
+    dispatch(getAllBrandsFetching());
     const options = {
       method: 'GET',
       headers: createHeaders(payload.token),
@@ -98,6 +129,7 @@ export function getAllBrands(payload) {
 
 export function getUserBrands(payload) {
   return (dispatch) => {
+    dispatch(getUserBrandsFetching());
     const options = {
       method: 'GET',
       headers: createHeaders(payload.token),
@@ -120,6 +152,7 @@ export function getUserBrands(payload) {
 
 export function getBrandsByPopularity(payload) {
   return (dispatch) => {
+    dispatch(getBrandsByPopularityBrandsFetching());
     const options = {
       method: 'GET',
       headers: createHeaders(payload.token),
@@ -128,7 +161,6 @@ export function getBrandsByPopularity(payload) {
     fetch(`${process.env.API_URL}/api/analytics/brand/popularity/${payload.limit}`, options)
       .then(response => response.json())
       .then((json) => {
-        console.log('JSON', json)
         if (!json.success) {
           return dispatch(getBrandsByPopularityFailure(json));
         }
@@ -143,6 +175,7 @@ export function getBrandsByPopularity(payload) {
 
 export function addBrand(payload) {
   return (dispatch) => {
+    dispatch(addBrandFetching());
     const options = {
       method: 'PUT',
       headers: createHeaders(payload.token),
@@ -166,6 +199,7 @@ export function addBrand(payload) {
 
 export function removeBrand(payload) {
   return (dispatch) => {
+    dispatch(removeBrandFetching());
     const options = {
       method: 'DELETE',
       headers: createHeaders(payload.token),

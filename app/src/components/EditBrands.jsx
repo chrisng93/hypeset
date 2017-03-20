@@ -7,16 +7,14 @@ const propTypes = {
   popularBrands: T.array,
   token: T.string,
   getAllBrands: T.func,
-  getUserBrands: T.func,
   addBrand: T.func,
   removeBrand: T.func,
 };
 
 export default class EditBrands extends Component {
   componentWillMount() {
-    const { getAllBrands, getUserBrands, getBrandsByPopularity, token } = this.props;
+    const { getAllBrands, getBrandsByPopularity, token } = this.props;
     getAllBrands({ token });
-    getUserBrands({ token });
     getBrandsByPopularity({ token, limit: 20 });
   }
 

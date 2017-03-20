@@ -1,6 +1,4 @@
-import auth from './authActions';
-import signUp from './signUpActions';
-import editUser from './editUserActions';
+import { auth, signUp, editUser } from './userActions';
 import { getAllBrands, getUserBrands, getBrandsByPopularity, addBrand, removeBrand } from './brandActions';
 import getNews from './newsActions';
 import getSales from './salesActions';
