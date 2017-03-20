@@ -3,12 +3,28 @@
  */
 import { createSelector } from 'reselect';
 import { toJS } from 'immutable';
+import { userBrandsSelector } from './brandSelectors';
 
 const salesStateSelector = state => state.sales.toJS();
 
 export const salesSelector = createSelector(
   salesStateSelector,
-  salesState => salesState.sales
+  userBrandsSelector,
+  (salesState, userBrands) => {
+    if (userBrands.length) {
+      const userBrandNames = userBrands.map(brand => brand.name);
+      return salesState.sales.filter((sales) => {
+        for (let i = 0; i < sales.Brands.length; i++) {
+          if (userBrandNames.indexOf(sales.Brands[i].name) < 0) {
+            return false;
+          }
+        }
+        return true;
+      });
+    } else {
+      return salesState.sales;
+    }
+  }
 );
 
 export const salesBrandsSelector = createSelector(

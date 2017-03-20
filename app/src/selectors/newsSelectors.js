@@ -11,15 +11,19 @@ export const newsSelector = createSelector(
   newsStateSelector,
   userBrandsSelector,
   (newsState, userBrands) => {
-    return newsState.news.filter((news) => {
+    if (userBrands.length) {
       const userBrandNames = userBrands.map(brand => brand.name);
-      for (let i = 0; i < news.Brands.length; i++) {
-        if (userBrandNames.indexOf(news.Brands[i].name) < 0) {
-          return false;
+      return newsState.news.filter((news) => {
+        for (let i = 0; i < news.Brands.length; i++) {
+          if (userBrandNames.indexOf(news.Brands[i].name) < 0) {
+            return false;
+          }
         }
-      }
-      return true;
-    });
+        return true;
+      });
+    } else {
+      return newsState.news;
+    }
   }
 );
 

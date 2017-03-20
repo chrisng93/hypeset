@@ -2,16 +2,18 @@ import React, { Component, PropTypes as T } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from '../actions';
-import { tokenSelector } from '../selectors/userSelectors';
-import { newsSelector, newsBrandsSelector, newsSitesSelector, isFetchingNewsSelector } from '../selectors/newsSelectors';
+import { isAuthenticatedSelector, tokenSelector } from '../selectors/userSelectors';
+import { newsSelector, newsBrandsSelector, newsSitesSelector, isFetchingAllNewsSelector, isFetchingOwnNewsSelector } from '../selectors/newsSelectors';
 import News from '../components/News';
 
 const propTypes = {
+  isAuthenticated: T.bool.isRequired,
   token: T.string.isRequired,
   news: T.array.isRequired,
   newsBrands: T.array.isRequired,
   newsSites: T.array.isRequired,
-  isFetchingNews: T.bool.isRequired,
+  isFetchingAllNews: T.bool.isRequired,
+  isFetchingOwnNews: T.bool.isRequired,
   getOwnNews: T.func.isRequired,
 };
 
@@ -23,11 +25,13 @@ function NewsContainer(props) {
 
 function mapStateToProps(state) {
   return {
+    isAuthenticated: isAuthenticatedSelector(state),
     token: tokenSelector(state),
     news: newsSelector(state),
     newsBrands: newsBrandsSelector(state),
     newsSites: newsSitesSelector(state),
-    isFetchingNews: isFetchingNewsSelector(state),
+    isFetchingAllNews: isFetchingAllNewsSelector(state),
+    isFetchingOwnNews: isFetchingOwnNewsSelector(state),
   };
 }
 

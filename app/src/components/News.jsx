@@ -3,11 +3,13 @@ import ArticleItem from './ArticleItem';
 import Checkbox from './Checkbox';
 
 const propTypes = {
+  isAuthenticated: T.bool.isRequired,
   token: T.string.isRequired,
   news: T.array.isRequired,
   newsBrands: T.array.isRequired,
   newsSites: T.array.isRequired,
-  isFetchingNews: T.bool.isRequired,
+  isFetchingAllNews: T.bool.isRequired,
+  isFetchingOwnNews: T.bool.isRequired,
   getOwnNews: T.func.isRequired,
 };
 
@@ -28,8 +30,8 @@ export default class News extends Component {
   }
 
   componentWillMount() {
-    const { news, isFetchingNews } = this.props;
-    if (news.length === 0 && !isFetchingNews) {
+    const { news, isFetchingAllNews, isFetchingOwnNews } = this.props;
+    if (news.length === 0 && !isFetchingAllNews && !isFetchingOwnNews) {
       this.retrieveNews();
     }
     const visibleArray = news.slice(0, 10);
@@ -56,8 +58,8 @@ export default class News extends Component {
 
   retrieveNews() {
     const { dbOffset } = this.state;
-    const { token, getOwnNews } = this.props;
-    getOwnNews({ token, offset: dbOffset });
+    const { isAuthenticated, token, getAllNews, getOwnNews } = this.props;
+    isAuthenticated ? getOwnNews({ token, offset: dbOffset }) : getAllNews({ offset: dbOffset });
   }
 
   changeFilteredOutState(info, isFilteredOut, field) {

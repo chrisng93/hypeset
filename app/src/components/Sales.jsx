@@ -3,11 +3,13 @@ import ArticleItem from './ArticleItem';
 import Checkbox from './Checkbox';
 
 const propTypes = {
+  isAuthenticated: T.bool.isRequired,
   token: T.string.isRequired,
   sales: T.array.isRequired,
   salesBrands: T.array.isRequired,
   salesSites: T.array.isRequired,
-  isFetchingSales: T.bool.isRequired,
+  isFetchingAllSales: T.bool.isRequired,
+  isFetchingOwnSales: T.bool.isRequired,
   getOwnSales: T.func.isRequired,
 };
 
@@ -28,8 +30,8 @@ export default class Sales extends Component {
   }
 
   componentWillMount() {
-    const { sales, isFetchingSales } = this.props;
-    if (sales.length === 0 && !isFetchingSales) {
+    const { sales, isFetchingAllSales, isFetchingOwnSales } = this.props;
+    if (sales.length === 0 && !isFetchingAllSales && !isFetchingOwnSales) {
       this.retrieveSales();
     }
     const visibleArray = sales.slice(0, 10);
@@ -56,8 +58,8 @@ export default class Sales extends Component {
 
   retrieveSales() {
     const { dbOffset } = this.state;
-    const { token, getOwnSales } = this.props;
-    getOwnSales({ token, offset: dbOffset });
+    const { isAuthenticated, token, getAllSales, getOwnSales } = this.props;
+    isAuthenticated ? getOwnSales({ token, offset: dbOffset }) : getAllSales({ offset: dbOffset });
   }
 
   changeFilteredOutState(info, isFilteredOut, field) {
