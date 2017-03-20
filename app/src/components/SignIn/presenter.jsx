@@ -1,5 +1,12 @@
 import React, { Component, PropTypes as T } from 'react';
 
+const propTypes = {
+  isAuthenticated: T.boolean.isRequired,
+  onAuth: T.func.isRequired,
+  routeToSignUp: T.func.isRequired,
+  routeToNews: T.func.isRequired,
+};
+
 export default class SignIn extends Component {
   constructor(props) {
     super(props);
@@ -45,9 +52,4 @@ export default class SignIn extends Component {
   }
 }
 
-SignIn.propTypes = {
-  onAuth: T.func,
-  routeToSignUp: T.func,
-  routeToNews: T.func,
-  isAuthenticated: T.boolean,
-};
+SignIn.propTypes = propTypes;

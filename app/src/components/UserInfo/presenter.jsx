@@ -1,5 +1,10 @@
 import React, { PropTypes as T } from 'react';
 
+const propTypes = {
+  user: T.object.isRequired,
+  routeToEditUser: T.func.isRequired,
+};
+
 export default function UserInfo({ user, routeToEditUser }) {
   return (
     <div className="user-info">
@@ -23,7 +28,4 @@ export default function UserInfo({ user, routeToEditUser }) {
   );
 }
 
-UserInfo.propTypes = {
-  user: T.object,
-  routeToEditUser: T.func,
-};
+UserInfo.propTypes = propTypes;

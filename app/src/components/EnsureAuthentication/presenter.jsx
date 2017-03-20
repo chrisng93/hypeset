@@ -1,6 +1,12 @@
 import React, { Component, PropTypes as T } from 'react';
 import Nav from '../Nav';
 
+const propTypes = {
+  isAuthenticated: T.boolean.isRequired,
+  children: T.node.isRequired,
+  routeToSignIn: T.func.isRequired,
+};
+
 export default class EnsureAuthentication extends Component {
   componentWillMount() {
     const { isAuthenticated, routeToSignIn } = this.props;
@@ -23,8 +29,4 @@ export default class EnsureAuthentication extends Component {
   }
 }
 
-EnsureAuthentication.propTypes = {
-  isAuthenticated: T.boolean,
-  routeToSignIn: T.func,
-  children: T.node,
-};
+EnsureAuthentication.propTypes = propTypes;

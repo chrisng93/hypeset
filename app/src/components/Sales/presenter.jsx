@@ -1,6 +1,14 @@
 import React, { Component, PropTypes as T } from 'react';
-import Article from '../Article';
+import ArticleItem from '../ArticleItem';
 import Checkbox from '../Checkbox';
+
+const propTypes = {
+  token: T.string.isRequired,
+  sales: T.array.isRequired,
+  salesBrands: T.array.isRequired,
+  salesSites: T.array.isRequired,
+  getSales: T.func.isRequired,
+};
 
 export default class Sales extends Component {
   constructor(props) {
@@ -40,7 +48,7 @@ export default class Sales extends Component {
               }
             }
             return filteredOutSites.indexOf(sales.Site.name) < 0;
-          }).map((sales, key) => <Article article={sales} key={key} /> )}
+          }).map((sales, key) => <ArticleItem article={sales} key={key} /> )}
         </div>
         <div className="filter-container">
           <div className="filter">
@@ -60,10 +68,4 @@ export default class Sales extends Component {
   }
 }
 
-Sales.propTypes = {
-  getSales: T.func,
-  token: T.string,
-  sales: T.array,
-  salesBrands: T.array,
-  salesSites: T.array,
-};
+Sales.propTypes = propTypes;

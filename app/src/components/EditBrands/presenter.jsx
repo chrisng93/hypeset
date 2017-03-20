@@ -1,5 +1,16 @@
 import React, { Component, PropTypes as T } from 'react';
 
+const propTypes = {
+  availableBrands: T.array.isRequired,
+  userBrands: T.array.isRequired,
+  popularBrands: T.array.isRequired,
+  token: T.string.isRequired,
+  getAllBrands: T.func.isRequired,
+  getUserBrands: T.func.isRequired,
+  addBrand: T.func.isRequired,
+  removeBrand: T.func.isRequired,
+};
+
 export default class EditBrands extends Component {
   componentWillMount() {
     const { getAllBrands, getUserBrands, getBrandsByPopularity, token } = this.props;
@@ -44,13 +55,4 @@ export default class EditBrands extends Component {
   }
 }
 
-EditBrands.propTypes = {
-  getAllBrands: T.func,
-  getUserBrands: T.func,
-  addBrand: T.func,
-  removeBrand: T.func,
-  availableBrands: T.array,
-  userBrands: T.array,
-  popularBrands: T.array,
-  token: T.string,
-};
+EditBrands.propTypes = propTypes;

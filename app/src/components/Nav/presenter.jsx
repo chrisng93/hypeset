@@ -1,5 +1,11 @@
 import React, { Component, PropTypes as T } from 'react';
 
+const propTypes = {
+  routeToNews: T.func.isRequired,
+  routeToSales: T.func.isRequired,
+  routeToProfile: T.func.isRequired,
+};
+
 export default class Nav extends Component {
   constructor(props) {
     super(props);
@@ -31,8 +37,4 @@ export default class Nav extends Component {
   }
 }
 
-Nav.propTypes = {
-  routeToNews: T.func,
-  routeToSales: T.func,
-  routeToProfile: T.func,
-};
+Nav.propTypes = propTypes;

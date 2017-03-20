@@ -1,5 +1,12 @@
 import React, { Component, PropTypes as T } from 'react';
 
+const propTypes = {
+  user: T.object.isRequired,
+  token: T.string.isRequired,
+  onEditUser: T.func.isRequired,
+  routeToProfile: T.func.isRequired,
+};
+
 export default class EditUser extends Component {
   constructor(props) {
     super(props);
@@ -83,9 +90,4 @@ export default class EditUser extends Component {
   }
 }
 
-EditUser.propTypes = {
-  user: T.object,
-  token: T.string,
-  onEditUser: T.func,
-  routeToProfile: T.func,
-};
+EditUser.propTypes = propTypes;

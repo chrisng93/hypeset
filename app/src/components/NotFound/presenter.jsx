@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { PropTypes as T } from 'react';
+
+const propTypes = {
+  routeToHome: T.func.isRequired
+};
 
 export default function NotFound({ routeToHome }) {
   return (
@@ -8,3 +12,5 @@ export default function NotFound({ routeToHome }) {
     </div>
   );
 }
+
+NotFound.propTypes = propTypes;

@@ -1,5 +1,10 @@
 import React, { Component, PropTypes as T } from 'react';
 
+const propTypes = {
+  info: T.string.isRequired,
+  clickHandler: T.func.isRequired,
+};
+
 export default class Checkbox extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +33,4 @@ export default class Checkbox extends Component {
   }
 }
 
-Checkbox.propTypes = {
-  info: T.string,
-  clickHandler: T.func,
-};
+Checkbox.propTypes = propTypes;

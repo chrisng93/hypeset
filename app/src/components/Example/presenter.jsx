@@ -1,6 +1,10 @@
 import React, { Component, PropTypes as T } from 'react';
 
-export default class Test extends Component {
+const propTypes = {
+
+};
+
+export default class Example extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -15,6 +19,4 @@ export default class Test extends Component {
   }
 }
 
-Test.propTypes = {
-
-};
+Example.propTypes = propTypes;

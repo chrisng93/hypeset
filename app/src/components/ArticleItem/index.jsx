@@ -1,6 +1,10 @@
 import React, { PropTypes as T } from 'react';
 
-export default function Article({ article }) {
+const propTypes = {
+  article: T.object.isRequired,
+};
+
+export default function ArticleItem({ article }) {
   return (
     <div className="article">
       <div className="image-container">
@@ -17,6 +21,4 @@ export default function Article({ article }) {
   );
 }
 
-Article.propTypes = {
-  article: T.object,
-};
+ArticleItem.propTypes = propTypes;

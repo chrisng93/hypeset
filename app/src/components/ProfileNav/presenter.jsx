@@ -1,5 +1,11 @@
 import React, { Component, PropTypes as T } from 'react';
 
+const propTypes = {
+  routeToUserInfo: T.func.isRequired,
+  routeToEditUser: T.func.isRequired,
+  routeToEditBrands: T.func.isRequired,
+};
+
 export default function ProfileNav({ routeToUserInfo, routeToEditUser, routeToEditBrands }) {
   return (
     <div className="profile-nav">
@@ -10,8 +16,4 @@ export default function ProfileNav({ routeToUserInfo, routeToEditUser, routeToEd
   );
 }
 
-ProfileNav.propTypes = {
-  routeToUserInfo: T.func,
-  routeToEditUser: T.func,
-  routeToEditBrands: T.func,
-};
+ProfileNav.propTypes = propTypes;
