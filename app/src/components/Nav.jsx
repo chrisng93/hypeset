@@ -8,6 +8,7 @@ const propTypes = {
   routeToNews: T.func.isRequired,
   routeToSales: T.func.isRequired,
   routeToProfile: T.func.isRequired,
+  routeToSignIn: T.func.isRequired,
 };
 
 export default class Nav extends Component {
@@ -24,7 +25,7 @@ export default class Nav extends Component {
 
   render() {
     const { selected } = this.state;
-    const { isAuthenticated, token, onLogout, routeToNews, routeToSales, routeToProfile } = this.props;
+    const { isAuthenticated, token, onLogout, routeToNews, routeToSales, routeToProfile, routeToSignIn } = this.props;
     return (
       <div className="nav">
         <div className="title"><span>hypeset</span></div>
@@ -32,7 +33,8 @@ export default class Nav extends Component {
           <div className={`nav-news ${selected === '/news' ? 'selected' : null}`} onClick={routeToNews}>News</div>
           <div className={`nav-sales ${selected === '/sales' ? 'selected' : null}`} onClick={routeToSales}>Sales</div>
           <div className={`nav-profile ${selected === '/profile' ? 'selected' : null} ${isAuthenticated ? '' : 'hidden'}`} onClick={routeToProfile}>Profile</div>
-          <div className={`logout ${isAuthenticated ? '' : 'hidden'}`} onClick={() => onLogout({ token })}>Log out</div>
+          <div className={`login ${isAuthenticated ? 'hidden' : ''}`} onClick={routeToSignIn}>Sign in</div>
+          <div className={`logout ${isAuthenticated ? '' : 'hidden'}`} onClick={() => onLogout({ token })}>Sign out</div>
         </div>
       </div>
     );

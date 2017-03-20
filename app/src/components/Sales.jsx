@@ -8,7 +8,7 @@ const propTypes = {
   salesBrands: T.array.isRequired,
   salesSites: T.array.isRequired,
   isFetchingSales: T.bool.isRequired,
-  getSales: T.func.isRequired,
+  getOwnSales: T.func.isRequired,
 };
 
 export default class Sales extends Component {
@@ -56,8 +56,8 @@ export default class Sales extends Component {
 
   retrieveSales() {
     const { dbOffset } = this.state;
-    const { token, getSales } = this.props;
-    getSales({ token, offset: dbOffset });
+    const { token, getOwnSales } = this.props;
+    getOwnSales({ token, offset: dbOffset });
   }
 
   changeFilteredOutState(info, isFilteredOut, field) {

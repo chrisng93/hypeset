@@ -6,6 +6,6 @@ import brandAnalyticsController from './brandAnalyticsController';
 
 const analyticsRouter = express.Router();
 
-analyticsRouter.get('/brand/popularity/:limit', (req, res) => brandAnalyticsController.retrieveBrandsByPopularity(req, res));
+analyticsRouter.get('/brand/popularity', (req, res) => brandAnalyticsController.retrieveBrandsByPopularity(req, res));
 
 module.exports = analyticsRouter;

@@ -8,7 +8,7 @@ const propTypes = {
   newsBrands: T.array.isRequired,
   newsSites: T.array.isRequired,
   isFetchingNews: T.bool.isRequired,
-  getNews: T.func.isRequired,
+  getOwnNews: T.func.isRequired,
 };
 
 export default class News extends Component {
@@ -56,8 +56,8 @@ export default class News extends Component {
 
   retrieveNews() {
     const { dbOffset } = this.state;
-    const { token, getNews } = this.props;
-    getNews({ token, offset: dbOffset });
+    const { token, getOwnNews } = this.props;
+    getOwnNews({ token, offset: dbOffset });
   }
 
   changeFilteredOutState(info, isFilteredOut, field) {

@@ -6,21 +6,33 @@ import * as actionTypes from '../constants/actionTypes';
 
 const initialState = fromJS({
   news: new List(),
-  isFetchingNews: false,
+  isFetchingAllNews: false,
+  isFetchingOwnNews: false,
   error: new Map(),
 });
 
 export default function news(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
-    case actionTypes.GET_NEWS_FETCHING:
-      return state.set('isFetchingNews', true);
-    case actionTypes.GET_NEWS_SUCCESS:
+    case actionTypes.GET_ALL_NEWS_FETCHING:
+      return state.set('isFetchingAllNews', true);
+    case actionTypes.GET_ALL_NEWS_SUCCESS:
       return state.set('news', state.get('news').concat(new List(payload.news)))
-        .set('isFetchingNews', false)
+        .set('isFetchingAllNews', false)
         .set('error', new Map());
-    case actionTypes.GET_NEWS_FAILURE:
-      return state.set('isFetchingNews', false)
+    case actionTypes.GET_ALL_NEWS_FAILURE:
+      return state.set('isFetchingAllNews', false)
+        .setIn(['error', 'status'], true)
+        .setIn(['error', 'message'], payload.message);
+
+    case actionTypes.GET_OWN_NEWS_FETCHING:
+      return state.set('isFetchingOwnNews', true);
+    case actionTypes.GET_OWN_NEWS_SUCCESS:
+      return state.set('news', state.get('news').concat(new List(payload.news)))
+        .set('isFetchingOwnNews', false)
+        .set('error', new Map());
+    case actionTypes.GET_OWN_NEWS_FAILURE:
+      return state.set('isFetchingOwnNews', false)
         .setIn(['error', 'status'], true)
         .setIn(['error', 'message'], payload.message);
 

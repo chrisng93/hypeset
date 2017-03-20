@@ -6,21 +6,33 @@ import * as actionTypes from '../constants/actionTypes';
 
 const initialState = fromJS({
   sales: new List(),
-  isFetchingSales: false,
+  isFetchingAllSales: false,
+  isFetchingOwnSales: false,
   error: new Map(),
 });
 
 export default function sales(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
-    case actionTypes.GET_SALES_FETCHING:
-      return state.set('isFetchingSales', true);
-    case actionTypes.GET_SALES_SUCCESS:
+    case actionTypes.GET_ALL_SALES_FETCHING:
+      return state.set('isFetchingAllSales', true);
+    case actionTypes.GET_ALL_SALES_SUCCESS:
       return state.set('sales', state.get('sales').concat(new List(payload.sales)))
-        .set('isFetchingSales', false)
+        .set('isFetchingAllSales', false)
         .set('error', new Map());
-    case actionTypes.GET_SALES_FAILURE:
-      return state.set('isFetchingSales', false)
+    case actionTypes.GET_ALL_SALES_FAILURE:
+      return state.set('isFetchingAllSales', false)
+        .setIn(['error', 'status'], true)
+        .setIn(['error', 'message'], payload.message);
+
+    case actionTypes.GET_OWN_SALES_FETCHING:
+      return state.set('isFetchingOwnSales', true);
+    case actionTypes.GET_OWN_SALES_SUCCESS:
+      return state.set('sales', state.get('sales').concat(new List(payload.sales)))
+        .set('isFetchingOwnSales', false)
+        .set('error', new Map());
+    case actionTypes.GET_OWN_SALES_FAILURE:
+      return state.set('isFetchingOwnSales', false)
         .setIn(['error', 'status'], true)
         .setIn(['error', 'message'], payload.message);
 

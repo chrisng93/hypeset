@@ -39,9 +39,14 @@ export const salesSitesSelector = createSelector(
   }
 );
 
-export const isFetchingSalesSelector = createSelector(
+export const isFetchingAllSalesSelector = createSelector(
   salesStateSelector,
-  salesState => salesState.isFetchingSales
+  salesState => salesState.isFetchingAllSales
+);
+
+export const isFetchingOwnSalesSelector = createSelector(
+  salesStateSelector,
+  salesState => salesState.isFetchingOwnSales
 );
 
 export const salesErrorSelector = createSelector(

@@ -104,12 +104,12 @@ function removeBrandFailure(payload) {
   };
 }
 
-export function getAllBrands(payload) {
+export function getAllBrands() {
   return (dispatch) => {
     dispatch(getAllBrandsFetching());
     const options = {
       method: 'GET',
-      headers: createHeaders(payload.token),
+      headers: createHeaders(),
     };
 
     fetch(`${process.env.API_URL}/api/brand`, options)
@@ -155,10 +155,10 @@ export function getBrandsByPopularity(payload) {
     dispatch(getBrandsByPopularityBrandsFetching());
     const options = {
       method: 'GET',
-      headers: createHeaders(payload.token),
+      headers: createHeaders(),
     };
 
-    fetch(`${process.env.API_URL}/api/analytics/brand/popularity/${payload.limit}`, options)
+    fetch(`${process.env.API_URL}/api/analytics/brand/popularity?limit=${payload.limit}`, options)
       .then(response => response.json())
       .then((json) => {
         if (!json.success) {

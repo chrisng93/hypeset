@@ -9,7 +9,7 @@ async function retrieveBrandsByPopularity(req, res) {
     const query = {
       attributes: ['brandName', 'count', 'date'],
       order: [[{ raw: 'batch DESC, count DESC' }]],
-      limit: req.params.limit,
+      limit: req.query.limit,
     };
     const brandsByPopularity = await m.BrandPopularity.findAll(query);
     console.log('Retrieved brands by popularity');

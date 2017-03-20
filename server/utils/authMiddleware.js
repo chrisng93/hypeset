@@ -4,9 +4,11 @@
 import jwt from 'jsonwebtoken';
 
 export const checkPath = (req, res, next) => {
-  const nonSecurePosts = ['/auth', '/api/user'];
+  // TODO: find way to do parameters
+  const unsecuredGets = ['/api/brand', '/api/brand/:name', '/api/analytics/brand/popularity', '/api/site', '/api/user/:username'];
+  const unsecuredPosts = ['/auth', '/api/user'];
 
-  if (req.method === 'POST' && nonSecurePosts.indexOf(req.path) >= 0) {
+  if ((req.method === 'POST' && unsecuredPosts.indexOf(req.path) >= 0) || (req.method === 'GET' && unsecuredGets.indexOf(req.path) >= 0)) {
     req.unsecured = true;
     return next();
   }

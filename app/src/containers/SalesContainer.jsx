@@ -12,7 +12,7 @@ const propTypes = {
   salesBrands: T.array.isRequired,
   salesSites: T.array.isRequired,
   isFetchingSales: T.bool.isRequired,
-  getSales: T.func.isRequired,
+  getOwnSales: T.func.isRequired,
 };
 
 function SalesContainer(props) {
@@ -33,7 +33,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getSales: bindActionCreators(actions.getSales, dispatch),
+    getOwnSales: bindActionCreators(actions.getOwnSales, dispatch),
   };
 }
 

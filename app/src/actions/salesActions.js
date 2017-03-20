@@ -4,45 +4,88 @@
 import * as actionTypes from '../constants/actionTypes.js';
 import { createHeaders } from '../utils/requestUtils';
 
-function getSalesFetching() {
+function getAllSalesFetching() {
   return {
-    type: actionTypes.GET_SALES_FETCHING,
+    type: actionTypes.GET_ALL_SALES_FETCHING,
   }
 }
 
-function getSalesSuccess(payload) {
+function getAllSalesSuccess(payload) {
   return {
-    type: actionTypes.GET_SALES_SUCCESS,
+    type: actionTypes.GET_ALL_SALES_SUCCESS,
     payload,
   }
 }
 
-function getSalesFailure(payload) {
+function getAllSalesFailure(payload) {
   return {
-    type: actionTypes.GET_SALES_FAILURE,
+    type: actionTypes.GET_ALL_SALES_FAILURE,
     payload,
   }
 }
 
-export default function getSales(payload) {
+function getOwnSalesFetching() {
+  return {
+    type: actionTypes.GET_OWN_SALES_FETCHING,
+  }
+}
+
+function getOwnSalesSuccess(payload) {
+  return {
+    type: actionTypes.GET_OWN_SALES_SUCCESS,
+    payload,
+  }
+}
+
+function getOwnSalesFailure(payload) {
+  return {
+    type: actionTypes.GET_OWN_SALES_FAILURE,
+    payload,
+  }
+}
+
+export function getAllSales(payload) {
   return (dispatch) => {
-    dispatch(getSalesFetching());
+    dispatch(getAllSalesFetching());
+    const options = {
+      method: 'GET',
+      headers: createHeaders(),
+    };
+
+    return fetch(`${process.env.API_URL}/api/sales?offset=${payload.offset}`, options)
+      .then(response => response.json())
+      .then((json) => {
+        if (!json.success) {
+          return dispatch(getAllSalesFailure(json));
+        }
+        return dispatch(getAllSalesSuccess(json));
+      })
+      .catch((err) => {
+        console.error(`Error getting all sales: ${err}`);
+        return dispatch(getAllSalesFailure(err));
+      })
+  };
+}
+
+export function getOwnSales(payload) {
+  return (dispatch) => {
+    dispatch(getOwnSalesFetching());
     const options = {
       method: 'GET',
       headers: createHeaders(payload.token),
     };
 
-    return fetch(`${process.env.API_URL}/api/me/sales/${payload.offset}`, options)
+    return fetch(`${process.env.API_URL}/api/me/sales?offset=${payload.offset}`, options)
       .then(response => response.json())
       .then((json) => {
         if (!json.success) {
-          return dispatch(getSalesFailure(json));
+          return dispatch(getOwnSalesFailure(json));
         }
-        return dispatch(getSalesSuccess(json));
+        return dispatch(getOwnSalesSuccess(json));
       })
       .catch((err) => {
-        console.error(`Error getting sales: ${err}`);
-        return dispatch(getSalesFailure(err));
+        console.error(`Error getting own sales: ${err}`);
+        return dispatch(getOwnSalesFailure(err));
       })
   };
 }

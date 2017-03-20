@@ -4,45 +4,88 @@
 import * as actionTypes from '../constants/actionTypes.js';
 import { createHeaders } from '../utils/requestUtils';
 
-function getNewsFetching() {
+function getAllNewsFetching() {
   return {
-    type: actionTypes.GET_NEWS_FETCHING,
+    type: actionTypes.GET_ALL_NEWS_FETCHING,
   };
 }
 
-function getNewsSuccess(payload) {
+function getAllNewsSuccess(payload) {
   return {
-    type: actionTypes.GET_NEWS_SUCCESS,
+    type: actionTypes.GET_ALL_NEWS_SUCCESS,
     payload,
   };
 }
 
-function getNewsFailure(payload) {
+function getAllNewsFailure(payload) {
   return {
-    type: actionTypes.GET_NEWS_FAILURE,
+    type: actionTypes.GET_ALL_NEWS_FAILURE,
     payload,
   };
 }
 
-export default function getNews(payload) {
+function getOwnNewsFetching() {
+  return {
+    type: actionTypes.GET_OWN_NEWS_FETCHING,
+  };
+}
+
+function getOwnNewsSuccess(payload) {
+  return {
+    type: actionTypes.GET_OWN_NEWS_SUCCESS,
+    payload,
+  };
+}
+
+function getOwnNewsFailure(payload) {
+  return {
+    type: actionTypes.GET_OWN_NEWS_FAILURE,
+    payload,
+  };
+}
+
+export function getAllNews(payload) {
   return (dispatch) => {
-    dispatch(getNewsFetching());
+    dispatch(getAllNewsFetching());
+    const options = {
+      method: 'GET',
+      headers: createHeaders(),
+    };
+
+    return fetch(`${process.env.API_URL}/api/news?offset=${payload.offset}`, options)
+      .then(response => response.json())
+      .then((json) => {
+        if (!json.success) {
+          return dispatch(getAllNewsFailure(json));
+        }
+        return dispatch(getAllNewsSuccess(json));
+      })
+      .catch((err) => {
+        console.error(`Error getting all news: ${err}`);
+        return dispatch(getAllNewsFailure(err));
+      })
+  };
+}
+
+export function getOwnNews(payload) {
+  return (dispatch) => {
+    dispatch(getOwnNewsFetching());
     const options = {
       method: 'GET',
       headers: createHeaders(payload.token),
     };
 
-    return fetch(`${process.env.API_URL}/api/me/news/${payload.offset}`, options)
+    return fetch(`${process.env.API_URL}/api/me/news?offset=${payload.offset}`, options)
       .then(response => response.json())
       .then((json) => {
         if (!json.success) {
-          return dispatch(getNewsFailure(json));
+          return dispatch(getOwnNewsFailure(json));
         }
-        return dispatch(getNewsSuccess(json));
+        return dispatch(getOwnNewsSuccess(json));
       })
       .catch((err) => {
-        console.error(`Error getting news: ${err}`);
-        return dispatch(getNewsFailure(err));
+        console.error(`Error getting own news: ${err}`);
+        return dispatch(getOwnNewsFailure(err));
       })
   };
 }

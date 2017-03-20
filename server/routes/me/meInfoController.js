@@ -22,26 +22,26 @@ async function getInfo(userId, type, offset, limit) {
 
 async function getOwnNews(req, res) {
   try {
-    let { offset } = req.params;
-    offset = parseInt(offset);
+    let { offset } = req.query;
+    offset ? offset = parseInt(offset) : offset = 0;
     let news = await getInfo(req.user.id, 'News', offset, 20);
     news = news.slice(offset, offset + 20);
     res.status(200).send({ success: true, news });
   } catch(err) {
-    console.error(`Error retrieving news for user ${req.user.id}: ${JSON.stringify(err)}`);
+    console.error(`Error retrieving news for user ${req.user.username}: ${JSON.stringify(err)}`);
     res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
 
 async function getOwnSales(req, res) {
   try {
-    let { offset } = req.params;
-    offset = parseInt(offset);
+    let { offset } = req.query;
+    offset ? offset = parseInt(offset) : offset = 0;
     let sales = await getInfo(req.user.id, 'Sale', offset, 20);
     sales = sales.slice(offset, offset + 20);
     res.status(200).send({ success: true, sales });
   } catch(err) {
-    console.error(`Error retrieving sales for user ${req.user.id}: ${JSON.stringify(err)}`);
+    console.error(`Error retrieving sales for user ${req.user.username}: ${JSON.stringify(err)}`);
     res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }

@@ -51,9 +51,14 @@ export const newsSitesSelector = createSelector(
   }
 );
 
-export const isFetchingNewsSelector = createSelector(
+export const isFetchingAllNewsSelector = createSelector(
   newsStateSelector,
-  newsState => newsState.isFetchingNews
+  newsState => newsState.isFetchingAllNews
+);
+
+export const isFetchingOwnNewsSelector = createSelector(
+  newsStateSelector,
+  newsState => newsState.isFetchingOwnNews
 );
 
 export const newsErrorSelector = createSelector(
