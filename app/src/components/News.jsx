@@ -5,6 +5,8 @@ import Checkbox from './Checkbox';
 const propTypes = {
   token: T.string.isRequired,
   news: T.array.isRequired,
+  newsBrands: T.array.isRequired,
+  newsSites: T.array.isRequired,
   getNews: T.func.isRequired,
 };
 
@@ -12,17 +14,28 @@ export default class News extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      visible: [],
       filteredOutBrands: [],
       filteredOutSites: [],
-      offset: 0,
+      dbOffset: 0,
+      visibleOffset: 0,
     };
-    this.handleScroll = this.handleScroll.bind(this);
-    this.changeFilteredOutState = this.changeFilteredOutState.bind(this);
     this.retrieveNews = this.retrieveNews.bind(this);
+    this.changeFilteredOutState = this.changeFilteredOutState.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
   }
 
   componentWillMount() {
-    this.retrieveNews();
+    const { news } = this.props;
+    if (news.length === 0) {
+      this.retrieveNews();
+    }
+    const visibleArray = news.slice(0, 10);
+    this.setState({
+      dbOffset: news.length,
+      visible: visibleArray,
+      visibleOffset: visibleArray.length,
+    });
   }
 
   componentDidMount() {
@@ -33,51 +46,59 @@ export default class News extends Component {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { news } = nextProps;
+    this.filterResults(news);
+    this.setState({ dbOffset: news.length + 1 });
+  }
+
   retrieveNews() {
-    const { offset } = this.state;
+    const { dbOffset } = this.state;
     const { token, getNews } = this.props;
-    getNews({ token, offset });
+    getNews({ token, offset: dbOffset });
   }
 
   changeFilteredOutState(info, isFilteredOut, field) {
+    const { news } = this.props;
     const newState = {};
     newState[field] = null;
-    if (isFilteredOut) {
-      newState[field] = this.state[field].concat(info);
-    } else {
-      newState[field] = this.state[field].filter(stateInfo => stateInfo !== info);
-    }
+    isFilteredOut ? newState[field] = this.state[field].concat(info) : newState[field] = this.state[field].filter(stateInfo => stateInfo !== info);
+    this.filterResults(news);
     this.setState(newState);
   }
 
+  filterResults(news) {
+    const { filteredOutBrands, filteredOutSites, visibleOffset } = this.state;
+    const validNews = news.filter((row) => {
+      if (filteredOutBrands.indexOf(row.Brands.name) >= 0) {
+        return false;
+      }
+      return filteredOutSites.indexOf(row.Site.name) < 0;
+    });
+    const visibleArray = validNews.slice(0, visibleOffset + 10);
+    this.setState({ visible: visibleArray, visibleOffset: visibleArray.length });
+  }
+
   handleScroll() {
-    const { offset } = this.state;
+    const { visible } = this.state;
+    const { news } = this.props;
     const windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight;
     const body = document.body;
     const html = document.documentElement;
     const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
     const windowBottom = windowHeight + window.pageYOffset;
     if (windowBottom >= docHeight - 1) {
-      this.setState({
-        offset: offset + 20,
-      }, this.retrieveNews);
+      news.length - visible.length < 10 ? this.retrieveNews() : this.filterResults(news);
     }
   }
 
   render() {
-    const { filteredOutBrands, filteredOutSites } = this.state;
-    const { news, newsBrands, newsSites } = this.props;
+    const { filteredOutBrands, filteredOutSites, visible } = this.state;
+    const { newsBrands, newsSites } = this.props;
     return (
       <div className="news">
         <div className="news-container">
-        {news.filter((news) => {
-          for (let i = 0; i < news.Brands.length; i++) {
-            if (filteredOutBrands.indexOf(news.Brands[i].name) >= 0) {
-              return false;
-            }
-          }
-          return filteredOutSites.indexOf(news.Site.name) < 0;
-        }).map((news, key) => <ArticleItem key={key} article={news} /> )}
+        {visible.map((news, key) => <ArticleItem key={key} article={news} /> )}
         </div>
         <div className="filter-container">
           <div className="filter">

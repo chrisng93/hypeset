@@ -1,7 +1,6 @@
 /**
  * Created by chrisng on 3/19/17.
  */
-import moment from 'moment';
 import { createSelector } from 'reselect';
 import { toJS } from 'immutable';
 
@@ -9,7 +8,7 @@ const salesStateSelector = state => state.sales.toJS();
 
 export const salesSelector = createSelector(
   salesStateSelector,
-  salesState => salesState.sales.sort((a, b) => moment(a.date).diff(b.date, 'seconds') < 0)
+  salesState => salesState.sales
 );
 
 export const salesBrandsSelector = createSelector(

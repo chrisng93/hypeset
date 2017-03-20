@@ -2,7 +2,7 @@
  * Created by chrisng on 3/14/17.
  */
 import * as actionTypes from '../constants/actionTypes.js';
-import { createHeaders } from '../utils/request';
+import { createHeaders } from '../utils/requestUtils';
 
 function getAllBrandsSuccess(payload) {
   return {

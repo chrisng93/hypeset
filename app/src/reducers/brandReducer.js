@@ -18,7 +18,7 @@ export default function brand(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case actionTypes.GET_ALL_BRANDS_SUCCESS:
-      return state.set('allBrands', payload.brands)
+      return state.set('allBrands', new List(payload.brands))
         .set('error', new Map());
     case actionTypes.GET_ALL_BRANDS_FAILURE:
       return state.set('allBrands', new List())
@@ -26,21 +26,21 @@ export default function brand(state = initialState, action) {
         .setIn(['error', 'message'], payload.message);
 
     case actionTypes.GET_USER_BRANDS_SUCCESS:
-      return state.set('userBrands', payload.brands);
+      return state.set('userBrands', new List(payload.brands));
     case actionTypes.GET_USER_BRANDS_FAILURE:
       return state.set('userBrands', new List())
         .setIn(['error', 'status'], true)
         .setIn(['error', 'message'], payload.message);
 
     case actionTypes.GET_BRANDS_BY_POPULARITY_SUCCESS:
-      return state.set('brandsByPopularity', payload.brandsByPopularity);
+      return state.set('brandsByPopularity', new List(payload.brandsByPopularity));
     case actionTypes.GET_BRANDS_BY_POPULARITY_FAILURE:
       return state.set('brandsByPopularity', new List())
         .setIn(['error', 'status'], true)
         .setIn(['error', 'message'], payload.message);
 
     case actionTypes.ADD_BRAND_SUCCESS:
-      return state.set('userBrands', state.get('userBrands').concat([...payload.successfulInserts]));
+      return state.set('userBrands', state.get('userBrands').concat(new List([...payload.successfulInserts])));
     case actionTypes.ADD_BRAND_FAILURE:
       return state.setIn(['error', 'status'], true)
         .setIn(['error', 'message'], payload.message);

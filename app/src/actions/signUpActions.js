@@ -2,7 +2,7 @@
  * Created by chrisng on 3/12/17.
  */
 import * as actionTypes from '../constants/actionTypes';
-import { createHeaders } from '../utils/request';
+import { createHeaders } from '../utils/requestUtils';
 
 function signUpSuccess(payload) {
   return {

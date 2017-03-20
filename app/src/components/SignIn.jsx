@@ -13,7 +13,6 @@ export default class SignIn extends Component {
     this.state = {
       username: '',
       password: '',
-      submitted: false,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
   }

@@ -29,8 +29,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch, ownProps) {
   return {
-    routeToSignIn: () => dispatch(push('/signin')),
     currentURL: ownProps.location.pathname,
+    routeToSignIn: () => dispatch(push('/signin')),
     routeToNews: () => dispatch(push('/news')),
     routeToSales: () => dispatch(push('/sales')),
     routeToProfile: () => dispatch(push('/profile')),

@@ -16,12 +16,36 @@ export default class Sales extends Component {
     this.state = {
       filteredOutBrands: [],
       filteredOutSites: [],
+      offset: 0,
     };
+    this.retrieveSales = this.retrieveSales.bind(this);
+    this.changeFilteredOutState = this.changeFilteredOutState.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
   }
 
   componentWillMount() {
+    const { sales } = this.props;
+    this.setState({
+      offset: sales.length + 1,
+    }, () => {
+      if (sales.length < 20) {
+        this.retrieveSales();
+      }
+    });
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  retrieveSales() {
+    const { offset } = this.state;
     const { token, getSales } = this.props;
-    getSales({ token });
+    getSales({ token, offset });
   }
 
   changeFilteredOutState(info, isFilteredOut, field) {
@@ -33,6 +57,22 @@ export default class Sales extends Component {
       newState[field] = this.state[field].filter(stateInfo => stateInfo !== info);
     }
     this.setState(newState);
+  }
+
+  handleScroll() {
+    const { offset } = this.state;
+    const windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight;
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+    const windowBottom = windowHeight + window.pageYOffset;
+    if (windowBottom >= docHeight - 1) {
+      this.setState({
+        offset: offset + 20,
+      }, () => {
+        this.retrieveSales();
+      });
+    }
   }
 
   render() {
