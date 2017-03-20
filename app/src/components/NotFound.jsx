@@ -1,15 +1,18 @@
 import React, { PropTypes as T } from 'react';
 
 const propTypes = {
-  routeToHome: T.func.isRequired
+  routeToHome: T.func.isRequired,
 };
 
 export default function NotFound(props) {
   const { routeToHome } = props;
   return (
     <div className="not-found">
-      <div>Route not found. Please go back to home page.</div>
-      <button onClick={routeToHome}>Click here to go back to home page.</button>
+      <img src={require('../../assets/intro-bg1.jpg')} className="bg" />
+      <div className="not-found-container">
+        <div className="title">Route not found.</div>
+        <div onClick={routeToHome}>Go back to the <span className="link">home page</span>.</div>
+      </div>
     </div>
   );
 }
