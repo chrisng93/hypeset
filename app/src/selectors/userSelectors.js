@@ -31,6 +31,11 @@ export const isFetchingSignup = createSelector(
   userState => userState.isFetchingSignup
 );
 
+export const isFetchingLogout = createSelector(
+  userStateSelector,
+  userState => userState.isFetchingLogout
+);
+
 export const isFetchingEditUser = createSelector(
   userStateSelector,
   userState => userState.isFetchingEditUser

@@ -9,6 +9,7 @@ const propTypes = {
   getUserBrands: T.func.isRequired,
   getNews: T.func.isRequired,
   getSales: T.func.isRequired,
+  onLogout: T.func.isRequired,
   routeToSignIn: T.func.isRequired,
   routeToNews: T.func.isRequired,
   routeToSales: T.func.isRequired,
@@ -27,8 +28,8 @@ export default class EnsureAuthentication extends Component {
   }
 
   render() {
-    const { isAuthenticated, pathname, children, routeToNews, routeToSales, routeToProfile } = this.props;
-    const navProps = { pathname, routeToNews, routeToSales, routeToProfile };
+    const { isAuthenticated, token, pathname, children, onLogout, routeToNews, routeToSales, routeToProfile } = this.props;
+    const navProps = { token, pathname, onLogout, routeToNews, routeToSales, routeToProfile };
     if (isAuthenticated) {
       return (
         <div className="container">

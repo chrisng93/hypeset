@@ -3,11 +3,10 @@
  */
 import jwt from 'jsonwebtoken';
 
-const checkPath = (req, res, next) => {
-  const nonSecurePaths = ['/auth'];
-  const nonSecurePosts = ['/api/user'];
+export const checkPath = (req, res, next) => {
+  const nonSecurePosts = ['/auth', '/api/user'];
 
-  if (nonSecurePaths.indexOf(req.path) >= 0 || (req.method === 'POST' && nonSecurePosts.indexOf(req.path) >= 0)) {
+  if (req.method === 'POST' && nonSecurePosts.indexOf(req.path) >= 0) {
     req.unsecured = true;
     return next();
   }
@@ -23,7 +22,7 @@ const getToken = (req) => {
   return null;
 };
 
-const verifyToken = (req, res, next) => {
+export const verifyToken = (req, res, next) => {
   if (req.unsecured) {
     return next();
   }
@@ -41,5 +40,3 @@ const verifyToken = (req, res, next) => {
     return next();
   });
 };
-
-module.exports = { checkPath, verifyToken };

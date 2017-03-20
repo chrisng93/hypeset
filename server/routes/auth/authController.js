@@ -29,13 +29,19 @@ async function authenticate(req, res) {
   }
 }
 
+async function logout(req, res) {
+  // TODO: invalidate token (redis?)
+  res.send({ success: true });
+}
+
 async function test(req, res) {
   try {
-    // await retrieveBrands();
-    // await retrieveNews();
-    const brandModels = await m.Brand.findAll();
-    const availableBrands = brandModels.map(model => model.name);
-    await retrieveSales(availableBrands);
+    await retrieveBrands();
+    await retrieveNews();
+    await retrieveSales();
+    // const brandModels = await m.Brand.findAll();
+    // const availableBrands = brandModels.map(model => model.name);
+    // await retrieveSales(availableBrands);
     // const sales = await m.Info.findAll({ where: { type: 'Sale' } });
     // for (let i = 0; i < sales.length; i++) {
     //   sales[i].destroy();
@@ -46,4 +52,4 @@ async function test(req, res) {
   res.send()
 }
 
-module.exports = { authenticate, test };
+module.exports = { authenticate, logout, test };

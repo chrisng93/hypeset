@@ -1,8 +1,9 @@
 /**
  * Created by chrisng on 3/19/17.
  */
+import { push } from 'react-router-redux';
 import * as actionTypes from '../constants/actionTypes.js';
-import { request, createHeaders } from '../utils/requestUtils';
+import { createHeaders } from '../utils/requestUtils';
 
 function authFetching() {
   return {
@@ -24,26 +25,6 @@ function authFailure(payload) {
   };
 }
 
-function editUserFetching() {
-  return {
-    type: actionTypes.EDIT_USER_FETCHING,
-  }
-}
-
-function editUserSuccess(payload) {
-  return {
-    type: actionTypes.EDIT_USER_SUCCESS,
-    payload,
-  };
-}
-
-function editUserFailure(payload) {
-  return {
-    type: actionTypes.EDIT_USER_FAILURE,
-    payload,
-  };
-}
-
 function signUpFetching() {
   return {
     type: actionTypes.SIGNUP_FETCHING,
@@ -60,6 +41,46 @@ function signUpSuccess(payload) {
 function signUpFailure(payload) {
   return {
     type: actionTypes.SIGNUP_FAILURE,
+    payload,
+  };
+}
+
+function logoutFetching() {
+  return {
+    type: actionTypes.LOGOUT_FETCHING,
+  }
+}
+
+function logoutSuccess(payload) {
+  return {
+    type: actionTypes.LOGOUT_SUCCESS,
+    payload,
+  };
+}
+
+function logoutFailure(payload) {
+  return {
+    type: actionTypes.LOGOUT_FAILURE,
+    payload,
+  };
+}
+
+function editUserFetching() {
+  return {
+    type: actionTypes.EDIT_USER_FETCHING,
+  }
+}
+
+function editUserSuccess(payload) {
+  return {
+    type: actionTypes.EDIT_USER_SUCCESS,
+    payload,
+  };
+}
+
+function editUserFailure(payload) {
+  return {
+    type: actionTypes.EDIT_USER_FAILURE,
     payload,
   };
 }
@@ -88,30 +109,6 @@ export function auth(payload) {
   };
 }
 
-export function editUser(payload, token) {
-  return (dispatch) => {
-    dispatch(editUserFetching());
-    const options = {
-      method: 'PUT',
-      headers: createHeaders(token),
-      body: JSON.stringify(payload),
-    };
-
-    fetch(`${process.env.API_URL}/api/user/${payload.username}`, options)
-      .then(response => response.json())
-      .then((json) => {
-        if (!json.success) {
-          return dispatch(editUserFailure(json));
-        }
-        return dispatch(editUserSuccess(json));
-      })
-      .catch((err) => {
-        console.error(`Error signing up user: ${err}`);
-        dispatch(editUserFailure(err));
-      });
-  };
-}
-
 export function signUp(payload) {
   return (dispatch) => {
     dispatch(signUpFetching());
@@ -134,4 +131,53 @@ export function signUp(payload) {
         return dispatch(signUpFailure(err));
       });
   }
+}
+
+export function logout(payload) {
+  return (dispatch) => {
+    dispatch(logoutFetching());
+    const options = {
+      method: 'POST',
+      headers: createHeaders(payload.token),
+    };
+
+    return fetch(`${process.env.API_URL}/auth/logout`, options)
+      .then(response => response.json())
+      .then((json) => {
+        dispatch(push('/signin'));
+        if (!json.success) {
+          return dispatch(logoutFailure(json));
+        }
+        return dispatch(logoutSuccess(json));
+      })
+      .catch((err) => {
+        console.error(`Error signing up user: ${err}`);
+        dispatch(push('/signin'));
+        return dispatch(logoutFailure(err));
+      });
+  };
+}
+
+export function editUser(payload) {
+  return (dispatch) => {
+    dispatch(editUserFetching());
+    const options = {
+      method: 'PUT',
+      headers: createHeaders(payload.token),
+      body: JSON.stringify(payload),
+    };
+
+    fetch(`${process.env.API_URL}/api/user/${payload.username}`, options)
+      .then(response => response.json())
+      .then((json) => {
+        if (!json.success) {
+          return dispatch(editUserFailure(json));
+        }
+        return dispatch(editUserSuccess(json));
+      })
+      .catch((err) => {
+        console.error(`Error signing up user: ${err}`);
+        dispatch(editUserFailure(err));
+      });
+  };
 }

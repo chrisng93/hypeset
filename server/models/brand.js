@@ -1,4 +1,5 @@
 import { isUnique } from '../utils/databaseHelpers';
+import { condense } from '../utils/scriptHelpers';
 
 module.exports = (sequelize, DataTypes) => {
   const Brand = sequelize.define('Brand', {
@@ -8,6 +9,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         isUnique: isUnique('Brand', 'name'),
+      },
+      condensedName: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false,
       },
     },
   }, {
@@ -24,12 +30,13 @@ module.exports = (sequelize, DataTypes) => {
         return this.find({ where: { name: { $iLike: name } } });
       },
       checkOrCreate: function(name) {
-        return this.find({ where: { name: { $iLike: name } } })
+        const condensedName = condense(name);
+        return this.find({ where: { condensedName: { $iLike: condensedName } } })
           .then((found) => {
             if (found) {
               return found;
             }
-            return this.create({ name });
+            return this.create({ name, condensedName });
           });
       },
     },

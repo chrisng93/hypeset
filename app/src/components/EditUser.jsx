@@ -44,7 +44,8 @@ export default class EditUser extends Component {
     if (email.length) {
       updatedFields.email = email;
     }
-    onEditUser(updatedFields, token);
+    updatedFields.token = token;
+    onEditUser(updatedFields);
     this.setState({ password: '', firstName: '', lastName: '', email: '' });
   }
 
