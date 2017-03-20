@@ -23,6 +23,7 @@ export default class News extends Component {
     };
     this.retrieveNews = this.retrieveNews.bind(this);
     this.changeFilteredOutState = this.changeFilteredOutState.bind(this);
+    this.filterResults = this.filterResults.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
   }
 
@@ -64,7 +65,7 @@ export default class News extends Component {
     const newState = {};
     newState[field] = null;
     isFilteredOut ? newState[field] = this.state[field].concat(info) : newState[field] = this.state[field].filter(stateInfo => stateInfo !== info);
-    field === 'filteredOutBrands' ? this.filterResults(news, newState.filteredOutBrands) : this.filterResults(news, this.state.filteredOutBrands, newState.filteredOutSites)
+    field === 'filteredOutBrands' ? this.filterResults(news, newState.filteredOutBrands) : this.filterResults(news, this.state.filteredOutBrands, newState.filteredOutSites);
     this.setState(newState);
   }
 

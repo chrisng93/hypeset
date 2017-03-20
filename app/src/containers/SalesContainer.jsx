@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from '../actions';
 import { tokenSelector } from '../selectors/userSelectors';
-import { salesSelector, salesBrandsSelector, salesSitesSelector } from '../selectors/salesSelectors';
+import { salesSelector, salesBrandsSelector, salesSitesSelector, isFetchingSalesSelector } from '../selectors/salesSelectors';
 import Sales from '../components/Sales';
 
 const propTypes = {
@@ -11,6 +11,7 @@ const propTypes = {
   sales: T.array.isRequired,
   salesBrands: T.array.isRequired,
   salesSites: T.array.isRequired,
+  isFetchingSales: T.bool.isRequired,
   getSales: T.func.isRequired,
 };
 
@@ -26,6 +27,7 @@ function mapStateToProps(state) {
     sales: salesSelector(state),
     salesBrands: salesBrandsSelector(state),
     salesSites: salesSitesSelector(state),
+    isFetchingSales: isFetchingSalesSelector(state),
   };
 }
 

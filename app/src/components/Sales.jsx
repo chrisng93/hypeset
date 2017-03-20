@@ -7,6 +7,7 @@ const propTypes = {
   sales: T.array.isRequired,
   salesBrands: T.array.isRequired,
   salesSites: T.array.isRequired,
+  isFetchingSales: T.bool.isRequired,
   getSales: T.func.isRequired,
 };
 
@@ -14,23 +15,28 @@ export default class Sales extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      visible: [],
       filteredOutBrands: [],
       filteredOutSites: [],
-      offset: 0,
+      dbOffset: 0,
+      visibleOffset: 0,
     };
     this.retrieveSales = this.retrieveSales.bind(this);
     this.changeFilteredOutState = this.changeFilteredOutState.bind(this);
+    this.filterResults = this.filterResults.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
   }
 
   componentWillMount() {
-    const { sales } = this.props;
+    const { sales, isFetchingSales } = this.props;
+    if (sales.length === 0 && !isFetchingSales) {
+      this.retrieveSales();
+    }
+    const visibleArray = sales.slice(0, 10);
     this.setState({
-      offset: sales.length + 1,
-    }, () => {
-      if (sales.length < 20) {
-        this.retrieveSales();
-      }
+      dbOffset: sales.length,
+      visible: visibleArray,
+      visibleOffset: visibleArray.length,
     });
   }
 
@@ -42,53 +48,61 @@ export default class Sales extends Component {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { sales } = nextProps;
+    this.filterResults(sales);
+    this.setState({ dbOffset: sales.length + 1 });
+  }
+
   retrieveSales() {
-    const { offset } = this.state;
+    const { dbOffset } = this.state;
     const { token, getSales } = this.props;
-    getSales({ token, offset });
+    getSales({ token, offset: dbOffset });
   }
 
   changeFilteredOutState(info, isFilteredOut, field) {
+    const { sales } = this.props;
     const newState = {};
     newState[field] = null;
-    if (isFilteredOut) {
-      newState[field] = this.state[field].concat(info);
-    } else {
-      newState[field] = this.state[field].filter(stateInfo => stateInfo !== info);
-    }
+    isFilteredOut ? newState[field] = this.state[field].concat(info) : newState[field] = this.state[field].filter(stateInfo => stateInfo !== info);
+    field === 'filteredOutBrands' ? this.filterResults(sales, newState.filteredOutBrands) : this.filterResults(sales, this.state.filteredOutBrands, newState.filteredOutSites);
     this.setState(newState);
   }
 
+  filterResults(sales, filteredOutBrands = this.state.filteredOutBrands, filteredOutSites = this.state.filteredOutSites) {
+    const { visibleOffset } = this.state;
+    const validSales = sales.filter((row) => {
+      for (let i = 0; i < row.Brands.length; i++) {
+        if (filteredOutBrands.indexOf(row.Brands[i].name) >= 0) {
+          return false;
+        }
+      }
+      return filteredOutSites.indexOf(row.Site.name) < 0;
+    });
+    const visibleArray = validSales.slice(0, visibleOffset + 10);
+    this.setState({ visible: visibleArray, visibleOffset: visibleArray.length });
+  }
+
   handleScroll() {
-    const { offset } = this.state;
+    const { visible } = this.state;
+    const { sales } = this.props;
     const windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight;
     const body = document.body;
     const html = document.documentElement;
     const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
     const windowBottom = windowHeight + window.pageYOffset;
     if (windowBottom >= docHeight - 1) {
-      this.setState({
-        offset: offset + 20,
-      }, () => {
-        this.retrieveSales();
-      });
+      sales.length - visible.length < 10 ? this.retrieveSales() : this.filterResults(sales);
     }
   }
 
   render() {
     const { filteredOutBrands, filteredOutSites } = this.state;
-    const { sales, salesBrands, salesSites } = this.props;
+    const { visible, salesBrands, salesSites } = this.props;
     return (
       <div className="sales">
         <div className="sales-container">
-          {sales.filter((sales) => {
-            for (let i = 0; i < sales.Brands.length; i++) {
-              if (filteredOutBrands.indexOf(sales.Brands[i].name) >= 0) {
-                return false;
-              }
-            }
-            return filteredOutSites.indexOf(sales.Site.name) < 0;
-          }).map((sales, key) => <ArticleItem article={sales} key={key} /> )}
+          {visible.map((sales, key) => <ArticleItem article={sales} key={key} /> )}
         </div>
         <div className="filter-container">
           <div className="filter">
