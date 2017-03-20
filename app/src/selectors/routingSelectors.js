@@ -5,7 +5,12 @@ import { createSelector } from 'reselect'
 
 const routingStateSelector = state => state.routing;
 
-export const pathnameSelector = createSelector(
+const locationBeforeTransitionsSelector = createSelector(
   routingStateSelector,
-  routingState => routingState.pathname
+  routingState => routingState.locationBeforeTransitions
+);
+
+export const pathnameSelector = createSelector(
+  locationBeforeTransitionsSelector,
+  locationBeforeTransitions => locationBeforeTransitions.pathname
 );

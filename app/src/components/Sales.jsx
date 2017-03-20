@@ -97,8 +97,8 @@ export default class Sales extends Component {
   }
 
   render() {
-    const { filteredOutBrands, filteredOutSites } = this.state;
-    const { visible, salesBrands, salesSites } = this.props;
+    const { visible, filteredOutBrands, filteredOutSites } = this.state;
+    const { salesBrands, salesSites } = this.props;
     return (
       <div className="sales">
         <div className="sales-container">

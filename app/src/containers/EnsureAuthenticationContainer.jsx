@@ -4,11 +4,13 @@ import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux';
 import * as actions from '../actions';
 import { isAuthenticatedSelector, tokenSelector } from '../selectors/userSelectors';
+import { pathnameSelector } from '../selectors/routingSelectors';
 import EnsureAuthentication from '../components/EnsureAuthentication';
 
 const propTypes = {
   isAuthenticated: T.bool.isRequired,
   token: T.string.isRequired,
+  pathname: T.string.isRequired,
   children: T.node.isRequired,
   getUserBrands: T.func.isRequired,
   getNews: T.func.isRequired,
@@ -29,6 +31,7 @@ function mapStateToProps(state) {
   return {
     isAuthenticated: isAuthenticatedSelector(state),
     token: tokenSelector(state),
+    pathname: pathnameSelector(state),
   };
 }
 

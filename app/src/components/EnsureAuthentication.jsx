@@ -4,6 +4,7 @@ import Nav from './Nav';
 const propTypes = {
   isAuthenticated: T.bool.isRequired,
   token: T.string.isRequired,
+  pathname: T.string.isRequired,
   children: T.node,
   getUserBrands: T.func.isRequired,
   getNews: T.func.isRequired,
@@ -26,8 +27,8 @@ export default class EnsureAuthentication extends Component {
   }
 
   render() {
-    const { isAuthenticated, children, routeToNews, routeToSales, routeToProfile } = this.props;
-    const navProps = { routeToNews, routeToSales, routeToProfile };
+    const { isAuthenticated, pathname, children, routeToNews, routeToSales, routeToProfile } = this.props;
+    const navProps = { pathname, routeToNews, routeToSales, routeToProfile };
     if (isAuthenticated) {
       return (
         <div className="container">

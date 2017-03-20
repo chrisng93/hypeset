@@ -2,7 +2,7 @@
  * Created by chrisng on 3/19/17.
  */
 import * as actionTypes from '../constants/actionTypes.js';
-import { createHeaders } from '../utils/requestUtils';
+import { request, createHeaders } from '../utils/requestUtils';
 
 function authFetching() {
   return {
