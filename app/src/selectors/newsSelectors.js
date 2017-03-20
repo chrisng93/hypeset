@@ -1,6 +1,7 @@
 /**
  * Created by chrisng on 3/15/17.
  */
+import moment from 'moment';
 import { createSelector } from 'reselect';
 import { toJS } from 'immutable';
 
@@ -8,7 +9,7 @@ const newsStateSelector = state => state.news.toJS();
 
 export const newsSelector = createSelector(
   newsStateSelector,
-  newsState => newsState.news
+  newsState => newsState.news.sort((a, b) => moment(a.date).diff(b.date, 'seconds') < 0)
 );
 
 export const newsBrandsSelector = createSelector(

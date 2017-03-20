@@ -8,12 +8,29 @@ export default class News extends Component {
     this.state = {
       filteredOutBrands: [],
       filteredOutSites: [],
+      offset: 0,
     };
+    this.handleScroll = this.handleScroll.bind(this);
+    this.changeFilteredOutState = this.changeFilteredOutState.bind(this);
+    this.retrieveNews = this.retrieveNews.bind(this);
   }
 
   componentWillMount() {
+    this.retrieveNews();
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  retrieveNews() {
+    const { offset } = this.state;
     const { token, getNews } = this.props;
-    getNews({ token });
+    getNews({ token, offset });
   }
 
   changeFilteredOutState(info, isFilteredOut, field) {
@@ -25,6 +42,20 @@ export default class News extends Component {
       newState[field] = this.state[field].filter(stateInfo => stateInfo !== info);
     }
     this.setState(newState);
+  }
+
+  handleScroll() {
+    const { offset } = this.state;
+    const windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight;
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+    const windowBottom = windowHeight + window.pageYOffset;
+    if (windowBottom >= docHeight - 1) {
+      this.setState({
+        offset: offset + 20,
+      }, this.retrieveNews);
+    }
   }
 
   render() {

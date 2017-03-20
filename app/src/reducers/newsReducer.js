@@ -13,7 +13,7 @@ export default function news(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case actionTypes.GET_NEWS_SUCCESS:
-      return state.set('news', payload.news)
+      return state.set('news', state.get('news').merge(payload.news))
         .set('error', new Map());
     case actionTypes.GET_NEWS_FAILURE:
       return state.setIn(['error', 'status'], true)

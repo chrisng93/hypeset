@@ -25,7 +25,7 @@ export default function getNews(payload) {
       headers: createHeaders(payload.token),
     };
 
-    return fetch(`${process.env.API_URL}/api/me/news`, options)
+    return fetch(`${process.env.API_URL}/api/me/news/${payload.offset}`, options)
       .then(response => response.json())
       .then((json) => {
         if (!json.success) {

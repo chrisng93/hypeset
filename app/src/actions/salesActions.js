@@ -25,7 +25,7 @@ export default function getSales(payload) {
       headers: createHeaders(payload.token),
     };
 
-    return fetch(`${process.env.API_URL}/api/me/sales`, options)
+    return fetch(`${process.env.API_URL}/api/me/sales/${payload.offset}`, options)
       .then(response => response.json())
       .then((json) => {
         if (!json.success) {
