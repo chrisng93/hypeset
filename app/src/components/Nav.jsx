@@ -19,9 +19,11 @@ export default class Nav extends Component {
     };
   }
 
+  componentWillMount() {
+    this.setState({ selected: this.props.pathname });
+  }
+
   componentWillReceiveProps(nextProps) {
-    // TODO: get this to call when page refreshes
-    console.log('GOT PROPS', nextProps)
     this.setState({ selected: nextProps.pathname });
   }
 
