@@ -67,9 +67,9 @@ export async function retrieveRedditFmfSales(r, sales = [], latestSaleDate, avai
           }
         }
         sale.brands = brands.join(', ');
-        // if (sale.brands.length > 0) {
+        if (sale.brands.length > 0) {
           sales.push(sale);
-        // }
+        }
 
         offset = post.name;
       })
