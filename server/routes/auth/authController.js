@@ -3,6 +3,7 @@
  */
 import jwt from 'jsonwebtoken';
 import m from '../../models';
+import redisClient from '../../config/redis';
 import { retrieveSales } from '../../scripts/sales/retrieveSales';
 import { retrieveBrands } from '../../scripts/brands/retrieveBrands';
 import { retrieveNews } from '../../scripts/news/retrieveNews';
@@ -21,8 +22,11 @@ async function authenticate(req, res) {
     }
 
     const token = jwt.sign({ user: { ...user.dataValues } }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
-    console.log(`User ${user.id} successfully authenticated`);
-    res.status(200).send({ success: true, token, user });
+    redisClient.setex(token, process.env.JWT_EXPIRATION, true, (err) => {
+      if (err) return res.status(500).send({ success: false, message: JSON.stringify(err) });
+      console.log(`User ${user.id} successfully authenticated`);
+      res.status(200).send({ success: true, token, user });
+    });
   } catch(err) {
     console.error(`Error authenticating username ${username}`);
     res.status(500).send({ success: false, message: JSON.stringify(err) });
@@ -30,8 +34,10 @@ async function authenticate(req, res) {
 }
 
 async function logout(req, res) {
-  // TODO: invalidate token (redis?)
-  res.send({ success: true });
+  redisClient.del(req.token, (err) => {
+    if (err) return res.status(500).send({ success: false, message: JSON.stringify(err) });
+    res.status(200).send({ success: true });
+  });
 }
 
 async function test(req, res) {

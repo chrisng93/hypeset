@@ -2,6 +2,7 @@
  * Created by chrisng on 3/12/17.
  */
 import jwt from 'jsonwebtoken';
+import redisClient from '../config/redis';
 
 const checkPathAgainstUnsecured = (unsecured, path) => {
   let found = -1;
@@ -46,11 +47,17 @@ export const verifyToken = (req, res, next) => {
     return res.status(403).send({ success: false, message: 'Invalid token' });
   }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(403).send({ success: false, message: err });
-    }
-    req.user = decoded.user;
-    return next();
+  redisClient.get(token, (redisErr, reply) => {
+    if (redisErr) return res.status(500).send({ success: false, message: JSON.stringify(redisErr) });
+    if (!reply) return res.status(403).send({ success: false, message: 'Invalid token' });
+
+    jwt.verify(token, process.env.JWT_SECRET, (jwtErr, decoded) => {
+      if (jwtErr) {
+        return res.status(403).send({ success: false, message: jwtErr });
+      }
+      req.user = decoded.user;
+      req.token = token;
+      return next();
+    });
   });
 };

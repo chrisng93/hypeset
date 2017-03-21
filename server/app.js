@@ -13,6 +13,9 @@ require('./config/initialize')(app);
 // set up db
 require('./models');
 
+// set up redis
+require('./config/redis');
+
 // set up routes
 app.all('*', checkPath);
 app.all('*', verifyToken);
@@ -24,7 +27,8 @@ app.get('/*', (req, res) => {
 
 app.listen(process.env.PORT, () => {
   console.log(`Listening on ${process.env.PORT}...`);
-  // require('./scripts/cronScript');
+
+  require('./scripts/cronScript');
 });
 
 module.exports = app;
