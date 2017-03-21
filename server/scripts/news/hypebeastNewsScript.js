@@ -4,7 +4,7 @@
 import request from 'request';
 import cheerio from 'cheerio';
 import moment from 'moment';
-import { findBrands } from '../../utils/scriptHelpers';
+import { findBrands } from '../../utils/scriptUtils';
 
 export async function parseHypebeastNews(articles = [], availableBrands, page = 1, latestArticleDate, hypebeastId) {
   return new Promise((resolve) => {

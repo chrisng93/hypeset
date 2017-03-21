@@ -52,6 +52,9 @@ export default class Sales extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.isFetchingAllSales || nextProps.isFetchingOwnSales) {
+      return;
+    }
     const { sales } = nextProps;
     this.filterResults(sales);
     this.setState({ dbOffset: sales.length + 1 });

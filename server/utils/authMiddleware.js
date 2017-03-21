@@ -2,7 +2,7 @@
  * Created by chrisng on 3/12/17.
  */
 import jwt from 'jsonwebtoken';
-import redisClient from '../config/redis';
+import redisClient from '../db/redis';
 
 const checkPathAgainstUnsecured = (unsecured, path) => {
   let found = -1;

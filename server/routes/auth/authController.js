@@ -3,7 +3,7 @@
  */
 import jwt from 'jsonwebtoken';
 import m from '../../models';
-import redisClient from '../../config/redis';
+import redisClient from '../../db/redis';
 import { retrieveSales } from '../../scripts/sales/retrieveSales';
 import { retrieveBrands } from '../../scripts/brands/retrieveBrands';
 import { retrieveNews } from '../../scripts/news/retrieveNews';

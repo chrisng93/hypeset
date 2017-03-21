@@ -1,5 +1,5 @@
-import { isUnique } from '../utils/databaseHelpers';
-import { condense } from '../utils/scriptHelpers';
+import { isUnique } from '../utils/databaseUtils';
+import { condense } from '../utils/scriptUtils';
 
 module.exports = (sequelize, DataTypes) => {
   const Brand = sequelize.define('Brand', {

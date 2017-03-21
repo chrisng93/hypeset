@@ -51,6 +51,7 @@ export function resetNews() {
 }
 
 export function getAllNews(payload) {
+  console.log('GETTING ALL NEWS', payload)
   return (dispatch) => {
     dispatch(getAllNewsFetching());
     const options = {

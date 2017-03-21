@@ -52,6 +52,9 @@ export default class News extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.isFetchingAllNews || nextProps.isFetchingOwnNews) {
+      return;
+    }
     const { news } = nextProps;
     this.filterResults(news);
     this.setState({ dbOffset: news.length + 1 });
@@ -73,15 +76,21 @@ export default class News extends Component {
   }
 
   filterResults(news, filteredOutBrands = this.state.filteredOutBrands, filteredOutSites = this.state.filteredOutSites) {
+    let validNews;
     const { visibleOffset } = this.state;
-    const validNews = news.filter((row) => {
-      for (let i = 0; i < row.Brands.length; i++) {
-        if (filteredOutBrands.indexOf(row.Brands[i].name) >= 0) {
-          return false;
+    console.log('visible offset', visibleOffset);
+    if (!filteredOutBrands.length && !filteredOutSites.length) {
+      validNews = news;
+    } else {
+      validNews = news.filter((row) => {
+        for (let i = 0; i < row.Brands.length; i++) {
+          if (filteredOutBrands.indexOf(row.Brands[i].name) >= 0) {
+            return false;
+          }
         }
-      }
-      return filteredOutSites.indexOf(row.Site.name) < 0;
-    });
+        return filteredOutSites.indexOf(row.Site.name) < 0;
+      });
+    }
     const visibleArray = validNews.slice(0, visibleOffset + 10);
     this.setState({ visible: visibleArray, visibleOffset: visibleArray.length });
   }
@@ -95,7 +104,7 @@ export default class News extends Component {
     const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
     const windowBottom = windowHeight + window.pageYOffset;
     if (windowBottom >= docHeight - 1) {
-      news.length - visible.length < 10 ? this.retrieveNews() : this.filterResults(news);
+      news.length - visible.length < 20 ? this.retrieveNews() : this.filterResults(news);
     }
   }
 

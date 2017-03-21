@@ -4,7 +4,7 @@
 import request from 'request';
 import cheerio from 'cheerio';
 import moment from 'moment';
-import { findBrands, findClass, findTag, formatDate } from '../../utils/scriptHelpers';
+import { findBrands, findClass, findTag, formatDate } from '../../utils/scriptUtils';
 
 export async function parseGrailedArticles(articles, availableBrands, page = 1, latestArticleDate, grailedId) {
   return new Promise((resolve) => {

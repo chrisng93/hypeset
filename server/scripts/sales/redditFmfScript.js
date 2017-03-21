@@ -5,7 +5,7 @@
 import request from 'request';
 import cheerio from 'cheerio';
 import moment from 'moment';
-import { findBrands } from '../../utils/scriptHelpers';
+import { findBrands } from '../../utils/scriptUtils';
 
 const eliminateDuplicates = (array) => {
   const noDuplicates = [];

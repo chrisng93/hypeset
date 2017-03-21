@@ -9,7 +9,7 @@ import configureStore from './store/configureStore';
 import routes from './routes';
 
 const store = configureStore();
-persistStore(store, { blacklist: ['routing'] });
+persistStore(store, { whitelist: ['user'] });
 const history = syncHistoryWithStore(browserHistory, store);
 
 // import stylesheets

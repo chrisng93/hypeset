@@ -4,7 +4,7 @@
 import request from 'request';
 import cheerio from 'cheerio';
 import moment from 'moment';
-import { findBrands, findTag } from '../../utils/scriptHelpers';
+import { findBrands, findTag } from '../../utils/scriptUtils';
 
 const now = moment().subtract(1, 'days').unix();
 const xago = moment().subtract(8, 'days').unix();

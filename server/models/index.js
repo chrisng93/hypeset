@@ -17,10 +17,9 @@ const pgConnectionString = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/post
 
 pg.connect(pgConnectionString, (dbConnectError, client) => {
   // const baseTables = ['brand', 'info', 'site', 'user'];
+  if (dbConnectError) throw new Error(`Error connecting to Postgres: ${dbConnectError}`);
+
   // create the db and ignore any errors (for example if it already exists)
-  if (dbConnectError) {
-    throw new Error(`Error connecting to the database: ${dbConnectError}`);
-  }
   client.query(`CREATE DATABASE ${DB_NAME}`, (createDbError) => {
     if (createDbError && createDbError.code === '42P04') console.log('Database already exists');
     if (!createDbError) console.log('Database created');
