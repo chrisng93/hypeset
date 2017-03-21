@@ -2,10 +2,10 @@
  * Created by chrisng on 3/20/17.
  */
 import express from 'express';
-import newsController from './newsController';
+import infoController from '../infoController';
 
 const newsRouter = express.Router();
 
-newsRouter.get('/', (req, res) => newsController.retrieveAllNews(req, res));
+newsRouter.get('/', (req, res) => infoController.retrieveNews(req, res));
 
 module.exports = newsRouter;

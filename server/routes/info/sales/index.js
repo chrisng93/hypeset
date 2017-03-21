@@ -2,10 +2,10 @@
  * Created by chrisng on 3/20/17.
  */
 import express from 'express';
-import salesController from './salesController';
+import infoController from '../infoController';
 
 const salesRouter = express.Router();
 
-salesRouter.get('/', (req, res) => salesController.retrieveAllSales(req, res));
+salesRouter.get('/', (req, res) => infoController.retrieveSales(req, res));
 
 module.exports = salesRouter;

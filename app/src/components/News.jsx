@@ -23,6 +23,7 @@ export default class News extends Component {
       filteredOutSites: [],
       dbOffset: 0,
       visibleOffset: 0,
+      limit: 20,
     };
     this.retrieveNews = this.retrieveNews.bind(this);
     this.changeFilteredOutState = this.changeFilteredOutState.bind(this);
@@ -31,11 +32,12 @@ export default class News extends Component {
   }
 
   componentWillMount() {
+    const { limit } = this.state;
     const { news, isFetchingAllNews, isFetchingOwnNews } = this.props;
     if (news.length === 0 && !isFetchingAllNews && !isFetchingOwnNews) {
       this.retrieveNews();
     }
-    const visibleArray = news.slice(0, 10);
+    const visibleArray = news.slice(0, (limit / 2));
     this.setState({
       dbOffset: news.length,
       visible: visibleArray,
@@ -61,9 +63,9 @@ export default class News extends Component {
   }
 
   retrieveNews() {
-    const { dbOffset } = this.state;
+    const { dbOffset, limit } = this.state;
     const { isAuthenticated, token, getAllNews, getOwnNews } = this.props;
-    isAuthenticated ? getOwnNews({ token, offset: dbOffset }) : getAllNews({ offset: dbOffset });
+    isAuthenticated ? getOwnNews({ token, offset: dbOffset, limit }) : getAllNews({ offset: dbOffset, limit });
   }
 
   changeFilteredOutState(info, isFilteredOut, field) {
@@ -77,7 +79,7 @@ export default class News extends Component {
 
   filterResults(news, filteredOutBrands = this.state.filteredOutBrands, filteredOutSites = this.state.filteredOutSites) {
     let validNews;
-    const { visibleOffset } = this.state;
+    const { visibleOffset, limit } = this.state;
     console.log('visible offset', visibleOffset);
     if (!filteredOutBrands.length && !filteredOutSites.length) {
       validNews = news;
@@ -91,12 +93,12 @@ export default class News extends Component {
         return filteredOutSites.indexOf(row.Site.name) < 0;
       });
     }
-    const visibleArray = validNews.slice(0, visibleOffset + 10);
+    const visibleArray = validNews.slice(0, visibleOffset + (limit / 2));
     this.setState({ visible: visibleArray, visibleOffset: visibleArray.length });
   }
 
   handleScroll() {
-    const { visible } = this.state;
+    const { visible, limit } = this.state;
     const { news } = this.props;
     const windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight;
     const body = document.body;
@@ -104,7 +106,7 @@ export default class News extends Component {
     const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
     const windowBottom = windowHeight + window.pageYOffset;
     if (windowBottom >= docHeight - 1) {
-      news.length - visible.length < 20 ? this.retrieveNews() : this.filterResults(news);
+      news.length - visible.length < (limit / 2) ? this.retrieveNews() : this.filterResults(news);
     }
   }
 

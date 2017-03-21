@@ -12,3 +12,21 @@ export const createHeaders = (token) => {
   }
   return headers;
 };
+
+export const getInfo = (body) => {
+  const { url, options, onFetching, onSuccess, onFailure, errorMessage, dispatch } = body;
+  dispatch(onFetching());
+
+  return fetch(url, options)
+    .then(response => response.json())
+    .then((json) => {
+      if (!json.success) {
+        return dispatch(onFailure(json));
+      }
+      return dispatch(onSuccess(json));
+    })
+    .catch((err) => {
+      console.error(`${errorMessage}: ${err}`);
+      return dispatch(onFailure(err));
+    });
+};

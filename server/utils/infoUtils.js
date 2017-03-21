@@ -3,7 +3,7 @@
  */
 import m from '../models';
 
-export async function getInfo(type, offset, limit) {
+export async function getAllInfo(type, offset, limit) {
   const query = {
     attributes: { exclude: ['createdAt', 'updatedAt'] },
     where: { type },

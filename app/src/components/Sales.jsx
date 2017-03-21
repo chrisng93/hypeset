@@ -23,6 +23,7 @@ export default class Sales extends Component {
       filteredOutSites: [],
       dbOffset: 0,
       visibleOffset: 0,
+      limit: 20,
     };
     this.retrieveSales = this.retrieveSales.bind(this);
     this.changeFilteredOutState = this.changeFilteredOutState.bind(this);
@@ -31,11 +32,12 @@ export default class Sales extends Component {
   }
 
   componentWillMount() {
+    const { limit } = this.state;
     const { sales, isFetchingAllSales, isFetchingOwnSales } = this.props;
     if (sales.length === 0 && !isFetchingAllSales && !isFetchingOwnSales) {
       this.retrieveSales();
     }
-    const visibleArray = sales.slice(0, 10);
+    const visibleArray = sales.slice(0, (limit / 2));
     this.setState({
       dbOffset: sales.length,
       visible: visibleArray,
@@ -61,9 +63,9 @@ export default class Sales extends Component {
   }
 
   retrieveSales() {
-    const { dbOffset } = this.state;
+    const { dbOffset, limit } = this.state;
     const { isAuthenticated, token, getAllSales, getOwnSales } = this.props;
-    isAuthenticated ? getOwnSales({ token, offset: dbOffset }) : getAllSales({ offset: dbOffset });
+    isAuthenticated ? getOwnSales({ token, offset: dbOffset, limit }) : getAllSales({ offset: dbOffset, limit });
   }
 
   changeFilteredOutState(info, isFilteredOut, field) {
@@ -76,7 +78,7 @@ export default class Sales extends Component {
   }
 
   filterResults(sales, filteredOutBrands = this.state.filteredOutBrands, filteredOutSites = this.state.filteredOutSites) {
-    const { visibleOffset } = this.state;
+    const { visibleOffset, limit } = this.state;
     const validSales = sales.filter((row) => {
       for (let i = 0; i < row.Brands.length; i++) {
         if (filteredOutBrands.indexOf(row.Brands[i].name) >= 0) {
@@ -85,12 +87,12 @@ export default class Sales extends Component {
       }
       return filteredOutSites.indexOf(row.Site.name) < 0;
     });
-    const visibleArray = validSales.slice(0, visibleOffset + 10);
+    const visibleArray = validSales.slice(0, visibleOffset + (limit / 2));
     this.setState({ visible: visibleArray, visibleOffset: visibleArray.length });
   }
 
   handleScroll() {
-    const { visible } = this.state;
+    const { visible, limit } = this.state;
     const { sales } = this.props;
     const windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight;
     const body = document.body;
@@ -98,7 +100,7 @@ export default class Sales extends Component {
     const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
     const windowBottom = windowHeight + window.pageYOffset;
     if (windowBottom >= docHeight - 1) {
-      sales.length - visible.length < 10 ? this.retrieveSales() : this.filterResults(sales);
+      sales.length - visible.length < (limit / 2) ? this.retrieveSales() : this.filterResults(sales);
     }
   }
 
