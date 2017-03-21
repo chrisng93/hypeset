@@ -3,12 +3,24 @@
  */
 import jwt from 'jsonwebtoken';
 
+const checkPathAgainstUnsecured = (unsecured, path) => {
+  let found = -1;
+  for (let i = 0; i < unsecured.length; i++) {
+    const endpoint = unsecured[i];
+    if (path === endpoint ||
+      (endpoint[endpoint.length - 1] === '*' && path.slice(0, endpoint.length - 2) === endpoint.slice(0, endpoint.length - 2))) {
+      found = i;
+    }
+  }
+  return found;
+};
+
 export const checkPath = (req, res, next) => {
-  // TODO: find way to do parameters
-  const unsecuredGets = ['/auth', '/api/brand', '/api/brand/:name', '/api/analytics/brand/popularity', '/api/site', '/api/user/:username', '/api/news', '/api/sales'];
+  const unsecuredGets = ['/auth', '/api/brand', '/api/brand/*', '/api/analytics/brand/popularity', '/api/site', '/api/user/*', '/api/news', '/api/sales'];
   const unsecuredPosts = ['/auth', '/api/user'];
 
-  if ((req.method === 'POST' && unsecuredPosts.indexOf(req.path) >= 0) || (req.method === 'GET' && unsecuredGets.indexOf(req.path) >= 0)) {
+  if ((req.method === 'POST' && checkPathAgainstUnsecured(unsecuredPosts, req.path) >= 0) ||
+    (req.method === 'GET' && checkPathAgainstUnsecured(unsecuredGets, req.path) >= 0)) {
     req.unsecured = true;
     return next();
   }
