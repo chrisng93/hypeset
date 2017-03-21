@@ -2,7 +2,7 @@ import React, { Component, PropTypes as T } from 'react';
 import ProfileNav from './ProfileNav';
 
 const propTypes = {
-  children: T.node.isRequired,
+  children: T.node,
   availableBrands: T.array.isRequired,
   userBrands: T.array.isRequired,
   popularBrands: T.array.isRequired,

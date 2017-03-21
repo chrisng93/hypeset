@@ -10,30 +10,17 @@ export async function parseGrailedDesigners() {
       const $ = cheerio.load(res.body);
       const scripts = $('script');
       const designerScript = $(scripts[3]).text();
-      const grailedDesignersRaw = designerScript.split('\n')[2];
-      const hypeDesignersRaw = designerScript.split('\n')[3];
-
-      if (grailedDesignersRaw && hypeDesignersRaw) {
-        const grailedDesignersCut = grailedDesignersRaw.slice(29, grailedDesignersRaw.length - 6);
-        const hypeDesignersCut = hypeDesignersRaw.slice(26, hypeDesignersRaw.length - 6);
-
-        const grailedDesignersData = findPopularDesigners(grailedDesignersCut);
-        const hypeDesignersData = findPopularDesigners(hypeDesignersCut);
-
-        const brandNames = grailedDesignersData.brandNames.concat(hypeDesignersData.brandNames);
-        const brandPopularity = hypeDesignersData.brandPopularity;
-        resolve({ brandNames, brandPopularity })
-      } else {
-        // TODO: if this happens, error out or call parsedGraileDesigners again or something
-        resolve({ brandNames: [], brandPopularity: [] });
-      }
+      const designersRaw = designerScript.split('\n')[1];
+      const designersCut = designersRaw.slice(21, designersRaw.length - 6);
+      const designersData = findPopularDesigners(designersCut);
+      resolve(designersData);
     });
   });
 }
 
 function findPopularDesigners(cutData) {
   const designersArray = JSON.parse(cutData).data;
-  const popularDesigners = designersArray.filter(designerJSON => designerJSON.count > 100);
+  const popularDesigners = designersArray.filter(designer => designer.count > 250 && designer.name !== 'Other' && designer.name !== 'Custom');
   const brandNames = popularDesigners.map(designerJSON => designerJSON.name);
   const brandPopularity = popularDesigners.map((designerJSON) => {
     return {

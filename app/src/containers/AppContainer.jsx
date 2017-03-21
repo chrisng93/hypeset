@@ -30,17 +30,19 @@ const propTypes = {
 
 class AppContainer extends Component {
   componentWillReceiveProps(nextProps) {
+    const offset = 0;
+    const limit = 20;
     const { getAllBrands, getAllNews, getAllSales, getUserBrands, getOwnNews, getOwnSales } = this.props;
     if (nextProps.isAuthenticated === this.props.isAuthenticated) {
       return;
     }
     if (nextProps.isAuthenticated) {
       getUserBrands({ token: nextProps.token });
-      getOwnNews({ token: nextProps.token, offset: 0 });
-      getOwnSales({ token: nextProps.token, offset: 0 });
+      getOwnNews({ token: nextProps.token, offset, limit });
+      getOwnSales({ token: nextProps.token, offset, limit });
     } else {
-      getAllNews({ offset: 0 });
-      getAllSales({ offset: 0 });
+      getAllNews({ offset, limit });
+      getAllSales({ offset, limit });
     }
     getAllBrands();
   }

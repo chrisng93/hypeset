@@ -32,7 +32,7 @@ export async function parseGrailedArticles(articles, availableBrands, page = 1, 
           articles.staffPicks.push(article);
         } else {
           const brands = findBrands(article.title, availableBrands);
-          if (brands) {
+          if (brands.length) {
             article.brands = brands;
             moment(latestArticleDate).diff(article.date, 'seconds') < 0 ? articles.news.push(article) : continueParsing = false;
           }

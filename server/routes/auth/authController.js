@@ -21,8 +21,9 @@ async function authenticate(req, res) {
       return res.status(403).send({ success: false, message: 'Incorrect password combination' });
     }
 
-    const token = jwt.sign({ user: { ...user.dataValues } }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
-    redisClient.setex(token, process.env.JWT_EXPIRATION, true, (err) => {
+    const expiration = parseInt(process.env.JWT_EXPIRATION);
+    const token = jwt.sign({ user: { ...user.dataValues } }, process.env.JWT_SECRET, { expiresIn: expiration });
+    redisClient.setex(token, expiration, true, (err) => {
       if (err) return res.status(500).send({ success: false, message: JSON.stringify(err) });
       console.log(`User ${user.id} successfully authenticated`);
       res.status(200).send({ success: true, token, user });
@@ -43,11 +44,10 @@ async function logout(req, res) {
 async function test(req, res) {
   try {
     // await retrieveBrands();
-    // const brandModels = await m.Brand.findAll();
-    // const availableBrands = brandModels.map(model => model.name);
+    const brandModels = await m.Brand.findAll();
+    const availableBrands = brandModels.map(model => model.name);
     // await retrieveNews(availableBrands);
-    // await retrieveSales(availableBrands);
-    // await retrieveSales(availableBrands);
+    await retrieveSales(availableBrands);
     // const sales = await m.Info.findAll({ where: { type: 'Sale' }, include: [m.Brand] });
     // for (let i = 0; i < sales.length; i++) {
     //   console.log(sales[i])

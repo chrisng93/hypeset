@@ -52,9 +52,7 @@ export const verifyToken = (req, res, next) => {
     if (!reply) return res.status(403).send({ success: false, message: 'Invalid token' });
 
     jwt.verify(token, process.env.JWT_SECRET, (jwtErr, decoded) => {
-      if (jwtErr) {
-        return res.status(403).send({ success: false, message: jwtErr });
-      }
+      if (jwtErr) return res.status(403).send({ success: false, message: jwtErr });
       req.user = decoded.user;
       req.token = token;
       return next();

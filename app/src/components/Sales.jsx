@@ -100,7 +100,7 @@ export default class Sales extends Component {
     const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
     const windowBottom = windowHeight + window.pageYOffset;
     if (windowBottom >= docHeight - 1) {
-      sales.length - visible.length < (limit / 2) ? this.retrieveSales() : this.filterResults(sales);
+      sales.length - visible.length <= (limit / 2) ? this.retrieveSales() : this.filterResults(sales);
     }
   }
 

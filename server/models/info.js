@@ -38,9 +38,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (m) => {
-        Info.belongsToMany(m.Brand, { through: 'InfoBrand', foreignKey: 'InfoId' });
-        Info.belongsToMany(m.User, { through: 'InfoUser', foreignKey: 'InfoId' });
-        Info.belongsTo(m.Site);
+        Info.belongsToMany(m.Brand, { through: 'InfoBrand', foreignKey: 'InfoId', onDelete: 'CASCADE' });
+        Info.belongsToMany(m.User, { through: 'InfoUser', foreignKey: 'InfoId', onDelete: 'CASCADE' });
+        Info.belongsTo(m.Site, { onDelete: 'SET NULL' });
       },
       updateOrCreate: function(article, type) {
         return this.find({ attributes: { exclude: ['createdAt', 'updatedAt'] }, where: { url: article.url } })

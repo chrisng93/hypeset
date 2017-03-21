@@ -71,7 +71,7 @@ export function getAllSales(payload) {
 export function getOwnSales(payload) {
   return (dispatch) => {
     const body = {
-      url: `${process.env.API_URL}/api/me/sales?offset=${payload.offset}&${payload.limit}`,
+      url: `${process.env.API_URL}/api/me/sales?offset=${payload.offset}&limit=${payload.limit}`,
       options: {
         method: 'GET',
         headers: createHeaders(payload.token),

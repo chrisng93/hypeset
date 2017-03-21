@@ -6,16 +6,16 @@ import request from 'request';
 import cheerio from 'cheerio';
 import moment from 'moment';
 import { findBrands } from '../../utils/scriptUtils';
-
-const eliminateDuplicates = (array) => {
-  const noDuplicates = [];
-  for (let i = 0; i < array.length; i++) {
-    if (noDuplicates.indexOf(array[i]) < 0) {
-      noDuplicates.push(array[i]);
-    }
-  }
-  return noDuplicates;
-};
+//
+// const eliminateDuplicates = (array) => {
+//   const noDuplicates = [];
+//   for (let i = 0; i < array.length; i++) {
+//     if (noDuplicates.indexOf(array[i]) < 0) {
+//       noDuplicates.push(array[i]);
+//     }
+//   }
+//   return noDuplicates;
+// };
 
 const findLink = (url) => {
   request(url, (err, res) => {
@@ -38,6 +38,7 @@ export async function retrieveRedditFmfSales(r, sales = [], latestSaleDate, avai
           title: post.title,
           url: post.url,
           blurb: post.selftext,
+          domain: post.domain,
           permalink: post.permalink,
           date: moment.unix(post.created_utc).format(),
           SiteId: redditId,
@@ -57,12 +58,18 @@ export async function retrieveRedditFmfSales(r, sales = [], latestSaleDate, avai
           return null;
         }
 
-        const brandsViaLink = findBrands(sale.url, availableBrands) || [];
-        const brandsViaTitle = findBrands(sale.title, availableBrands) || [];
-        sale.brands = eliminateDuplicates(brandsViaLink.concat(brandsViaTitle));
-        if (sale.brands.length > 0) {
-          sales.push(sale);
+        let brands = [];
+        brands = brands.concat(findBrands(sale.title, availableBrands, 'title'));
+        if (!brands.length) {
+          brands = brands.concat(findBrands(sale.domain, availableBrands, 'domain'));
+          if (!brands.length) {
+            brands = brands.concat(findBrands(sale.url, availableBrands, 'url'));
+          }
         }
+        sale.brands = brands.join(', ');
+        // if (sale.brands.length > 0) {
+          sales.push(sale);
+        // }
 
         offset = post.name;
       })

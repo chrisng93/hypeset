@@ -80,7 +80,6 @@ export default class News extends Component {
   filterResults(news, filteredOutBrands = this.state.filteredOutBrands, filteredOutSites = this.state.filteredOutSites) {
     let validNews;
     const { visibleOffset, limit } = this.state;
-    console.log('visible offset', visibleOffset);
     if (!filteredOutBrands.length && !filteredOutSites.length) {
       validNews = news;
     } else {
@@ -106,7 +105,7 @@ export default class News extends Component {
     const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
     const windowBottom = windowHeight + window.pageYOffset;
     if (windowBottom >= docHeight - 1) {
-      news.length - visible.length < (limit / 2) ? this.retrieveNews() : this.filterResults(news);
+      news.length - visible.length <= (limit / 2) ? this.retrieveNews() : this.filterResults(news);
     }
   }
 

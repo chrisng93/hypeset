@@ -7,9 +7,10 @@ import { parseGrailedDesigners } from './grailedDesignersScript';
 
 export async function retrieveBrands() {
   console.log('Started retrieving brands..');
-  const hbxBrands = await parseHbxDesigners();
+  // const hbxBrands = await parseHbxDesigners();
   const grailedBrands = await parseGrailedDesigners();
-  const allBrands = hbxBrands.concat(grailedBrands.brandNames);
+  // const allBrands = hbxBrands.concat(grailedBrands.brandNames);
+  const allBrands = grailedBrands.brandNames;
   const brandPopularity = grailedBrands.brandPopularity;
   console.log('Finished retrieving brands..');
 

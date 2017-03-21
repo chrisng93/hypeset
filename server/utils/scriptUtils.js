@@ -3,7 +3,13 @@
  */
 import moment from 'moment';
 
-export const condense = string => string.replace(/[^a-z0-9+]/gi, '');
+export const condenseName = string => string.replace(/[^a-z0-9+.]/gi, '');
+
+export const condenseTitle = string => string.replace(/[^a-z0-9+&!-?]/gi, '');
+
+export const condenseDomain = string => string.replace(/[^a-z0-9.]/gi, '');
+
+export const condenseUrl = string => string.replace(/[^a-z0-9+&!?./]/gi, '');
 
 const findLps = (string) => {
   const result = [];
@@ -56,10 +62,30 @@ const foundSubstring = (string, target) => {
 };
 
 // TODO: find a more efficient way to do this?
-export const findBrands = (title, availableBrands) => {
-  title = title.toLowerCase();
-  const brands = availableBrands.filter(brand => foundSubstring(condense(title), condense(brand.toLowerCase())));
-  return brands.length ? brands : null;
+export const findBrands = (str, availableBrands, type = null) => {
+  let condense = null;
+  if (type === 'title') {
+    condense = condenseTitle;
+  } else if (type === 'domain') {
+    condense = condenseDomain;
+  } else if (type === 'url') {
+    condense = condenseUrl;
+  } else {
+    condense = condenseName;
+  }
+  const condensedStr = condense(str.toLowerCase());
+  return availableBrands.filter((brand) => {
+    if (type === 'domain') {
+      return foundSubstring(condensedStr, condenseName(brand));
+    }
+    if (type === 'title' && brand.length < 4) {
+      return foundSubstring(str.toLowerCase(), brand.toLowerCase());
+    }
+    if (type === 'url' && brand.length < 3) {
+      return false;
+    }
+    return foundSubstring(condensedStr, condense(brand.toLowerCase()));
+  });
 };
 
 export const findClass = (node, cls, result = []) => {

@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (m) => {
-        BrandPopularity.belongsTo(m.Brand);
+        BrandPopularity.belongsTo(m.Brand, { onDelete: 'SET NULL' });
       },
     },
   });

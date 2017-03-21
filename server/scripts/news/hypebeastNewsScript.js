@@ -21,7 +21,7 @@ export async function parseHypebeastNews(articles = [], availableBrands, page = 
 
           if (article.title && article.url) {
             const brands = findBrands(article.title, availableBrands);
-            if (brands) {
+            if (brands.length) {
               article.brands = brands;
               const thumbnailElement = $(`#${post.attribs.id} .img-responsive`)[0];
               if (thumbnailElement) {

@@ -38,7 +38,7 @@ async function parseWeekendReadingArticle(article, availableBrands) {
       const validBrands = [];
       links.forEach((link) => {
         const brands = findBrands(link.children[0].data, availableBrands);
-        if (brands) {
+        if (brands.length) {
           insertNew(validBrands, brands);
         }
       });
@@ -69,7 +69,7 @@ const parseDataListings = (article, classSelector, availableBrands, resolve) => 
       const parsedListings = JSON.parse(rawListings);
       parsedListings.forEach((parsedListing) => {
         const brands = findBrands(parsedListing.designer_names, availableBrands);
-        if (brands) {
+        if (brands.length) {
           insertNew(validBrands, brands);
         }
       });
