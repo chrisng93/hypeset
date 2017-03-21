@@ -19,10 +19,10 @@ async function retrieveAllSales(req, res) {
       // limit,
       // offset,
     };
-    let news = await m.Info.findAll(query);
-    news = news.slice(offset, offset + 20);
+    let sales = await m.Info.findAll(query);
+    sales = sales.slice(offset, offset + 20);
     console.log('Retrieved all sales');
-    res.status(200).send({ success: true, news });
+    res.status(200).send({ success: true, sales });
   } catch(err) {
     sendCrudError('retrieving', 'all sales', err, res);
   }

@@ -7,7 +7,7 @@ import { salesSelector, salesBrandsSelector, salesSitesSelector, isFetchingAllSa
 import Sales from '../components/Sales';
 
 const propTypes = {
-  isAuthenticatedSelector: T.bool.isRequired,
+  isAuthenticated: T.bool.isRequired,
   token: T.string.isRequired,
   sales: T.array.isRequired,
   salesBrands: T.array.isRequired,

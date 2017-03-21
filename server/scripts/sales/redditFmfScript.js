@@ -60,7 +60,9 @@ export async function retrieveRedditFmfSales(r, sales = [], latestSaleDate, avai
         const brandsViaLink = findBrands(sale.url, availableBrands) || [];
         const brandsViaTitle = findBrands(sale.title, availableBrands) || [];
         sale.brands = eliminateDuplicates(brandsViaLink.concat(brandsViaTitle));
-        sales.push(sale);
+        if (sale.brands.length > 0) {
+          sales.push(sale);
+        }
 
         offset = post.name;
       })
