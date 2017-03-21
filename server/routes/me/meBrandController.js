@@ -8,8 +8,11 @@ async function getOwnBrands(req, res) {
     const query = {
       attributes: { exclude: ['password', 'createdAt', 'updatedAt'] },
       where: { id: req.user.id },
-      include: [{ model: m.Brand, attributes: ['name'] }],
-      order: 'name DESC',
+      include: [{
+        model: m.Brand,
+        attributes: ['name'],
+        order: [[m.sequelize.fn('lower', m.sequelize.col('name')), 'ASC']],
+      }],
     };
     const user = await m.User.find(query);
     res.status(200).send({ success: true, brands: user.Brands });

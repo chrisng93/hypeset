@@ -2,11 +2,10 @@
  * Created by chrisng on 3/19/17.
  */
 import { createSelector } from 'reselect';
-import { toJS } from 'immutable';
 import { isAuthenticatedSelector } from './userSelectors';
 import { userBrandsSelector } from './brandSelectors';
 
-const salesStateSelector = state => state.sales.toJS();
+const salesStateSelector = state => state.sales;
 
 export const salesSelector = createSelector(
   salesStateSelector,

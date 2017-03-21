@@ -42,7 +42,6 @@ export async function retrieveRedditFmfSales(r, sales = [], latestSaleDate, avai
           date: moment.unix(post.created_utc).format(),
           SiteId: redditId,
         };
-        console.log(post.title, post.url)
         if (moment(latestSaleDate).diff(moment(sale.date), 'seconds') > 0) {
           continueSearching = false;
           return;

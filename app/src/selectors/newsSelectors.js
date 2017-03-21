@@ -2,11 +2,10 @@
  * Created by chrisng on 3/15/17.
  */
 import { createSelector } from 'reselect';
-import { toJS } from 'immutable';
 import { isAuthenticatedSelector } from './userSelectors';
 import { userBrandsSelector } from './brandSelectors';
 
-const newsStateSelector = state => state.news.toJS();
+const newsStateSelector = state => state.news;
 
 export const newsSelector = createSelector(
   newsStateSelector,

@@ -2,9 +2,8 @@
  * Created by chrisng on 3/14/17.
  */
 import { createSelector } from 'reselect'
-import { toJS } from 'immutable';
 
-const userStateSelector = state => state.user.toJS();
+const userStateSelector = state => state.user;
 
 export const userSelector = createSelector(
   userStateSelector,

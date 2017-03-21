@@ -1,44 +1,58 @@
 /**
  * Created by chrisng on 3/19/17.
  */
-import { fromJS, List, Map } from 'immutable';
 import * as actionTypes from '../constants/actionTypes';
 import { formatDates } from '../utils/dateUtils';
 
-const initialState = fromJS({
-  sales: new List(),
+const freshErrorState = {
+  status: false,
+  message: '',
+};
+
+const initialState = {
+  sales: [],
   isFetchingAllSales: false,
   isFetchingOwnSales: false,
-  error: new Map(),
-});
+  error: freshErrorState,
+};
 
 export default function sales(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case actionTypes.GET_ALL_SALES_FETCHING:
-      return state.set('isFetchingAllSales', true);
+      return { ...state, isFetchingAllSales: true };
     case actionTypes.GET_ALL_SALES_SUCCESS:
-      return state.set('sales', state.get('sales').concat(new List(formatDates(payload.sales))))
-        .set('isFetchingAllSales', false)
-        .set('error', new Map());
+      return {
+        ...state,
+        sales: state.sales.concat(formatDates(payload.sales)),
+        isFetchingAllSales: false,
+        error: freshErrorState,
+      };
     case actionTypes.GET_ALL_SALES_FAILURE:
-      return state.set('isFetchingAllSales', false)
-        .setIn(['error', 'status'], true)
-        .setIn(['error', 'message'], payload.message);
+      return {
+        ...state,
+        isFetchingAllSales: false,
+        error: { status: true, message: payload.message },
+      };
 
     case actionTypes.GET_OWN_SALES_FETCHING:
-      return state.set('isFetchingOwnSales', true);
+      return { ...state, isFetchingOwnSales: true };
     case actionTypes.GET_OWN_SALES_SUCCESS:
-      return state.set('sales', state.get('sales').concat(new List(formatDates(payload.sales))))
-        .set('isFetchingOwnSales', false)
-        .set('error', new Map());
+      return {
+        ...state,
+        sales: state.sales.concat(formatDates(payload.sales)),
+        isFetchingOwnSales: false,
+        error: freshErrorState,
+      };
     case actionTypes.GET_OWN_SALES_FAILURE:
-      return state.set('isFetchingOwnSales', false)
-        .setIn(['error', 'status'], true)
-        .setIn(['error', 'message'], payload.message);
+      return {
+        ...state,
+        isFetchingOwnSales: false,
+        error: { status: true, message: payload.message },
+      };
 
     case actionTypes.RESET_SALES:
-      return state.set('sales', new List());
+      return { ...state, sales: [] };
 
     default:
       return state;

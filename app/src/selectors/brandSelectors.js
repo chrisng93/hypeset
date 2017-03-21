@@ -2,9 +2,8 @@
  * Created by chrisng on 3/14/17.
  */
 import { createSelector } from 'reselect';
-import { toJS } from 'immutable';
 
-const brandStateSelector = state => state.brand.toJS();
+const brandStateSelector = state => state.brand;
 
 export const allBrandsSelector = createSelector(
   brandStateSelector,

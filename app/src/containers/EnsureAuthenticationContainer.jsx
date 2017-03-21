@@ -1,15 +1,13 @@
 import React, { Component, PropTypes as T } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux';
-import * as actions from '../actions';
 import { isAuthenticatedSelector, tokenSelector } from '../selectors/userSelectors';
-import { pathnameSelector } from '../selectors/routingSelectors';
 import EnsureAuthentication from '../components/EnsureAuthentication';
 
 const propTypes = {
   children: T.node.isRequired,
   isAuthenticated: T.bool.isRequired,
+  routeToSignIn: T.func.isRequired,
 };
 
 function EnsureAuthenticationContainer(props) {
@@ -25,7 +23,9 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    routeToSignIn: () => dispatch(push('/signin')),
+  };
 }
 
 EnsureAuthenticationContainer.propTypes = propTypes;
