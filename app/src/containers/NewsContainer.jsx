@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import * as actions from '../actions';
 import { isAuthenticatedSelector, tokenSelector } from '../selectors/userSelectors';
 import { newsSelector, newsBrandsSelector, newsSitesSelector, isFetchingAllNewsSelector, isFetchingOwnNewsSelector } from '../selectors/newsSelectors';
-import News from '../components/News';
+import Articles from '../components/Articles';
 
 const propTypes = {
   isAuthenticated: T.bool.isRequired,
@@ -19,8 +19,20 @@ const propTypes = {
 };
 
 function NewsContainer(props) {
+  const { isAuthenticated, token, news, newsBrands, newsSites, isFetchingAllNews, isFetchingOwnNews, getAllNews, getOwnNews } = props;
+  const articlesProps = {
+    isAuthenticated,
+    token,
+    articles: news,
+    articlesBrands: newsBrands,
+    articlesSites: newsSites,
+    isFetchingAllArticles: isFetchingAllNews,
+    isFetchingOwnArticles: isFetchingOwnNews,
+    getAllArticles: getAllNews,
+    getOwnArticles: getOwnNews,
+  };
   return (
-    <News {...props} />
+    <Articles {...articlesProps} />
   );
 }
 

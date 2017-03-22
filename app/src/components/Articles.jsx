@@ -5,16 +5,16 @@ import Checkbox from './Checkbox';
 const propTypes = {
   isAuthenticated: T.bool.isRequired,
   token: T.string.isRequired,
-  news: T.array.isRequired,
-  newsBrands: T.array.isRequired,
-  newsSites: T.array.isRequired,
-  isFetchingAllNews: T.bool.isRequired,
-  isFetchingOwnNews: T.bool.isRequired,
-  getAllNews: T.func.isRequired,
-  getOwnNews: T.func.isRequired,
+  articles: T.array.isRequired,
+  articlesBrands: T.array.isRequired,
+  articlesSites: T.array.isRequired,
+  isFetchingAllArticles: T.bool.isRequired,
+  isFetchingOwnArticles: T.bool.isRequired,
+  getAllArticles: T.func.isRequired,
+  getOwnArticles: T.func.isRequired,
 };
 
-export default class News extends Component {
+export default class Articles extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,7 +25,7 @@ export default class News extends Component {
       visibleOffset: 0,
       limit: 20,
     };
-    this.retrieveNews = this.retrieveNews.bind(this);
+    this.retrieveArticles = this.retrieveArticles.bind(this);
     this.changeFilteredOutState = this.changeFilteredOutState.bind(this);
     this.filterResults = this.filterResults.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
@@ -33,13 +33,13 @@ export default class News extends Component {
 
   componentWillMount() {
     const { limit } = this.state;
-    const { news, isFetchingAllNews, isFetchingOwnNews } = this.props;
-    if (news.length === 0 && !isFetchingAllNews && !isFetchingOwnNews) {
-      this.retrieveNews();
+    const { articles, isFetchingAllArticles, isFetchingOwnArticles } = this.props;
+    if (articles.length === 0 && !isFetchingAllArticles && !isFetchingOwnArticles) {
+      this.retrieveArticles();
     }
-    const visibleArray = news.slice(0, (limit / 2));
+    const visibleArray = articles.slice(0, (limit / 2));
     this.setState({
-      dbOffset: news.length,
+      dbOffset: articles.length,
       visible: visibleArray,
       visibleOffset: visibleArray.length,
     });
@@ -54,36 +54,39 @@ export default class News extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.isFetchingAllNews || nextProps.isFetchingOwnNews) {
+    console.log('RECEIVING PROPS')
+    console.log(nextProps)
+    console.log(this.props)
+    if (nextProps.isFetchingAllArticles || nextProps.isFetchingOwnArticles) {
       return;
     }
-    const { news } = nextProps;
-    this.filterResults(news);
-    this.setState({ dbOffset: news.length + 1 });
+    const { articles } = nextProps;
+    this.filterResults(articles);
+    this.setState({ dbOffset: articles.length + 1 });
   }
 
-  retrieveNews() {
+  retrieveArticles() {
     const { dbOffset, limit } = this.state;
-    const { isAuthenticated, token, getAllNews, getOwnNews } = this.props;
-    isAuthenticated ? getOwnNews({ token, offset: dbOffset, limit }) : getAllNews({ offset: dbOffset, limit });
+    const { isAuthenticated, token, getAllArticles, getOwnArticles } = this.props;
+    isAuthenticated ? getOwnArticles({ token, offset: dbOffset, limit }) : getAllArticles({ offset: dbOffset, limit });
   }
 
   changeFilteredOutState(info, isFilteredOut, field) {
-    const { news } = this.props;
+    const { articles } = this.props;
     const newState = {};
     newState[field] = null;
     isFilteredOut ? newState[field] = this.state[field].concat(info) : newState[field] = this.state[field].filter(stateInfo => stateInfo !== info);
-    field === 'filteredOutBrands' ? this.filterResults(news, newState.filteredOutBrands) : this.filterResults(news, this.state.filteredOutBrands, newState.filteredOutSites);
+    field === 'filteredOutBrands' ? this.filterResults(articles, newState.filteredOutBrands) : this.filterResults(articles, this.state.filteredOutBrands, newState.filteredOutSites);
     this.setState(newState);
   }
 
-  filterResults(news, filteredOutBrands = this.state.filteredOutBrands, filteredOutSites = this.state.filteredOutSites) {
-    let validNews;
+  filterResults(articles, filteredOutBrands = this.state.filteredOutBrands, filteredOutSites = this.state.filteredOutSites) {
+    let validArticles;
     const { visibleOffset, limit } = this.state;
     if (!filteredOutBrands.length && !filteredOutSites.length) {
-      validNews = news;
+      validArticles = articles;
     } else {
-      validNews = news.filter((row) => {
+      validArticles = articles.filter((row) => {
         for (let i = 0; i < row.Brands.length; i++) {
           if (filteredOutBrands.indexOf(row.Brands[i].name) >= 0) {
             return false;
@@ -92,41 +95,41 @@ export default class News extends Component {
         return filteredOutSites.indexOf(row.Site.name) < 0;
       });
     }
-    const visibleArray = validNews.slice(0, visibleOffset + (limit / 2));
+    const visibleArray = validArticles.slice(0, visibleOffset + (limit / 2));
     this.setState({ visible: visibleArray, visibleOffset: visibleArray.length });
   }
 
   handleScroll() {
     const { visible, limit } = this.state;
-    const { news } = this.props;
+    const { articles } = this.props;
     const windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight;
     const body = document.body;
     const html = document.documentElement;
     const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
     const windowBottom = windowHeight + window.pageYOffset;
     if (windowBottom >= docHeight - 1) {
-      news.length - visible.length <= (limit / 2) ? this.retrieveNews() : this.filterResults(news);
+      articles.length - visible.length <= (limit / 2) ? this.retrieveArticles() : this.filterResults(articles);
     }
   }
 
   render() {
     const { filteredOutBrands, filteredOutSites, visible } = this.state;
-    const { newsBrands, newsSites } = this.props;
+    const { articlesBrands, articlesSites } = this.props;
     return (
-      <div className="news">
-        <div className="news-container">
-        {visible.map((news, key) => <ArticleItem key={key} article={news} /> )}
+      <div className="articles">
+        <div className="articles-container">
+        {visible.map((article, key) => <ArticleItem key={key} article={article} /> )}
         </div>
         <div className="filter-container">
           <div className="filter">
             <div className="header">Filters</div>
-            <div className="news-brands">
+            <div className="articles-brands">
               <div className="title">Brands</div>
-              {newsBrands.map((brand, key) => <Checkbox key={key} info={brand} clickHandler={(brandName, isFilteredOut) => this.changeFilteredOutState(brandName, isFilteredOut, 'filteredOutBrands')} />)}
+              {articlesBrands.map((brand, key) => <Checkbox key={key} info={brand} clickHandler={(brandName, isFilteredOut) => this.changeFilteredOutState(brandName, isFilteredOut, 'filteredOutBrands')} />)}
             </div>
-            <div className="news-sites">
+            <div className="articles-sites">
               <div className="title">Sites</div>
-              {newsSites.map((site, key) => <Checkbox key={key} info={site} clickHandler={(brandName, isFilteredOut) => this.changeFilteredOutState(site, isFilteredOut, 'filteredOutSites')} />)}
+              {articlesSites.map((site, key) => <Checkbox key={key} info={site} clickHandler={(brandName, isFilteredOut) => this.changeFilteredOutState(site, isFilteredOut, 'filteredOutSites')} />)}
             </div>
           </div>
         </div>
@@ -135,4 +138,4 @@ export default class News extends Component {
   }
 }
 
-News.propTypes = propTypes;
+Articles.propTypes = propTypes;

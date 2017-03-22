@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import * as actions from '../actions';
 import { isAuthenticatedSelector, tokenSelector } from '../selectors/userSelectors';
 import { salesSelector, salesBrandsSelector, salesSitesSelector, isFetchingAllSalesSelector, isFetchingOwnSalesSelector } from '../selectors/salesSelectors';
-import Sales from '../components/Sales';
+import Articles from '../components/Articles';
 
 const propTypes = {
   isAuthenticated: T.bool.isRequired,
@@ -19,8 +19,20 @@ const propTypes = {
 };
 
 function SalesContainer(props) {
+  const { isAuthenticated, token, sales, salesBrands, salesSites, isFetchingAllSales, isFetchingOwnSales, getAllSales, getOwnSales } = props;
+  const articlesProps = {
+    isAuthenticated,
+    token,
+    articles: sales,
+    articlesBrands: salesBrands,
+    articlesSites: salesSites,
+    isFetchingAllArticles: isFetchingAllSales,
+    isFetchingOwnArticles: isFetchingOwnSales,
+    getAllArticles: getAllSales,
+    getOwnArticles: getOwnSales,
+  };
   return (
-    <Sales {...props} />
+    <Articles {...articlesProps} />
   );
 }
 
