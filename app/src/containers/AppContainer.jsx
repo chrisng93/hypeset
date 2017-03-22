@@ -25,6 +25,7 @@ const propTypes = {
   routeToNews: T.func.isRequired,
   routeToSales: T.func.isRequired,
   routeToProfile: T.func.isRequired,
+  routeToBrands: T.func.isRequired,
   routeToSignIn: T.func.isRequired,
 };
 
@@ -48,8 +49,8 @@ class AppContainer extends Component {
   }
 
   render() {
-    const { children, isAuthenticated, token, pathname, onLogout, routeToNews, routeToSales, routeToProfile, routeToSignIn } = this.props;
-    const navProps = { isAuthenticated, token, pathname, onLogout, routeToNews, routeToSales, routeToProfile, routeToSignIn };
+    const { children, isAuthenticated, token, pathname, onLogout, routeToNews, routeToSales, routeToProfile, routeToBrands, routeToSignIn } = this.props;
+    const navProps = { isAuthenticated, token, pathname, onLogout, routeToNews, routeToSales, routeToProfile, routeToBrands, routeToSignIn };
     return(
       <div id="app">
         <Nav {...navProps} />
@@ -79,6 +80,7 @@ function mapDispatchToProps(dispatch) {
     routeToSignIn: () => dispatch(push('/signin')),
     routeToNews: () => dispatch(push('/news')),
     routeToSales: () => dispatch(push('/sales')),
+    routeToBrands: () => dispatch(push('/brands')),
     routeToProfile: () => dispatch(push('/profile')),
   };
 }
