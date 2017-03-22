@@ -31,7 +31,7 @@ async function retrieveAllBrands(req, res) {
 async function retrieveBrand(req, res) {
   const { name } = req.params;
   try {
-    const brand = await m.Brand.findByName(name);
+    const brand = await m.Brand.find({ where: { condensedName: name } });
     if (!brand) {
       console.error(`Brand ${name} not found`);
       return res.status(404).send({ success: false, message: `Brand ${name} not found` });
@@ -51,7 +51,7 @@ async function updateBrand(req, res) {
   }
 
   try {
-    const brand = await m.Brand.findByName(name);
+    const brand = await m.Brand.find({ where: { condensedName: name } });
     if (!brand) {
       console.error(`Brand ${name} not found`);
       return res.status(404).send({ success: false, message: `Brand ${name} not found` });
@@ -72,7 +72,7 @@ async function deleteBrand(req, res) {
   }
 
   try {
-    const brand = await m.Brand.findByName(name);
+    const brand = await m.Brand.find({ where: { condensedName: name } });
     if (!brand) {
       console.error(`Brand ${name} not found`);
       return res.status(404).send({ success: false, message: `Brand ${name} not found` });

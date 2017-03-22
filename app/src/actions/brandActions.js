@@ -219,7 +219,7 @@ export function removeBrand(payload) {
 export function getBrandInfos(payload) {
   return (dispatch) => {
     const body = {
-      url: `${process.env.API_URL}/api/brand/info?brand=${payload.brand}`,
+      url: `${process.env.API_URL}/api/brand/${payload.brand}/info?offset=${payload.offset}&limit=${payload.limit}`,
       options: {
         method: 'GET',
         headers: createHeaders(),
