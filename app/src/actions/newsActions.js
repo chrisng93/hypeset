@@ -2,7 +2,7 @@
  * Created by chrisng on 3/15/17.
  */
 import * as actionTypes from '../constants/actionTypes.js';
-import { getInfo, createHeaders } from '../utils/requestUtils';
+import { actionApiCall, createHeaders } from '../utils/requestUtils';
 
 function getAllNewsFetching() {
   return {
@@ -64,7 +64,7 @@ export function getAllNews(payload) {
       errorMessage: 'Error getting all news',
       dispatch,
     };
-    return getInfo(body);
+    return actionApiCall(body);
   };
 }
 
@@ -82,6 +82,6 @@ export function getOwnNews(payload) {
       errorMessage: 'Error getting own news',
       dispatch,
     };
-    return getInfo(body);
+    return actionApiCall(body);
   };
 }

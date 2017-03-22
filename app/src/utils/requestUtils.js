@@ -13,7 +13,7 @@ export const createHeaders = (token) => {
   return headers;
 };
 
-export const getInfo = (body) => {
+export const actionApiCall = (body) => {
   const { url, options, onFetching, onSuccess, onFailure, errorMessage, dispatch } = body;
   dispatch(onFetching());
 

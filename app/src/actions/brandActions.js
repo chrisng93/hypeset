@@ -2,7 +2,7 @@
  * Created by chrisng on 3/14/17.
  */
 import * as actionTypes from '../constants/actionTypes.js';
-import { createHeaders } from '../utils/requestUtils';
+import { actionApiCall, createHeaders } from '../utils/requestUtils';
 
 function getAllBrandsFetching() {
   return {
@@ -44,7 +44,7 @@ function getUserBrandsFailure(payload) {
   };
 }
 
-function getBrandsByPopularityBrandsFetching() {
+function getBrandsByPopularityFetching() {
   return {
     type: actionTypes.GET_BRANDS_BY_POPULARITY_FETCHING,
   }
@@ -104,119 +104,132 @@ function removeBrandFailure(payload) {
   };
 }
 
+function getBrandInfosFetching() {
+  return {
+    type: actionTypes.GET_BRAND_INFOS_FETCHING,
+  }
+}
+
+function getBrandInfosSuccess(payload) {
+  return {
+    type: actionTypes.GET_BRAND_INFOS_SUCCESS,
+    payload,
+  }
+}
+
+function getBrandInfosFailure(payload) {
+  return {
+    type: actionTypes.GET_BRAND_INFOS_FAILURE,
+    payload,
+  }
+}
+
 export function getAllBrands() {
   return (dispatch) => {
-    dispatch(getAllBrandsFetching());
-    const options = {
-      method: 'GET',
-      headers: createHeaders(),
+    const body = {
+      url: `${process.env.API_URL}/api/brand`,
+      options: {
+        method: 'GET',
+        headers: createHeaders(),
+      },
+      onFetching: getAllBrandsFetching,
+      onSuccess: getAllBrandsSuccess,
+      onFailure: getAllBrandsFailure,
+      errorMessage: 'Error getting all brands',
+      dispatch,
     };
-
-    fetch(`${process.env.API_URL}/api/brand`, options)
-      .then(response => response.json())
-      .then((json) => {
-        if (!json.success) {
-          return dispatch(getAllBrandsFailure(json));
-        }
-        return dispatch(getAllBrandsSuccess(json));
-      })
-      .catch((err) => {
-        console.error(`Error getting all brands: ${err}`);
-        return dispatch(getAllBrandsFailure(err));
-      });
+    return actionApiCall(body);
   };
 }
 
 export function getUserBrands(payload) {
   return (dispatch) => {
-    dispatch(getUserBrandsFetching());
-    const options = {
-      method: 'GET',
-      headers: createHeaders(payload.token),
+    const body = {
+      url: `${process.env.API_URL}/api/me/brand`,
+      options: {
+        method: 'GET',
+        headers: createHeaders(payload.token),
+      },
+      onFetching: getUserBrandsFetching,
+      onSuccess: getUserBrandsSuccess,
+      onFailure: getUserBrandsFailure,
+      errorMessage: 'Error getting user brands',
+      dispatch,
     };
-
-    fetch(`${process.env.API_URL}/api/me/brand`, options)
-      .then(response => response.json())
-      .then((json) => {
-        if (!json.success) {
-          return dispatch(getUserBrandsFailure(json));
-        }
-        return dispatch(getUserBrandsSuccess(json));
-      })
-      .catch((err) => {
-        console.error(`Error getting user brands: ${err}`);
-        return dispatch(getUserBrandsFailure(err));
-      });
+    return actionApiCall(body);
   };
 }
 
 export function getBrandsByPopularity(payload) {
   return (dispatch) => {
-    dispatch(getBrandsByPopularityBrandsFetching());
-    const options = {
-      method: 'GET',
-      headers: createHeaders(),
+    const body = {
+      url: `${process.env.API_URL}/api/analytics/brand/popularity?limit=${payload.limit}`,
+      options: {
+        method: 'GET',
+        headers: createHeaders(),
+      },
+      onFetching: getBrandsByPopularityFetching,
+      onSuccess: getBrandsByPopularitySuccess,
+      onFailure: getBrandsByPopularityFailure,
+      errorMessage: 'Error getting brands by popularity',
+      dispatch,
     };
-
-    fetch(`${process.env.API_URL}/api/analytics/brand/popularity?limit=${payload.limit}`, options)
-      .then(response => response.json())
-      .then((json) => {
-        if (!json.success) {
-          return dispatch(getBrandsByPopularityFailure(json));
-        }
-        return dispatch(getBrandsByPopularitySuccess(json));
-      })
-      .catch((err) => {
-        console.error(`Error getting brands by popularity: ${err}`);
-        return dispatch(getBrandsByPopularityFailure(err));
-      });
-  }
+    return actionApiCall(body);
+  };
 }
 
 export function addBrand(payload) {
   return (dispatch) => {
-    dispatch(addBrandFetching());
-    const options = {
-      method: 'PUT',
-      headers: createHeaders(payload.token),
-      body: JSON.stringify({ brands: payload.brands }),
+    const body = {
+      url: `${process.env.API_URL}/api/me/brand`,
+      options: {
+        method: 'PUT',
+        headers: createHeaders(payload.token),
+        body: JSON.stringify({ brands: payload.brands }),
+      },
+      onFetching: addBrandFetching,
+      onSuccess: addBrandSuccess,
+      onFailure: addBrandFailure,
+      errorMessage: 'Error adding brands to user profile',
+      dispatch,
     };
-
-    fetch(`${process.env.API_URL}/api/me/brand`, options)
-      .then(response => response.json())
-      .then((json) => {
-        if (!json.success) {
-          return dispatch(addBrandFailure(json));
-        }
-        return dispatch(addBrandSuccess(json));
-      })
-      .catch((err) => {
-        console.error(`Error adding brands to user profile: ${err}`);
-        return dispatch(addBrandFailure(err));
-      });
+    return actionApiCall(body);
   };
 }
 
 export function removeBrand(payload) {
   return (dispatch) => {
-    dispatch(removeBrandFetching());
-    const options = {
-      method: 'DELETE',
-      headers: createHeaders(payload.token),
-      body: JSON.stringify({ brands: payload.brands }),
+    const body = {
+      url: `${process.env.API_URL}/api/me/brand`,
+      options: {
+        method: 'DELETE',
+        headers: createHeaders(payload.token),
+        body: JSON.stringify({ brands: payload.brands }),
+      },
+      onFetching: removeBrandFetching,
+      onSuccess: removeBrandSuccess,
+      onFailure: removeBrandFailure,
+      errorMessage: 'Error removing brands from user profile',
+      dispatch,
     };
+    return actionApiCall(body);
+  };
+}
 
-    fetch(`${process.env.API_URL}/api/me/brand`, options)
-      .then(response => response.json())
-      .then((json) => {
-        if (!json.success) {
-          return dispatch(removeBrandFailure(json));
-        }
-        return dispatch(removeBrandSuccess(json));
-      })
-      .catch((err) => {
-        console.error(`Error removing brands from user profile: ${err}`);
-        return dispatch(removeBrandFailure(err));
-      });
+export function getBrandInfos(payload) {
+  return (dispatch) => {
+    const body = {
+      url: `${process.env.API_URL}/api/brand/info?brand=${payload.brand}`,
+      options: {
+        method: 'GET',
+        headers: createHeaders(),
+      },
+      onFetching: getBrandInfosFetching,
+      onSuccess: getBrandInfosSuccess,
+      onFailure: getBrandInfosFailure,
+      errorMessage: `Error getting brand info for ${payload.brand}`,
+      dispatch,
+    };
+    return actionApiCall(body);
   };
 }

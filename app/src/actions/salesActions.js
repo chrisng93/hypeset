@@ -2,7 +2,7 @@
  * Created by chrisng on 3/19/17.
  */
 import * as actionTypes from '../constants/actionTypes.js';
-import { getInfo, createHeaders } from '../utils/requestUtils';
+import { actionApiCall, createHeaders } from '../utils/requestUtils';
 
 function getAllSalesFetching() {
   return {
@@ -64,7 +64,7 @@ export function getAllSales(payload) {
       errorMessage: 'Error getting all sales',
       dispatch,
     };
-    return getInfo(body);
+    return actionApiCall(body);
   };
 }
 
@@ -82,6 +82,6 @@ export function getOwnSales(payload) {
       errorMessage: 'Error getting own sales',
       dispatch,
     };
-    return getInfo(body);
+    return actionApiCall(body);
   };
 }

@@ -3,7 +3,7 @@
  */
 import { push } from 'react-router-redux';
 import * as actionTypes from '../constants/actionTypes.js';
-import { createHeaders } from '../utils/requestUtils';
+import { actionApiCall, createHeaders } from '../utils/requestUtils';
 import { resetNews } from './newsActions';
 import { resetSales } from './salesActions';
 
@@ -89,50 +89,40 @@ function editUserFailure(payload) {
 
 export function auth(payload) {
   return (dispatch) => {
-    dispatch(authFetching());
-    const options = {
-      method: 'POST',
-      headers: createHeaders(),
-      body: JSON.stringify(payload),
+    const body = {
+      url: `${process.env.API_URL}/auth`,
+      options: {
+        method: 'POST',
+        headers: createHeaders(),
+        body: JSON.stringify(payload),
+      },
+      onFetching: authFetching,
+      onSuccess: authSuccess,
+      onFailure: authFailure,
+      errorMessage: `Error authenticating user ${payload.username}`,
+      dispatch,
     };
-
-    return fetch(`${process.env.API_URL}/auth`, options)
-      .then(response => response.json())
-      .then((json) => {
-        if (!json.success) {
-          return dispatch(authFailure(json));
-        }
-        return dispatch(authSuccess(json));
-      })
-      .catch((err) => {
-        console.error(`Error authenticating user: ${err}`);
-        return dispatch(authFailure(err));
-      });
+    return actionApiCall(body);
   };
 }
 
 export function signUp(payload) {
   return (dispatch) => {
-    dispatch(signUpFetching());
-    const options = {
-      method: 'POST',
-      headers: createHeaders(),
-      body: JSON.stringify(payload),
+    const body = {
+      url: `${process.env.API_URL}/api/user`,
+      options: {
+        method: 'POST',
+        headers: createHeaders(),
+        body: JSON.stringify(payload),
+      },
+      onFetching: signUpFetching,
+      onSuccess: signUpSuccess,
+      onFailure: signUpFailure,
+      errorMessage: `Error signing up user ${payload.username}`,
+      dispatch,
     };
-
-    return fetch(`${process.env.API_URL}/api/user`, options)
-      .then(response => response.json())
-      .then((json) => {
-        if (!json.success) {
-          return dispatch(signUpFailure(json));
-        }
-        return dispatch(signUpSuccess(json));
-      })
-      .catch((err) => {
-        console.error(`Error signing up user: ${err}`);
-        return dispatch(signUpFailure(err));
-      });
-  }
+    return actionApiCall(body);
+  };
 }
 
 export function logout(payload) {
@@ -166,24 +156,19 @@ export function logout(payload) {
 
 export function editUser(payload) {
   return (dispatch) => {
-    dispatch(editUserFetching());
-    const options = {
-      method: 'PUT',
-      headers: createHeaders(payload.token),
-      body: JSON.stringify(payload),
+    const body = {
+      url: `${process.env.API_URL}/api/user/${payload.username}`,
+      options: {
+        method: 'PUT',
+        headers: createHeaders(payload.token),
+        body: JSON.stringify(payload),
+      },
+      onFetching: editUserFetching,
+      onSuccess: editUserSuccess,
+      onFailure: editUserFailure,
+      errorMessage: `Error editing user ${payload.username}`,
+      dispatch,
     };
-
-    fetch(`${process.env.API_URL}/api/user/${payload.username}`, options)
-      .then(response => response.json())
-      .then((json) => {
-        if (!json.success) {
-          return dispatch(editUserFailure(json));
-        }
-        return dispatch(editUserSuccess(json));
-      })
-      .catch((err) => {
-        console.error(`Error signing up user: ${err}`);
-        dispatch(editUserFailure(err));
-      });
+    return actionApiCall(body);
   };
 }
