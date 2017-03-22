@@ -44,16 +44,13 @@ async function logout(req, res) {
 async function test(req, res) {
   try {
     // await retrieveBrands();
-    const brandModels = await m.Brand.findAll();
-    const availableBrands = brandModels.map(model => model.name);
+    // const brandModels = await m.Brand.findAll();
+    // const availableBrands = brandModels.map(model => model.name);
     // await retrieveNews(availableBrands);
-    await retrieveSales(availableBrands);
+    // await retrieveSales(availableBrands);
     // const sales = await m.Info.findAll({ where: { type: 'Sale' }, include: [m.Brand] });
     // for (let i = 0; i < sales.length; i++) {
-    //   console.log(sales[i])
-    //   if (sales[i].Brands.length === 0) {
-    //     sales[i].destroy();
-    //   }
+    //   sales[i].destroy();
     // }
   } catch(err) {
     console.log(err)

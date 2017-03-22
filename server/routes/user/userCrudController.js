@@ -3,14 +3,19 @@
  */
 import jwt from 'jsonwebtoken';
 import m from '../../models';
+import redisClient from '../../db/redis';
 import { sendCrudError } from '../../utils/commonErrorHandling';
 
 async function createUser(req, res) {
   try {
     const user = await m.User.create(req.body);
-    const token = jwt.sign({ user: {...user.dataValues} }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
-    console.log(`Created user ${user.username}`);
-    res.status(201).send({ success: true, token, user });
+    const expiration = parseInt(process.env.JWT_EXPIRATION);
+    const token = jwt.sign({ user: { ...user.dataValues } }, process.env.JWT_SECRET, { expiresIn: expiration });
+    redisClient.setex(token, expiration, true, (err) => {
+      if (err) return res.status(500).send({ success: false, message: JSON.stringify(err) });
+      console.log(`User ${user.username} successfully created`);
+      res.status(201).send({ success: true, token, user });
+    });
   } catch(err) {
     sendCrudError('creating', 'user', err, res);
   }
