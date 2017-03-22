@@ -1,17 +1,4 @@
 div.news {
-  display: flex;
-  flex-direction: row;
-  margin: 40px 100px 0 100px;
-
-  div.news-container {
-    flex: 4;
-  }
-
-  div.filter-container {
-    display: flex;
-    flex: 1;
-  }
-
   img {
     transform: scale(0.85);
     margin: -35px 0 0 -180px;

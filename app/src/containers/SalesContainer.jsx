@@ -32,7 +32,9 @@ function SalesContainer(props) {
     getOwnArticles: getOwnSales,
   };
   return (
-    <Articles {...articlesProps} />
+    <div className="sales">
+      <Articles {...articlesProps} />
+    </div>
   );
 }
 

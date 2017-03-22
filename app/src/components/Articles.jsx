@@ -54,9 +54,6 @@ export default class Articles extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('RECEIVING PROPS')
-    console.log(nextProps)
-    console.log(this.props)
     if (nextProps.isFetchingAllArticles || nextProps.isFetchingOwnArticles) {
       return;
     }

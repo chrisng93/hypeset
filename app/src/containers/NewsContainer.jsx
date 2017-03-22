@@ -32,7 +32,9 @@ function NewsContainer(props) {
     getOwnArticles: getOwnNews,
   };
   return (
-    <Articles {...articlesProps} />
+    <div className="news">
+      <Articles {...articlesProps} />
+    </div>
   );
 }
 

@@ -6,7 +6,8 @@ import { allBrandsSelector } from '../selectors/brandSelectors';
 import Brands from '../components/Brands';
 
 const propTypes = {
-  brands: T.array,
+  brands: T.array.isRequired,
+  getAllBrands: T.func.isRequired,
 };
 
 function BrandsContainer(props) {
@@ -23,6 +24,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    getAllBrands: bindActionCreators(actions.getAllBrands, dispatch),
   };
 }
 
