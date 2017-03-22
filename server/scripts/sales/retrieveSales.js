@@ -24,12 +24,10 @@ export async function retrieveSales(availableBrands) {
   console.log('Finished retrieving sales..');
 
   for (let i = 0; i < sales.length; i++) {
-    if (sales[i]) {
-      const sale = await m.Info.updateOrCreate(sales[i], 'Sale');
-      for (let j = 0; j < sales[i].brands.length; j++) {
-        const brand = await m.Brand.findByName(sales[i].brands[j]);
-        sale.addBrand(brand);
-      }
+    const sale = await m.Info.updateOrCreate(sales[i], 'Sale');
+    for (let j = 0; j < sales[i].brands.length; j++) {
+      const brand = await m.Brand.findByName(sales[i].brands[j]);
+      sale.addBrand(brand);
     }
   }
   console.log('Finished inserting sales into table..');

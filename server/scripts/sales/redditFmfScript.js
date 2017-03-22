@@ -66,7 +66,7 @@ export async function retrieveRedditFmfSales(r, sales = [], latestSaleDate, avai
             brands = brands.concat(findBrands(sale.url, availableBrands, 'url'));
           }
         }
-        sale.brands = brands.join(', ');
+        sale.brands = brands;
         if (sale.brands.length > 0) {
           sales.push(sale);
         }
