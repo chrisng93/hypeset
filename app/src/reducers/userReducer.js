@@ -3,10 +3,7 @@
  */
 import * as actionTypes from '../constants/actionTypes';
 
-const freshErrorState = {
-  status: false,
-  message: '',
-};
+const freshErrorState = { status: false, message: '' };
 
 const initialState = {
   user: {},

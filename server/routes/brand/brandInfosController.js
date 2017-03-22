@@ -22,10 +22,16 @@ async function retrieveBrandInfos(req, res) {
     limit ? limit = parseInt(limit) : limit = 20;
     const newsQuery = createBrandInfoQuery('News', name, offset, limit);
     const salesQuery = createBrandInfoQuery('Sale', name, offset, limit);
-    const brandNews = await m.Brand.find(newsQuery);
-    const brandSales = await m.Brand.find(salesQuery);
+    const brand = await m.Brand.find({ attributes: ['name', 'condensedName'], where: { condensedName: name } });
+    const brandNews = await m.Brand.find(newsQuery) || {};
+    const brandSales = await m.Brand.find(salesQuery) || {};
     console.log(`Retrieved news and sales for brand ${name}`);
-    res.status(200).send({ success: true, brand: name, brandNews: brandNews.Infos, brandSales: brandSales.Infos });
+    const brandInfos = {
+      brand: brand.name,
+      brandNews: brandNews.Infos || [],
+      brandSales: brandSales.Infos || [],
+    };
+    res.status(200).send({ success: true, brandInfos });
   } catch(err) {
     console.error(`Error retrieving brand ${name} infos: ${err}`);
     res.status(500).send({ success: false, message: JSON.stringify(err) });

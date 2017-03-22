@@ -4,10 +4,7 @@
 import * as actionTypes from '../constants/actionTypes';
 import { formatDates } from '../utils/dateUtils';
 
-const freshErrorState = {
-  status: false,
-  message: '',
-};
+const freshErrorState = { status: false, message: '' };
 
 const initialState = {
   sales: [],

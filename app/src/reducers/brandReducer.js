@@ -3,20 +3,19 @@
  */
 import * as actionTypes from '../constants/actionTypes';
 
-const freshErrorState = {
-  status: false,
-  message: '',
-};
+const freshErrorState = { status: false, message: '' };
 
 const initialState = {
   allBrands: [],
   userBrands: [],
   brandsByPopularity: [],
+  brandInfos: {},
   isFetchingAllBrands: false,
   isFetchingUserBrands: false,
   isFetchingBrandsByPopularity: false,
   isFetchingAddBrand: false,
   isFetchingRemoveBrand: false,
+  isFetchingBrandInfos: false,
   error: freshErrorState,
 };
 
@@ -100,6 +99,22 @@ export default function brand(state = initialState, action) {
       return {
         ...state,
         isFetchingRemoveBrand: false,
+        error: { status: true, message: payload.message },
+      };
+
+    case actionTypes.GET_BRAND_INFOS_FETCHING:
+      return { ...state, isFetchingBrandInfos: true };
+    case actionTypes.GET_BRAND_INFOS_SUCCESS:
+      return {
+        ...state,
+        brandInfos: payload.brandInfos,
+        isFetchingBrandInfos: false,
+        error: freshErrorState,
+      };
+    case actionTypes.GET_BRAND_INFOS_FAILURE:
+      return {
+        ...state,
+        isFetchingBrandInfos: false,
         error: { status: true, message: payload.message },
       };
 

@@ -20,6 +20,26 @@ export const brandsByPopularitySelector = createSelector(
   brandState => brandState.brandsByPopularity
 );
 
+export const brandInfosSelector = createSelector(
+  brandStateSelector,
+  brandState => brandState.brandInfos
+);
+
+export const brandNameSelector = createSelector(
+  brandInfosSelector,
+  brandInfos => brandInfos.brand
+);
+
+export const brandNewsSelector = createSelector(
+  brandInfosSelector,
+  brandInfos => brandInfos.brandNews
+);
+
+export const brandSalesSelector = createSelector(
+  brandInfosSelector,
+  brandInfos => brandInfos.brandSales
+);
+
 export const isFetchingAllBrandsSelector = createSelector(
   brandStateSelector,
   brandState => brandState.isFetchingAllBrands
@@ -43,6 +63,11 @@ export const isFetchingAddBrandSelector = createSelector(
 export const isFetchingRemoveBrandSelector = createSelector(
   brandStateSelector,
   brandState => brandState.isFetchingRemoveBrand
+);
+
+export const isFetchingBrandInfosSelector = createSelector(
+  brandStateSelector,
+  brandState => brandState.isFetchingBrandInfos
 );
 
 export const brandErrorSelector = createSelector(

@@ -3,16 +3,20 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { push } from 'react-router-redux';
 import * as actions from '../actions';
-import { allBrandsSelector } from '../selectors/brandSelectors';
+import { brandNameSelector, brandNewsSelector, brandSalesSelector } from '../selectors/brandSelectors';
 import Brand from '../components/Brand';
 
 const propTypes = {
+  brandName: T.string.isRequired,
+  brandNews: T.array.isRequired,
+  brandSales: T.array.isRequired,
+  getBrandInfos: T.func.isRequired,
 };
 
 class BrandContainer extends Component {
   componentWillMount() {
-    const { params } = this.props;
-    console.log(params.brand)
+    const { params, getBrandInfos } = this.props;
+    getBrandInfos({ brand: params.brand, offset: 0, limit: 20 });
   }
 
   render() {
@@ -26,13 +30,15 @@ class BrandContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-
+    brandName: brandNameSelector(state),
+    brandNews: brandNewsSelector(state),
+    brandSales: brandSalesSelector(state),
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-
+    getBrandInfos: bindActionCreators(actions.getBrandInfos, dispatch),
   };
 }
 
