@@ -27,7 +27,12 @@ export const brandInfosSelector = createSelector(
 
 export const brandNameSelector = createSelector(
   brandInfosSelector,
-  brandInfos => brandInfos.brand
+  brandInfos => brandInfos.brandName
+);
+
+export const brandCondensedNameSelector = createSelector(
+  brandInfosSelector,
+  brandInfos => brandInfos.brandCondensedName
 );
 
 export const brandNewsSelector = createSelector(

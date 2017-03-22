@@ -2,6 +2,7 @@
  * Created by chrisng on 3/14/17.
  */
 import * as actionTypes from '../constants/actionTypes';
+import { formatDates } from '../utils/dateUtils';
 
 const freshErrorState = { status: false, message: '' };
 
@@ -9,7 +10,7 @@ const initialState = {
   allBrands: [],
   userBrands: [],
   brandsByPopularity: [],
-  brandInfos: {},
+  brandInfos: { brandNews: [], brandSales: [] },
   isFetchingAllBrands: false,
   isFetchingUserBrands: false,
   isFetchingBrandsByPopularity: false,
@@ -107,7 +108,12 @@ export default function brand(state = initialState, action) {
     case actionTypes.GET_BRAND_INFOS_SUCCESS:
       return {
         ...state,
-        brandInfos: payload.brandInfos,
+        brandInfos: {
+          brandName: payload.brandInfos.brandName,
+          brandCondensedName: payload.brandInfos.brandCondensedName,
+          brandNews: state.brandInfos.brandNews.concat(formatDates(payload.brandInfos.brandNews)),
+          brandSales: state.brandInfos.brandSales.concat(formatDates(payload.brandInfos.brandSales)),
+        },
         isFetchingBrandInfos: false,
         error: freshErrorState,
       };
@@ -116,6 +122,11 @@ export default function brand(state = initialState, action) {
         ...state,
         isFetchingBrandInfos: false,
         error: { status: true, message: payload.message },
+      };
+    case actionTypes.RESET_BRAND_INFOS:
+      return {
+        ...state,
+        brandInfos: { brandNews: [], brandSales: [] },
       };
 
     default:

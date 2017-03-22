@@ -124,6 +124,12 @@ function getBrandInfosFailure(payload) {
   }
 }
 
+export function resetBrandInfos() {
+  return {
+    type: actionTypes.RESET_BRAND_INFOS,
+  }
+}
+
 export function getAllBrands() {
   return (dispatch) => {
     const body = {

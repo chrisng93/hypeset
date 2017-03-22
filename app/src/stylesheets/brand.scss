@@ -1,0 +1,12 @@
+div.brand {
+  display: flex;
+  flex-direction: row;
+
+  div.brand-news {
+    flex: 1;
+  }
+
+  div.brand-sales {
+    flex: 1;
+  }
+}

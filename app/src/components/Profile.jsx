@@ -1,5 +1,6 @@
 import React, { Component, PropTypes as T } from 'react';
 import ProfileNav from './ProfileNav';
+import UserInfo from './UserInfo';
 
 const propTypes = {
   children: T.node,
@@ -18,33 +19,49 @@ const propTypes = {
   routeToEditBrands: T.func.isRequired,
 };
 
-export default function Profile(props) {
-  const { token, availableBrands, userBrands, popularBrands, getAllBrands, getBrandsByPopularity,
-    addBrand, removeBrand, user, onEditUser, routeToProfile, routeToUserInfo, routeToEditUser, routeToEditBrands, children } = props;
-  const profileNavProps = { routeToUserInfo, routeToEditUser, routeToEditBrands };
-  const userInfoProps = { user, routeToEditUser };
-  const editUserProps = { user, token, onEditUser, routeToProfile };
-  const editBrandProps = { token, availableBrands, userBrands, popularBrands, getAllBrands, getBrandsByPopularity, addBrand, removeBrand };
-  const childrenWithProps = React.Children.map(children, (child) => {
-    let childProps = null;
-    const componentName = child.type.name;
-    if (componentName === 'UserInfo') {
-      childProps = userInfoProps;
-    } else if (componentName === 'EditUser') {
-      childProps = editUserProps;
-    } else {
-      childProps = editBrandProps;
+export default class Profile extends Component {
+  constructor(props) {
+    super(props);
+    this.renderChild = this.renderChild.bind(this);
+  }
+
+  renderChild() {
+    const { token, availableBrands, userBrands, popularBrands, getAllBrands, getBrandsByPopularity,
+      addBrand, removeBrand, user, onEditUser, routeToProfile, routeToEditUser, children } = this.props;
+    const userInfoProps = { user, routeToEditUser };
+    const editUserProps = { user, token, onEditUser, routeToProfile };
+    const editBrandProps = { token, availableBrands, userBrands, popularBrands, getAllBrands, getBrandsByPopularity, addBrand, removeBrand };
+    const childrenWithProps = React.Children.map(children, (child) => {
+      let childProps;
+      const componentName = child.type.name;
+      if (componentName === 'EditUser') {
+        childProps = editUserProps;
+      } else {
+        childProps = editBrandProps;
+      }
+      return React.cloneElement(child, childProps);
+    });
+
+    if (children) {
+      return (childrenWithProps);
     }
-    return React.cloneElement(child, childProps);
-  });
-  return (
-    <div className="profile">
-      <ProfileNav {...profileNavProps} />
-      <div className="content">
-        {childrenWithProps}
+    return (
+      <UserInfo {...userInfoProps} />
+    );
+  }
+
+  render() {
+    const { routeToUserInfo, routeToEditUser, routeToEditBrands } = this.props;
+    const profileNavProps = { routeToUserInfo, routeToEditUser, routeToEditBrands };
+    return (
+      <div className="profile">
+        <ProfileNav {...profileNavProps} />
+        <div className="content">
+          {this.renderChild()}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 Profile.propTypes = propTypes;

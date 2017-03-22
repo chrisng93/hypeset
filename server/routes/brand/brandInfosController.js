@@ -27,7 +27,8 @@ async function retrieveBrandInfos(req, res) {
     const brandSales = await m.Brand.find(salesQuery) || {};
     console.log(`Retrieved news and sales for brand ${name}`);
     const brandInfos = {
-      brand: brand.name,
+      brandName: brand.name,
+      brandCondensedName: brand.condensedName,
       brandNews: brandNews.Infos || [],
       brandSales: brandSales.Infos || [],
     };

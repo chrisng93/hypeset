@@ -19,6 +19,7 @@ const propTypes = {
   getAllNews: T.func.isRequired,
   getAllSales: T.func.isRequired,
   getUserBrands: T.func.isRequired,
+  getBrandsByPopularity: T.func.isRequired,
   getOwnNews: T.func.isRequired,
   getOwnSales: T.func.isRequired,
   onLogout: T.func.isRequired,
@@ -33,7 +34,7 @@ class AppContainer extends Component {
   componentWillReceiveProps(nextProps) {
     const offset = 0;
     const limit = 20;
-    const { getAllBrands, getAllNews, getAllSales, getUserBrands, getOwnNews, getOwnSales } = this.props;
+    const { getAllBrands, getAllNews, getAllSales, getUserBrands, getBrandsByPopularity, getOwnNews, getOwnSales } = this.props;
     if (nextProps.isAuthenticated === this.props.isAuthenticated) {
       return;
     }
@@ -45,6 +46,7 @@ class AppContainer extends Component {
       getAllNews({ offset, limit });
       getAllSales({ offset, limit });
     }
+    getBrandsByPopularity({ limit: 20 });
     getAllBrands();
   }
 
@@ -74,6 +76,7 @@ function mapDispatchToProps(dispatch) {
     getAllNews: bindActionCreators(actions.getAllNews, dispatch),
     getAllSales: bindActionCreators(actions.getAllSales, dispatch),
     getUserBrands: bindActionCreators(actions.getUserBrands, dispatch),
+    getBrandsByPopularity: bindActionCreators(actions.getBrandsByPopularity, dispatch),
     getOwnNews: bindActionCreators(actions.getOwnNews, dispatch),
     getOwnSales: bindActionCreators(actions.getOwnSales, dispatch),
     onLogout: bindActionCreators(actions.logout, dispatch),

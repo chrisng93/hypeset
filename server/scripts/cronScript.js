@@ -12,7 +12,8 @@ export default function runScripts() {
     cronTime: '* * 01 * * *',
     onTick,
     start: true,
-    runOnInit: true,
+    // TODO: uncomment when deploy
+    // runOnInit: true,
   });
   job.start();
   console.log(job.running);

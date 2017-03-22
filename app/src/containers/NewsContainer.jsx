@@ -30,6 +30,7 @@ function NewsContainer(props) {
     isFetchingOwnArticles: isFetchingOwnNews,
     getAllArticles: getAllNews,
     getOwnArticles: getOwnNews,
+    shouldFilter: true,
   };
   return (
     <div className="news">

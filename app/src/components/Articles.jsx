@@ -3,15 +3,17 @@ import ArticleItem from './ArticleItem';
 import Checkbox from './Checkbox';
 
 const propTypes = {
-  isAuthenticated: T.bool.isRequired,
-  token: T.string.isRequired,
+  isAuthenticated: T.bool,
+  token: T.string,
+  brand: T.string,
   articles: T.array.isRequired,
-  articlesBrands: T.array.isRequired,
-  articlesSites: T.array.isRequired,
+  articlesBrands: T.array,
+  articlesSites: T.array,
   isFetchingAllArticles: T.bool.isRequired,
   isFetchingOwnArticles: T.bool.isRequired,
   getAllArticles: T.func.isRequired,
   getOwnArticles: T.func.isRequired,
+  shouldFilter: T.bool.isRequired,
 };
 
 export default class Articles extends Component {
@@ -29,14 +31,12 @@ export default class Articles extends Component {
     this.changeFilteredOutState = this.changeFilteredOutState.bind(this);
     this.filterResults = this.filterResults.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
+    this.renderFilters = this.renderFilters.bind(this);
   }
 
   componentWillMount() {
     const { limit } = this.state;
-    const { articles, isFetchingAllArticles, isFetchingOwnArticles } = this.props;
-    if (articles.length === 0 && !isFetchingAllArticles && !isFetchingOwnArticles) {
-      this.retrieveArticles();
-    }
+    const { articles } = this.props;
     const visibleArray = articles.slice(0, (limit / 2));
     this.setState({
       dbOffset: articles.length,
@@ -64,7 +64,11 @@ export default class Articles extends Component {
 
   retrieveArticles() {
     const { dbOffset, limit } = this.state;
-    const { isAuthenticated, token, getAllArticles, getOwnArticles } = this.props;
+    const { isAuthenticated, token, brand, getAllArticles, getOwnArticles } = this.props;
+    if (brand) {
+      getAllArticles({ offset: dbOffset, limit, brand });
+      return;
+    }
     isAuthenticated ? getOwnArticles({ token, offset: dbOffset, limit }) : getAllArticles({ offset: dbOffset, limit });
   }
 
@@ -109,14 +113,10 @@ export default class Articles extends Component {
     }
   }
 
-  render() {
-    const { filteredOutBrands, filteredOutSites, visible } = this.state;
-    const { articlesBrands, articlesSites } = this.props;
-    return (
-      <div className="articles">
-        <div className="articles-container">
-        {visible.map((article, key) => <ArticleItem key={key} article={article} /> )}
-        </div>
+  renderFilters() {
+    const { shouldFilter, articlesBrands, articlesSites } = this.props;
+    if (shouldFilter) {
+      return (
         <div className="filter-container">
           <div className="filter">
             <div className="header">Filters</div>
@@ -130,6 +130,18 @@ export default class Articles extends Component {
             </div>
           </div>
         </div>
+      );
+    }
+  }
+
+  render() {
+    const { visible } = this.state;
+    return (
+      <div className="articles">
+        <div className="articles-container">
+        {visible.map((article, key) => <ArticleItem key={key} article={article} /> )}
+        </div>
+        {this.renderFilters()}
       </div>
     );
   }

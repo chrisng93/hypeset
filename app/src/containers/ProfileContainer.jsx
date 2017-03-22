@@ -47,8 +47,8 @@ function mapDispatchToProps(dispatch) {
     removeBrand: bindActionCreators(actions.removeBrand, dispatch),
     onEditUser: bindActionCreators(actions.editUser, dispatch),
     routeToProfile: () => dispatch(push('/profile')),
-    routeToEditUser: () => dispatch(push('/profile/edit')),
     routeToUserInfo: () => dispatch(push('/profile')),
+    routeToEditUser: () => dispatch(push('/profile/edit')),
     routeToEditBrands: () => dispatch(push('/profile/brands')),
   };
 }

@@ -30,6 +30,7 @@ function SalesContainer(props) {
     isFetchingOwnArticles: isFetchingOwnSales,
     getAllArticles: getAllSales,
     getOwnArticles: getOwnSales,
+    shouldFilter: true,
   };
   return (
     <div className="sales">

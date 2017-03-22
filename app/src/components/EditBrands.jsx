@@ -13,9 +13,13 @@ const propTypes = {
 
 export default class EditBrands extends Component {
   componentWillMount() {
-    const { getAllBrands, getBrandsByPopularity, token } = this.props;
-    getAllBrands({ token });
-    getBrandsByPopularity({ token, limit: 20 });
+    const { availableBrands, popularBrands, getAllBrands, getBrandsByPopularity, token } = this.props;
+    if (!availableBrands.length) {
+      getAllBrands({ token });
+    }
+    if (!popularBrands.length) {
+      getBrandsByPopularity({ limit: 20 });
+    }
   }
 
   render() {
