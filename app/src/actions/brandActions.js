@@ -238,7 +238,8 @@ export function getBrandInfos(payload) {
         }
         if (payload.type === 'news') {
           json.brandInfos.brandSales = []
-        } else if (payload.type === 'sales') {
+        }
+        if (payload.type === 'sales') {
           json.brandInfos.brandNews = []
         }
         return dispatch(getBrandInfosSuccess(json));

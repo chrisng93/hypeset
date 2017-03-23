@@ -6,7 +6,7 @@ import cheerio from 'cheerio';
 import moment from 'moment';
 import { findBrands, findClass, findTag, formatDate } from '../../utils/scriptUtils';
 
-export async function parseGrailedArticles(articles, availableBrands, page = 1, latestArticleDate, grailedId) {
+export function parseGrailedArticles(articles, availableBrands, page = 1, latestArticleDate, grailedId) {
   return new Promise((resolve) => {
     let continueParsing = true;
     request(`${process.env.GRAILED_URL}/drycleanonly?page=${page}`, (err, res) => {

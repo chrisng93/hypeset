@@ -10,27 +10,31 @@ const now = moment().subtract(1, 'days').unix();
 const xago = moment().subtract(8, 'days').unix();
 
 export async function parseGrailedSpecificArticles(type, articles, availableBrands) {
-  const validArticles = [];
-  let parseFunction;
-  if (type === 'Weekend Reading') {
-    parseFunction = parseWeekendReadingArticle;
-  } else if (type === 'Grail Fits') {
-    parseFunction = parseGrailFitsArticle;
-  } else {
-    parseFunction = parseStaffPicksArticle;
-  }
-  for (let i = 0; i < articles.length; i++) {
-    let article;
-    article = await parseFunction(articles[i], availableBrands);
-    if (article) {
-      validArticles.push(article);
+  try {
+    const validArticles = [];
+    let parseFunction;
+    if (type === 'Weekend Reading') {
+      parseFunction = parseWeekendReadingArticle;
+    } else if (type === 'Grail Fits') {
+      parseFunction = parseGrailFitsArticle;
+    } else {
+      parseFunction = parseStaffPicksArticle;
     }
+    for (let i = 0; i < articles.length; i++) {
+      let article;
+      article = await parseFunction(articles[i], availableBrands);
+      if (article) {
+        validArticles.push(article);
+      }
+    }
+    return validArticles;
+  } catch(err) {
+    console.error(`Error parsing Grailed articles: ${err}`);
   }
-  return validArticles;
 }
 
 async function parseWeekendReadingArticle(article, availableBrands) {
-  return new Promise((resolve) => {
+  try {
     request(article.url, (err, res) => {
       const $ = cheerio.load(res.body);
       const root = $('.article-wrapper')[0];
@@ -43,24 +47,33 @@ async function parseWeekendReadingArticle(article, availableBrands) {
         }
       });
       article.brands = validBrands;
-      validBrands.length > 0 ? resolve(article) : resolve(null);
+      if (validBrands.length) {
+        return article;
+      }
+      return null;
     });
-  });
+  } catch(err) {
+    console.error(`Error parsing Grailed Weekend Reading articles: ${err}`);
+  }
 }
 
 async function parseGrailFitsArticle(article, availableBrands) {
-  return new Promise((resolve) => {
-    parseDataListings(article, '.listings', availableBrands, resolve);
-  });
+  try {
+    return parseDataListings(article, '.listings', availableBrands);
+  } catch(err) {
+    console.error(`Error parsing Grailed Grail Fits articles: ${err}`);
+  }
 }
 
 async function parseStaffPicksArticle(article, availableBrands) {
-  return new Promise((resolve) => {
-    parseDataListings(article, '.listings', availableBrands, resolve);
-  })
+  try {
+    return parseDataListings(article, '.listings', availableBrands);
+  } catch(err) {
+    console.error(`Error parsing Grailed Staff Picks articles: ${err}`);
+  }
 }
 
-const parseDataListings = (article, classSelector, availableBrands, resolve) => {
+const parseDataListings = (article, classSelector, availableBrands) => {
   request(article.url, (err, res) => {
     const $ = cheerio.load(res.body);
     const validBrands = [];
@@ -75,7 +88,10 @@ const parseDataListings = (article, classSelector, availableBrands, resolve) => 
       });
     });
     article.brands = validBrands;
-    validBrands.length > 0 ? resolve(article) : resolve(null);
+    if (validBrands.length) {
+      return article;
+    }
+    return null;
   });
 };
 

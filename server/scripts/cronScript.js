@@ -29,10 +29,16 @@ async function onTick() {
     await retrieveSales(availableBrands);
     console.log('Finished retrieving sales..');
     await retrieveNews(availableBrands);
+    console.log('Finished retrieving news..');
+
     console.log('Finished web scraping scripts..');
   } catch(err) {
     console.error(`Error running cron job: ${err}`)
   }
+}
+
+function setRedisKeys() {
+
 }
 
 runScripts();
