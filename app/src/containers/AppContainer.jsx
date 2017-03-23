@@ -31,14 +31,27 @@ const propTypes = {
 };
 
 class AppContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.getData = this.getData.bind(this);
+  }
+
+  componentWillMount() {
+    this.getData(false);
+  }
+
   componentWillReceiveProps(nextProps) {
-    const offset = 0;
-    const limit = 20;
-    const { getAllBrands, getAllNews, getAllSales, getUserBrands, getBrandsByPopularity, getOwnNews, getOwnSales } = this.props;
     if (nextProps.isAuthenticated === this.props.isAuthenticated) {
       return;
     }
-    if (nextProps.isAuthenticated) {
+    this.getData(nextProps.isAuthenticated);
+  }
+
+  getData(isAuthenticated) {
+    const { getAllBrands, getAllNews, getAllSales, getUserBrands, getBrandsByPopularity, getOwnNews, getOwnSales } = this.props;
+    const offset = 0;
+    const limit = 20;
+    if (isAuthenticated) {
       getUserBrands({ token: nextProps.token });
       getOwnNews({ token: nextProps.token, offset, limit });
       getOwnSales({ token: nextProps.token, offset, limit });

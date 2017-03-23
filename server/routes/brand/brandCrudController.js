@@ -19,7 +19,6 @@ async function retrieveAllBrands(req, res) {
   try {
     const cachedAllBrands = await redisClient.getAsync('allBrands');
     if (cachedAllBrands) {
-      console.log('CACHED ALL BRANDS');
       return res.status(200).send({ success: true, brands: JSON.parse(cachedAllBrands) });
     }
 

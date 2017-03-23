@@ -32,7 +32,6 @@ async function retrieveNews(req, res) {
 
     let cachedNews = await redisClient.getAsync('top40News');
     if (cachedNews && ((offset === 0 && limit === 20) || (offset === 20 && limit === 20))) {
-      console.log('RETURNED CAHCED NEWS BITCH')
       offset === 0 && limit === 20 ? cachedNews = JSON.parse(cachedNews).slice(0, 20) : cachedNews = JSON.parse(cachedNews).slice(20);
       return res.status(200).send({ success: true, news: cachedNews });
     }
@@ -53,7 +52,6 @@ async function retrieveSales(req, res) {
 
     let cachedSales = await redisClient.getAsync('top40Sales');
     if (cachedSales && ((offset === 0 && limit === 20) || (offset === 20 && limit === 20))) {
-      console.log('RETURNED CAHCED SALES BITCH')
       offset === 0 && limit === 20 ? cachedSales = JSON.parse(cachedSales).slice(0, 20) : cachedSales = JSON.parse(cachedSales).slice(20);
       return res.status(200).send({ success: true, sales: cachedSales });
     }
