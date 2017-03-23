@@ -8,7 +8,7 @@ import SignUpContainer from './containers/SignUpContainer';
 import NewsContainer from './containers/NewsContainer';
 import SalesContainer from './containers/SalesContainer';
 import BrandsContainer from './containers/BrandsContainer';
-import BrandContainer from './containers/BrandContainer';
+import Brand from './components/Brand';
 import ProfileContainer from './containers/ProfileContainer';
 import UserInfo from './components/UserInfo';
 import EditUser from './components/EditUser';
@@ -22,8 +22,7 @@ const routes = (
     <Route path="/news" component={NewsContainer} />
     <Route path="/sales" component={SalesContainer} />
     <Route path="/brands" component={BrandsContainer}>
-      <IndexRoute component={BrandsContainer} />
-      <Route path="/brands/:brand" component={BrandContainer} />
+      <Route path="/brands/:brand" component={Brand} />
     </Route>
     <Route path="/profile" component={EnsureAuthenticationContainer}>
       <IndexRoute component={ProfileContainer} />

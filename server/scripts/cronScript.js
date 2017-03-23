@@ -13,22 +13,26 @@ export default function runScripts() {
     onTick,
     start: true,
     // TODO: uncomment when deploy
-    // runOnInit: true,
+    runOnInit: true,
   });
   job.start();
   console.log(job.running);
 };
 
 async function onTick() {
-  console.log('Started web scraping scripts..');
-  await retrieveBrands();
-  console.log('Finished retrieving brands..');
-  const brandModels = await m.Brand.findAll();
-  const availableBrands = brandModels.map(model => model.name);
-  await retrieveSales(availableBrands);
-  console.log('Finished retrieving sales..');
-  await retrieveNews(availableBrands);
-  console.log('Finished web scraping scripts..')
+  try {
+    console.log('Started web scraping scripts..');
+    await retrieveBrands();
+    console.log('Finished retrieving brands..');
+    const brandModels = await m.Brand.findAll();
+    const availableBrands = brandModels.map(model => model.name);
+    await retrieveSales(availableBrands);
+    console.log('Finished retrieving sales..');
+    await retrieveNews(availableBrands);
+    console.log('Finished web scraping scripts..');
+  } catch(err) {
+    console.error(`Error running cron job: ${err}`)
+  }
 }
 
 runScripts();

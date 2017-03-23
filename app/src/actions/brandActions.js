@@ -224,18 +224,28 @@ export function removeBrand(payload) {
 
 export function getBrandInfos(payload) {
   return (dispatch) => {
-    const body = {
-      url: `${process.env.API_URL}/api/brand/${payload.brand}/info?offset=${payload.offset}&limit=${payload.limit}`,
-      options: {
-        method: 'GET',
-        headers: createHeaders(),
-      },
-      onFetching: getBrandInfosFetching,
-      onSuccess: getBrandInfosSuccess,
-      onFailure: getBrandInfosFailure,
-      errorMessage: `Error getting brand info for ${payload.brand}`,
-      dispatch,
+    dispatch(getBrandInfosFetching());
+    const options = {
+      method: 'GET',
+      headers: createHeaders(),
     };
-    return actionApiCall(body);
+
+    return fetch(`${process.env.API_URL}/api/brand/${payload.brand}/info?offset=${payload.offset}&limit=${payload.limit}`, options)
+      .then(response => response.json())
+      .then((json) => {
+        if (!json.success) {
+          return dispatch(getBrandInfosFailure(json));
+        }
+        if (payload.type === 'news') {
+          json.brandInfos.brandSales = []
+        } else if (payload.type === 'sales') {
+          json.brandInfos.brandNews = []
+        }
+        return dispatch(getBrandInfosSuccess(json));
+      })
+      .catch((err) => {
+        console.error(`Error signing up user: ${err}`);
+        return dispatch(getBrandInfosFailure(err));
+      });
   };
 }

@@ -14,6 +14,7 @@ const propTypes = {
   getAllArticles: T.func.isRequired,
   getOwnArticles: T.func.isRequired,
   shouldFilter: T.bool.isRequired,
+  type: T.string,
 };
 
 export default class Articles extends Component {
@@ -64,9 +65,9 @@ export default class Articles extends Component {
 
   retrieveArticles() {
     const { dbOffset, limit } = this.state;
-    const { isAuthenticated, token, brand, getAllArticles, getOwnArticles } = this.props;
+    const { isAuthenticated, token, brand, type, getAllArticles, getOwnArticles } = this.props;
     if (brand) {
-      getAllArticles({ offset: dbOffset, limit, brand });
+      getAllArticles({ offset: dbOffset, limit, brand, type });
       return;
     }
     isAuthenticated ? getOwnArticles({ token, offset: dbOffset, limit }) : getAllArticles({ offset: dbOffset, limit });
