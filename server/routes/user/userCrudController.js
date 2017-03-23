@@ -11,11 +11,9 @@ async function createUser(req, res) {
     const user = await m.User.create(req.body);
     const expiration = parseInt(process.env.JWT_EXPIRATION);
     const token = jwt.sign({ user: { ...user.dataValues } }, process.env.JWT_SECRET, { expiresIn: expiration });
-    redisClient.setex(token, expiration, true, (err) => {
-      if (err) return res.status(500).send({ success: false, message: JSON.stringify(err) });
-      console.log(`User ${user.username} successfully created`);
-      res.status(201).send({ success: true, token, user });
-    });
+    await redisClient.setex(token, expiration, true);
+    console.log(`User ${user.username} successfully created`);
+    res.status(201).send({ success: true, token, user });
   } catch(err) {
     sendCrudError('creating', 'user', err, res);
   }

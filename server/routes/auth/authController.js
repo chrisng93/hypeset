@@ -23,11 +23,9 @@ async function authenticate(req, res) {
 
     const expiration = parseInt(process.env.JWT_EXPIRATION);
     const token = jwt.sign({ user: { ...user.dataValues } }, process.env.JWT_SECRET, { expiresIn: expiration });
-    redisClient.setex(token, expiration, true, (err) => {
-      if (err) return res.status(500).send({ success: false, message: JSON.stringify(err) });
-      console.log(`User ${user.id} successfully authenticated`);
-      res.status(200).send({ success: true, token, user });
-    });
+    await redisClient.setex(token, expiration, true);
+    console.log(`User ${user.username} successfully authenticated`);
+    res.status(200).send({ success: true, token, user });
   } catch(err) {
     console.error(`Error authenticating username ${username}`);
     res.status(500).send({ success: false, message: JSON.stringify(err) });
@@ -35,10 +33,12 @@ async function authenticate(req, res) {
 }
 
 async function logout(req, res) {
-  redisClient.del(req.token, (err) => {
-    if (err) return res.status(500).send({ success: false, message: JSON.stringify(err) });
+  try {
+    await redisClient.del(req.token);
     res.status(200).send({ success: true });
-  });
+  } catch(err) {
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
+  }
 }
 
 async function test(req, res) {
