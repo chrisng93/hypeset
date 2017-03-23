@@ -38,21 +38,24 @@ async function onTick() {
   }
 }
 
+const createInfoQuery = (type) => {
+  return {
+    attributes: { exclude: ['createdAt', 'updatedAt'] },
+    where: { type },
+    include: [
+      { model: m.Brand, attributes: ['name'] },
+      { model: m.Site, attributes: ['name'] },
+    ],
+    limit: 40,
+    order: 'date DESC'
+  }
+};
+
 async function setRedisKeys(allBrands) {
   try {
     // set all brands, top 40 news articles, top 40 sales articles, top brand popularities, top 20 news and sales for top brand popularities
-    const top40News = await m.Info.findAll({
-      attributes: { exclude: ['createdAt', 'updatedAt'] },
-      where: { type: 'News' },
-      limit: 40,
-      order: 'date DESC'
-    });
-    const top40Sales = await m.Info.findAll({
-      attributes: { exclude: ['createdAt', 'updatedAt'] },
-      where: { type: 'Sale' },
-      limit: 40,
-      order: 'date DESC'
-    });
+    const top40News = await m.Info.findAll(createInfoQuery('News'));
+    const top40Sales = await m.Info.findAll(createInfoQuery('Sale'));
     const top20Brands = await m.BrandPopularity.findAll({
       attributes: { exclude: ['date', 'batch', 'createdAt', 'updatedAt'] },
       include: [{ model: m.Brand, attributes: { exclude: ['createdAt', 'updatedAt'] } }],

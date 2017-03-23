@@ -2,6 +2,7 @@
  * Created by chrisng on 3/12/17.
  */
 import m from '../../models';
+import redisClient from '../../db/redis';
 import { sendCrudError } from '../../utils/commonErrorHandling';
 
 async function createBrand(req, res) {
@@ -16,6 +17,12 @@ async function createBrand(req, res) {
 
 async function retrieveAllBrands(req, res) {
   try {
+    const cachedAllBrands = await redisClient.getAsync('allBrands');
+    if (cachedAllBrands) {
+      console.log('CACHED ALL BRANDS');
+      return res.status(200).send({ success: true, brands: JSON.parse(cachedAllBrands) });
+    }
+
     const query = {
       attributes: ['name', 'condensedName'],
       order: [[m.sequelize.fn('lower', m.sequelize.col('name')), 'ASC']],
