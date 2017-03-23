@@ -4,6 +4,7 @@
 import jwt from 'jsonwebtoken';
 import m from '../../models';
 import redisClient from '../../db/redis';
+import { sendError } from '../../utils/commonErrorHandling';
 import { retrieveSales } from '../../scripts/sales/retrieveSales';
 import { retrieveBrands } from '../../scripts/brands/retrieveBrands';
 import { retrieveNews } from '../../scripts/news/retrieveNews';
@@ -27,17 +28,17 @@ async function authenticate(req, res) {
     console.log(`User ${user.username} successfully authenticated`);
     res.status(200).send({ success: true, token, user });
   } catch(err) {
-    console.error(`Error authenticating username ${username}`);
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    sendError(`authenticating username ${username}`, err, res);
   }
 }
 
 async function logout(req, res) {
+  const { user } = req;
   try {
     await redisClient.del(req.token);
     res.status(200).send({ success: true });
   } catch(err) {
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    sendError(`logging out user ${user.username}`, err, res);
   }
 }
 

@@ -3,7 +3,7 @@
  */
 import m from '../../models';
 import redisClient from '../../db/redis';
-import { sendCrudError } from '../../utils/commonErrorHandling';
+import { sendError } from '../../utils/commonErrorHandling';
 
 async function retrieveBrandsByPopularity(req, res) {
   try {
@@ -21,7 +21,7 @@ async function retrieveBrandsByPopularity(req, res) {
     console.log('Retrieved brands by popularity');
     res.status(200).send({ success: true, brandsByPopularity });
   } catch(err) {
-    sendCrudError('retrieving', 'brand popularities', err, res);
+    sendError('retrieving brand popularities', err, res);
   }
 }
 

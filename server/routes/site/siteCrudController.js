@@ -3,7 +3,7 @@
  */
 import jwt from 'jsonwebtoken';
 import m from '../../models';
-import { sendCrudError } from '../../utils/commonErrorHandling';
+import { sendError } from '../../utils/commonErrorHandling';
 
 async function createSite(req, res) {
   if (req.user.role !== 'Admin') {
@@ -15,7 +15,7 @@ async function createSite(req, res) {
     console.log(`Created site ${site.name}`);
     res.status(201).send({ success: true, site });
   } catch(err) {
-    sendCrudError('creating', 'site', err, res);
+    sendError('creating site', err, res);
   }
 }
 
@@ -31,7 +31,7 @@ async function retrieveSite(req, res) {
     console.log(`Retrieved site ${sitename}`);
     res.status(200).send({ success: true, site });
   } catch(err) {
-    sendCrudError('retrieving', 'site', err, res);
+    sendError(`retrieving site ${name}`, err, res);
   }
 }
 
@@ -52,7 +52,7 @@ async function updateSite(req, res) {
     console.log(`Updated site ${name}`);
     res.status(200).send({ success: true, site });
   } catch(err) {
-    sendCrudError('updating', 'site', err, res);
+    sendError(`updating site ${name}`, err, res);
   }
 }
 
@@ -72,7 +72,7 @@ async function deleteSite(req, res) {
     await site.destroy({ force: true });
     res.status(200).send({ success: true });
   } catch(err) {
-    sendCrudError('deleting', 'site', err, res);
+    sendError(`deleting site ${name}`, err, res);
   }
 }
 

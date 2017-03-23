@@ -3,7 +3,7 @@
  */
 import m from '../../models';
 import redisClient from '../../db/redis';
-import { sendCrudError } from '../../utils/commonErrorHandling';
+import { sendError } from '../../utils/commonErrorHandling';
 
 async function createBrand(req, res) {
   try {
@@ -11,7 +11,7 @@ async function createBrand(req, res) {
     console.log(`Created brand ${brand.name}`);
     res.status(201).send({ success: true, brand });
   } catch(err) {
-    sendCrudError('creating', 'brand', err, res);
+    sendError('creating brand', err, res);
   }
 }
 
@@ -30,7 +30,7 @@ async function retrieveAllBrands(req, res) {
     console.log('Retrieved all brands');
     res.status(200).send({ success: true, brands });
   } catch(err) {
-    sendCrudError('retrieving', 'brands', err, res);
+    sendError('retrieving all brands', err, res);
   }
 }
 
@@ -46,7 +46,7 @@ async function retrieveBrand(req, res) {
     console.log(`Retrieve brand ${name}`);
     res.status(200).send({ success: true, brand });
   } catch(err) {
-    sendCrudError('retrieving', 'brand', err, res);
+    sendError(`retrieving brand ${name}`, err, res);
   }
 }
 
@@ -67,7 +67,7 @@ async function updateBrand(req, res) {
     console.log(`Updated brand ${name}`);
     res.status(200).send({ success: true, brand });
   } catch(err) {
-    sendCrudError('updating', 'brand', err, res);
+    sendError(`updating brand ${name}`, err, res);
   }
 }
 
@@ -87,7 +87,7 @@ async function deleteBrand(req, res) {
     await brand.destroy({ force: true });
     res.status(200).send({ success: true });
   } catch(err) {
-    sendCrudError('deleting', 'brand', err, res);
+    sendError(`deleting brand ${name}`, err, res);
   }
 }
 

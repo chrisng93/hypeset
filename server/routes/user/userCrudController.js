@@ -4,7 +4,7 @@
 import jwt from 'jsonwebtoken';
 import m from '../../models';
 import redisClient from '../../db/redis';
-import { sendCrudError } from '../../utils/commonErrorHandling';
+import { sendError } from '../../utils/commonErrorHandling';
 
 async function createUser(req, res) {
   try {
@@ -15,7 +15,7 @@ async function createUser(req, res) {
     console.log(`User ${user.username} successfully created`);
     res.status(201).send({ success: true, token, user });
   } catch(err) {
-    sendCrudError('creating', 'user', err, res);
+    sendError('creating user', err, res);
   }
 }
 
@@ -31,7 +31,7 @@ async function retrieveUser(req, res) {
     console.log(`Retrieved user ${username}`);
     res.status(200).send({ success: true, user });
   } catch(err) {
-    sendCrudError('retrieving', 'user', err, res);
+    sendError(`retrieving user ${username}`, err, res);
   }
 }
 
@@ -52,7 +52,7 @@ async function updateUser(req, res) {
     console.log(`Updated user ${username}`);
     res.status(200).send({ success: true, user });
   } catch(err) {
-    sendCrudError('updating', 'user', err, res);
+    sendError(`updating user ${username}`, err, res);
   }
 }
 
@@ -72,7 +72,7 @@ async function deleteUser(req, res) {
     await user.destroy({ force: true });
     res.status(200).send({ success: true });
   } catch(err) {
-    sendCrudError('deleting', 'user', err, res);
+    sendError(`deleting user ${username}`, err, res);
   }
 }
 

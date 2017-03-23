@@ -3,7 +3,7 @@
  */
 import m from '../../models';
 import redisClient from '../../db/redis';
-import { sendCrudError } from '../../utils/commonErrorHandling';
+import { sendError } from '../../utils/commonErrorHandling';
 
 export async function getInfo(type, offset, limit, res) {
   try {
@@ -20,7 +20,7 @@ export async function getInfo(type, offset, limit, res) {
     };
     return await m.Info.findAll(query);
   } catch(err) {
-    sendCrudError('retrieving', 'info', err, res);
+    sendError('retrieving info', err, res);
   }
 }
 
@@ -40,7 +40,7 @@ async function retrieveNews(req, res) {
     console.log('Retrieved news');
     res.status(200).send({ success: true, news });
   } catch(err) {
-    sendCrudError('retrieving', 'all news', err, res);
+    sendError('retrieving all news', err, res);
   }
 }
 
@@ -60,7 +60,7 @@ async function retrieveSales(req, res) {
     console.log('Retrieved sales');
     res.status(200).send({ success: true, sales });
   } catch(err) {
-    sendCrudError('retrieving', 'all sales', err, res);
+    sendError('retrieving all sales', err, res);
   }
 }
 

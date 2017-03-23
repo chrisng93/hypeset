@@ -3,6 +3,7 @@
  */
 import m from '../../models';
 import redisClient from '../../db/redis';
+import { sendError } from '../../utils/commonErrorHandling';
 
 function createBrandInfoQuery(type, brandName, offset, limit) {
   return {
@@ -55,12 +56,10 @@ async function retrieveBrandInfos(req, res) {
           brandInfo.brandSales = info.brandSales;
         }
       }
-      console.log('CACHED BRAND INFOS TOO', brandInfos)
       return res.status(200).send({ success: true, brandInfos });
     }
   } catch(err) {
-    console.error(`Error retrieving brand ${name} infos: ${err}`);
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    sendError(`retrieving brand ${name} infos`, err, res);
   }
 }
 

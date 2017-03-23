@@ -2,6 +2,7 @@
  * Created by chrisng on 3/12/17.
  */
 import m from '../../models';
+import { sendError } from '../../utils/commonErrorHandling';
 
 async function getOwnBrands(req, res) {
   try {
@@ -17,11 +18,11 @@ async function getOwnBrands(req, res) {
     const user = await m.User.find(query);
     res.status(200).send({ success: true, brands: user.Brands });
   } catch(err) {
-    console.error(`Error retrieving brands for user ${req.user.id}: ${JSON.stringify(err)}`);
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    sendError(`Error retrieving brands for user ${req.user.username}`, err, res);
   }
 }
 
+// TODO: do we need to check for successful/failed - update/delete?
 async function updateOwnBrands(req, res) {
   const { brands } = req.body;
   try {
@@ -42,8 +43,7 @@ async function updateOwnBrands(req, res) {
     }
     res.status(200).send({ success: true, successfulInserts, failedInserts });
   } catch(err) {
-    console.error(`Error updating brands for user ${req.user.id}: ${JSON.stringify(err)}`);
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    sendError(`updating brands for user ${req.user.username}`, err, res);
   }
 }
 
@@ -68,8 +68,7 @@ async function deleteOwnBrands(req, res) {
     }
     res.status(200).send({ success: true, successfulDeletes, failedDeletes });
   } catch(err) {
-    console.error(`Error deleting brands for user ${req.user.id}: ${JSON.stringify(err)}`);
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    sendError(`deleting brands for user ${req.user.username}`, err, res);
   }
 }
 

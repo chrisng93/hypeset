@@ -2,6 +2,7 @@
  * Created by chrisng on 3/15/17.
  */
 import m from '../../models';
+import { sendError } from '../../utils/commonErrorHandling';
 
 async function getOwnInfo(userId, type, offset, limit, res) {
   try {
@@ -21,8 +22,7 @@ async function getOwnInfo(userId, type, offset, limit, res) {
     };
     return await m.Info.findAll(query);
   } catch(err) {
-    console.error(`Error retrieving info: ${JSON.stringify(err)}`);
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    sendError('retrieving info', err, res);
   }
 }
 
@@ -34,8 +34,7 @@ async function getOwnNews(req, res) {
     const news = await getOwnInfo(req.user.id, 'News', offset, limit, res);
     res.status(200).send({ success: true, news });
   } catch(err) {
-    console.error(`Error retrieving news for user ${req.user.username}: ${JSON.stringify(err)}`);
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    sendError(`retrieving news for user ${req.user.username}`, err, res);
   }
 }
 
@@ -47,8 +46,7 @@ async function getOwnSales(req, res) {
     const sales = await getOwnInfo(req.user.id, 'Sale', offset, limit, res);
     res.status(200).send({ success: true, sales });
   } catch(err) {
-    console.error(`Error retrieving sales for user ${req.user.username}: ${JSON.stringify(err)}`);
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    sendError(`retrieving sales for user ${req.user.username}`, err, res);
   }
 }
 
