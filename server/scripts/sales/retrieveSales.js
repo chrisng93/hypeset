@@ -3,8 +3,11 @@
  */
 import moment from 'moment';
 import snoowrap from 'snoowrap';
+import winston from 'winston';
 import m from '../../models';
 import { retrieveRedditFmfSales } from './redditFmfScript';
+
+const logger = winston.loggers.get('scripts');
 
 export async function retrieveSales(availableBrands) {
   try {
@@ -20,9 +23,9 @@ export async function retrieveSales(availableBrands) {
       refreshToken: process.env.REDDIT_REFRESH_TOKEN,
     });
 
-    console.log('Starting to retrieve sales..');
+    logger.debug('Started retrieving Reddit sales', { type: 'Sale', site: 'Reddit', action: 'start retrieve' });
     const sales = await retrieveRedditFmfSales(r, [], latestSaleDate, availableBrands, reddit.id);
-    console.log('Finished retrieving sales..');
+    logger.debug('Finished retrieving Reddit sales', { type: 'Sale', site: 'Reddit', action: 'finish retrieve' });
 
     for (let i = 0; i < sales.length; i++) {
       const sale = await m.Info.updateOrCreate(sales[i], 'Sale');
@@ -31,8 +34,8 @@ export async function retrieveSales(availableBrands) {
         sale.addBrand(brand);
       }
     }
-    console.log('Finished inserting sales into table..');
+    logger.debug('Finished inserting sales into database', { type: 'Sale', action: 'finish insert' });
   } catch(err) {
-    console.error(`Error retrieving sales: ${err}`);
+    logger.error('Error retrieving sales', { type: 'Sale', action: 'retrieve', err: JSON.stringify(err) });
   }
 }

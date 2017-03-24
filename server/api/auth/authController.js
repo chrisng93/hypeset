@@ -2,9 +2,10 @@
  * Created by chrisng on 3/12/17.
  */
 import jwt from 'jsonwebtoken';
+import winston from 'winston';
 import m from '../../models';
 import redisClient from '../../db/redis';
-import { sendError } from '../../utils/commonErrorHandling';
+const logger = winston.loggers.get('auth');
 import { retrieveSales } from '../../scripts/sales/retrieveSales';
 import { retrieveBrands } from '../../scripts/brands/retrieveBrands';
 import { retrieveNews } from '../../scripts/news/retrieveNews';
@@ -14,21 +15,24 @@ async function authenticate(req, res) {
   try {
     const user = await m.User.findByUsername(username);
     if (!user) {
+      logger.info('User not found', { user: username, action: 'not found' });
       return res.status(404).send({ success: false, message: 'User not found' });
     }
 
     const valid = user.validatePassword(password);
     if (!valid) {
+      logger.info('User password not valid', { user: user.username, action: 'invalid password' });
       return res.status(403).send({ success: false, message: 'Incorrect password combination' });
     }
 
     const expiration = parseInt(process.env.JWT_EXPIRATION);
     const token = jwt.sign({ user: { ...user.dataValues } }, process.env.JWT_SECRET, { expiresIn: expiration });
     await redisClient.setex(token, expiration, true);
-    console.log(`User ${user.username} successfully authenticated`);
+    logger.info('User authenticated', { user: user.username, action: 'authenticate' });
     res.status(200).send({ success: true, token, user });
   } catch(err) {
-    sendError(`authenticating username ${username}`, err, res);
+    logger.warn('Error authenticating user', { user: username, action: 'authenticate', err: JSON.stringify(err) });
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
 
@@ -36,9 +40,11 @@ async function logout(req, res) {
   const { user } = req;
   try {
     await redisClient.del(req.token);
+    logger.info('User logged out', { user: user.username, action: 'logout' });
     res.status(200).send({ success: true });
   } catch(err) {
-    sendError(`logging out user ${user.username}`, err, res);
+    logger.warn('Error logging out', { user: user.username, action: 'logout', err: JSON.stringify(err) });
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
 

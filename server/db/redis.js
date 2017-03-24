@@ -3,22 +3,18 @@
  */
 import redis from 'redis';
 import Promise from 'bluebird';
-import env from 'dotenv';
+import winston from 'winston';
 
-env.config({ path: './.env' });
+const logger = winston.loggers.get('redis');
 
 const client = Promise.promisifyAll(redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST));
 
-client.on('connect', () => {
-  console.log('Connected to Redis..');
-});
+client.on('connect', () => logger.info('Connected to Redis', { action: 'connect' }));
 
-client.on('error', (err) => {
-  console.log(`Error connecting to Redis: ${err}`);
-});
+client.on('error', (err) => logger.error('Error with Redis', { err: JSON.stringify(err) }));
 
 setInterval(() => {
-  console.log('Redis client sending ping..');
+  logger.debug('Redis pinging', { action: 'ping' });
   client.ping();
 }, 60000);
 

@@ -3,11 +3,10 @@
  */
 import request from 'request';
 import cheerio from 'cheerio';
-import moment from 'moment';
+import winston from 'winston';
 import { findBrands, findTag } from '../../utils/scriptUtils';
 
-const now = moment().subtract(1, 'days').unix();
-const xago = moment().subtract(8, 'days').unix();
+const logger = winston.loggers.get('scripts');
 
 export async function parseGrailedSpecificArticles(type, articles, availableBrands) {
   try {
@@ -29,7 +28,7 @@ export async function parseGrailedSpecificArticles(type, articles, availableBran
     }
     return validArticles;
   } catch(err) {
-    console.error(`Error parsing Grailed articles: ${err}`);
+    logger.error('Error parsing Grailed articles', { type: 'News', action: 'parse', site: 'Grailed', err: JSON.stringify(err) });
   }
 }
 
@@ -53,7 +52,7 @@ async function parseWeekendReadingArticle(article, availableBrands) {
       return null;
     });
   } catch(err) {
-    console.error(`Error parsing Grailed Weekend Reading articles: ${err}`);
+    logger.error('Error parsing Grailed Weekend Reading article', { type: 'News', action: 'parse', site: 'Grailed', err: JSON.stringify(err) });
   }
 }
 
@@ -61,7 +60,8 @@ async function parseGrailFitsArticle(article, availableBrands) {
   try {
     return parseDataListings(article, '.listings', availableBrands);
   } catch(err) {
-    console.error(`Error parsing Grailed Grail Fits articles: ${err}`);
+    logger.error('Error parsing Grailed Grail Fits article', { type: 'News', action: 'parse', site: 'Grailed', err: JSON.stringify(err) });
+
   }
 }
 
@@ -69,7 +69,7 @@ async function parseStaffPicksArticle(article, availableBrands) {
   try {
     return parseDataListings(article, '.listings', availableBrands);
   } catch(err) {
-    console.error(`Error parsing Grailed Staff Picks articles: ${err}`);
+    logger.error('Error parsing Grailed Staff Picks article', { type: 'News', action: 'parse', site: 'Grailed', err: JSON.stringify(err) });
   }
 }
 

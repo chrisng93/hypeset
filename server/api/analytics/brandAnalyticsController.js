@@ -1,14 +1,16 @@
 /**
  * Created by chrisng on 3/17/17.
  */
+import winston from 'winston';
 import m from '../../models';
 import redisClient from '../../db/redis';
-import { sendError } from '../../utils/commonErrorHandling';
+const logger = winston.loggers.get('analyticsApi');
 
 async function retrieveBrandsByPopularity(req, res) {
   try {
     const cachedTopBrands = await redisClient.getAsync('top20Brands');
     if (cachedTopBrands) {
+      logger.debug('Brands by popularity retrieved from Redis cache', { action: 'retrieve' });
       return res.status(200).send({ success: true, brandsByPopularity: JSON.parse(cachedTopBrands) });
     }
 
@@ -18,10 +20,11 @@ async function retrieveBrandsByPopularity(req, res) {
       limit: req.query.limit,
     };
     const brandsByPopularity = await m.BrandPopularity.findAll(query);
-    console.log('Retrieved brands by popularity');
+    logger.debug('Brands by popularity retrieved', { action: 'retrieve' });
     res.status(200).send({ success: true, brandsByPopularity });
   } catch(err) {
-    sendError('retrieving brand popularities', err, res);
+    logger.warn('Error retrieving brands by popularity', { action: 'retrieve', err: JSON.stringify(err) });
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
 

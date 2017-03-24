@@ -6,7 +6,9 @@ import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
 import pg from 'pg';
+import winston from 'winston';
 
+const logger = winston.loggers.get('postgres');
 const db = {};
 const basename = path.basename(module.filename);
 const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } = process.env;
@@ -17,17 +19,21 @@ const pgConnectionString = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/post
 
 pg.connect(pgConnectionString, (dbConnectError, client) => {
   // const baseTables = ['brand', 'info', 'site', 'user'];
-  if (dbConnectError) throw new Error(`Error connecting to Postgres: ${dbConnectError}`);
+  if (dbConnectError) {
+    logger.error('Error connecting to Postgres', { action: 'connect', err: JSON.stringify(dbConnectError) });
+    throw new Error(`Error connecting to Postgres: ${JSON.stringify(dbConnectError)}`);
+  }
 
   // create the db and ignore any errors (for example if it already exists)
   client.query(`CREATE DATABASE ${DB_NAME}`, (createDbError) => {
-    if (createDbError && createDbError.code === '42P04') console.log('Database already exists');
-    if (!createDbError) console.log('Database created');
+    if (createDbError && createDbError.code === '42P04') logger.debug('Database already exists', { action: 'attempted create' });
+    if (!createDbError) logger.debug('Database created', { action: 'create' });
 
     sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
       host: DB_HOST,
       port: DB_PORT,
       dialect: 'postgres',
+      logging: false,
     });
 
     fs.readdirSync(__dirname)

@@ -1,17 +1,19 @@
 /**
  * Created by chrisng on 3/12/17.
  */
+import winston from 'winston';
 import m from '../../models';
 import redisClient from '../../db/redis';
-import { sendError } from '../../utils/commonErrorHandling';
+const logger = winston.loggers.get('brandApi');
 
 async function createBrand(req, res) {
   try {
     const brand = await m.Brand.create(req.body);
-    console.log(`Created brand ${brand.name}`);
+    logger.debug('Brand created', { brand: brand.name, action: 'create' });
     res.status(201).send({ success: true, brand });
   } catch(err) {
-    sendError('creating brand', err, res);
+    logger.warn('Error creating brand', { brand: req.body.name,  action: 'create', err: JSON.stringify(err) });
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
 
@@ -19,6 +21,7 @@ async function retrieveAllBrands(req, res) {
   try {
     const cachedAllBrands = await redisClient.getAsync('allBrands');
     if (cachedAllBrands) {
+      logger.debug('All brands retrieved from Redis cache', { action: 'retrieve' });
       return res.status(200).send({ success: true, brands: JSON.parse(cachedAllBrands) });
     }
 
@@ -27,10 +30,11 @@ async function retrieveAllBrands(req, res) {
       order: [[m.sequelize.fn('lower', m.sequelize.col('name')), 'ASC']],
     };
     const brands = await m.Brand.findAll(query);
-    console.log('Retrieved all brands');
+    logger.debug('All brands retrieved', { action: 'retrieve' });
     res.status(200).send({ success: true, brands });
   } catch(err) {
-    sendError('retrieving all brands', err, res);
+    logger.warn('Error retrieving all brands', { action: 'retrieve', err: JSON.stringify(err) });
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
 
@@ -39,14 +43,15 @@ async function retrieveBrand(req, res) {
   try {
     const brand = await m.Brand.find({ where: { condensedName: name } });
     if (!brand) {
-      console.error(`Brand ${name} not found`);
+      logger.info('Brand not found', { brand: name, action: 'not found' });
       return res.status(404).send({ success: false, message: `Brand ${name} not found` });
     }
 
-    console.log(`Retrieve brand ${name}`);
+    logger.debug('Brand retrieved', { brand: brand.name, action: 'retrieve' });
     res.status(200).send({ success: true, brand });
   } catch(err) {
-    sendError(`retrieving brand ${name}`, err, res);
+    logger.warn('Error retrieving brand', { brand: name,  action: 'retrieve', err: JSON.stringify(err) });
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
 
@@ -59,15 +64,16 @@ async function updateBrand(req, res) {
   try {
     const brand = await m.Brand.find({ where: { condensedName: name } });
     if (!brand) {
-      console.error(`Brand ${name} not found`);
+      logger.info('Brand not found', { brand: name, action: 'not found' });
       return res.status(404).send({ success: false, message: `Brand ${name} not found` });
     }
 
     await brand.update({ ...req.body });
-    console.log(`Updated brand ${name}`);
+    logger.debug('Brand updated', { brand: brand.name, action: 'update' });
     res.status(200).send({ success: true, brand });
   } catch(err) {
-    sendError(`updating brand ${name}`, err, res);
+    logger.warn('Error updating brand', { brand: name,  action: 'update', err: JSON.stringify(err) });
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
 
@@ -80,14 +86,16 @@ async function deleteBrand(req, res) {
   try {
     const brand = await m.Brand.find({ where: { condensedName: name } });
     if (!brand) {
-      console.error(`Brand ${name} not found`);
+      logger.info('Brand not found', { brand: name, action: 'not found' });
       return res.status(404).send({ success: false, message: `Brand ${name} not found` });
     }
 
     await brand.destroy({ force: true });
+    logger.debug('Brand deleted', { brand: brand.name, action: 'delete' });
     res.status(200).send({ success: true });
   } catch(err) {
-    sendError(`deleting brand ${name}`, err, res);
+    logger.warn('Error deleting brand', { brand: name,  action: 'delete', err: JSON.stringify(err) });
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
 

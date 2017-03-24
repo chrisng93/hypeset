@@ -1,24 +1,27 @@
 /**
  * Created by chrisng on 3/15/17.
  */
+import winston from 'winston';
 import m from '../../models';
 import { parseHbxDesigners } from './hbxDesignersScript';
 import { parseGrailedDesigners } from './grailedDesignersScript';
 
+const logger = winston.loggers.get('scripts');
+
 export async function retrieveBrands() {
   try {
-    console.log('Started retrieving brands..');
     // const hbxBrands = await parseHbxDesigners();
+    logger.debug('Started retrieving from Grailed brands', { type: 'Brands', site: 'Grailed', action: 'start retrieve' });
     const grailedBrands = await parseGrailedDesigners();
+    logger.debug('Finished retrieving from Grailed brands', { type: 'Brands', site: 'Grailed', action: 'finish retrieve' });
     // const allBrands = hbxBrands.concat(grailedBrands.brandNames);
     const allBrands = grailedBrands.brandNames;
     const brandPopularity = grailedBrands.brandPopularity;
-    console.log('Finished retrieving brands..');
 
     for (let i = 0; i < allBrands.length; i++) {
       await m.Brand.checkOrCreate(allBrands[i]);
     }
-    console.log('Finished inserting brands into db..');
+    logger.debug('Finished inserting brands into database', { type: 'Brands', action: 'finish insert' });
 
     const latestBrandsByPopularity = await m.BrandPopularity.find({ order: 'batch DESC' });
     let batch = 0;
@@ -30,8 +33,8 @@ export async function retrieveBrands() {
       const brand = await m.Brand.findByName(brandPopularity[i].name);
       await m.BrandPopularity.create({ BrandId: brand.id, brandName: brand.name, count: brandPopularity[i].count, batch });
     }
-    console.log('Finished inserting into brand popularities table..');
+    logger.debug('Finished inserting brand popularities into database', { type: 'BrandPopularities', action: 'finish insert' });
   } catch(err) {
-    console.error(`Error retrieivng brands: ${err}`);
+    logger.error('Error retrieving brands', { type: 'Brands', action: 'retrieve', err: JSON.stringify(err) });
   }
 }

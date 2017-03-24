@@ -1,9 +1,9 @@
 /**
  * Created by chrisng on 3/12/17.
  */
-import jwt from 'jsonwebtoken';
+import winston from 'winston';
 import m from '../../models';
-import { sendError } from '../../utils/commonErrorHandling';
+const logger = winston.loggers.get('siteApi');
 
 async function createSite(req, res) {
   if (req.user.role !== 'Admin') {
@@ -12,10 +12,11 @@ async function createSite(req, res) {
 
   try {
     const site = await m.Site.create(req.body);
-    console.log(`Created site ${site.name}`);
+    logger.debug('Site created', { site: site.name, action: 'create' });
     res.status(201).send({ success: true, site });
   } catch(err) {
-    sendError('creating site', err, res);
+    logger.warn('Error creating site', { site: req.body.name, action: 'create', err: JSON.stringify(err) });
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
 
@@ -24,14 +25,15 @@ async function retrieveSite(req, res) {
   try {
     const site = await m.Site.findByName(name);
     if (!site) {
-      console.error(`Site ${name} not found`);
+      logger.info('Site not found', { site: name, action: 'not found' });
       return res.status(404).send({ success: false, message: 'Site not found' });
     }
 
-    console.log(`Retrieved site ${sitename}`);
+    logger.debug('Site retrieved', { site: site.name, action: 'retrieve' });
     res.status(200).send({ success: true, site });
   } catch(err) {
-    sendError(`retrieving site ${name}`, err, res);
+    logger.warn('Error retrieving site', { site: name, action: 'retrieve', err: JSON.stringify(err) });
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
 
@@ -44,15 +46,16 @@ async function updateSite(req, res) {
   try {
     const site = await m.Site.findByName(name);
     if (!site) {
-      console.error(`Site ${name} not found`);
+      logger.info('Site not found', { site: name, action: 'not found' });
       return res.status(404).send({ success: false, message: 'Site not found' });
     }
 
     await site.update({ ...req.body });
-    console.log(`Updated site ${name}`);
+    logger.debug('Site updated', { site: site.name, action: 'update' });
     res.status(200).send({ success: true, site });
   } catch(err) {
-    sendError(`updating site ${name}`, err, res);
+    logger.warn('Error updating site', { site: name, action: 'update', err: JSON.stringify(err) });
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
 
@@ -65,14 +68,16 @@ async function deleteSite(req, res) {
   try {
     const site = await m.Site.findByName(name);
     if (!site) {
-      console.error(`Site ${name} not found`);
+      logger.info('Site not found', { site: name, action: 'not found' });
       return res.status(404).send({ success: false, message: 'Site not found' });
     }
 
     await site.destroy({ force: true });
+    logger.debug('Site destroyed', { site: site.name, action: 'destroy' });
     res.status(200).send({ success: true });
   } catch(err) {
-    sendError(`deleting site ${name}`, err, res);
+    logger.warn('Error destroying site', { site: name, action: 'destroy', err: JSON.stringify(err) });
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
 

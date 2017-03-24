@@ -1,8 +1,9 @@
 /**
  * Created by chrisng on 3/12/17.
  */
+import winston from 'winston';
 import m from '../../models';
-import { sendError } from '../../utils/commonErrorHandling';
+const logger = winston.loggers.get('meApi');
 
 async function getOwnBrands(req, res) {
   try {
@@ -16,9 +17,11 @@ async function getOwnBrands(req, res) {
       }],
     };
     const user = await m.User.find(query);
+    logger.debug('User brands retrieved', { user: user.username, type: 'Brands', action: 'retrieve' });
     res.status(200).send({ success: true, brands: user.Brands });
   } catch(err) {
-    sendError(`Error retrieving brands for user ${req.user.username}`, err, res);
+    logger.warn('Error retrieving user brands', { user: req.user.username, type: 'Brands', action: 'retrieve', err: JSON.stringify(err) });
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
 
@@ -39,11 +42,14 @@ async function updateOwnBrands(req, res) {
       }
     }
     if (!successfulInserts.length) {
+      logger.info('User brands unable to be updated', { user: user.username, type: 'Brands', action: 'failed update' });
       return res.status(400).send({ success: false, failedInserts });
     }
+    logger.debug('User brands successfully updated', { user: user.username, type: 'Brands', action: 'update' });
     res.status(200).send({ success: true, successfulInserts, failedInserts });
   } catch(err) {
-    sendError(`updating brands for user ${req.user.username}`, err, res);
+    logger.warn('Error updating user brands', { user: req.user.username, type: 'Brands', action: 'update', err: JSON.stringify(err) });
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
 
@@ -64,11 +70,14 @@ async function deleteOwnBrands(req, res) {
       }
     }
     if (!successfulDeletes.length) {
+      logger.info('User brands unable to be deleted', { user: user.username, type: 'Brands', action: 'failed delete' });
       return res.status(400).send({ success: false, failedDeletes });
     }
+    logger.debug('User brands successfully deleted', { user: user.username, type: 'Brands', action: 'delete' });
     res.status(200).send({ success: true, successfulDeletes, failedDeletes });
   } catch(err) {
-    sendError(`deleting brands for user ${req.user.username}`, err, res);
+    logger.warn('Error deleting user brands', { user: req.user.username, type: 'Brands', action: 'delete', err: JSON.stringify(err) });
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
 

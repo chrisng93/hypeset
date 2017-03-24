@@ -1,9 +1,10 @@
 /**
  * Created by chrisng on 3/21/17.
  */
+import winston from 'winston';
 import m from '../../models';
 import redisClient from '../../db/redis';
-import { sendError } from '../../utils/commonErrorHandling';
+const logger = winston.loggers.get('infoApi');
 
 export async function getInfo(type, offset, limit, res) {
   try {
@@ -20,47 +21,50 @@ export async function getInfo(type, offset, limit, res) {
     };
     return await m.Info.findAll(query);
   } catch(err) {
-    sendError('retrieving info', err, res);
+    logger.warn('Error retrieving info', { type, action: 'retrieve', offset, limit, err: JSON.stringify(err) });
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
 
 async function retrieveNews(req, res) {
+  let { offset, limit } = req.query;
+  offset ? offset = parseInt(offset) : offset = 0;
+  limit ? limit = parseInt(limit) : limit = 20;
   try {
-    let { offset, limit } = req.query;
-    offset ? offset = parseInt(offset) : offset = 0;
-    limit ? limit = parseInt(limit) : limit = 20;
-
     let cachedNews = await redisClient.getAsync('top40News');
     if (cachedNews && ((offset === 0 && limit === 20) || (offset === 20 && limit === 20))) {
       offset === 0 && limit === 20 ? cachedNews = JSON.parse(cachedNews).slice(0, 20) : cachedNews = JSON.parse(cachedNews).slice(20);
+      logger.info('News retrieved from Redis cache', { type: 'News', action: 'retrieve', offset, limit });
       return res.status(200).send({ success: true, news: cachedNews });
     }
 
     const news = await getInfo('News', offset, limit, res);
-    console.log('Retrieved news');
+    logger.info('News retrieved', { type: 'News', action: 'retrieve', offset, limit });
     res.status(200).send({ success: true, news });
   } catch(err) {
-    sendError('retrieving all news', err, res);
+    logger.warn('Error retrieving news', { type: 'News', action: 'retrieve', offset, limit, err: JSON.stringify(err) });
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
 
 async function retrieveSales(req, res) {
+  let { offset, limit } = req.query;
+  offset ? offset = parseInt(offset) : offset = 0;
+  limit ? limit = parseInt(limit) : limit = 20;
   try {
-    let { offset, limit } = req.query;
-    offset ? offset = parseInt(offset) : offset = 0;
-    limit ? limit = parseInt(limit) : limit = 20;
-
     let cachedSales = await redisClient.getAsync('top40Sales');
     if (cachedSales && ((offset === 0 && limit === 20) || (offset === 20 && limit === 20))) {
       offset === 0 && limit === 20 ? cachedSales = JSON.parse(cachedSales).slice(0, 20) : cachedSales = JSON.parse(cachedSales).slice(20);
+      logger.info('Sales retrieved from Redis cache', { type: 'Sale', action: 'retrieve', offset, limit });
       return res.status(200).send({ success: true, sales: cachedSales });
     }
 
     const sales = await getInfo('Sale', offset, limit, res);
-    console.log('Retrieved sales');
+    logger.info('Sales retrieved', { type: 'Sale', action: 'retrieve', offset, limit });
     res.status(200).send({ success: true, sales });
   } catch(err) {
-    sendError('retrieving all sales', err, res);
+    logger.warn('Error retrieving sales', { type: 'Sale', action: 'retrieve', offset, limit, err: JSON.stringify(err) });
+    res.status(500).send({ success: false, message: JSON.stringify(err) });
   }
 }
 

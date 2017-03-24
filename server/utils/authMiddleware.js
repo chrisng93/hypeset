@@ -2,7 +2,9 @@
  * Created by chrisng on 3/12/17.
  */
 import jwt from 'jsonwebtoken';
+import winston from 'winston';
 import redisClient from '../db/redis';
+const logger = winston.loggers.get('auth');
 
 const checkPathAgainstUnsecured = (unsecured, path) => {
   let found = -1;
@@ -22,6 +24,7 @@ export const checkPath = (req, res, next) => {
 
   if ((req.method === 'POST' && checkPathAgainstUnsecured(unsecuredPosts, req.path) >= 0) ||
     (req.method === 'GET' && checkPathAgainstUnsecured(unsecuredGets, req.path) >= 0)) {
+    logger.debug('Route marked as unsecured', { path: req.path });
     req.unsecured = true;
     return next();
   }
@@ -44,12 +47,16 @@ export const verifyToken = (req, res, next) => {
 
   const token = getToken(req);
   if (!token) {
+    logger.info('Invalid token', { token });
     return res.status(403).send({ success: false, message: 'Invalid token' });
   }
 
   redisClient.get(token, (redisErr, reply) => {
     if (redisErr) return res.status(500).send({ success: false, message: JSON.stringify(redisErr) });
-    if (!reply) return res.status(403).send({ success: false, message: 'Invalid token' });
+    if (!reply) {
+      logger.info('Invalid token', { token });
+      return res.status(403).send({ success: false, message: 'Invalid token' });
+    }
 
     jwt.verify(token, process.env.JWT_SECRET, (jwtErr, decoded) => {
       if (jwtErr) return res.status(403).send({ success: false, message: jwtErr });
