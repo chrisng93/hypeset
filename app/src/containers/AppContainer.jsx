@@ -67,10 +67,10 @@ class AppContainer extends Component {
     const { children, isAuthenticated, token, pathname, onLogout, routeToNews, routeToSales, routeToProfile, routeToBrands, routeToSignIn } = this.props;
     const navProps = { isAuthenticated, token, pathname, onLogout, routeToNews, routeToSales, routeToProfile, routeToBrands, routeToSignIn };
     return(
-      <div id="app">
+      <section id="app">
         <Nav {...navProps} />
         {children}
-      </div>
+      </section>
     );
   }
 }

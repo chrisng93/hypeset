@@ -33,9 +33,9 @@ function SalesContainer(props) {
     shouldFilter: true,
   };
   return (
-    <div className="sales">
+    <section className="sales">
       <Articles {...articlesProps} />
-    </div>
+    </section>
   );
 }
 

@@ -32,17 +32,17 @@ export default class Nav extends Component {
     const { selected } = this.state;
     const { isAuthenticated, token, onLogout, routeToNews, routeToSales, routeToProfile, routeToBrands, routeToSignIn } = this.props;
     return (
-      <div className="nav">
-        <div className="title"><span>hypeset</span></div>
-        <div className="routes">
-          <div className={`nav-news ${selected === 'news' ? 'selected' : null}`} onClick={routeToNews}>News</div>
-          <div className={`nav-sales ${selected === 'sales' ? 'selected' : null}`} onClick={routeToSales}>Sales</div>
-          <div className={`nav-brands ${selected === 'brands' ? 'selected' : null}`} onClick={routeToBrands}>Brands</div>
-          <div className={`nav-profile ${selected === 'profile' ? 'selected' : null} ${isAuthenticated ? '' : 'hidden'}`} onClick={routeToProfile}>Profile</div>
-          <div className={`login ${isAuthenticated ? 'hidden' : ''}`} onClick={routeToSignIn}>Sign in</div>
-          <div className={`logout ${isAuthenticated ? '' : 'hidden'}`} onClick={() => onLogout({ token })}>Sign out</div>
-        </div>
-      </div>
+      <nav>
+        <h1><span>hypeset</span></h1>
+        <ul className="nav-routes">
+          <li className={`nav-news ${selected === 'news' ? 'selected' : null}`} onClick={routeToNews}>News</li>
+          <li className={`nav-sales ${selected === 'sales' ? 'selected' : null}`} onClick={routeToSales}>Sales</li>
+          <li className={`nav-brands ${selected === 'brands' ? 'selected' : null}`} onClick={routeToBrands}>Brands</li>
+          <li className={`nav-profile ${selected === 'profile' ? 'selected' : null} ${isAuthenticated ? '' : 'hidden'}`} onClick={routeToProfile}>Profile</li>
+          <li className={`login ${isAuthenticated ? 'hidden' : ''}`} onClick={routeToSignIn}>Sign in</li>
+          <li className={`logout ${isAuthenticated ? '' : 'hidden'}`} onClick={() => onLogout({ token })}>Sign out</li>
+        </ul>
+      </nav>
     );
   }
 }
