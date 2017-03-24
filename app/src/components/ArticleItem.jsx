@@ -6,18 +6,18 @@ const propTypes = {
 
 export default function ArticleItem({ article }) {
   return (
-    <div className="article">
-      <div className="image-container">
+    <article className="article">
+      <section className="image-container">
         <img src={article.imgUrl} />
-      </div>
-      <div className="info-container">
-        <div className="title">
+      </section>
+      <section className="info-container">
+        <header>
           <a href={article.url} target="_blank">{article.title}</a>
-        </div>
-        <div className="date">{article.date}</div>
-        <div className="blurb">{article.blurb}</div>
-      </div>
-    </div>
+        </header>
+        <p className="date">{article.date}</p>
+        <p className="blurb">{article.blurb}</p>
+      </section>
+    </article>
   );
 }
 

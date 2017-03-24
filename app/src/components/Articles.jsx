@@ -118,19 +118,17 @@ export default class Articles extends Component {
     const { shouldFilter, articlesBrands, articlesSites } = this.props;
     if (shouldFilter) {
       return (
-        <div className="filter-container">
-          <div className="filter">
-            <div className="header">Filters</div>
-            <div className="articles-brands">
-              <div className="title">Brands</div>
-              {articlesBrands.map((brand, key) => <Checkbox key={key} info={brand} clickHandler={(brandName, isFilteredOut) => this.changeFilteredOutState(brandName, isFilteredOut, 'filteredOutBrands')} />)}
-            </div>
-            <div className="articles-sites">
-              <div className="title">Sites</div>
-              {articlesSites.map((site, key) => <Checkbox key={key} info={site} clickHandler={(brandName, isFilteredOut) => this.changeFilteredOutState(site, isFilteredOut, 'filteredOutSites')} />)}
-            </div>
-          </div>
-        </div>
+        <section className="filter">
+          <header>Filters</header>
+          <section className="filter-brands">
+            <header className="filter-title">Brands</header>
+            {articlesBrands.map((brand, key) => <Checkbox key={key} info={brand} clickHandler={(brandName, isFilteredOut) => this.changeFilteredOutState(brandName, isFilteredOut, 'filteredOutBrands')} />)}
+          </section>
+          <section className="filter-sites">
+            <header className="filter-title">Sites</header>
+            {articlesSites.map((site, key) => <Checkbox key={key} info={site} clickHandler={(brandName, isFilteredOut) => this.changeFilteredOutState(site, isFilteredOut, 'filteredOutSites')} />)}
+          </section>
+        </section>
       );
     }
   }
@@ -138,12 +136,12 @@ export default class Articles extends Component {
   render() {
     const { visible } = this.state;
     return (
-      <div className="articles">
-        <div className="articles-container">
-        {visible.map((article, key) => <ArticleItem key={key} article={article} /> )}
-        </div>
+      <article className="articles-container">
+        <section className="articles">
+          {visible.map((article, key) => <ArticleItem key={key} article={article} /> )}
+        </section>
         {this.renderFilters()}
-      </div>
+      </article>
     );
   }
 }

@@ -1,13 +1,13 @@
-div.article {
-  display: flex;
-  flex-direction: row;
+.article {
   height: 300px;
   width: 100%;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: row;
   background-color: #eeeeee;
   border: 1px solid #dcdcdc;
-  margin-bottom: 30px;
 
-  div.image-container {
+  .image-container {
     min-height: 300px;
     min-width: 330px;
     max-height: 300px;
@@ -16,13 +16,13 @@ div.article {
     overflow: hidden;
   }
 
-  div.info-container {
+  .info-container {
     display: flex;
     flex-direction: column;
     width: 100%;
     margin: 30px 30px 0 30px;
 
-    div.title {
+    header {
       flex: 0 0 fit-content;
 
       a {
@@ -38,12 +38,12 @@ div.article {
       }
     }
 
-    div.date {
+    .date {
       margin: 16px 0 0 auto;
       padding-right: 14px;
     }
 
-    div.blurb {
+    .blurb {
       margin-top: 20px;
     }
   }

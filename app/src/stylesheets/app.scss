@@ -4,7 +4,7 @@
 @import './news.scss';
 @import './sales.scss';
 @import './articles.scss';
-@import './article.scss';
+@import './articleitem.scss';
 @import './filter.scss';
 @import './brands.scss';
 @import './profile.scss';
@@ -21,7 +21,7 @@ body {
   background: #EDEBED;
 }
 
-img.bg {
+.bg {
   // fill background
   min-height: 100%;
   min-width: 1024px;
@@ -37,10 +37,10 @@ img.bg {
   z-index: -1;
 }
 
-span.link {
+.link {
   color: #0000ff;
 }
 
-span.link:hover {
+.link:hover {
   cursor: pointer;
 }

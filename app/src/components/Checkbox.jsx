@@ -25,10 +25,10 @@ export default class Checkbox extends Component {
     const { info } = this.props;
     const { isChecked } = this.state;
     return (
-      <div className="checkbox">
+      <section className="checkbox">
         <input type="checkbox" checked={isChecked} onChange={this.changeHandler} />
         <span className="info">{info}</span>
-      </div>
+      </section>
     );
   }
 }

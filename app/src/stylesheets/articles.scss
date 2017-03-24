@@ -1,13 +1,13 @@
-div.articles {
+.articles-container {
+  margin: 40px 100px 0 100px;
   display: flex;
   flex-direction: row;
-  margin: 40px 100px 0 100px;
 
-  div.articles-container {
+  .articles {
     flex: 4;
   }
 
-  div.filter-container {
+  .filter {
     display: flex;
     flex: 1;
   }
