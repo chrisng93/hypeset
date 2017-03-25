@@ -19,7 +19,7 @@ export default function runScripts() {
     onTick,
     start: true,
     // TODO: uncomment when deploy
-    runOnInit: true,
+    // runOnInit: true,
   });
   job.start();
 };
@@ -68,7 +68,9 @@ async function setRedisKeys(allBrands) {
     });
     const top20BrandInfos = {};
     for (let i = 0; i < top20Brands.length; i++) {
-      top20BrandInfos[top20Brands[i].Brand.condensedName] = await getInfoForBrand(top20Brands[i].Brand.id);
+      const currBrand = top20Brands[i].Brand;
+      top20BrandInfos[currBrand.condensedName] = await getInfoForBrand(currBrand.id);
+      top20BrandInfos[currBrand.condensedName].name = currBrand.name;
     }
     await redisClient.set('top40News', JSON.stringify(top40News));
     await redisClient.set('top40Sales', JSON.stringify(top40Sales));
@@ -94,7 +96,7 @@ async function getInfoForBrand(brandId) {
     });
     const brandSales = await m.Info.findAll({
       attributes: { exclude: ['createdAt', 'updatedAt'] },
-      where: { type: 'News' },
+      where: { type: 'Sale' },
       include: [{
         model: m.Brand,
         attributes: { exclude: ['createdAt', 'updatedAt'] },

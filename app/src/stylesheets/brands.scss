@@ -1,21 +1,25 @@
-div.brands {
+.brands {
   display: flex;
   flex-direction: row;
 
-  div.tabs {
-    display: flex;
-    flex-direction: row;
-  }
-
-  div.list {
+  .brands-list {
     flex: 1;
   }
 
-  div.brand {
+  .brands-brand {
     flex: 4;
+
+    h1 {
+      align-self: center;
+    }
+
+    .brands-brand-tabs {
+      display: flex;
+      flex-direction: row;
+    }
   }
 
-  div.hidden {
+  .hidden {
     display: none;
   }
 }

@@ -26,7 +26,7 @@ nav {
     flex-direction: row;
     background-color: #000000;
 
-    li {
+    a {
       height: 40px;
       width: 150px;
       margin: auto 0 auto 0;
@@ -45,7 +45,7 @@ nav {
       transition: all 0.2s;
     }
 
-    li:hover {
+    a:hover {
       cursor: pointer;
     }
 

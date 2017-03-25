@@ -54,12 +54,12 @@ export default class Profile extends Component {
     const { routeToUserInfo, routeToEditUser, routeToEditBrands } = this.props;
     const profileNavProps = { routeToUserInfo, routeToEditUser, routeToEditBrands };
     return (
-      <div className="profile">
+      <section className="profile">
         <ProfileNav {...profileNavProps} />
-        <div className="content">
+        <section className="content">
           {this.renderChild()}
-        </div>
-      </div>
+        </section>
+      </section>
     );
   }
 }

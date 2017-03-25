@@ -1,70 +1,64 @@
-div.profile {
+.profile {
   display: flex;
   flex-direction: row;
   margin: 40px 100px 0 100px;
 
-  div.profile-nav {
+  .profile-nav {
     flex: 1;
 
-    div.title {
+    .profile-nav-user-info {
       font-size: 24px;
       font-weight: 500;
       margin-bottom: 14px;
     }
 
-    div.edit-user-nav, div.edit-brands-nav {
+    .profile-nav-edit-user, .profile-nav-edit-brands {
       font-size: 20px;
       font-weight: 400;
       margin: 0 0 6px 8px;
     }
   }
 
-  div.content {
+  .content {
     flex: 5;
 
-    div.user-info {
-      div {
+    .user-info {
         display: flex;
         width: 400px;
         height: 30px;
         font-size: 20px;
         margin-bottom: 12px;
 
-        span.field {
+        .field {
           width: 150px;
           margin-right: 10px;
           text-align: right;
         }
 
-        span.value {
+        .value {
           width: 150px;
           margin-right: auto;
         }
       }
 
-      input {
-        height: 30px;
-        width: 150px;
-        background-color: #eeeeee;
-        border: 1px solid #dcdcdc;
-        border-radius: 3px;
-        font-size: 16px;
-        text-align: center;
-        margin-left: 75px;
-      }
+    button {
+      height: 30px;
+      width: 150px;
+      background-color: #eeeeee;
+      border: 1px solid #dcdcdc;
+      border-radius: 3px;
+      font-size: 16px;
+      text-align: center;
+      margin-left: 75px;
     }
 
-    div.edit-user {
+    .edit-user {
 
     }
 
-    div.brands {
+    .edit-brands {
       display: flex;
       flex-direction: row;
-
-      div {
-        flex: 1;
-      }
     }
   }
 }

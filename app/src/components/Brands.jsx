@@ -32,14 +32,12 @@ export default class Brands extends Component {
   render() {
     const { brands, routeToBrandPage } = this.props;
     return (
-      <div className="brands">
-        <div className="list">
-          {brands.map((brand, key) => <div key={key} onClick={() => routeToBrandPage(brand.condensedName)}>{brand.name}</div>)}
-        </div>
-        <div className="brand">
-          {this.renderBrand()}
-        </div>
-      </div>
+      <section className="brands">
+        <ul className="brands-list">
+          {brands.map((brand, key) => <li key={key} onClick={() => routeToBrandPage(brand.condensedName)}>{brand.name}</li>)}
+        </ul>
+        {this.renderBrand()}
+      </section>
     )
   }
 }

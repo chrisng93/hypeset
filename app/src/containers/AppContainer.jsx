@@ -44,17 +44,18 @@ class AppContainer extends Component {
     if (nextProps.isAuthenticated === this.props.isAuthenticated) {
       return;
     }
-    this.getData(nextProps.isAuthenticated);
+    this.getData(nextProps);
   }
 
-  getData(isAuthenticated) {
+  getData(nextProps) {
+    const { isAuthenticated, token } = nextProps;
     const { getAllBrands, getAllNews, getAllSales, getUserBrands, getBrandsByPopularity, getOwnNews, getOwnSales } = this.props;
     const offset = 0;
     const limit = 20;
     if (isAuthenticated) {
-      getUserBrands({ token: nextProps.token });
-      getOwnNews({ token: nextProps.token, offset, limit });
-      getOwnSales({ token: nextProps.token, offset, limit });
+      getUserBrands({ token: token });
+      getOwnNews({ token: token, offset, limit });
+      getOwnSales({ token: token, offset, limit });
     } else {
       getAllNews({ offset, limit });
       getAllSales({ offset, limit });

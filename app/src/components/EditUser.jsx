@@ -56,38 +56,38 @@ export default class EditUser extends Component {
     const { user, routeToProfile } = this.props;
     const { password, firstName, lastName, email } = this.state;
     return (
-      <div className="edit-user">
-        <div className="username">
+      <form className="edit-user">
+        <label className="username">
           <span className="field">Username:</span>
           <span className="value">{user.username}</span>
-        </div>
-        <div className="password">
+        </label>
+        <label className="password">
           <span className="field">Password:</span>
           <span className="value">
             <input type="password" name="password" value={password} placeholder="**********" onChange={e => this.handleInputChange(e, 'password')} />
           </span>
-        </div>
-        <div className="email">
+        </label>
+        <label className="email">
           <span className="field">Email:</span>
           <span className="value">
             <input type="email" name="email" value={email} placeholder={user.email} onChange={e => this.handleInputChange(e, 'email')} />
           </span>
-        </div>
-        <div className="first-name">
+        </label>
+        <label className="first-name">
           <span className="field">First name:</span>
           <span className="value">
             <input type="text" name="first-name" value={firstName} placeholder={user.firstName} onChange={e => this.handleInputChange(e, 'firstName')} />
           </span>
-        </div>
-        <div className="last-name">
+        </label>
+        <label className="last-name">
           <span className="field">Last name:</span>
           <span className="value">
             <input type="text" name="last-name" value={lastName} placeholder={user.lastName} onChange={e => this.handleInputChange(e, 'lastName')} />
           </span>
-        </div>
+        </label>
         <input type="button" value="Submit changes" onClick={this.submitForm} />
         <input type="button" value="Cancel" onClick={routeToProfile} />
-      </div>
+      </form>
     );
   }
 }

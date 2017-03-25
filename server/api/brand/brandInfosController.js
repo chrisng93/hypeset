@@ -25,10 +25,10 @@ async function retrieveBrandInfos(req, res) {
   try {
     let cachedTopBrands = await redisClient.getAsync('top20Brands');
     cachedTopBrands = JSON.parse(cachedTopBrands) || [];
-    const topBrandCondensedNames = cachedTopBrands.map(brandModel => brandModel.brand.condensedName);
+    const topBrandCondensedNames = cachedTopBrands.map(brandModel => brandModel.Brand.condensedName);
     let index = topBrandCondensedNames.indexOf(name);
 
-    if (offset === 0 && limit === 20 && !cachedTopBrands && index < 0) {
+    if (index < 0) {
       const newsQuery = createBrandInfoQuery('News', name, offset, limit);
       const salesQuery = createBrandInfoQuery('Sale', name, offset, limit);
       const brand = await m.Brand.find({ attributes: ['name', 'condensedName'], where: { condensedName: name } });
@@ -45,18 +45,15 @@ async function retrieveBrandInfos(req, res) {
     }
 
     let brandInfo = await redisClient.getAsync('top20BrandInfos');
-    if (brandInfo) {
-      const brandInfos = {};
+    if (offset === 0 && limit === 20 && brandInfo) {
       brandInfo = JSON.parse(brandInfo);
-      for (let i = 0; i < brandInfo.length; i++) {
-        if (name === brandInfo[i].Brand.condensedName) {
-          const info = brandInfo[i];
-          brandInfos.name = info.Brand.name;
-          brandInfos.condensedName = info.Brand.condensedName;
-          brandInfos.brandNews = info.brandNews;
-          brandInfo.brandSales = info.brandSales;
-        }
-      }
+      const info = brandInfo[name];
+      const brandInfos = {
+        brandName: info.name,
+        brandCondensedName: name,
+        brandNews: info.brandNews,
+        brandSales: info.brandSales,
+      };
       logger.debug('Brand infos retrieved from Redis cache', { brand: brandInfos.name, type: 'Infos', action: 'retrieve', offset, limit });
       return res.status(200).send({ success: true, brandInfos });
     }

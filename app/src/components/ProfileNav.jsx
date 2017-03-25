@@ -9,11 +9,11 @@ const propTypes = {
 export default function ProfileNav(props) {
   const { routeToUserInfo, routeToEditUser, routeToEditBrands } = props;
   return (
-    <div className="profile-nav">
-      <div className="title" onClick={routeToUserInfo}>Profile</div>
-      <div className="edit-user-nav" onClick={routeToEditUser}>Edit user</div>
-      <div className="edit-brands-nav" onClick={routeToEditBrands}>Edit brands</div>
-    </div>
+    <ul className="profile-nav">
+      <a className="profile-nav-user-info" onClick={routeToUserInfo}>Profile</a>
+      <a className="profile-nav-edit-user" onClick={routeToEditUser}>Edit user</a>
+      <a className="profile-nav-edit-brands" onClick={routeToEditBrands}>Edit brands</a>
+    </ul>
   );
 }
 

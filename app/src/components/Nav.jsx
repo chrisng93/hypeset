@@ -35,12 +35,12 @@ export default class Nav extends Component {
       <nav>
         <h1><span>hypeset</span></h1>
         <ul className="nav-routes">
-          <li className={`nav-news ${selected === 'news' ? 'selected' : null}`} onClick={routeToNews}>News</li>
-          <li className={`nav-sales ${selected === 'sales' ? 'selected' : null}`} onClick={routeToSales}>Sales</li>
-          <li className={`nav-brands ${selected === 'brands' ? 'selected' : null}`} onClick={routeToBrands}>Brands</li>
-          <li className={`nav-profile ${selected === 'profile' ? 'selected' : null} ${isAuthenticated ? '' : 'hidden'}`} onClick={routeToProfile}>Profile</li>
-          <li className={`login ${isAuthenticated ? 'hidden' : ''}`} onClick={routeToSignIn}>Sign in</li>
-          <li className={`logout ${isAuthenticated ? '' : 'hidden'}`} onClick={() => onLogout({ token })}>Sign out</li>
+          <a className={`nav-news ${selected === 'news' ? 'selected' : null}`} onClick={routeToNews}>News</a>
+          <a className={`nav-sales ${selected === 'sales' ? 'selected' : null}`} onClick={routeToSales}>Sales</a>
+          <a className={`nav-brands ${selected === 'brands' ? 'selected' : null}`} onClick={routeToBrands}>Brands</a>
+          <a className={`nav-profile ${selected === 'profile' ? 'selected' : null} ${isAuthenticated ? '' : 'hidden'}`} onClick={routeToProfile}>Profile</a>
+          <a className={`login ${isAuthenticated ? 'hidden' : ''}`} onClick={routeToSignIn}>Sign in</a>
+          <a className={`logout ${isAuthenticated ? '' : 'hidden'}`} onClick={() => onLogout({ token })}>Sign out</a>
         </ul>
       </nav>
     );

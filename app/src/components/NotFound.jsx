@@ -7,13 +7,13 @@ const propTypes = {
 export default function NotFound(props) {
   const { routeToHome } = props;
   return (
-    <div className="not-found">
+    <section className="not-found">
       <img src={require('../../assets/intro-bg1.jpg')} className="bg" />
-      <div className="not-found-container">
-        <div className="title">Route not found.</div>
-        <div onClick={routeToHome}>Go back to the <span className="link">home page</span>.</div>
-      </div>
-    </div>
+      <section className="not-found-content">
+        <h1>Route not found.</h1>
+        <p>Go back to the <a className="link" onClick={routeToHome}>home page</a>.</p>
+      </section>
+    </section>
   );
 }
 

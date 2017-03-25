@@ -67,16 +67,16 @@ export default class Brand extends Component {
 
   render() {
     return (
-      <div className="brand">
-        {this.props.brandName}
-        <div className="tabs">
-          <div className="tabs-news" onClick={() => this.changeTabs('news')}>News</div>
-          <div className="tabs-sales" onClick={() => this.changeTabs('sales')}>Sales</div>
-        </div>
-        <div className="articles">
+      <section className="brands-brand">
+        <h1>{this.props.brandName}</h1>
+        <ul className="brands-brand-tabs">
+          <li className="brands-brand-tabs-news" onClick={() => this.changeTabs('news')}>News</li>
+          <li className="brands-brand-tabs-sales" onClick={() => this.changeTabs('sales')}>Sales</li>
+        </ul>
+        <section className="brands-brand-articles">
           {this.renderArticles()}
-        </div>
-      </div>
+        </section>
+      </section>
     );
   }
 }

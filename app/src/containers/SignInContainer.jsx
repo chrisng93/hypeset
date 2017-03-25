@@ -2,7 +2,7 @@ import React, { Component, PropTypes as T } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { push } from 'react-router-redux';
-import { isAuthenticatedSelector } from '../selectors/userSelectors';
+import { isAuthenticatedSelector, userErrorSelector } from '../selectors/userSelectors';
 import * as actions from '../actions';
 import { resetNews } from '../actions/newsActions';
 import { resetSales } from '../actions/salesActions';
@@ -10,6 +10,7 @@ import SignIn from '../components/SignIn';
 
 const propTypes = {
   isAuthenticated: T.bool.isRequired,
+  error: T.object,
   onAuth: T.func.isRequired,
   routeToSignUp: T.func.isRequired,
   routeToNews: T.func.isRequired,
@@ -26,6 +27,7 @@ function SignInContainer(props) {
 function mapStateToProps(state) {
   return {
     isAuthenticated: isAuthenticatedSelector(state),
+    error: userErrorSelector(state),
   };
 }
 

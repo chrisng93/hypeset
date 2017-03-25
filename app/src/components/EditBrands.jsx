@@ -26,34 +26,40 @@ export default class EditBrands extends Component {
     const { availableBrands, userBrands, popularBrands, addBrand, removeBrand, token } = this.props;
     // TODO: make dropdown with available brands
     return (
-      <div className="brands">
-        <div className="dropdown">
-          Add brands:
-          {availableBrands.map((brand, key) => {
-            return (
-              <div key={key}>
-                {brand.name}
-                <input type="button" value="Add brand to favorites" onClick={() => addBrand({ token, brands: [brand.name] })} />
-              </div>
-            );
-          })}
-        </div>
-        <div className="popular">
-          Popular brands:
-          {popularBrands.map((brand, key) => <div key={key}>{brand.brandName}</div>)}
-        </div>
-        <div className="following">
-          Following:
-          {userBrands.map((brand, key) => {
-            return (
-              <div key={key}>
-                {brand.name}
-                <input type="button" value="Remove brand from favorites" onClick={() => removeBrand({ token, brands: [brand.name] })} />
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      <section className="edit-brands">
+        <section className="edit-brands-add">
+          <h1>Add brands:</h1>
+          <ul className="edit-brands-add-dropdown">
+            {availableBrands.map((brand, key) => {
+              return (
+                <li key={key}>
+                  {brand.name}
+                  <button value="Add brand to favorites" onClick={() => addBrand({ token, brands: [brand.name] })} />
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+        <section className="edit-brands-popular">
+          <h1>Popular brands:</h1>
+          <ul>
+            {popularBrands.map((brand, key) => <li key={key}>{brand.brandName}</li>)}
+          </ul>
+        </section>
+        <section className="edit-brands-following">
+          <h1>Following:</h1>
+          <ul>
+            {userBrands.map((brand, key) => {
+              return (
+                <li key={key}>
+                  {brand.name}
+                  <button value="Remove brand from favorites" onClick={() => removeBrand({ token, brands: [brand.name] })} />
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      </section>
     );
   }
 }
