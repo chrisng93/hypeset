@@ -3,6 +3,7 @@
  */
 import winston from 'winston';
 import m from '../../models';
+import { checkForSequelizeErrors } from '../../utils/apiUtils';
 const logger = winston.loggers.get('meApi');
 
 async function getOwnBrands(req, res) {
@@ -20,8 +21,9 @@ async function getOwnBrands(req, res) {
     logger.debug('User brands retrieved', { user: user.username, type: 'Brands', action: 'retrieve' });
     res.status(200).send({ success: true, brands: user.Brands });
   } catch(err) {
-    logger.warn('Error retrieving user brands', { user: req.user.username, type: 'Brands', action: 'retrieve', err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error retrieving user brands', { user: req.user.username, type: 'Brands', action: 'retrieve', err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 
@@ -48,8 +50,9 @@ async function updateOwnBrands(req, res) {
     logger.debug('User brands successfully updated', { user: user.username, type: 'Brands', action: 'update' });
     res.status(200).send({ success: true, successfulInserts, failedInserts });
   } catch(err) {
-    logger.warn('Error updating user brands', { user: req.user.username, type: 'Brands', action: 'update', err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error updating user brands', { user: req.user.username, type: 'Brands', action: 'update', err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 
@@ -76,8 +79,9 @@ async function deleteOwnBrands(req, res) {
     logger.debug('User brands successfully deleted', { user: user.username, type: 'Brands', action: 'delete' });
     res.status(200).send({ success: true, successfulDeletes, failedDeletes });
   } catch(err) {
-    logger.warn('Error deleting user brands', { user: req.user.username, type: 'Brands', action: 'delete', err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error deleting user brands', { user: req.user.username, type: 'Brands', action: 'delete', err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 

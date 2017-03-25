@@ -4,6 +4,7 @@
 import winston from 'winston';
 import m from '../../models';
 import redisClient from '../../db/redis';
+import { checkForSequelizeErrors } from '../../utils/apiUtils';
 const logger = winston.loggers.get('brandApi');
 
 function createBrandInfoQuery(type, brandName, offset, limit) {
@@ -58,8 +59,9 @@ async function retrieveBrandInfos(req, res) {
       return res.status(200).send({ success: true, brandInfos });
     }
   } catch(err) {
-    logger.warn('Error retrieving brand infos', { brand: name, type: 'Infos', action: 'retrieve', offset, limit, err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error retrieving brand infos', { brand: name, type: 'Infos', action: 'retrieve', offset, limit, err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 

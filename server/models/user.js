@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt-nodejs';
+import { isMoreThanXChars } from '../utils/databaseUtils';
 
 module.exports = (sequelize, DataTypes) => {
   const ROLES = ['Admin', 'User'];
@@ -18,7 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      validate: {
+        isMoreThanXChars: isMoreThanXChars('Password', 5),
+      },
     },
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,

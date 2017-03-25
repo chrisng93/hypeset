@@ -4,6 +4,7 @@
 import winston from 'winston';
 import m from '../../models';
 import redisClient from '../../db/redis';
+import { checkForSequelizeErrors } from '../../utils/apiUtils';
 const logger = winston.loggers.get('brandApi');
 
 async function createBrand(req, res) {
@@ -12,8 +13,9 @@ async function createBrand(req, res) {
     logger.debug('Brand created', { brand: brand.name, action: 'create' });
     res.status(201).send({ success: true, brand });
   } catch(err) {
-    logger.warn('Error creating brand', { brand: req.body.name,  action: 'create', err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error creating brand', { brand: req.body.name,  action: 'create', err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 
@@ -33,8 +35,9 @@ async function retrieveAllBrands(req, res) {
     logger.debug('All brands retrieved', { action: 'retrieve' });
     res.status(200).send({ success: true, brands });
   } catch(err) {
-    logger.warn('Error retrieving all brands', { action: 'retrieve', err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error retrieving all brands', { action: 'retrieve', err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 
@@ -50,8 +53,9 @@ async function retrieveBrand(req, res) {
     logger.debug('Brand retrieved', { brand: brand.name, action: 'retrieve' });
     res.status(200).send({ success: true, brand });
   } catch(err) {
-    logger.warn('Error retrieving brand', { brand: name,  action: 'retrieve', err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error retrieving brand', { brand: name,  action: 'retrieve', err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 
@@ -72,8 +76,9 @@ async function updateBrand(req, res) {
     logger.debug('Brand updated', { brand: brand.name, action: 'update' });
     res.status(200).send({ success: true, brand });
   } catch(err) {
-    logger.warn('Error updating brand', { brand: name,  action: 'update', err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error updating brand', { brand: name,  action: 'update', err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 
@@ -94,8 +99,9 @@ async function deleteBrand(req, res) {
     logger.debug('Brand deleted', { brand: brand.name, action: 'delete' });
     res.status(200).send({ success: true });
   } catch(err) {
-    logger.warn('Error deleting brand', { brand: name,  action: 'delete', err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error deleting brand', { brand: name,  action: 'delete', err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 

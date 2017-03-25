@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import winston from 'winston';
 import m from '../../models';
 import redisClient from '../../db/redis';
+import { checkForSequelizeErrors } from '../../utils/apiUtils';
 const logger = winston.loggers.get('userApi');
 
 async function createUser(req, res) {
@@ -16,12 +17,7 @@ async function createUser(req, res) {
     logger.debug('User created', { user: user.username, action: 'create' });
     res.status(201).send({ success: true, token, user });
   } catch(err) {
-    let message;
-    if (err.name === 'SequelizeUniqueConstraintError' || err.name === 'SequelizeValidationError') {
-      message = err.errors[0].message;
-    } else {
-      message = JSON.stringify(err);
-    }
+    const message = checkForSequelizeErrors(err);
     logger.warn('Error creating user', { user: req.body.username, action: 'create', err: message });
     res.status(500).send({ success: false, message: message });
   }
@@ -39,8 +35,9 @@ async function retrieveUser(req, res) {
     logger.debug('User retrieved', { user: user.username, action: 'retrieve'});
     res.status(200).send({ success: true, user });
   } catch(err) {
-    logger.warn('Error retrieving user', { user: username, action: 'retrieve', err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error retrieving user', { user: username, action: 'retrieve', err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 
@@ -57,12 +54,16 @@ async function updateUser(req, res) {
       return res.status(404).send({ success: false, message: 'User not found' });
     }
 
+    if (req.body.role) {
+      delete req.body.role;
+    }
     await user.update({ ...req.body });
     logger.debug('User updated', { user: user.username, action: 'update' });
     res.status(200).send({ success: true, user });
   } catch(err) {
-    logger.warn('Error updating user', { user: username, action: 'update', err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error updating user', { user: username, action: 'update', err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 
@@ -83,8 +84,9 @@ async function deleteUser(req, res) {
     logger.info('User destroyed', { user: user.username, action: 'destroy' });
     res.status(200).send({ success: true });
   } catch(err) {
-    logger.warn('Error destroying user', { user: username, action: 'destroy', err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error destroying user', { user: username, action: 'destroy', err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 

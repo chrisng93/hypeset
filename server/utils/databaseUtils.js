@@ -17,3 +17,12 @@ export const isUnique = (modelName, field) => {
       });
   };
 };
+
+export const isMoreThanXChars = (field, x) => {
+  return (value, next) => {
+    if (value.length < x) {
+      return next(`${field} must be more than ${x} characters`);
+    }
+    return next();
+  };
+};

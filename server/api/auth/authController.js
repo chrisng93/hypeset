@@ -5,7 +5,9 @@ import jwt from 'jsonwebtoken';
 import winston from 'winston';
 import m from '../../models';
 import redisClient from '../../db/redis';
+import { checkForSequelizeErrors } from '../../utils/apiUtils';
 const logger = winston.loggers.get('auth');
+
 import { retrieveSales } from '../../scripts/sales/retrieveSales';
 import { retrieveBrands } from '../../scripts/brands/retrieveBrands';
 import { retrieveNews } from '../../scripts/news/retrieveNews';
@@ -31,8 +33,9 @@ async function authenticate(req, res) {
     logger.info('User authenticated', { user: user.username, action: 'authenticate' });
     res.status(200).send({ success: true, token, user });
   } catch(err) {
-    logger.warn('Error authenticating user', { user: username, action: 'authenticate', err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error authenticating user', { user: username, action: 'authenticate', err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 
@@ -43,8 +46,9 @@ async function logout(req, res) {
     logger.info('User logged out', { user: user.username, action: 'logout' });
     res.status(200).send({ success: true });
   } catch(err) {
-    logger.warn('Error logging out', { user: user.username, action: 'logout', err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error logging out', { user: user.username, action: 'logout', err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 

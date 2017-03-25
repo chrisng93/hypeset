@@ -21,7 +21,7 @@ export default class SignUp extends Component {
       emailError: false,
       emptyError: false,
     };
-    this.validateSignUp = this.validateSignUp.bind(this);
+    this.validateSignUp = this.validateSignUp.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this);
     this.renderError = this.renderError.bind(this);
   }

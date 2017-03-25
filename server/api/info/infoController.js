@@ -4,6 +4,7 @@
 import winston from 'winston';
 import m from '../../models';
 import redisClient from '../../db/redis';
+import { checkForSequelizeErrors } from '../../utils/apiUtils';
 const logger = winston.loggers.get('infoApi');
 
 export async function getInfo(type, offset, limit, res) {
@@ -21,8 +22,9 @@ export async function getInfo(type, offset, limit, res) {
     };
     return await m.Info.findAll(query);
   } catch(err) {
-    logger.warn('Error retrieving info', { type, action: 'retrieve', offset, limit, err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error retrieving info', { type, action: 'retrieve', offset, limit, err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 
@@ -42,8 +44,8 @@ async function retrieveNews(req, res) {
     logger.info('News retrieved', { type: 'News', action: 'retrieve', offset, limit });
     res.status(200).send({ success: true, news });
   } catch(err) {
-    logger.warn('Error retrieving news', { type: 'News', action: 'retrieve', offset, limit, err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    logger.warn('Error retrieving news', { type: 'News', action: 'retrieve', offset, limit, err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 
@@ -63,8 +65,8 @@ async function retrieveSales(req, res) {
     logger.info('Sales retrieved', { type: 'Sale', action: 'retrieve', offset, limit });
     res.status(200).send({ success: true, sales });
   } catch(err) {
-    logger.warn('Error retrieving sales', { type: 'Sale', action: 'retrieve', offset, limit, err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    logger.warn('Error retrieving sales', { type: 'Sale', action: 'retrieve', offset, limit, err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 

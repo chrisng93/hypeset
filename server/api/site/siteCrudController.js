@@ -3,6 +3,7 @@
  */
 import winston from 'winston';
 import m from '../../models';
+import { checkForSequelizeErrors } from '../../utils/apiUtils';
 const logger = winston.loggers.get('siteApi');
 
 async function createSite(req, res) {
@@ -15,8 +16,9 @@ async function createSite(req, res) {
     logger.debug('Site created', { site: site.name, action: 'create' });
     res.status(201).send({ success: true, site });
   } catch(err) {
-    logger.warn('Error creating site', { site: req.body.name, action: 'create', err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error creating site', { site: req.body.name, action: 'create', err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 
@@ -32,8 +34,9 @@ async function retrieveSite(req, res) {
     logger.debug('Site retrieved', { site: site.name, action: 'retrieve' });
     res.status(200).send({ success: true, site });
   } catch(err) {
-    logger.warn('Error retrieving site', { site: name, action: 'retrieve', err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error retrieving site', { site: name, action: 'retrieve', err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 
@@ -54,8 +57,9 @@ async function updateSite(req, res) {
     logger.debug('Site updated', { site: site.name, action: 'update' });
     res.status(200).send({ success: true, site });
   } catch(err) {
-    logger.warn('Error updating site', { site: name, action: 'update', err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error updating site', { site: name, action: 'update', err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 
@@ -76,8 +80,9 @@ async function deleteSite(req, res) {
     logger.debug('Site destroyed', { site: site.name, action: 'destroy' });
     res.status(200).send({ success: true });
   } catch(err) {
-    logger.warn('Error destroying site', { site: name, action: 'destroy', err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error destroying site', { site: name, action: 'destroy', err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 

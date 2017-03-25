@@ -3,6 +3,7 @@
  */
 import winston from 'winston';
 import m from '../../models';
+import { checkForSequelizeErrors } from '../../utils/apiUtils';
 const logger = winston.loggers.get('meApi');
 
 async function getOwnInfo(user, type, offset, limit, res) {
@@ -22,8 +23,9 @@ async function getOwnInfo(user, type, offset, limit, res) {
     };
     return await m.Info.findAll(query);
   } catch(err) {
-    logger.warn('Error retrieving user info', { user: user.username, type, action: 'retrieve', offset, limit, err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error retrieving user info', { user: user.username, type, action: 'retrieve', offset, limit, err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 
@@ -37,8 +39,9 @@ async function getOwnNews(req, res) {
     logger.debug('User news retrieved', { user: user.username, type: 'News', action: 'retrieve', offset, limit });
     res.status(200).send({ success: true, news });
   } catch(err) {
-    logger.warn('Error retrieving user news', { user: req.user.username, type: 'News', action: 'retrieve', offset, limit, err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error retrieving user news', { user: req.user.username, type: 'News', action: 'retrieve', offset, limit, err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 
@@ -52,8 +55,9 @@ async function getOwnSales(req, res) {
     logger.debug('User sales retrieved', { user: user.username, type: 'Sales', action: 'retrieve', offset, limit });
     res.status(200).send({ success: true, sales });
   } catch(err) {
-    logger.warn('Error retrieving user sales', { user: req.user.username, type: 'Sale', action: 'retrieve', offset, limit, err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    const message = checkForSequelizeErrors(err);
+    logger.warn('Error retrieving user sales', { user: req.user.username, type: 'Sale', action: 'retrieve', offset, limit, err: message });
+    res.status(500).send({ success: false, message });
   }
 }
 
