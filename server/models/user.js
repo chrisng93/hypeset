@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt-nodejs';
-import { isMoreThanXChars } from '../utils/databaseUtils';
 
 module.exports = (sequelize, DataTypes) => {
   const ROLES = ['Admin', 'User'];
@@ -19,9 +18,6 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        isMoreThanXChars: isMoreThanXChars('Password', 5),
-      },
     },
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
@@ -53,10 +49,12 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  User.beforeValidate((usr) => {
-    const hashSaltPassword = usr.generateHash(usr.password);
-    usr.password = hashSaltPassword;
-    return sequelize.Promise.resolve(usr);
+  User.beforeValidate((user) => {
+    if (user.password.length < 5) {
+      return sequelize.Promise.reject('Password must be at least 5 characters');
+    }
+    user.password = user.generateHash(user.password);
+    return sequelize.Promise.resolve(user);
   });
 
   return User;

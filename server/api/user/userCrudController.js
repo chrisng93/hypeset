@@ -10,6 +10,9 @@ const logger = winston.loggers.get('userApi');
 
 async function createUser(req, res) {
   try {
+    if (req.body.role) {
+      delete req.body.role;
+    }
     const user = await m.User.create(req.body);
     const expiration = parseInt(process.env.JWT_EXPIRATION);
     const token = jwt.sign({ user: { ...user.dataValues } }, process.env.JWT_SECRET, { expiresIn: expiration });

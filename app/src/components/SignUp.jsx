@@ -18,10 +18,11 @@ export default class SignUp extends Component {
       password: '',
       email: '',
       usernameError: false,
+      passwordError: false,
       emailError: false,
       emptyError: false,
     };
-    this.validateSignUp = this.validateSignUp.bind(this)
+    this.validateSignUp = this.validateSignUp.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.renderError = this.renderError.bind(this);
   }
@@ -30,6 +31,7 @@ export default class SignUp extends Component {
     const { isAuthenticated, error, routeToNews, resetNews, resetSales } = nextProps;
     error.message === 'username must be unique' ? this.setState({ usernameError: true }) : this.setState({ usernameError: false });
     error.message === 'Validation isEmail failed' ? this.setState({ emailError: true }) : this.setState({ emailError: false });
+    error.message === '"Password must be at least 5 characters"' ? this.setState({ passwordError: true }) : this.setState({ passwordError: false });
     if (isAuthenticated) {
       resetNews();
       resetSales();
@@ -61,10 +63,9 @@ export default class SignUp extends Component {
     );
   }
 
-  // TODO: form validation
   render() {
-    const { onSignUp, routeToSignIn } = this.props;
-    const { username, password, email, usernameError, emailError, emptyError } = this.state;
+    const { routeToSignIn } = this.props;
+    const { username, password, email, usernameError, passwordError, emailError, emptyError } = this.state;
     return (
       <section className="sign-up">
         <img src={require('../../assets/intro-bg1.jpg')} className="bg" />
@@ -89,6 +90,7 @@ export default class SignUp extends Component {
                 value={password}
                 onChange={e => this.handleInputChange(e, 'password')}
               />
+              {passwordError ? this.renderError('Password must be 5 or more characters') : null}
             </label>
             <label className={`sign-up-form-email ${emailError ? 'input-error' : ''}`}>
               <input
