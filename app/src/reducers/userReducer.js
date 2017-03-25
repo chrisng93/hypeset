@@ -96,6 +96,14 @@ export default function user(state = initialState, action) {
         error: { status: true, message: payload.message },
       };
 
+    case actionTypes.RESET_USER:
+      return {
+        ...state,
+        user: {},
+        token: '',
+        isAuthenticated: false,
+      };
+
     default:
       return state;
   }

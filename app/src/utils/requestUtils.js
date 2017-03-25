@@ -1,6 +1,14 @@
 /**
  * Created by chrisng on 3/14/17.
  */
+import * as actions from '../actions';
+import * as actionTypes from '../constants/actionTypes';
+
+function resetUser() {
+  return {
+    type: actionTypes.RESET_USER,
+  }
+}
 
 export const createHeaders = (token) => {
   const headers = {
@@ -21,6 +29,9 @@ export const actionApiCall = (body) => {
     .then(response => response.json())
     .then((json) => {
       if (!json.success) {
+        if (json.message === 'Invalid token') {
+          dispatch(resetUser);
+        }
         return dispatch(onFailure(json));
       }
       return dispatch(onSuccess(json));
