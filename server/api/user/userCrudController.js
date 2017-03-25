@@ -16,8 +16,14 @@ async function createUser(req, res) {
     logger.debug('User created', { user: user.username, action: 'create' });
     res.status(201).send({ success: true, token, user });
   } catch(err) {
-    logger.warn('Error creating user', { user: req.body.username, action: 'create', err: JSON.stringify(err) });
-    res.status(500).send({ success: false, message: JSON.stringify(err) });
+    let message;
+    if (err.name === 'SequelizeUniqueConstraintError' || err.name === 'SequelizeValidationError') {
+      message = err.errors[0].message;
+    } else {
+      message = JSON.stringify(err);
+    }
+    logger.warn('Error creating user', { user: req.body.username, action: 'create', err: message });
+    res.status(500).send({ success: false, message: message });
   }
 }
 

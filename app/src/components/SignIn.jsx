@@ -20,8 +20,7 @@ export default class SignIn extends Component {
       passwordError: false,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.renderUsernameError = this.renderUsernameError.bind(this);
-    this.renderPasswordError = this.renderPasswordError.bind(this);
+    this.renderError = this.renderError.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -41,21 +40,9 @@ export default class SignIn extends Component {
     this.setState(updatedState);
   }
 
-  renderUsernameError() {
-    if (!this.state.usernameError) {
-      return null;
-    }
+  renderError(message) {
     return (
-      <p className="error">Invalid username</p>
-    );
-  }
-
-  renderPasswordError() {
-    if (!this.state.passwordError) {
-      return null;
-    }
-    return (
-      <p className="error">Password incorrect</p>
+      <p className="error">{message}</p>
     );
   }
 
@@ -76,7 +63,7 @@ export default class SignIn extends Component {
                 placeholder="Username"
                 onChange={e => this.handleInputChange(e, 'username')}
               />
-              {this.renderUsernameError()}
+              {usernameError ? this.renderError('Invalid username') : null}
             </label>
             <label className="sign-in-form-password">
               <input
@@ -86,7 +73,7 @@ export default class SignIn extends Component {
                 placeholder="Password"
                 onChange={e => this.handleInputChange(e, 'password')}
               />
-              {this.renderPasswordError()}
+              {passwordError ? this.renderError('Incorrect password') : null}
             </label>
             <button type="button" onClick={() => onAuth({ username, password })}>Sign in</button>
           </form>

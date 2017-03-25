@@ -2,6 +2,7 @@ import React, { Component, PropTypes as T } from 'react';
 
 const propTypes = {
   isAuthenticated: T.bool.isRequired,
+  error: T.object,
   onSignUp: T.func.isRequired,
   routeToNews: T.func.isRequired,
   routeToSignIn: T.func.isRequired,
@@ -16,17 +17,34 @@ export default class SignUp extends Component {
       username: '',
       password: '',
       email: '',
+      usernameError: false,
+      emailError: false,
+      emptyError: false,
     };
+    this.validateSignUp = this.validateSignUp.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.renderError = this.renderError.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { isAuthenticated, routeToNews, resetNews, resetSales } = nextProps;
+    const { isAuthenticated, error, routeToNews, resetNews, resetSales } = nextProps;
+    error.message === 'username must be unique' ? this.setState({ usernameError: true }) : this.setState({ usernameError: false });
+    error.message === 'Validation isEmail failed' ? this.setState({ emailError: true }) : this.setState({ emailError: false });
     if (isAuthenticated) {
       resetNews();
       resetSales();
       routeToNews();
     }
+  }
+
+  validateSignUp() {
+    const { onSignUp } = this.props;
+    const { username, password, email } = this.state;
+    if (username === '' || password === '' || email === '') {
+      this.setState({ emptyError: true });
+      return;
+    }
+    onSignUp({ username, password, email });
   }
 
   handleInputChange(e, field) {
@@ -35,41 +53,55 @@ export default class SignUp extends Component {
     this.setState(updatedState);
   }
 
+  renderError(message) {
+    return (
+      <p className="error">
+        {message}
+      </p>
+    );
+  }
+
   // TODO: form validation
   render() {
     const { onSignUp, routeToSignIn } = this.props;
-    const { username, password, email, firstName, lastName } = this.state;
+    const { username, password, email, usernameError, emailError, emptyError } = this.state;
     return (
       <section className="sign-up">
         <img src={require('../../assets/intro-bg1.jpg')} className="bg" />
         <section className="sign-up-container">
           <h1>hypeset</h1>
           <form className="sign-up-form">
-            <input
-              type="text"
-              className="sign-up-form-username"
-              name="username"
-              placeholder="Username"
-              value={username}
-              onChange={e => this.handleInputChange(e, 'username')}
-            />
-            <input
-              type="password"
-              className="sign-up-form-password"
-              name="password"
-              placeholder="Password"
-              value={password}
-              onChange={e => this.handleInputChange(e, 'password')}
-            />
-            <input
-              type="email"
-              className="sign-up-form-email"
-              name="email"
-              placeholder="Email"
-              value={email}
-              onChange={e => this.handleInputChange(e, 'email')}
-            />
-            <button type="button" onClick={() => onSignUp({ username, password, email, firstName, lastName })}>Sign Up</button>
+            <label className={`sign-up-form-username ${usernameError ? 'input-error' : ''}`}>
+              <input
+                type="text"
+                className="sign-up-form-username-input"
+                placeholder="Username"
+                value={username}
+                onChange={e => this.handleInputChange(e, 'username')}
+              />
+              {usernameError ? this.renderError('Username taken') : null}
+            </label>
+            <label className="sign-up-form-password">
+              <input
+                type="password"
+                className="sign-up-form-password-input"
+                placeholder="Password"
+                value={password}
+                onChange={e => this.handleInputChange(e, 'password')}
+              />
+            </label>
+            <label className={`sign-up-form-email ${emailError ? 'input-error' : ''}`}>
+              <input
+                type="email"
+                className="sign-up-form-email-input"
+                placeholder="Email"
+                value={email}
+                onChange={e => this.handleInputChange(e, 'email')}
+              />
+              {emailError ? this.renderError('Invalid email') : null}
+            </label>
+            {emptyError ? this.renderError('Please fill in all fields') : null}
+            <button type="button" onClick={this.validateSignUp}>Sign Up</button>
           </form>
           <p>Already have an account? <a className="link" onClick={routeToSignIn}>Sign in</a></p>
         </section>

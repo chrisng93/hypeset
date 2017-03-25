@@ -23,7 +23,7 @@
     margin-top: 20px;
   }
 
-  form.sign-up-form {
+  .sign-up-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -31,7 +31,7 @@
     height: 300px;
     width: 450px;
 
-    .sign-up-form-username {
+    .sign-up-form-username-input {
       margin-top: -15px;
     }
 
