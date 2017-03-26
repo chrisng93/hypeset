@@ -2,7 +2,7 @@ import { auth, signUp, logout, editUser } from './userActions';
 import { getAllBrands, getUserBrands, getBrandsByPopularity, addBrand, removeBrand, getBrandInfos, resetBrandInfos } from './brandActions';
 import { getAllNews, getOwnNews } from './newsActions';
 import { getAllSales, getOwnSales } from './salesActions';
-import { routeToSignInModal, exitSignInModal, routeToSignUpModal, exitSignUpModal, routeToSignedOutModal, exitSignedOutModal } from './modalActions';
+import { exitAllModals, routeToSignInModal, exitSignInModal, routeToSignUpModal, exitSignUpModal, routeToSignedOutModal, exitSignedOutModal } from './modalActions';
 
 module.exports = {
   // user actions
@@ -29,6 +29,7 @@ module.exports = {
   getOwnSales,
 
   // modal actions
+  exitAllModals,
   routeToSignInModal,
   exitSignInModal,
   routeToSignUpModal,

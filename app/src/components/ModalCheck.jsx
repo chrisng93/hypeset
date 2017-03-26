@@ -8,6 +8,7 @@ const propTypes = {
   signInModal: T.bool.isRequired,
   signUpModal: T.bool.isRequired,
   signedOutModal: T.bool.isRequired,
+  isAuthenticated: T.bool.isRequired,
   exitSignInModal: T.func.isRequired,
   exitSignUpModal: T.func.isRequired,
   exitSignedOutModal: T.func.isRequired,
@@ -16,9 +17,10 @@ const propTypes = {
 };
 
 export default function ModalCheck(props) {
-  const { children, signInModal, signUpModal, signedOutModal, exitSignInModal, exitSignUpModal, exitSignedOutModal, routeToSignIn, routeToHome } = props;
-  const signInModalProps = { exitSignInModal };
-  const signUpModalProps = { exitSignUpModal };
+  const { children, signInModal, signUpModal, signedOutModal, isAuthenticated, exitSignInModal,
+    exitSignUpModal, exitSignedOutModal, routeToSignIn, routeToHome } = props;
+  const signInModalProps = { exitSignInModal, isAuthenticated };
+  const signUpModalProps = { exitSignUpModal, isAuthenticated };
   const signedOutModalProps = { exitSignedOutModal, routeToSignIn, routeToHome };
   return (
     <section className="modal">

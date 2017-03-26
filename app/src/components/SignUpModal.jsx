@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import SignUpContainer from '../containers/SignUpContainer';
 
 const propTypes = {
+  isAuthenticated: T.bool.isRequired,
   exitSignUpModal: T.func.isRequired,
 };
 

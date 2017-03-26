@@ -4,8 +4,9 @@
 import { push } from 'react-router-redux';
 import * as actionTypes from '../constants/actionTypes.js';
 import { actionApiCall, createHeaders } from '../utils/requestUtils';
-import { resetNews } from './newsActions';
 import { resetSales } from './salesActions';
+import { resetNews } from './newsActions';
+import { exitAllModals } from './modalActions';
 
 function authFetching() {
   return {
@@ -89,20 +90,26 @@ function editUserFailure(payload) {
 
 export function auth(payload) {
   return (dispatch) => {
-    const body = {
-      url: `${process.env.API_URL}/auth`,
-      options: {
-        method: 'POST',
-        headers: createHeaders(),
-        body: JSON.stringify(payload),
-      },
-      onFetching: authFetching,
-      onSuccess: authSuccess,
-      onFailure: authFailure,
-      errorMessage: `Error authenticating user ${payload.username}`,
-      dispatch,
+    dispatch(authFetching());
+    const options = {
+      method: 'POST',
+      headers: createHeaders(),
+      body: JSON.stringify(payload),
     };
-    return actionApiCall(body);
+
+    return fetch(`${process.env.API_URL}/auth`, options)
+      .then(response => response.json())
+      .then((json) => {
+        if (!json.success) {
+          return dispatch(authFailure(json));
+        }
+        dispatch(exitAllModals());
+        return dispatch(authSuccess(json));
+      })
+      .catch((err) => {
+        console.error(`Error authenticating user ${payload.username}: ${err}`);
+        return dispatch(authFailure(err));
+      });
   };
 }
 
@@ -127,30 +134,23 @@ export function signUp(payload) {
 
 export function logout(payload) {
   return (dispatch) => {
-    dispatch(logoutFetching());
-    const options = {
-      method: 'POST',
-      headers: createHeaders(payload.token),
-    };
+    dispatch(resetNews());
+    dispatch(resetSales());
+    dispatch(push('/'));
 
-    return fetch(`${process.env.API_URL}/auth/logout`, options)
-      .then(response => response.json())
-      .then((json) => {
-        dispatch(resetNews());
-        dispatch(resetSales());
-        dispatch(push('/signin'));
-        if (!json.success) {
-          return dispatch(logoutFailure(json));
-        }
-        return dispatch(logoutSuccess(json));
-      })
-      .catch((err) => {
-        console.error(`Error signing up user: ${err}`);
-        dispatch(resetNews());
-        dispatch(resetSales());
-        dispatch(push('/signin'));
-        return dispatch(logoutFailure(err));
-      });
+    const body = {
+      url: `${process.env.API_URL}/auth/logout`,
+      options: {
+        method: 'POST',
+        headers: createHeaders(payload.token),
+      },
+      onFetching: logoutFetching,
+      onSuccess: logoutSuccess,
+      onFailure: logoutFailure,
+      errorMessage: `Error logging out user ${payload.username}`,
+      dispatch,
+    };
+    return actionApiCall(body);
   };
 }
 

@@ -3,9 +3,15 @@
  */
 import * as actionTypes from '../constants/actionTypes.js';
 
+export function exitAllModals() {
+  return {
+    type: actionTypes.EXIT_ALL_MODALS,
+  }
+}
+
 export function routeToSignInModal() {
   return (dispatch) => {
-    dispatch({ type: actionTypes.EXIT_ALL_MODALS });
+    dispatch(exitAllModals());
     dispatch({ type: actionTypes.ROUTE_TO_SIGN_IN_MODAL });
   }
 }
@@ -16,7 +22,7 @@ export function exitSignInModal() {
 
 export function routeToSignUpModal() {
   return (dispatch) => {
-    dispatch({ type: actionTypes.EXIT_ALL_MODALS });
+    dispatch(exitAllModals());
     dispatch({ type: actionTypes.ROUTE_TO_SIGN_UP_MODAL });
   }
 }
@@ -27,7 +33,7 @@ export function exitSignUpModal() {
 
 export function routeToSignedOutModal() {
   return (dispatch) => {
-    dispatch({ type: actionTypes.EXIT_ALL_MODALS });
+    dispatch(exitAllModals());
     dispatch({ type: actionTypes.ROUTE_TO_SIGNED_OUT_MODAL });
   }
 }

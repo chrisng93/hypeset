@@ -11,7 +11,22 @@ export default class ArticleItem extends Component {
       brandNames: [],
       renderBrandTag: false,
     };
+    this.setBrands = this.setBrands.bind(this);
     this.renderBrandTag = this.renderBrandTag.bind(this);
+  }
+
+  componentWillMount() {
+    this.setBrands();
+  }
+
+  setBrands() {
+    const { article } = this.props;
+    if (article.Brands) {
+      this.setState({
+        brandNames: article.Brands.map(brand => brand.name),
+        renderBrandTag: true,
+      });
+    }
   }
 
   renderBrandTag() {
@@ -26,12 +41,6 @@ export default class ArticleItem extends Component {
 
   render() {
     const { article } = this.props;
-    if (article.Brands) {
-      this.setState({
-        brandNames: article.Brands.map(brand => brand.name),
-        renderBrandTag: true,
-      });
-    }
     return (
       <article className="article">
         <section className="article-image-container">
