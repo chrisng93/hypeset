@@ -53,9 +53,9 @@ class AppContainer extends Component {
     const offset = 0;
     const limit = 20;
     if (isAuthenticated) {
-      getUserBrands({ token: token });
-      getOwnNews({ token: token, offset, limit });
-      getOwnSales({ token: token, offset, limit });
+      getUserBrands({ token: nextProps.token });
+      getOwnNews({ token: nextProps.token, offset, limit });
+      getOwnSales({ token: nextProps.token, offset, limit });
     } else {
       getAllNews({ offset, limit });
       getAllSales({ offset, limit });
@@ -94,7 +94,7 @@ function mapDispatchToProps(dispatch) {
     getOwnNews: bindActionCreators(actions.getOwnNews, dispatch),
     getOwnSales: bindActionCreators(actions.getOwnSales, dispatch),
     onLogout: bindActionCreators(actions.logout, dispatch),
-    routeToSignIn: () => dispatch(push('/signin')),
+    routeToSignIn: bindActionCreators(actions.routeToSignedOutModal, dispatch),
     routeToNews: () => dispatch(push('/news')),
     routeToSales: () => dispatch(push('/sales')),
     routeToBrands: () => dispatch(push('/brands')),

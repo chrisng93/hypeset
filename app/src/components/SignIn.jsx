@@ -51,7 +51,7 @@ export default class SignIn extends Component {
     const { username, password, usernameError, passwordError } = this.state;
     return (
       <section className="sign-in">
-        <img src={require('../../assets/intro-bg1.jpg')} className="bg" />
+        {/*<img src={require('../../assets/intro-bg1.jpg')} className="bg" />*/}
         <section className="sign-in-container">
           <h1>hypeset</h1>
           <form className="sign-in-form">

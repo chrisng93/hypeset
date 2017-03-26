@@ -66,4 +66,13 @@ module.exports = {
   GET_OWN_SALES_FAILURE: 'GET_OWN_SALES_FAILURE',
   // reset sales
   RESET_SALES: 'RESET_SALES',
+
+  // routeToSignInModal
+  ROUTE_TO_SIGN_IN_MODAL: 'ROUTE_TO_SIGN_IN_MODAL',
+  // exitSignInModal
+  EXIT_SIGN_IN_MODAL: 'EXIT_SIGN_IN_MODAL',
+  // routeToSignedOutModal
+  ROUTE_TO_SIGNED_OUT_MODAL: 'ROUTE_TO_SIGNED_OUT_MODAL',
+  // exitSignedOutModal
+  EXIT_SIGNED_OUT_MODAL: 'EXIT_SIGNED_OUT_MODAL',
 };
