@@ -7,7 +7,7 @@
   background-color: #eeeeee;
   border: 1px solid #dcdcdc;
 
-  .image-container {
+  .article-image-container {
     min-height: 300px;
     min-width: 330px;
     max-height: 300px;
@@ -16,7 +16,7 @@
     overflow: hidden;
   }
 
-  .info-container {
+  .article-info-container {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -38,13 +38,17 @@
       }
     }
 
-    .date {
+    .article-info-container-date {
       margin: 16px 0 0 auto;
       padding-right: 14px;
     }
 
-    .blurb {
+    .article-info-container-blurb {
       margin-top: 20px;
+    }
+
+    .article-info-container-brands {
+
     }
   }
 }
