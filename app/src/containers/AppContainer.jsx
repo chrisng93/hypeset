@@ -94,7 +94,7 @@ function mapDispatchToProps(dispatch) {
     getOwnNews: bindActionCreators(actions.getOwnNews, dispatch),
     getOwnSales: bindActionCreators(actions.getOwnSales, dispatch),
     onLogout: bindActionCreators(actions.logout, dispatch),
-    routeToSignIn: bindActionCreators(actions.routeToSignedOutModal, dispatch),
+    routeToSignIn: bindActionCreators(actions.routeToSignInModal, dispatch),
     routeToNews: () => dispatch(push('/news')),
     routeToSales: () => dispatch(push('/sales')),
     routeToBrands: () => dispatch(push('/brands')),

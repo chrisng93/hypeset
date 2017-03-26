@@ -34,7 +34,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onAuth: bindActionCreators(actions.auth, dispatch),
-    routeToSignUp: () => dispatch(push('/signup')),
+    routeToSignUp: bindActionCreators(actions.routeToSignUpModal, dispatch),
     routeToNews: () => dispatch(push('/news')),
     resetNews: () => dispatch(resetNews()),
     resetSales: () => dispatch(resetSales()),

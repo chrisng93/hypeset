@@ -10,6 +10,11 @@ export const signInStateSelector = createSelector(
   modalState => modalState.signInModal
 );
 
+export const signUpStateSelector = createSelector(
+  modalStateSelector,
+  modalState => modalState.signUpModal
+);
+
 export const signedOutStateSelector = createSelector(
   modalStateSelector,
   modalState => modalState.signedOutModal

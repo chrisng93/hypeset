@@ -12,8 +12,8 @@ const propTypes = {
   isAuthenticated: T.bool.isRequired,
   error: T.object,
   onSignUp: T.func.isRequired,
-  routeToNews: T.func.isRequired,
   routeToSignIn: T.func.isRequired,
+  routeToNews: T.func.isRequired,
   resetNews: T.func.isRequired,
   resetSales: T.func.isRequired,
 };
@@ -34,8 +34,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onSignUp: bindActionCreators(actions.signUp, dispatch),
+    routeToSignIn: bindActionCreators(actions.routeToSignInModal, dispatch),
     routeToNews: () => dispatch(push('/news')),
-    routeToSignIn: () => dispatch(push('/signin')),
     resetNews: () => dispatch(resetNews()),
     resetSales: () => dispatch(resetSales()),
   };

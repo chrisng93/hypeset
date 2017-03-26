@@ -68,7 +68,7 @@ export default class SignUp extends Component {
     const { username, password, email, usernameError, passwordError, emailError, emptyError } = this.state;
     return (
       <section className="sign-up">
-        <img src={require('../../assets/intro-bg1.jpg')} className="bg" />
+        {/*<img src={require('../../assets/intro-bg1.jpg')} className="bg" />*/}
         <section className="sign-up-container">
           <h1>hypeset</h1>
           <form className="sign-up-form">

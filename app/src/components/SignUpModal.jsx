@@ -1,13 +1,12 @@
 import React, { Component, PropTypes as T } from 'react';
 import Modal from 'react-modal';
+import SignUpContainer from '../containers/SignUpContainer';
 
 const propTypes = {
-  exitSignedOutModal: T.func.isRequired,
-  routeToSignIn: T.func.isRequired,
-  routeToHome: T.func.isRequired,
+  exitSignUpModal: T.func.isRequired,
 };
 
-export default class SignedOutModal extends Component {
+export default class SignInModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,12 +20,11 @@ export default class SignedOutModal extends Component {
   }
 
   onClose() {
-    this.props.exitSignedOutModal();
+    this.props.exitSignUpModal();
     this.setState({ modalIsOpen: false });
   }
 
   render() {
-    const { routeToSignIn, routeToHome } = this.props;
     return (
       <Modal
         isOpen={this.state.modalIsOpen}
@@ -34,16 +32,10 @@ export default class SignedOutModal extends Component {
         shouldCloseOnOverlayClick={true}
         contentLabel="Modal"
       >
-        <h1>Your session has expired.</h1>
-        <p>
-          Please
-          <a className="link" onClick={routeToSignIn}> sign in </a>
-          again or go back to the
-          <a className="link" onClick={routeToHome}> home page</a>
-        </p>
+        <SignUpContainer />
       </Modal>
     );
   }
 }
 
-SignedOutModal.propTypes = propTypes;
+SignInModal.propTypes = propTypes;
