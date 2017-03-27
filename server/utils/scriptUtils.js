@@ -3,6 +3,8 @@
  */
 import moment from 'moment';
 
+export const condenseAll = string => string.replace(/[^a-z0-9]/gi, '');
+
 export const condenseName = string => string.replace(/[^a-z0-9+.]/gi, '');
 
 export const condenseTitle = string => string.replace(/[^a-z0-9+&!-?]/gi, '');

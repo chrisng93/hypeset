@@ -1,5 +1,5 @@
 import { isUnique } from '../utils/databaseUtils';
-import { condenseName } from '../utils/scriptUtils';
+import { condenseAll } from '../utils/scriptUtils';
 
 module.exports = (sequelize, DataTypes) => {
   const Brand = sequelize.define('Brand', {
@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         return this.find({ attributes: { include: ['name'], exclude: ['createdAt', 'updatedAt'] }, where: { name: { $iLike: name } } });
       },
       checkOrCreate: function(name) {
-        const condensedName = condenseName(name).toLowerCase();
+        const condensedName = condenseAll(name).toLowerCase();
         return this.find({ attributes: { include: ['name'], exclude: ['createdAt', 'updatedAt'] }, where: { condensedName: { $iLike: condensedName } } })
           .then((found) => {
             if (found) {
