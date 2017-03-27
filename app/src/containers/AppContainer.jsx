@@ -9,6 +9,7 @@ import * as actions from '../actions';
 import { isAuthenticatedSelector, tokenSelector } from '../selectors/userSelectors';
 import { pathnameSelector } from '../selectors/routingSelectors';
 import Nav from '../components/Nav';
+import ModalCheckContainer from './ModalCheckContainer';
 
 const propTypes = {
   children: T.node.isRequired,
@@ -53,9 +54,9 @@ class AppContainer extends Component {
     const offset = 0;
     const limit = 20;
     if (isAuthenticated) {
-      getUserBrands({ token: nextProps.token });
-      getOwnNews({ token: nextProps.token, offset, limit });
-      getOwnSales({ token: nextProps.token, offset, limit });
+      getUserBrands({ token });
+      getOwnNews({ token, offset, limit });
+      getOwnSales({ token, offset, limit });
     } else {
       getAllNews({ offset, limit });
       getAllSales({ offset, limit });
@@ -70,6 +71,7 @@ class AppContainer extends Component {
     return(
       <section id="app">
         <Nav {...navProps} />
+        <ModalCheckContainer />
         {children}
       </section>
     );
