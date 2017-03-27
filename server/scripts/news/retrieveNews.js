@@ -41,7 +41,6 @@ export async function retrieveNews(availableBrands, newBrand = false) {
     logger.debug('Started parsing Grailed Staff Picks', { type: 'News', site: 'Grailed', action: 'start parse' });
     const grailedStaffPicks = await parseGrailedSpecificArticles('Staff Picks', grailedArticles.staffPicks, availableBrands);
     logger.debug('Finished parsing Grailed Staff Picks', { type: 'News', site: 'Grailed', action: 'finish parse' });
-    console.log(grailedWeekendReading, grailedGrailFits, grailedStaffPicks)
     const allNews = hypebeastNews.concat(grailedArticles.news).concat(grailedWeekendReading).concat(grailedGrailFits).concat(grailedStaffPicks);
     logger.debug('Finished retrieving news', { type: 'News', action: 'finish retrieve' });
 

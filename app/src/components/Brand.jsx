@@ -73,7 +73,7 @@ export default class Brand extends Component {
           <li className="brands-brand-tabs-news" onClick={() => this.changeTabs('news')}>News</li>
           <li className="brands-brand-tabs-sales" onClick={() => this.changeTabs('sales')}>Sales</li>
         </ul>
-        <section className="brands-brand-articles">
+        <section className={`brands-brand-articles ${this.state.selected === 'news' ? 'news' : 'sales'}`}>
           {this.renderArticles()}
         </section>
       </section>

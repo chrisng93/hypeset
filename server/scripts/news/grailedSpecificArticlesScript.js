@@ -33,7 +33,7 @@ export async function parseGrailedSpecificArticles(type, articles, availableBran
 }
 
 async function parseWeekendReadingArticle(article, availableBrands) {
-  try {
+  return new Promise((resolve) => {
     request(article.url, (err, res) => {
       const $ = cheerio.load(res.body);
       const root = $('.article-wrapper')[0];
@@ -46,34 +46,24 @@ async function parseWeekendReadingArticle(article, availableBrands) {
         }
       });
       article.brands = validBrands;
-      if (validBrands.length) {
-        return article;
-      }
-      return null;
+      validBrands.length > 0 ? resolve(article) : resolve(null);
     });
-  } catch(err) {
-    logger.error('Error parsing Grailed Weekend Reading article', { type: 'News', action: 'parse', site: 'Grailed', err: JSON.stringify(err) });
-  }
+  });
 }
 
 async function parseGrailFitsArticle(article, availableBrands) {
-  try {
-    return parseDataListings(article, '.listings', availableBrands);
-  } catch(err) {
-    logger.error('Error parsing Grailed Grail Fits article', { type: 'News', action: 'parse', site: 'Grailed', err: JSON.stringify(err) });
-
-  }
+  return new Promise((resolve) => {
+    parseDataListings(article, '.listings', availableBrands, resolve);
+  });
 }
 
 async function parseStaffPicksArticle(article, availableBrands) {
-  try {
-    return parseDataListings(article, '.listings', availableBrands);
-  } catch(err) {
-    logger.error('Error parsing Grailed Staff Picks article', { type: 'News', action: 'parse', site: 'Grailed', err: JSON.stringify(err) });
-  }
+  return new Promise((resolve) => {
+    parseDataListings(article, '.listings', availableBrands, resolve);
+  })
 }
 
-const parseDataListings = (article, classSelector, availableBrands) => {
+const parseDataListings = (article, classSelector, availableBrands, resolve) => {
   request(article.url, (err, res) => {
     const $ = cheerio.load(res.body);
     const validBrands = [];
@@ -88,10 +78,7 @@ const parseDataListings = (article, classSelector, availableBrands) => {
       });
     });
     article.brands = validBrands;
-    if (validBrands.length) {
-      return article;
-    }
-    return null;
+    validBrands.length > 0 ? resolve(article) : resolve(null);
   });
 };
 

@@ -1,6 +1,11 @@
 .news {
   .article {
+    height: 220px;
+
     .article-image-container {
+      min-height: 220px;
+      max-height: 220px;
+
       img {
         max-width: 100%;
       }
