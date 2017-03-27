@@ -5,20 +5,15 @@ import winston from 'winston';
 import m from '../../models';
 import redisClient from '../../db/redis';
 import { checkForSequelizeErrors } from '../../utils/apiUtils';
-import { retrieveNews } from '../../scripts/news/retrieveNews';
-import { retrieveSales } from '../../scripts/sales/retrieveSales';
-import { setRedisKeys } from '../../utils/redisUtils';
 const logger = winston.loggers.get('brandApi');
 
 async function createBrand(req, res) {
   try {
-    const brand = await m.Brand.checkOrCreate(req.body.name);
+    const brand = await m.Brand.checkOrCreate(req.body.name, true);
     logger.debug('Brand created', { brand: brand.name, action: 'create' });
     res.status(201).send({ success: true, brand });
-    await retrieveNews([brand.name], true);
-    await retrieveSales([brand.name], true);
-    setRedisKeys();
   } catch(err) {
+    console.log(err)
     const message = checkForSequelizeErrors(err);
     logger.warn('Error creating brand', { brand: req.body.name,  action: 'create', err: message });
     res.status(500).send({ success: false, message });

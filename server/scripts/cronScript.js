@@ -13,7 +13,7 @@ const scriptLogger = winston.loggers.get('scripts');
 
 export default function runScripts() {
   const job = new CronJob({
-    cronTime: '* * 01 * * *',
+    cronTime: '0 0 */1 * * *',
     onTick,
     start: true,
     // TODO: uncomment when deploy

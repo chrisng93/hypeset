@@ -1,5 +1,8 @@
 import { isUnique } from '../utils/databaseUtils';
 import { condenseAll } from '../utils/scriptUtils';
+import { retrieveNews } from '../scripts/news/retrieveNews';
+import { retrieveSales } from '../scripts/sales/retrieveSales';
+import { setRedisKeys } from '../utils/redisUtils';
 
 module.exports = (sequelize, DataTypes) => {
   const Brand = sequelize.define('Brand', {
@@ -29,14 +32,21 @@ module.exports = (sequelize, DataTypes) => {
       findByName: function(name) {
         return this.find({ attributes: { include: ['name'], exclude: ['createdAt', 'updatedAt'] }, where: { name: { $iLike: name } } });
       },
-      checkOrCreate: function(name) {
+      checkOrCreate: function(name, isNew = false) {
         const condensedName = condenseAll(name).toLowerCase();
-        return this.find({ attributes: { include: ['name'], exclude: ['createdAt', 'updatedAt'] }, where: { condensedName: { $iLike: condensedName } } })
+        return this.find({ attributes: { include: ['name'], exclude: ['createdAt', 'updatedAt'] }, where: { condensedName } })
           .then((found) => {
             if (found) {
               return found;
             }
-            return this.create({ name, condensedName });
+            let brand;
+            if (isNew) {
+              brand = this.create({ name, condensedName });
+              retrieveNews([name], true);
+              retrieveSales([name], true);
+              setRedisKeys();
+            }
+            return brand;
           });
       },
     },

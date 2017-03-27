@@ -18,8 +18,11 @@ export async function retrieveBrands() {
     const allBrands = grailedBrands.brandNames;
     const brandPopularity = grailedBrands.brandPopularity;
 
+    const brandPopularityCount = await m.BrandPopularity.count();
     for (let i = 0; i < allBrands.length; i++) {
-      await m.Brand.checkOrCreate(allBrands[i]);
+      const priorCount = await m.BrandPopularity.count({ where: { brandName: allBrands[i] } });
+      let isNew = (priorCount === 0) && (brandPopularityCount !== 0);
+      await m.Brand.checkOrCreate(allBrands[i], isNew);
     }
     logger.debug('Finished inserting brands into database', { type: 'Brands', action: 'finish insert' });
 
