@@ -19,10 +19,11 @@
   }
 
   .article-info-container {
-    display: flex;
-    flex-direction: column;
     width: 100%;
     margin: 30px 30px 0 30px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
 
     header {
       flex: 0 0 fit-content;

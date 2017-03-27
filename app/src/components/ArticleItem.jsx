@@ -19,6 +19,10 @@ export default class ArticleItem extends Component {
     this.setBrands();
   }
 
+  componentWillReceiveProps() {
+    this.setBrands();
+  }
+
   setBrands() {
     const { article } = this.props;
     if (article.Brands) {

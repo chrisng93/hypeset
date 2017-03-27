@@ -60,7 +60,7 @@ export default class Articles extends Component {
     }
     const { articles } = nextProps;
     this.filterResults(articles);
-    this.setState({ dbOffset: articles.length + 1 });
+    this.setState({ dbOffset: articles.length });
   }
 
   retrieveArticles() {
@@ -70,6 +70,7 @@ export default class Articles extends Component {
       getAllArticles({ offset: dbOffset, limit, brand, type });
       return;
     }
+    console.log(dbOffset, limit)
     isAuthenticated ? getOwnArticles({ token, offset: dbOffset, limit }) : getAllArticles({ offset: dbOffset, limit });
   }
 
@@ -96,8 +97,10 @@ export default class Articles extends Component {
         }
         return filteredOutSites.indexOf(row.Site.name) < 0;
       });
+      console.log(validArticles)
     }
     const visibleArray = validArticles.slice(0, visibleOffset + (limit / 2));
+    console.log(visibleArray);
     this.setState({ visible: visibleArray, visibleOffset: visibleArray.length });
   }
 
