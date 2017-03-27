@@ -42,8 +42,6 @@ pg.connect(pgConnectionString, (dbConnectError, client) => {
         if (file.slice(-3) !== '.js') return;
         const model = sequelize['import'](path.join(__dirname, file));
         db[model.name] = model;
-        // create table in postgres that maps to given model
-        // TODO: when first starting up db from scratch, this creates errors
       });
 
     Object.keys(db).forEach((modelName) => {

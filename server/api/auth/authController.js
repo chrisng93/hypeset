@@ -24,7 +24,7 @@ async function authenticate(req, res) {
     const valid = user.validatePassword(password);
     if (!valid) {
       logger.info('User password not valid', { user: user.username, action: 'invalid password' });
-      return res.status(403).send({ success: false, message: 'Incorrect password combination' });
+      return res.status(401).send({ success: false, message: 'Incorrect password combination' });
     }
 
     const expiration = parseInt(process.env.JWT_EXPIRATION);
