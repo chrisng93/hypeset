@@ -115,20 +115,26 @@ export function auth(payload) {
 
 export function signUp(payload) {
   return (dispatch) => {
-    const body = {
-      url: `${process.env.API_URL}/api/user`,
-      options: {
-        method: 'POST',
-        headers: createHeaders(),
-        body: JSON.stringify(payload),
-      },
-      onFetching: signUpFetching,
-      onSuccess: signUpSuccess,
-      onFailure: signUpFailure,
-      errorMessage: `Error signing up user ${payload.username}`,
-      dispatch,
+    dispatch(signUpFetching());
+    const options = {
+      method: 'POST',
+      headers: createHeaders(),
+      body: JSON.stringify(payload),
     };
-    return actionApiCall(body);
+
+    return fetch(`${process.env.API_URL}/api/user`, options)
+      .then(response => response.json())
+      .then((json) => {
+        if (!json.success) {
+          return dispatch(signUpFailure(json));
+        }
+        dispatch(exitAllModals());
+        return dispatch(signUpSuccess(json));
+      })
+      .catch((err) => {
+        console.error(`Error signing up user ${payload.username}: ${err}`);
+        return dispatch(signUpFailure(err));
+      });
   };
 }
 
