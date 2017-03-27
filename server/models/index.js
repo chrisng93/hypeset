@@ -44,17 +44,6 @@ pg.connect(pgConnectionString, (dbConnectError, client) => {
         db[model.name] = model;
         // create table in postgres that maps to given model
         // TODO: when first starting up db from scratch, this creates errors
-        model.sync();
-      });
-
-    fs.readdirSync(__dirname)
-      .filter(file => (file.indexOf('.') !== 0) && (file !== basename))
-      .forEach((file) => {
-        if (file.slice(-3) !== '.js') return;
-        const model = sequelize['import'](path.join(__dirname, file));
-        db[model.name] = model;
-        // create table in postgres that maps to given model
-        model.sync();
       });
 
     Object.keys(db).forEach((modelName) => {
@@ -66,10 +55,17 @@ pg.connect(pgConnectionString, (dbConnectError, client) => {
     db.sequelize = sequelize;
     db.Sequelize = Sequelize;
 
-    // populate table with Grailed and Hypebeast sites
-    db.Site.findOrCreate({ where: { name: 'Grailed' }, defaults: { name: 'Grailed', url: process.env.GRAILED_URL } });
-    db.Site.findOrCreate({ where: { name: 'Hypebeast' }, defaults: { name: 'Hypebeast', url: process.env.HYPEBEAST_URL } });
-    db.Site.findOrCreate({ where: { name: 'Reddit' }, defaults: { name: 'Reddit', url: process.env.REDDIT_URL } });
+    sequelize
+      .sync()
+      .then(() => {
+        // populate table with Grailed and Hypebeast sites
+        db.Site.findOrCreate({ where: { name: 'Grailed' }, defaults: { name: 'Grailed', url: process.env.GRAILED_URL } });
+        db.Site.findOrCreate({ where: { name: 'Hypebeast' }, defaults: { name: 'Hypebeast', url: process.env.HYPEBEAST_URL } });
+        db.Site.findOrCreate({ where: { name: 'Reddit' }, defaults: { name: 'Reddit', url: process.env.REDDIT_URL } });
+      })
+      .catch((err) => {
+        logger.warn('Error syncing Postgres models', { action: 'sync', err: JSON.stringify(err) });
+      });
   });
 });
 
