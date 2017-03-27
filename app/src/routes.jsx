@@ -3,8 +3,6 @@ import { Route, IndexRoute } from 'react-router';
 import AppContainer from './containers/AppContainer';
 import NotFoundContainer from './containers/NotFoundContainer';
 import EnsureAuthenticationContainer from './containers/EnsureAuthenticationContainer';
-import SignInContainer from './containers/SignInContainer';
-import SignUpContainer from './containers/SignUpContainer';
 import NewsContainer from './containers/NewsContainer';
 import SalesContainer from './containers/SalesContainer';
 import BrandsContainer from './containers/BrandsContainer';
@@ -17,8 +15,6 @@ import EditBrands from './components/EditBrands';
 const routes = (
   <Route path="/" component={AppContainer}>
     <IndexRoute component={NewsContainer} />
-    <Route path="/signin" component={SignInContainer} />
-    <Route path="/signup" component={SignUpContainer} />
     <Route path="/news" component={NewsContainer} />
     <Route path="/sales" component={SalesContainer} />
     <Route path="/brands" component={BrandsContainer}>
