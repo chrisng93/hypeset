@@ -2,16 +2,18 @@
   height: 300px;
   width: 100%;
   margin-bottom: 30px;
+  border: 1px solid #dcdcdc;
   display: flex;
   flex-direction: row;
   background-color: #eeeeee;
-  border: 1px solid #dcdcdc;
 
   .article-image-container {
     min-height: 300px;
     min-width: 330px;
     max-height: 300px;
     max-width: 330px;
+    display: flex;
+    align-items: center;
     object-fit: cover;
     overflow: hidden;
   }
@@ -48,7 +50,7 @@
     }
 
     .article-info-container-brands {
-
+      margin-top: auto;
     }
   }
 }

@@ -17,7 +17,7 @@ export default function runScripts() {
     onTick,
     start: true,
     // TODO: uncomment when deploy
-    runOnInit: true,
+    // runOnInit: true,
   });
   job.start();
 };

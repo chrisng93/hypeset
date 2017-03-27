@@ -34,7 +34,7 @@ export async function parseGrailedArticles(articles, availableBrands, page = 1, 
           const brands = findBrands(article.title, availableBrands);
           if (brands.length && moment(latestArticleDate).diff(article.date, 'seconds') < 0) {
             article.brands = brands;
-
+            articles.news.push(article);
           }
         }
         if (moment(latestArticleDate).diff(article.date, 'seconds') > 0) {

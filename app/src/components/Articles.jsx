@@ -109,7 +109,7 @@ export default class Articles extends Component {
     const html = document.documentElement;
     const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
     const windowBottom = windowHeight + window.pageYOffset;
-    if (windowBottom >= docHeight - 1) {
+    if (windowBottom >= docHeight - 10) {
       articles.length - visible.length <= (limit / 2) ? this.retrieveArticles() : this.filterResults(articles);
     }
   }
