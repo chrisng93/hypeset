@@ -100,7 +100,6 @@ export default class Articles extends Component {
       console.log(validArticles)
     }
     const visibleArray = validArticles.slice(0, visibleOffset + (limit / 2));
-    console.log(visibleArray);
     this.setState({ visible: visibleArray, visibleOffset: visibleArray.length });
   }
 

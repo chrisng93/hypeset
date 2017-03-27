@@ -4,15 +4,17 @@
   margin: 40px 100px 0 100px;
 
   .profile-nav {
+    display: flex;
     flex: 1;
+    flex-direction: column;
 
-    .profile-nav-user-info {
+    .profile-nav-header {
       font-size: 24px;
       font-weight: 500;
       margin-bottom: 14px;
     }
 
-    .profile-nav-edit-user, .profile-nav-edit-brands {
+    .profile-nav-user, .profile-nav-brands {
       font-size: 20px;
       font-weight: 400;
       margin: 0 0 6px 8px;

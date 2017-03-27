@@ -51,8 +51,8 @@ export default class Profile extends Component {
   }
 
   render() {
-    const { routeToUserInfo, routeToEditUser, routeToEditBrands } = this.props;
-    const profileNavProps = { routeToUserInfo, routeToEditUser, routeToEditBrands };
+    const { routeToUserInfo, routeToEditBrands } = this.props;
+    const profileNavProps = { routeToUserInfo, routeToEditBrands };
     return (
       <section className="profile">
         <ProfileNav {...profileNavProps} />
