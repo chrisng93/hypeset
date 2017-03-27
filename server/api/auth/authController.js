@@ -52,6 +52,10 @@ async function logout(req, res) {
   }
 }
 
+async function forgot(req, res) {
+
+}
+
 async function test(req, res) {
   try {
     // await retrieveBrands();
@@ -69,4 +73,4 @@ async function test(req, res) {
   res.send()
 }
 
-module.exports = { authenticate, logout, test };
+module.exports = { authenticate, logout, forgot, test };

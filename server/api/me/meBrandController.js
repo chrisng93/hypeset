@@ -33,22 +33,15 @@ async function updateOwnBrands(req, res) {
   try {
     const user = await m.User.findById(req.user.id);
     const successfulInserts = [];
-    const failedInserts = [];
     for (let i = 0; i < brands.length; i++) {
       const brand = await m.Brand.findByName(brands[i]);
       if (brand) {
         user.addBrand(brand);
         successfulInserts.push(brand);
-      } else {
-        failedInserts.push(brands[i]);
       }
     }
-    if (!successfulInserts.length) {
-      logger.info('User brands unable to be updated', { user: user.username, type: 'Brands', action: 'failed update' });
-      return res.status(400).send({ success: false, failedInserts });
-    }
     logger.debug('User brands successfully updated', { user: user.username, type: 'Brands', action: 'update' });
-    res.status(200).send({ success: true, successfulInserts, failedInserts });
+    res.status(200).send({ success: true, successfulInserts });
   } catch(err) {
     const message = checkForSequelizeErrors(err);
     logger.warn('Error updating user brands', { user: req.user.username, type: 'Brands', action: 'update', err: message });
@@ -61,23 +54,16 @@ async function deleteOwnBrands(req, res) {
   try {
     const user = await m.User.findById(req.user.id);
     const successfulDeletes = [];
-    const failedDeletes = [];
     for (let i = 0; i < brands.length; i++) {
       const brand = await m.Brand.findByName(brands[i]);
       const hasAssociation = await user.hasBrand(brand);
       if (brand && hasAssociation) {
         user.removeBrand(brand);
         successfulDeletes.push(brands[i]);
-      } else {
-        failedDeletes.push(brands[i]);
       }
     }
-    if (!successfulDeletes.length) {
-      logger.info('User brands unable to be deleted', { user: user.username, type: 'Brands', action: 'failed delete' });
-      return res.status(400).send({ success: false, failedDeletes });
-    }
     logger.debug('User brands successfully deleted', { user: user.username, type: 'Brands', action: 'delete' });
-    res.status(200).send({ success: true, successfulDeletes, failedDeletes });
+    res.status(200).send({ success: true, successfulDeletes });
   } catch(err) {
     const message = checkForSequelizeErrors(err);
     logger.warn('Error deleting user brands', { user: req.user.username, type: 'Brands', action: 'delete', err: message });
