@@ -5,6 +5,7 @@ import winston from 'winston';
 import m from '../../models';
 import redisClient from '../../db/redis';
 import { checkForSequelizeErrors } from '../../utils/apiUtils';
+import { setTop40News, setTop40Sales } from '../../utils/redisUtils';
 const logger = winston.loggers.get('infoApi');
 
 export async function getInfo(type, offset, limit, res) {
@@ -137,9 +138,11 @@ async function deleteBrands(req, res) {
     }
 
     // update cache
-    let type;
-    info.type === 'News' ? type = 'News' : type = 'Sales';
-    info.Brands.length ? updateCache(type, info, res) : resetCache(type, info, res);
+    if (!info.Brands.length) {
+      const deleteInfo = await m.Info.find({ where: { id: info.id } });
+      deleteInfo.destroy();
+    }
+    info.type === 'News' ? setTop40News() : setTop40Sales();
 
     logger.debug('Info brand(s) deleted', { action: 'delete brand(s)', brands: JSON.stringify(brands.map(brand => brand.name)) });
     return res.status(200).send({ success: true });

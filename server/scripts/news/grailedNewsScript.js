@@ -32,10 +32,13 @@ export async function parseGrailedArticles(articles, availableBrands, page = 1, 
           articles.staffPicks.push(article);
         } else {
           const brands = findBrands(article.title, availableBrands);
-          if (brands.length) {
+          if (brands.length && moment(latestArticleDate).diff(article.date, 'seconds') < 0) {
             article.brands = brands;
-            moment(latestArticleDate).diff(article.date, 'seconds') < 0 ? articles.news.push(article) : continueParsing = false;
+
           }
+        }
+        if (moment(latestArticleDate).diff(article.date, 'seconds') > 0) {
+          continueParsing = false;
         }
       });
       if (continueParsing) {

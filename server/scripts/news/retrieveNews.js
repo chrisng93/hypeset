@@ -10,11 +10,11 @@ import { parseGrailedSpecificArticles } from './grailedSpecificArticlesScript';
 
 const logger = winston.loggers.get('scripts');
 
-export async function retrieveNews(availableBrands) {
+export async function retrieveNews(availableBrands, newBrand = false) {
   try {
     const latestNews = await m.Info.find({ where: { type: 'News' }, order: 'date DESC' });
     let latestNewsDate;
-    latestNews ? latestNewsDate = latestNews.date : latestNewsDate = moment().subtract(30, 'days');
+    (latestNews && !newBrand) ? latestNewsDate = latestNews.date : latestNewsDate = moment().subtract(30, 'days');
     const grailed = await m.Site.find({ where: { name: 'Grailed' } });
     const hypebeast = await m.Site.find({ where: { name: 'Hypebeast' } });
 

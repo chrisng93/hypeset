@@ -60,6 +60,9 @@ pg.connect(pgConnectionString, (dbConnectError, client) => {
         db.Site.findOrCreate({ where: { name: 'Grailed' }, defaults: { name: 'Grailed', url: process.env.GRAILED_URL } });
         db.Site.findOrCreate({ where: { name: 'Hypebeast' }, defaults: { name: 'Hypebeast', url: process.env.HYPEBEAST_URL } });
         db.Site.findOrCreate({ where: { name: 'Reddit' }, defaults: { name: 'Reddit', url: process.env.REDDIT_URL } });
+
+        // create admin
+        db.User.findOrCreate({ where: { role: 'Admin' }, defaults: { username: process.env.ADMIN_USERNAME, password: process.env.ADMIN_PASSWORD, role: 'Admin' } });
       })
       .catch((err) => {
         logger.warn('Error syncing Postgres models', { action: 'sync', err: JSON.stringify(err) });
