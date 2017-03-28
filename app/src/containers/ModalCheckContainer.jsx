@@ -8,7 +8,7 @@ import { signInStateSelector, signUpStateSelector, signedOutStateSelector } from
 import ModalCheck from '../components/ModalCheck';
 
 const propTypes = {
-  children: T.node.isRequired,
+  children: T.node,
   signInModal: T.bool.isRequired,
   signUpModal: T.bool.isRequired,
   signedOutModal: T.bool.isRequired,

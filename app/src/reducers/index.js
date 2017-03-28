@@ -5,6 +5,7 @@ import brand from './brandReducer';
 import news from './newsReducer';
 import sales from './salesReducer';
 import modal from './modalReducer';
+import persist from './persistReducer';
 
 export default combineReducers({
   user,
@@ -12,5 +13,6 @@ export default combineReducers({
   news,
   sales,
   modal,
+  persist,
   routing: routerReducer,
 });
