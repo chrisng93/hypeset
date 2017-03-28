@@ -1,21 +1,38 @@
 .brands {
+  margin: 40px 100px 0 100px;
   display: flex;
   flex-direction: row;
 
   .brands-list {
     flex: 1;
+    list-style-type: none;
+
+    li {
+      margin-bottom: 5px;
+      font-size: 16px;
+      font-weight: 500;
+    }
   }
 
   .brands-brand {
     flex: 4;
 
     h1 {
-      align-self: center;
+      font-size: 24px;
+      text-align: center;
     }
 
     .brands-brand-tabs {
       display: flex;
       flex-direction: row;
+      align-items: center;
+
+      li {
+        flex: 1;
+        font-size: 14px;
+        text-align: center;
+        list-style-type: none;
+      }
     }
   }
 

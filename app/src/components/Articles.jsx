@@ -142,7 +142,7 @@ export default class Articles extends Component {
         <section className="articles">
           {visible.map((article, key) => <ArticleItem key={key} article={article} /> )}
         </section>
-        {this.renderFilters()}
+        {/*{this.renderFilters()}*/}
       </article>
     );
   }

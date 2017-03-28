@@ -85,8 +85,8 @@ export default class EditUser extends Component {
             <input type="text" name="last-name" value={lastName} placeholder={user.lastName} onChange={e => this.handleInputChange(e, 'lastName')} />
           </span>
         </label>
-        <input type="button" value="Submit changes" onClick={this.submitForm} />
-        <input type="button" value="Cancel" onClick={routeToProfile} />
+        <button onClick={this.submitForm}>Submit changes</button>
+        <button onClick={routeToProfile}>Cancel</button>
       </form>
     );
   }

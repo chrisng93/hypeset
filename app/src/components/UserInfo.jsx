@@ -29,7 +29,7 @@ export default function UserInfo(props) {
         <span className="field">Last name:</span>
         <span className="value">{user.lastName}</span>
       </label>
-      <button value="Edit info" onClick={routeToEditUser} />
+      <button onClick={routeToEditUser}>Edit Info</button>
     </form>
   );
 }
