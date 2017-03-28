@@ -45,6 +45,9 @@ export default class ArticleItem extends Component {
 
   render() {
     const { article } = this.props;
+    if (!article.imgUrl) {
+      article.imgUrl = require('../../assets/sale_default.png');
+    }
     return (
       <article className="article">
         <section className="article-image-container">
