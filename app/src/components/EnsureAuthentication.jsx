@@ -28,3 +28,7 @@ export default class EnsureAuthentication extends Component {
 }
 
 EnsureAuthentication.propTypes = propTypes;
+
+// have listener for rehydrate, have ensure auth only route to news if not authenticated and rehydrate is true
+// have app return null if rehydrate false
+// have app only get data when rehydrate is true
