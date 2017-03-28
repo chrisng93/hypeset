@@ -49,6 +49,7 @@ class AppContainer extends Component {
   }
 
   getData(nextProps) {
+    console.log('GETTING DATA', nextProps)
     const { isAuthenticated, token } = nextProps;
     const { getAllBrands, getAllNews, getAllSales, getUserBrands, getBrandsByPopularity, getOwnNews, getOwnSales } = this.props;
     const offset = 0;

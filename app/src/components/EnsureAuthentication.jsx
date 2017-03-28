@@ -3,14 +3,14 @@ import React, { Component, PropTypes as T } from 'react';
 const propTypes = {
   children: T.node.isRequired,
   isAuthenticated: T.bool.isRequired,
-  routeToSignIn: T.func.isRequired,
+  routeToNews: T.func.isRequired,
 };
 
 export default class EnsureAuthentication extends Component {
   componentWillMount() {
-    const { isAuthenticated, routeToSignIn } = this.props;
+    const { isAuthenticated, routeToNews } = this.props;
     if (!isAuthenticated) {
-      return routeToSignIn();
+      return routeToNews();
     }
   }
 

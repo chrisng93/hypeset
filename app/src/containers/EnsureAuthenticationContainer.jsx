@@ -7,7 +7,7 @@ import EnsureAuthentication from '../components/EnsureAuthentication';
 const propTypes = {
   children: T.node.isRequired,
   isAuthenticated: T.bool.isRequired,
-  routeToSignIn: T.func.isRequired,
+  routeToNews: T.func.isRequired,
 };
 
 function EnsureAuthenticationContainer(props) {
@@ -24,7 +24,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    routeToSignIn: () => dispatch(push('/signin')),
+    routeToNews: () => dispatch(push('/news')),
   };
 }
 
