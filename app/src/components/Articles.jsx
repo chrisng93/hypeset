@@ -5,6 +5,7 @@ import Checkbox from './Checkbox';
 const propTypes = {
   isAuthenticated: T.bool,
   token: T.string,
+  pathname: T.string,
   brand: T.string,
   articles: T.array.isRequired,
   isFetchingAllArticles: T.bool,
@@ -21,54 +22,71 @@ export default class Articles extends Component {
     super(props);
     this.state = {
       visible: [],
-      dbOffset: 0,
       visibleOffset: 0,
       limit: 8,
     };
-    this.setArticles = this.setArticles.bind(this);
+    this.setInitialArticles = this.setInitialArticles.bind(this);
     this.retrieveArticles = this.retrieveArticles.bind(this);
-    this.reversePage = this.reversePage.bind(this);
+    this.onForwardPage = this.onForwardPage.bind(this);
+    this.onBackPage = this.onBackPage.bind(this);
     this.goToBeginning = this.goToBeginning.bind(this);
   }
 
   componentWillMount() {
-    this.setArticles();
+    this.setInitialArticles();
   }
+
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.isFetchingAllArticles || nextProps.isFetchingOwnArticles || nextProps.isFetchingBrandArticles) {
+    if (((nextProps.isFetchingAllArticles || nextProps.isFetchingOwnArticles || nextProps.isFetchingBrandArticles)
+         || (this.props.isFetchingAllArticles || this.props.isFetchingOwnArticles || this.props.isFetchingBrandArticles)
+         || (this.props.pathname === nextProps.pathname)) && this.props.articles.length !== 0) {
       return;
     }
-    console.log('got props', nextProps.articles)
-    this.setArticles(nextProps.articles);
-    this.setState({ dbOffset: nextProps.articles.length });
+    this.setInitialArticles(nextProps.articles);
   }
 
-  setArticles(articles = null) {
+  setInitialArticles(articles = null) {
     const { visibleOffset, limit } = this.state;
     if (!articles) {
       articles = this.props.articles;
     }
+    if (!articles.length) {
+      return;
+    }
     const showUntil = visibleOffset + (limit / 2);
     const visibleArray = articles.slice(visibleOffset, showUntil);
     this.setState({
-      dbOffset: articles.length,
       visible: visibleArray,
       visibleOffset: showUntil,
     });
   }
 
   retrieveArticles() {
-    const { dbOffset, limit } = this.state;
-    const { isAuthenticated, token, brand, type, getAllArticles, getOwnArticles, getBrandArticles } = this.props;
+    const { limit } = this.state;
+    const { articles, isAuthenticated, token, brand, type, getAllArticles, getOwnArticles, getBrandArticles } = this.props;
     if (brand) {
-      getBrandArticles({ offset: dbOffset, limit, brand, type });
+      getBrandArticles({ offset: articles.length, limit, brand, type });
       return;
     }
-    isAuthenticated ? getOwnArticles({ token, offset: dbOffset, limit }) : getAllArticles({ offset: dbOffset, limit });
+    isAuthenticated ? getOwnArticles({ token, offset: articles.length, limit }) : getAllArticles({ offset: articles.length, limit });
   }
 
-  reversePage() {
+  onForwardPage() {
+    const { visibleOffset, limit } = this.state;
+    const { articles } = this.props;
+    if (articles.length - visibleOffset < 5) {
+      this.retrieveArticles();
+    }
+    const showUntil = visibleOffset + (limit / 2);
+    const visibleArray = articles.slice(visibleOffset, showUntil);
+    this.setState({
+      visible: visibleArray,
+      visibleOffset: showUntil,
+    });
+  }
+
+  onBackPage() {
     const { visibleOffset, limit } = this.state;
     const { articles } = this.props;
     const showUntil = visibleOffset - (limit / 2);
@@ -98,8 +116,8 @@ export default class Articles extends Component {
           {visible.map((article, key) => <ArticleItem key={key} article={article} /> )}
         </section>
         <section className="articles-nav">
-          <a onClick={this.retrieveArticles}>Go forward</a><br/>
-          <a onClick={this.reversePage}>Go backward</a><br/>
+          <a onClick={this.onForwardPage}>Go forward</a><br/>
+          <a onClick={this.onBackPage}>Go backward</a><br/>
           <a onClick={this.goToBeginning}>Go to beginning</a>
         </section>
       </article>

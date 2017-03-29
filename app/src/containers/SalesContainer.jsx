@@ -4,11 +4,13 @@ import { bindActionCreators } from 'redux';
 import * as actions from '../actions';
 import { isAuthenticatedSelector, tokenSelector } from '../selectors/userSelectors';
 import { salesSelector, salesBrandsSelector, salesSitesSelector, isFetchingAllSalesSelector, isFetchingOwnSalesSelector } from '../selectors/salesSelectors';
+import { pathnameSelector } from '../selectors/routingSelectors';
 import Articles from '../components/Articles';
 
 const propTypes = {
   isAuthenticated: T.bool.isRequired,
   token: T.string.isRequired,
+  pathname: T.string.isRequired,
   sales: T.array.isRequired,
   salesBrands: T.array.isRequired,
   salesSites: T.array.isRequired,
@@ -19,10 +21,11 @@ const propTypes = {
 };
 
 function SalesContainer(props) {
-  const { isAuthenticated, token, sales, salesBrands, salesSites, isFetchingAllSales, isFetchingOwnSales, getAllSales, getOwnSales } = props;
+  const { isAuthenticated, token, pathname, sales, salesBrands, salesSites, isFetchingAllSales, isFetchingOwnSales, getAllSales, getOwnSales } = props;
   const articlesProps = {
     isAuthenticated,
     token,
+    pathname,
     articles: sales,
     articlesBrands: salesBrands,
     articlesSites: salesSites,
@@ -30,7 +33,6 @@ function SalesContainer(props) {
     isFetchingOwnArticles: isFetchingOwnSales,
     getAllArticles: getAllSales,
     getOwnArticles: getOwnSales,
-    shouldFilter: true,
   };
   return (
     <section className="sales">
@@ -43,6 +45,7 @@ function mapStateToProps(state) {
   return {
     isAuthenticated: isAuthenticatedSelector(state),
     token: tokenSelector(state),
+    pathname: pathnameSelector(state),
     sales: salesSelector(state),
     salesBrands: salesBrandsSelector(state),
     salesSites: salesSitesSelector(state),

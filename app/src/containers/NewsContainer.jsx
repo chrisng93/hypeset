@@ -4,11 +4,13 @@ import { bindActionCreators } from 'redux';
 import * as actions from '../actions';
 import { isAuthenticatedSelector, tokenSelector } from '../selectors/userSelectors';
 import { newsSelector, newsBrandsSelector, newsSitesSelector, isFetchingAllNewsSelector, isFetchingOwnNewsSelector } from '../selectors/newsSelectors';
+import { pathnameSelector } from '../selectors/routingSelectors';
 import Articles from '../components/Articles';
 
 const propTypes = {
   isAuthenticated: T.bool.isRequired,
   token: T.string.isRequired,
+  pathname: T.string.isRequired,
   news: T.array.isRequired,
   newsBrands: T.array.isRequired,
   newsSites: T.array.isRequired,
@@ -19,10 +21,11 @@ const propTypes = {
 };
 
 function NewsContainer(props) {
-  const { isAuthenticated, token, news, newsBrands, newsSites, isFetchingAllNews, isFetchingOwnNews, getAllNews, getOwnNews } = props;
+  const { isAuthenticated, token, pathname, news, newsBrands, newsSites, isFetchingAllNews, isFetchingOwnNews, getAllNews, getOwnNews } = props;
   const articlesProps = {
     isAuthenticated,
     token,
+    pathname,
     articles: news,
     articlesBrands: newsBrands,
     articlesSites: newsSites,
@@ -44,6 +47,7 @@ function mapStateToProps(state) {
   return {
     isAuthenticated: isAuthenticatedSelector(state),
     token: tokenSelector(state),
+    pathname: pathnameSelector(state),
     news: newsSelector(state),
     newsBrands: newsBrandsSelector(state),
     newsSites: newsSitesSelector(state),
