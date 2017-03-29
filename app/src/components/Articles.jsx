@@ -89,6 +89,9 @@ export default class Articles extends Component {
     const { visibleOffset, limit } = this.state;
     const { articles } = this.props;
     const showUntil = visibleOffset - (limit / 2);
+    if (showUntil === 0) {
+      return;
+    }
     const visibleArray = articles.slice(showUntil - (limit / 2), showUntil);
     this.setState({
       visible: visibleArray,

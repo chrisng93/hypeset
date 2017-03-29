@@ -21,12 +21,14 @@
     flex: 3;
 
     .article {
-      .article-image-container {
-        min-height: 220px;
-        max-height: 220px;
 
-        img {
-          max-width: 100%;
+      .article-image-container {
+        height: 200px;
+        text-align: center;
+
+        .article-image {
+          min-width: 85%;
+          margin: 0 auto;
         }
       }
     }

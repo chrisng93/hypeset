@@ -1,14 +1,15 @@
 .article {
   height: 100vh;
-  border: 1px solid #dcdcdc;
+  border-left: 1px solid #dcdcdc;
   padding: 15px;
   flex: 1;
   display: flex;
   flex-direction: column;
+  color: #5f5f5f;
 
   .article-brands {
     height: 75px;
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 400;
 
     .article-brands-brand {
@@ -19,7 +20,6 @@
   .article-date {
     height: 100px;
     margin: 8px 0 0 auto;
-    padding-right: 14px;
   }
 
   .article-title {
@@ -27,9 +27,10 @@
 
     a {
       font-size: 24px;
-      font-weight: 400;
+      font-weight: 600;
       letter-spacing: 1px;
-      color: #2c2c2c;
+      color: #5f5f5f;
+      //color: #b0b0b0;
       text-decoration: none;
     }
 
@@ -39,7 +40,6 @@
   }
 
   .article-image-container {
-    height: 300px;
     max-width: 100%;
 
     .article-image {
@@ -47,10 +47,8 @@
       align-self: flex-end;
     }
   }
+}
 
-  .article-blurb {
-    height: 100px;
-    margin-top: 14px;
-    align-self: flex-end;
-  }
+.article:last-child {
+  border-right: 1px solid #dcdcdc;
 }

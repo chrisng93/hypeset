@@ -22,12 +22,13 @@
 
     .article {
       .article-image-container {
-        min-height: 220px;
-        max-height: 220px;
+        height: 180px;
+      }
 
-        img {
-          max-width: 100%;
-        }
+      .article-blurb {
+        height: 100px;
+        margin-top: 14px;
+        align-self: flex-start;
       }
     }
   }
