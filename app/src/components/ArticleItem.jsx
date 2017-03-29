@@ -12,9 +12,9 @@ export default class ArticleItem extends Component {
     }
     return (
       <article className="article">
-        <p className="article-brands">
-          {article.Brands ? article.Brands.map(brand => <p className="article-brands-brand">{brand.name}</p>) : ''}
-        </p>
+        <section className="article-brands">
+          {article.Brands ? article.Brands.map((brand, key) => <p key={key} className="article-brands-brand">{brand.name}</p>) : ''}
+        </section>
         <p className="article-date">{article.date}</p>
         <h1 className="article-title"><a href={article.url} target="_blank">{article.title}</a></h1>
         <section className="article-image-container">

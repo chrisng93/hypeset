@@ -1,42 +1,69 @@
-.brands {
-  margin: 40px 100px 0 100px;
+.brands-container {
   display: flex;
   flex-direction: row;
 
-  .brands-list {
-    flex: 1;
-    list-style-type: none;
+  h1 {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    flex: 2;
 
-    li {
-      margin-bottom: 5px;
-      font-size: 16px;
-      font-weight: 500;
+    span {
+      width: 100%;
+      padding: 0 0 120px 20px;
+      font-size: 48px;
     }
   }
 
-  .brands-brand {
-    flex: 4;
+  .brands {
+    display: flex;
+    flex-direction: row;
+    flex: 5;
 
-    h1 {
-      font-size: 24px;
-      text-align: center;
-    }
+    .brands-list {
+      flex: 3;
+      list-style-type: none;
+      overflow: scroll;
 
-    .brands-brand-tabs {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
+      .brands-list-grouping {
+        margin-bottom: 40px;
+        display: flex;
+        flex-direction: row;
+
+        h1 {
+          min-width: 40px;
+          max-width: 40px;
+          margin: 0 30px 0 0;
+          align-self: flex-start;
+          font-size: 48px;
+          font-weight: 600;
+        }
+
+        .brands-list-grouping-brands {
+          width: calc(100% - 40px);
+          margin-top: 6px;
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          flex-wrap: wrap;
+
+          .brands-list-grouping-brands-brand {
+            width: calc(100% * (1/4));
+            margin-right: 5%;
+            margin-bottom: 4px;
+          }
+        }
+      }
 
       li {
-        flex: 1;
-        font-size: 14px;
-        text-align: center;
-        list-style-type: none;
+        margin-bottom: 5px;
+        font-size: 16px;
+        font-weight: 500;
       }
     }
-  }
 
-  .hidden {
-    display: none;
+    .hidden {
+      display: none;
+    }
   }
 }

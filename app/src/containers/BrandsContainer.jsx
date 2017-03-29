@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { push } from 'react-router-redux';
 import * as actions from '../actions';
-import { allBrandsSelector, brandNameSelector, brandCondensedNameSelector, brandNewsSelector, brandSalesSelector, isFetchingBrandInfosSelector } from '../selectors/brandSelectors';
+import { allBrandsSelector, allBrandsByGroupingSelector, brandNameSelector, brandCondensedNameSelector, brandNewsSelector, brandSalesSelector, isFetchingBrandInfosSelector } from '../selectors/brandSelectors';
 import Brands from '../components/Brands';
 
 const propTypes = {
   children: T.node,
   brands: T.array.isRequired,
+  brandsByGrouping: T.object.isRequired,
   brandName: T.string,
   brandCondensedName: T.string,
   brandNews: T.array,
@@ -29,6 +30,7 @@ function BrandsContainer(props) {
 function mapStateToProps(state) {
   return {
     brands: allBrandsSelector(state),
+    brandsByGrouping: allBrandsByGroupingSelector(state),
     brandName: brandNameSelector(state),
     brandCondensedName: brandCondensedNameSelector(state),
     brandNews: brandNewsSelector(state),

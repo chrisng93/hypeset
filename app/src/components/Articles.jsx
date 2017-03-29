@@ -35,26 +35,31 @@ export default class Articles extends Component {
     this.setInitialArticles();
   }
 
-
   componentWillReceiveProps(nextProps) {
-    if (((nextProps.isFetchingAllArticles || nextProps.isFetchingOwnArticles || nextProps.isFetchingBrandArticles)
-         || (this.props.isFetchingAllArticles || this.props.isFetchingOwnArticles || this.props.isFetchingBrandArticles)
-         || (this.props.pathname === nextProps.pathname)) && this.props.articles.length !== 0) {
+    if (((nextProps.isFetchingAllArticles || nextProps.isFetchingOwnArticles)
+         || (this.props.isFetchingAllArticles || this.props.isFetchingOwnArticles)
+         || (this.props.pathname === nextProps.pathname && !nextProps.brand)) && this.props.articles.length !== 0) {
       return;
     }
-    this.setInitialArticles(nextProps.articles);
+    let changeTab = this.props.type !== nextProps.type;
+    this.setInitialArticles(nextProps.articles, changeTab);
   }
 
-  setInitialArticles(articles = null) {
+  setInitialArticles(articles = this.props.articles, changeTab = false) {
     const { visibleOffset, limit } = this.state;
-    if (!articles) {
-      articles = this.props.articles;
-    }
-    if (!articles.length) {
+    if (!articles.length && !this.props.brand) {
       return;
     }
-    const showUntil = visibleOffset + (limit / 2);
-    const visibleArray = articles.slice(visibleOffset, showUntil);
+    let showUntil;
+    let visibleArray;
+    if (changeTab) {
+      showUntil = limit / 2;
+      visibleArray = articles.slice(0, showUntil);
+    } else {
+      showUntil = visibleOffset + (limit / 2);
+      visibleArray = articles.slice(visibleOffset, showUntil);
+    }
+    console.log('setting new array', showUntil, visibleArray)
     this.setState({
       visible: visibleArray,
       visibleOffset: showUntil,
@@ -64,16 +69,20 @@ export default class Articles extends Component {
   retrieveArticles() {
     const { limit } = this.state;
     const { articles, isAuthenticated, token, brand, type, getAllArticles, getOwnArticles, getBrandArticles } = this.props;
+    console.log(brand, limit, type)
     if (brand) {
-      getBrandArticles({ offset: articles.length, limit, brand, type });
+      getBrandArticles({ offset: articles.length, limit: 20, brand, type });
       return;
     }
-    isAuthenticated ? getOwnArticles({ token, offset: articles.length, limit }) : getAllArticles({ offset: articles.length, limit });
+    isAuthenticated ? getOwnArticles({ token, offset: articles.length, limit: 20 }) : getAllArticles({ offset: articles.length, limit: 20 });
   }
 
   onForwardPage() {
     const { visibleOffset, limit } = this.state;
     const { articles } = this.props;
+    if (articles.length <= visibleOffset) {
+      return;
+    }
     if (articles.length - visibleOffset < 5) {
       this.retrieveArticles();
     }

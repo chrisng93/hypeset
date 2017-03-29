@@ -29,7 +29,7 @@ async function retrieveBrandInfos(req, res) {
     const topBrandCondensedNames = cachedTopBrands.map(brandModel => brandModel.Brand.condensedName);
     let index = topBrandCondensedNames.indexOf(name);
 
-    if (index < 0) {
+    if (index < 0 || offset !== 0 || limit !== 20) {
       const newsQuery = createBrandInfoQuery('News', name, offset, limit);
       const salesQuery = createBrandInfoQuery('Sale', name, offset, limit);
       const brand = await m.Brand.find({ attributes: ['name', 'condensedName'], where: { condensedName: name } });

@@ -6,7 +6,7 @@ import EnsureAuthenticationContainer from './containers/EnsureAuthenticationCont
 import NewsContainer from './containers/NewsContainer';
 import SalesContainer from './containers/SalesContainer';
 import BrandsContainer from './containers/BrandsContainer';
-import Brand from './components/Brand';
+import BrandContainer from './containers/BrandContainer';
 import ProfileContainer from './containers/ProfileContainer';
 import UserInfo from './components/UserInfo';
 import EditUser from './components/EditUser';
@@ -17,9 +17,8 @@ const routes = (
     <IndexRoute component={NewsContainer} />
     <Route path="/news" component={NewsContainer} />
     <Route path="/sales" component={SalesContainer} />
-    <Route path="/brands" component={BrandsContainer}>
-      <Route path="/brands/:brand" component={Brand} />
-    </Route>
+    <Route path="/brands" component={BrandsContainer} />
+    <Route path="/brands/:brand" component={BrandContainer} />
     <Route path="/profile" component={EnsureAuthenticationContainer}>
       <IndexRoute component={ProfileContainer} />
       <Route path="/profile" component={ProfileContainer}>

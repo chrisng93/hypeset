@@ -10,9 +10,10 @@
   }
 
   .articles-nav {
+    width: 60px;
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex-shrink: 0;
 
     .articles-nav-forward, .articles-nav-backward {
       max-width: 100%;

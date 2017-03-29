@@ -1,0 +1,47 @@
+.brands-brand {
+  height: 100vh;
+  width: 100vw;
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+
+  h1 {
+    padding: 0 0 120px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    flex: 2;
+
+    span {
+      font-size: 48px;
+    }
+
+    .brands-brand-tabs {
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      li {
+        height: 100%;
+        margin-right: 8px;
+        font-size: 28px;
+        font-weight: 400;
+        list-style-type: none;
+      }
+    }
+  }
+
+  .news {
+    height: 100%;
+    width: 100%;
+    flex: 5;
+  }
+
+  .sales {
+    height: 100%;
+    width: 100%;
+    flex: 5;
+  }
+}

@@ -3,12 +3,12 @@ import Articles from './Articles';
 
 const propTypes = {
   brandName: T.string,
-  brandCondensedName: T.string.isRequired,
+  brandCondensedName: T.string,
   brandNews: T.array.isRequired,
   brandSales: T.array.isRequired,
-  isFetchingBrandInfos: T.bool.isRequired,
-  getBrandInfos: T.func.isRequired,
-  resetBrandInfos: T.func.isRequired,
+  isFetchingBrandInfos: T.bool,
+  getBrandInfos: T.func,
+  resetBrandInfos: T.func,
 };
 
 export default class Brand extends Component {
@@ -26,32 +26,26 @@ export default class Brand extends Component {
     this.retrieveNewBrandInfos(this.props.params.brand);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.params.brand !== nextProps.params.brand) {
-      this.props.resetBrandInfos();
-      this.retrieveNewBrandInfos(nextProps.params.brand);
-    }
-  }
-
   retrieveNewBrandInfos(brand) {
     this.props.getBrandInfos({ brand, offset: 0, limit: 20 });
   }
 
   changeTabs(tab) {
-    this.setState({ selected: tab });
+    if (this.state.selected !== tab) {
+      this.setState({ selected: tab });
+    }
   }
 
   renderArticles() {
     const { selected } = this.state;
-    const { params, brandCondensedName, brandNews, brandSales, getBrandInfos, isFetchingBrandInfos } = this.props;
+    const { params, brandCondensedName, brandNews, brandSales, getBrandInfos, isFetchingBrandInfos, resetBrandInfos } = this.props;
     const base = {
       brand: brandCondensedName || params.brand,
-      isFetchingAllArticles: isFetchingBrandInfos,
-      isFetchingOwnArticles: isFetchingBrandInfos,
-      getAllArticles: getBrandInfos,
-      getOwnArticles: getBrandInfos,
+      isFetchingBrandArticles: isFetchingBrandInfos,
+      getBrandArticles: getBrandInfos,
       shouldFilter: false,
       type: selected,
+      resetBrandInfos,
     };
     const brandNewsProps = { ...base, articles: brandNews || [] };
     const brandSalesProps = { ...base, articles: brandSales || [] };
@@ -68,11 +62,13 @@ export default class Brand extends Component {
   render() {
     return (
       <section className="brands-brand">
-        <h1>{this.props.brandName}</h1>
-        <ul className="brands-brand-tabs">
-          <li className="brands-brand-tabs-news" onClick={() => this.changeTabs('news')}>News</li>
-          <li className="brands-brand-tabs-sales" onClick={() => this.changeTabs('sales')}>Sales</li>
-        </ul>
+        <h1>
+          <span>{this.props.brandName}</span>
+          <ul className="brands-brand-tabs">
+            <li className="brands-brand-tabs-news" onClick={() => this.changeTabs('news')}>News</li>
+            <li className="brands-brand-tabs-sales" onClick={() => this.changeTabs('sales')}>Sales</li>
+          </ul>
+        </h1>
         <section className={`brands-brand-articles ${this.state.selected === 'news' ? 'news' : 'sales'}`}>
           {this.renderArticles()}
         </section>

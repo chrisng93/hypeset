@@ -9,7 +9,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: flex-end;
-    flex: 1;
+    flex: 2;
 
     span {
       padding: 0 0 120px 20px;
@@ -18,7 +18,7 @@
   }
 
   .articles-container {
-    flex: 3;
+    flex: 5;
 
     .article {
 

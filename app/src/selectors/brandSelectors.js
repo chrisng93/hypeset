@@ -88,3 +88,28 @@ export const availableBrandsSelector = createSelector(
     return allBrands.filter(brand => userBrandNames.indexOf(brand.name) < 0);
   }
 );
+
+export const allBrandsByGroupingSelector = createSelector(
+  allBrandsSelector,
+  allBrands => groupBrands(allBrands)
+);
+
+export const availableBrandsByGroupingSelector = createSelector(
+  availableBrandsSelector,
+  availableBrands => groupBrands(availableBrands)
+);
+
+const groupBrands = (brands) => {
+  const brandsByGrouping = {};
+  const groupings = ['#', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u' ,'v', 'w', 'x', 'y', 'z'];
+  groupings.forEach(grouping => brandsByGrouping[grouping] = []);
+  brands.forEach(brand => {
+    const firstLetter = brand.name[0].toLowerCase();
+    if (brandsByGrouping[firstLetter]) {
+      brandsByGrouping[firstLetter].push(brand);
+    } else {
+      brandsByGrouping['#'].push(brand);
+    }
+  });
+  return brandsByGrouping;
+};

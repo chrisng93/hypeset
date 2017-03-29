@@ -3,6 +3,7 @@ import React, { Component, PropTypes as T } from 'react';
 const propTypes = {
   children: T.node,
   brands: T.array.isRequired,
+  brandsByGrouping: T.object.isRequired,
   brandName: T.string,
   brandCondensedName: T.string,
   brandNews: T.array,
@@ -27,6 +28,23 @@ export default class Brands extends Component {
     }
   }
 
+  renderBrandList() {
+    const { brandsByGrouping, routeToBrandPage } = this.props;
+    return (
+      Object.keys(brandsByGrouping).map((key) => {
+        const brandsInGrouping = brandsByGrouping[key];
+        return (
+          <section key={key} className="brands-list-grouping">
+            <h1>{key}</h1>
+            <section className="brands-list-grouping-brands">
+              {brandsInGrouping.map((brand, key) => <section key={key} className="brands-list-grouping-brands-brand" onClick={() => routeToBrandPage(brand.condensedName)}>{brand.name}</section>)}
+            </section>
+          </section>
+        );
+      })
+    );
+  }
+
   renderBrand() {
     const { children, brandName, brandCondensedName, brandNews, brandSales, isFetchingBrandInfos, getBrandInfos, resetBrandInfos } = this.props;
     const childProps = { brandName, brandCondensedName, brandNews, brandSales, isFetchingBrandInfos, getBrandInfos, resetBrandInfos };
@@ -34,13 +52,15 @@ export default class Brands extends Component {
   }
 
   render() {
-    const { brands, routeToBrandPage } = this.props;
     return (
-      <section className="brands">
-        <ul className="brands-list">
-          {brands.map((brand, key) => <li key={key} onClick={() => routeToBrandPage(brand.condensedName)}>{brand.name}</li>)}
-        </ul>
-        {this.renderBrand()}
+      <section className="brands-container">
+        <h1><span>Curated Brands</span></h1>
+        <section className="brands">
+          <ul className="brands-list">
+            {this.renderBrandList()}
+          </ul>
+          {/*{this.renderBrand()}*/}
+        </section>
       </section>
     )
   }

@@ -85,9 +85,9 @@ class AppContainer extends Component {
       <section id="app">
         <section className="app-container">
           <section className={`app-nav ${this.state.selected ? 'selected' : ''}`}><Nav {...navProps} /></section>
-          <section className="app-toggle-nav">
+          <section className="app-toggle-nav" onClick={this.toggleNav}>
             <h1 className="app-brand-title">hypeset</h1>
-            <img className="app-hamburger" src={require('../../assets/hamburger.png')} onClick={this.toggleNav} />
+            <img className="app-hamburger" src={require('../../assets/hamburger.png')} />
           </section>
           <ModalCheckContainer />
           {children}
