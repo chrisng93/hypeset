@@ -1,24 +1,25 @@
 .sales {
-  .article {
-    height: 140px;
+  height: 100vh;
+  width: 100vw;
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
 
-    .article-image-container {
-      min-height: 140px;
-      min-width: 140px;
-      max-height: 140px;
-      max-width: 140px;
+  h1 {
+    flex: 1;
+  }
 
-      img {
-        max-height: 140px;
-        max-width: 140px;
-      }
-    }
+  .articles-container {
+    flex: 3;
 
-    .article-info-container {
-      margin: 15px 15px 0 15px;
+    .article {
+      .article-image-container {
+        min-height: 220px;
+        max-height: 220px;
 
-      .article-info-container-blurb {
-        display: none;
+        img {
+          max-width: 100%;
+        }
       }
     }
   }

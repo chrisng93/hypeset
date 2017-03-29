@@ -36,6 +36,7 @@ function SalesContainer(props) {
   };
   return (
     <section className="sales">
+      <h1>Curated Sales</h1>
       <Articles {...articlesProps} />
     </section>
   );
