@@ -29,7 +29,6 @@ export default class Articles extends Component {
     this.retrieveArticles = this.retrieveArticles.bind(this);
     this.onForwardPage = this.onForwardPage.bind(this);
     this.onBackPage = this.onBackPage.bind(this);
-    this.goToBeginning = this.goToBeginning.bind(this);
   }
 
   componentWillMount() {
@@ -97,17 +96,6 @@ export default class Articles extends Component {
     });
   }
 
-  goToBeginning() {
-    const { limit } = this.state;
-    const { articles } = this.props;
-    const showUntil = limit / 2;
-    const visibleArray = articles.slice(0, showUntil);
-    this.setState({
-      visible: visibleArray,
-      visibleOffset: showUntil,
-    });
-  }
-
   render() {
     const { visible } = this.state;
     return (
@@ -116,9 +104,8 @@ export default class Articles extends Component {
           {visible.map((article, key) => <ArticleItem key={key} article={article} /> )}
         </section>
         <section className="articles-nav">
-          <a onClick={this.onForwardPage}>Go forward</a><br/>
-          <a onClick={this.onBackPage}>Go backward</a><br/>
-          <a onClick={this.goToBeginning}>Go to beginning</a>
+          <img className="articles-nav-forward" src={require('../../assets/forward-arrow.png')} onClick={this.onForwardPage} />
+          <img className="articles-nav-backward" src={require('../../assets/backward-arrow.png')} onClick={this.onBackPage} />
         </section>
       </article>
     );

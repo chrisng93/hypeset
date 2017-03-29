@@ -18,8 +18,49 @@ html *
 body {
   margin: 0;
   padding: 0;
-  background: #EDEBED;
   text-transform: lowercase;
+}
+
+.app-container {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+
+  .app-toggle-nav {
+    height: 100vh;
+    width: 50px;
+    border-right: #2c2c2c 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .app-brand-title {
+      position: absolute;
+      top: 60px;
+      margin: auto;
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      color: #000000;
+      transform: rotate(270deg);
+    }
+
+    .app-hamburger {
+      max-width: 100%;
+    }
+  }
+
+  .app-nav {
+    width: 0;
+    -webkit-transition: width 2s;
+    transition: width 2s;
+  }
+
+  .selected {
+    width: 500px;
+    -webkit-transition: width 2s;
+    transition: width 2s;
+  }
 }
 
 .bg {

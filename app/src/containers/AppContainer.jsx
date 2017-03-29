@@ -34,7 +34,11 @@ const propTypes = {
 class AppContainer extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      selected: '',
+    };
     this.getData = this.getData.bind(this);
+    this.toggleNav = this.toggleNav.bind(this);
   }
 
   componentWillMount() {
@@ -65,14 +69,24 @@ class AppContainer extends Component {
     getAllBrands();
   }
 
+  toggleNav() {
+    this.setState({ selected: !this.state.selected });
+  }
+
   render() {
     const { children, isAuthenticated, token, pathname, onLogout, routeToNews, routeToSales, routeToProfile, routeToBrands, routeToSignIn } = this.props;
     const navProps = { isAuthenticated, token, pathname, onLogout, routeToNews, routeToSales, routeToProfile, routeToBrands, routeToSignIn };
     return(
       <section id="app">
-        <Nav {...navProps} />
-        <ModalCheckContainer />
-        {children}
+        <section className="app-container">
+          <section className={`app-nav ${this.state.selected ? 'selected' : ''}`}><Nav {...navProps} /></section>
+          <section className="app-toggle-nav">
+            <h1 className="app-brand-title">hypeset</h1>
+            <img className="app-hamburger" src={require('../../assets/hamburger.png')} onClick={this.toggleNav} />
+          </section>
+          <ModalCheckContainer />
+          {children}
+        </section>
       </section>
     );
   }

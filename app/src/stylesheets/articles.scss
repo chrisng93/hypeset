@@ -10,6 +10,12 @@
   }
 
   .articles-nav {
+    display: flex;
+    flex-direction: column;
     flex: 1;
+
+    .articles-nav-forward, .articles-nav-backward {
+      max-width: 100%;
+    }
   }
 }

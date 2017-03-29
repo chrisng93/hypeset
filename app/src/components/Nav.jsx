@@ -13,13 +13,6 @@ const propTypes = {
 };
 
 export default class Nav extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selected: 'news',
-    };
-  }
-
   componentWillMount() {
     this.setState({ selected: this.props.pathname.split('/')[1] });
   }
@@ -33,11 +26,10 @@ export default class Nav extends Component {
     const { isAuthenticated, token, onLogout, routeToNews, routeToSales, routeToProfile, routeToBrands, routeToSignIn } = this.props;
     return (
       <nav>
-        <h1><span>hypeset</span></h1>
         <ul className="nav-routes">
-          <a className={`nav-news ${selected === 'news' ? 'selected' : null}`} onClick={routeToNews}>News</a>
-          <a className={`nav-sales ${selected === 'sales' ? 'selected' : null}`} onClick={routeToSales}>Sales</a>
-          <a className={`nav-brands ${selected === 'brands' ? 'selected' : null}`} onClick={routeToBrands}>Brands</a>
+          <a className="nav-news" onClick={routeToNews}>News</a>
+          <a className="nav-sales" onClick={routeToSales}>Sales</a>
+          <a className="nav-brands" onClick={routeToBrands}>Brands</a>
           <a className={`nav-profile ${selected === 'profile' ? 'selected' : null} ${isAuthenticated ? '' : 'hidden'}`} onClick={routeToProfile}>Profile</a>
           <a className={`login ${isAuthenticated ? 'hidden' : ''}`} onClick={routeToSignIn}>Sign in</a>
           <a className={`logout ${isAuthenticated ? '' : 'hidden'}`} onClick={() => onLogout({ token })}>Sign out</a>
