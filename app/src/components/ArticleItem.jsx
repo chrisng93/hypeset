@@ -37,7 +37,7 @@ export default class ArticleItem extends Component {
     const { brandNames, renderBrandTag } = this.state;
     if (renderBrandTag) {
       return (
-        <p className="article-info-container-brands">{brandNames.length > 1 ? 'Brands' : 'Brand'}: {brandNames.join(', ')}</p>
+        <p className="article-brands">{brandNames.join(', ')}</p>
       );
     }
     return null;
@@ -50,17 +50,11 @@ export default class ArticleItem extends Component {
     }
     return (
       <article className="article">
-        <section className="article-image-container">
-          <img src={article.imgUrl} />
-        </section>
-        <section className="article-info-container">
-          <header>
-            <a href={article.url} target="_blank">{article.title}</a>
-          </header>
-          <p className="article-info-container-date">{article.date}</p>
-          <p className="article-info-container-blurb">{article.blurb}</p>
-          {this.renderBrandTag()}
-        </section>
+        {this.renderBrandTag()}
+        <p className="article-date">{article.date}</p>
+        <h1 className="article-title"><a href={article.url} target="_blank">{article.title}</a></h1>
+        <img className="article-image" src={article.imgUrl} />
+        <p className="article-blurb">{article.blurb}</p>
       </article>
     );
   }

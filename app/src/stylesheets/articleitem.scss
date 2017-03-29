@@ -1,57 +1,42 @@
 .article {
-  height: 300px;
-  width: 100%;
+  height: 100vh;
   margin-bottom: 30px;
   border: 1px solid #dcdcdc;
+  flex: 1;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   background-color: #eeeeee;
 
-  .article-image-container {
-    min-height: 300px;
-    min-width: 330px;
-    max-height: 300px;
-    max-width: 330px;
-    display: flex;
-    align-items: center;
-    object-fit: cover;
-    overflow: hidden;
+  .article-brands {
+    margin-top: auto;
   }
 
-  .article-info-container {
-    width: 100%;
-    margin: 30px 30px 0 30px;
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
+  .article-title {
+    flex: 0 0 fit-content;
 
-    header {
-      flex: 0 0 fit-content;
-
-      a {
-        font-size: 24px;
-        font-weight: 400;
-        letter-spacing: 1px;
-        color: #2c2c2c;
-        text-decoration: none;
-      }
-
-      a:hover {
-        color: #b0b0b0;
-      }
+    a {
+      font-size: 24px;
+      font-weight: 400;
+      letter-spacing: 1px;
+      color: #2c2c2c;
+      text-decoration: none;
     }
 
-    .article-info-container-date {
-      margin: 8px 0 0 auto;
-      padding-right: 14px;
+    a:hover {
+      color: #b0b0b0;
     }
+  }
 
-    .article-info-container-blurb {
-      margin-top: 14px;
-    }
+  .article-image {
+    max-width: 100%;
+  }
 
-    .article-info-container-brands {
-      margin-top: auto;
-    }
+  .article-date {
+    margin: 8px 0 0 auto;
+    padding-right: 14px;
+  }
+
+  .article-blurb {
+    margin-top: 14px;
   }
 }

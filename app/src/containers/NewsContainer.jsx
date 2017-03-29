@@ -34,6 +34,7 @@ function NewsContainer(props) {
   };
   return (
     <div className="news">
+      <h1>Curated News</h1>
       <Articles {...articlesProps} />
     </div>
   );

@@ -7,13 +7,12 @@ const propTypes = {
   token: T.string,
   brand: T.string,
   articles: T.array.isRequired,
-  articlesBrands: T.array,
-  articlesSites: T.array,
-  isFetchingAllArticles: T.bool.isRequired,
-  isFetchingOwnArticles: T.bool.isRequired,
-  getAllArticles: T.func.isRequired,
-  getOwnArticles: T.func.isRequired,
-  shouldFilter: T.bool.isRequired,
+  isFetchingAllArticles: T.bool,
+  isFetchingOwnArticles: T.bool,
+  isFetchingBrandArticles: T.bool,
+  getAllArticles: T.func,
+  getOwnArticles: T.func,
+  getBrandArticles: T.func,
   type: T.string,
 };
 
@@ -22,117 +21,73 @@ export default class Articles extends Component {
     super(props);
     this.state = {
       visible: [],
-      filteredOutBrands: [],
-      filteredOutSites: [],
       dbOffset: 0,
       visibleOffset: 0,
-      limit: 20,
+      limit: 8,
     };
+    this.setArticles = this.setArticles.bind(this);
     this.retrieveArticles = this.retrieveArticles.bind(this);
-    this.changeFilteredOutState = this.changeFilteredOutState.bind(this);
-    this.filterResults = this.filterResults.bind(this);
-    this.handleScroll = this.handleScroll.bind(this);
-    this.renderFilters = this.renderFilters.bind(this);
+    this.reversePage = this.reversePage.bind(this);
+    this.goToBeginning = this.goToBeginning.bind(this);
   }
 
   componentWillMount() {
-    const { limit } = this.state;
-    const { articles } = this.props;
-    const visibleArray = articles.slice(0, (limit / 2));
-    this.setState({
-      dbOffset: articles.length,
-      visible: visibleArray,
-      visibleOffset: visibleArray.length,
-    });
-  }
-
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
+    this.setArticles();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.isFetchingAllArticles || nextProps.isFetchingOwnArticles) {
+    if (nextProps.isFetchingAllArticles || nextProps.isFetchingOwnArticles || nextProps.isFetchingBrandArticles) {
       return;
     }
-    const { articles } = nextProps;
-    this.filterResults(articles);
-    this.setState({ dbOffset: articles.length });
+    console.log('got props', nextProps.articles)
+    this.setArticles(nextProps.articles);
+    this.setState({ dbOffset: nextProps.articles.length });
+  }
+
+  setArticles(articles = null) {
+    const { visibleOffset, limit } = this.state;
+    if (!articles) {
+      articles = this.props.articles;
+    }
+    const showUntil = visibleOffset + (limit / 2);
+    const visibleArray = articles.slice(visibleOffset, showUntil);
+    this.setState({
+      dbOffset: articles.length,
+      visible: visibleArray,
+      visibleOffset: showUntil,
+    });
   }
 
   retrieveArticles() {
     const { dbOffset, limit } = this.state;
-    const { isAuthenticated, token, brand, type, getAllArticles, getOwnArticles } = this.props;
+    const { isAuthenticated, token, brand, type, getAllArticles, getOwnArticles, getBrandArticles } = this.props;
     if (brand) {
-      getAllArticles({ offset: dbOffset, limit, brand, type });
+      getBrandArticles({ offset: dbOffset, limit, brand, type });
       return;
     }
-    console.log(dbOffset, limit)
     isAuthenticated ? getOwnArticles({ token, offset: dbOffset, limit }) : getAllArticles({ offset: dbOffset, limit });
   }
 
-  changeFilteredOutState(info, isFilteredOut, field) {
-    const { articles } = this.props;
-    const newState = {};
-    newState[field] = null;
-    isFilteredOut ? newState[field] = this.state[field].concat(info) : newState[field] = this.state[field].filter(stateInfo => stateInfo !== info);
-    field === 'filteredOutBrands' ? this.filterResults(articles, newState.filteredOutBrands) : this.filterResults(articles, this.state.filteredOutBrands, newState.filteredOutSites);
-    this.setState(newState);
-  }
-
-  filterResults(articles, filteredOutBrands = this.state.filteredOutBrands, filteredOutSites = this.state.filteredOutSites) {
-    let validArticles;
+  reversePage() {
     const { visibleOffset, limit } = this.state;
-    if (!filteredOutBrands.length && !filteredOutSites.length) {
-      validArticles = articles;
-    } else {
-      validArticles = articles.filter((row) => {
-        for (let i = 0; i < row.Brands.length; i++) {
-          if (filteredOutBrands.indexOf(row.Brands[i].name) >= 0) {
-            return false;
-          }
-        }
-        return filteredOutSites.indexOf(row.Site.name) < 0;
-      });
-      console.log(validArticles)
-    }
-    const visibleArray = validArticles.slice(0, visibleOffset + (limit / 2));
-    this.setState({ visible: visibleArray, visibleOffset: visibleArray.length });
-  }
-
-  handleScroll() {
-    const { visible, limit } = this.state;
     const { articles } = this.props;
-    const windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight;
-    const body = document.body;
-    const html = document.documentElement;
-    const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-    const windowBottom = windowHeight + window.pageYOffset;
-    if (windowBottom >= docHeight - 10) {
-      articles.length - visible.length <= (limit / 2) ? this.retrieveArticles() : this.filterResults(articles);
-    }
+    const showUntil = visibleOffset - (limit / 2);
+    const visibleArray = articles.slice(showUntil - (limit / 2), showUntil);
+    this.setState({
+      visible: visibleArray,
+      visibleOffset: showUntil,
+    });
   }
 
-  renderFilters() {
-    const { shouldFilter, articlesBrands, articlesSites } = this.props;
-    if (shouldFilter) {
-      return (
-        <section className="filter">
-          <header>Filters</header>
-          <section className="filter-brands">
-            <header className="filter-title">Brands</header>
-            {articlesBrands.map((brand, key) => <Checkbox key={key} info={brand} clickHandler={(brandName, isFilteredOut) => this.changeFilteredOutState(brandName, isFilteredOut, 'filteredOutBrands')} />)}
-          </section>
-          <section className="filter-sites">
-            <header className="filter-title">Sites</header>
-            {articlesSites.map((site, key) => <Checkbox key={key} info={site} clickHandler={(brandName, isFilteredOut) => this.changeFilteredOutState(site, isFilteredOut, 'filteredOutSites')} />)}
-          </section>
-        </section>
-      );
-    }
+  goToBeginning() {
+    const { limit } = this.state;
+    const { articles } = this.props;
+    const showUntil = limit / 2;
+    const visibleArray = articles.slice(0, showUntil);
+    this.setState({
+      visible: visibleArray,
+      visibleOffset: showUntil,
+    });
   }
 
   render() {
@@ -142,7 +97,11 @@ export default class Articles extends Component {
         <section className="articles">
           {visible.map((article, key) => <ArticleItem key={key} article={article} /> )}
         </section>
-        {/*{this.renderFilters()}*/}
+        <section className="articles-nav">
+          <a onClick={this.retrieveArticles}>Go forward</a><br/>
+          <a onClick={this.reversePage}>Go backward</a><br/>
+          <a onClick={this.goToBeginning}>Go to beginning</a>
+        </section>
       </article>
     );
   }

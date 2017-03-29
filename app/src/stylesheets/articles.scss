@@ -1,14 +1,15 @@
 .articles-container {
-  margin: 40px 100px 0 100px;
   display: flex;
   flex-direction: row;
 
   .articles {
-    flex: 4;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    flex: 19;
   }
 
-  .filter {
-    display: flex;
+  .articles-nav {
     flex: 1;
   }
 }
