@@ -6,7 +6,15 @@
   flex-direction: row;
 
   h1 {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
     flex: 1;
+
+    span {
+      padding: 0 0 120px 20px;
+      font-size: 48px;
+    }
   }
 
   .articles-container {

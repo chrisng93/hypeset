@@ -33,6 +33,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    -webkit-transition: width 0.5s;
+    transition: width 0.5s;
 
     .app-brand-title {
       position: absolute;
@@ -50,16 +52,22 @@ body {
     }
   }
 
+  .app-toggle-nav:active {
+    width: 35px;
+    -webkit-transition: width 0.5s;
+    transition: width 0.5s;
+  }
+
   .app-nav {
     width: 0;
-    -webkit-transition: width 2s;
-    transition: width 2s;
+    -webkit-transition: width 1.5s;
+    transition: width 1.5s;
   }
 
   .selected {
     width: 500px;
-    -webkit-transition: width 2s;
-    transition: width 2s;
+    -webkit-transition: width 1.5s;
+    transition: width 1.5s;
   }
 }
 

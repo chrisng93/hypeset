@@ -39,6 +39,7 @@ class AppContainer extends Component {
     };
     this.getData = this.getData.bind(this);
     this.toggleNav = this.toggleNav.bind(this);
+    this.onClickNav = this.onClickNav.bind(this);
   }
 
   componentWillMount() {
@@ -73,9 +74,13 @@ class AppContainer extends Component {
     this.setState({ selected: !this.state.selected });
   }
 
+  onClickNav() {
+    this.setState({ selected: false });
+  }
+
   render() {
     const { children, isAuthenticated, token, pathname, onLogout, routeToNews, routeToSales, routeToProfile, routeToBrands, routeToSignIn } = this.props;
-    const navProps = { isAuthenticated, token, pathname, onLogout, routeToNews, routeToSales, routeToProfile, routeToBrands, routeToSignIn };
+    const navProps = { isAuthenticated, token, pathname, onLogout, routeToNews, routeToSales, routeToProfile, routeToBrands, routeToSignIn, onClickNav: this.onClickNav };
     return(
       <section id="app">
         <section className="app-container">

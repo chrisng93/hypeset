@@ -37,7 +37,7 @@ function NewsContainer(props) {
   };
   return (
     <div className="news">
-      <h1>Curated News</h1>
+      <h1><span>Curated News</span></h1>
       <Articles {...articlesProps} />
     </div>
   );
