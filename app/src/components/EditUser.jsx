@@ -89,7 +89,7 @@ export default class EditUser extends Component {
           <button onClick={(e) => this.submitForm(e)}>Submit</button>
           <button onClick={routeToProfile}>Cancel</button>
         </form>
-        <img src={require('../../assets/profile-2.jpg')} />
+        <img src="https://s3-us-west-1.amazonaws.com/hypeset/profile-2.jpg" />
       </section>
     );
   }

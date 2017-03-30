@@ -77,7 +77,7 @@ export default class SignIn extends Component {
             <button type="button" onClick={() => onAuth({ username, password })}>Sign in</button>
           </form>
           <p>Don't have an account? <a className="link" onClick={routeToSignUp}>Sign up</a></p>
-          <img src={require('../../assets/intro-1.jpg')} />
+          <img src="https://s3-us-west-1.amazonaws.com/hypeset/intro-2.jpg" />
         </section>
       </section>
     );

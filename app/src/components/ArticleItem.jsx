@@ -8,7 +8,7 @@ export default class ArticleItem extends Component {
   render() {
     const { article } = this.props;
     if (!article.imgUrl) {
-      article.imgUrl = require('../../assets/sale_default.png');
+      article.imgUrl = 'https://s3-us-west-1.amazonaws.com/hypeset/sale-default.png';
     }
     return (
       <article className="article">

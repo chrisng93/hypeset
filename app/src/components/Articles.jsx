@@ -113,8 +113,8 @@ export default class Articles extends Component {
           {visible.map((article, key) => <ArticleItem key={key} article={article} /> )}
         </section>
         <section className="articles-nav">
-          <img className="articles-nav-forward" src={require('../../assets/forward-arrow.png')} onClick={this.onForwardPage} />
-          <img className="articles-nav-backward" src={require('../../assets/backward-arrow.png')} onClick={this.onBackPage} />
+          <img className="articles-nav-forward" src="https://s3-us-west-1.amazonaws.com/hypeset/forward-arrow.png" onClick={this.onForwardPage} />
+          <img className="articles-nav-backward" src="https://s3-us-west-1.amazonaws.com/hypeset/backward-arrow.png" onClick={this.onBackPage} />
         </section>
       </article>
     );

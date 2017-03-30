@@ -105,7 +105,7 @@ export default class SignUp extends Component {
             <button type="button" onClick={this.validateSignUp}>Sign Up</button>
           </form>
           <p>Already have an account? <a className="link" onClick={routeToSignIn}>Sign in</a></p>
-          <img src={require('../../assets/intro-2.jpg')} />
+          <img src="https://s3-us-west-1.amazonaws.com/hypeset/intro-1.jpg" />
         </section>
       </section>
     );

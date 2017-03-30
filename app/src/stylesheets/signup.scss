@@ -47,13 +47,15 @@
   }
 
   p {
+    margin-right: -50px;
     flex: 1.5;
     align-self: flex-end;
   }
 
   img {
-    flex: 2;
     max-height: 100%;
-    max-width: 70%;
+    max-width: 100%;
+    margin-left: 50px;
+    flex: 2;
   }
 }

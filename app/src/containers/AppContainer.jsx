@@ -87,7 +87,7 @@ class AppContainer extends Component {
           <section className={`app-nav ${this.state.selected ? 'selected' : ''}`}><Nav {...navProps} /></section>
           <section className="app-toggle-nav" onClick={this.toggleNav}>
             <h1 className="app-brand-title">hypeset</h1>
-            <img className="app-hamburger" src={require('../../assets/hamburger.png')} />
+            <img className="app-hamburger" src="https://s3-us-west-1.amazonaws.com/hypeset/hamburger.png" />
           </section>
           {/*<ModalCheckContainer />*/}
           {children}

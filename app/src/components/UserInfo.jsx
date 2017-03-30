@@ -32,7 +32,7 @@ export default function UserInfo(props) {
         </label>
         <button onClick={routeToEditUser}>Edit Info</button>
       </form>
-      <img src={require('../../assets/profile-1.jpg')} />
+      <img src="https://s3-us-west-1.amazonaws.com/hypeset/profile-1.jpg" />
     </section>
   );
 }
