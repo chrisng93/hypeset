@@ -230,6 +230,7 @@ export function getBrandInfos(payload) {
       headers: createHeaders(),
     };
 
+    console.log('making request', `${process.env.API_URL}/api/brand/${payload.brand}/info?offset=${payload.offset}&limit=${payload.limit}`)
     return fetch(`${process.env.API_URL}/api/brand/${payload.brand}/info?offset=${payload.offset}&limit=${payload.limit}`, options)
       .then(response => response.json())
       .then((json) => {

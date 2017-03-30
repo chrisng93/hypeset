@@ -1,6 +1,5 @@
 import React, { Component, PropTypes as T } from 'react';
 import ArticleItem from './ArticleItem';
-import Checkbox from './Checkbox';
 
 const propTypes = {
   isAuthenticated: T.bool,
@@ -41,7 +40,6 @@ export default class Articles extends Component {
          || (this.props.pathname === nextProps.pathname && !nextProps.brand)) && this.props.articles.length !== 0) {
       return;
     }
-    console.log(nextProps, this.props)
     let changeTab = this.props.type !== nextProps.type;
     this.setInitialArticles(nextProps.articles, changeTab);
   }
@@ -60,7 +58,6 @@ export default class Articles extends Component {
       showUntil = visibleOffset + (limit / 2);
       visibleArray = articles.slice(visibleOffset, showUntil);
     }
-    console.log('setting new array', showUntil, visibleArray)
     this.setState({
       visible: visibleArray,
       visibleOffset: showUntil,

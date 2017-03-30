@@ -7,16 +7,21 @@ import redisClient from '../../db/redis';
 import { checkForSequelizeErrors } from '../../utils/apiUtils';
 const logger = winston.loggers.get('brandApi');
 
-function createBrandInfoQuery(type, brandName, offset, limit) {
+function createBrandInfoQuery(type, brandId, offset, limit) {
   return {
-    attributes: ['name', 'condensedName'],
-    where: { condensedName: brandName },
-    include: [{ model: m.Info, where: { type }, order: 'date ASC' }],
+    attributes: { exclude: ['createdAt', 'updatedAt'] },
+    where: { type },
+    include: [{
+      model: m.Brand,
+      attributes: { exclude: ['createdAt', 'updatedAt'] },
+      where: { id: brandId } }],
     offset,
     limit,
     subQuery: false,
+    order: 'date DESC',
   };
 }
+
 
 async function retrieveBrandInfos(req, res) {
   const { name } = req.params;
@@ -30,16 +35,16 @@ async function retrieveBrandInfos(req, res) {
     let index = topBrandCondensedNames.indexOf(name);
 
     if (index < 0 || offset !== 0 || limit !== 20) {
-      const newsQuery = createBrandInfoQuery('News', name, offset, limit);
-      const salesQuery = createBrandInfoQuery('Sale', name, offset, limit);
-      const brand = await m.Brand.find({ attributes: ['name', 'condensedName'], where: { condensedName: name } });
-      const brandNews = await m.Brand.find(newsQuery) || {};
-      const brandSales = await m.Brand.find(salesQuery) || {};
+      const brand = await m.Brand.find({ attributes: ['id', 'name', 'condensedName'], where: { condensedName: name } });
+      const newsQuery = createBrandInfoQuery('News', brand.id, offset, limit);
+      const salesQuery = createBrandInfoQuery('Sale', brand.id, offset, limit);
+      const brandNews = await m.Info.findAll(newsQuery) || {};
+      const brandSales = await m.Info.findAll(salesQuery) || {};
       const brandInfos = {
         brandName: brand.name,
         brandCondensedName: brand.condensedName,
-        brandNews: brandNews.Infos || [],
-        brandSales: brandSales.Infos || [],
+        brandNews: brandNews || [],
+        brandSales: brandSales || [],
       };
       logger.debug('Brand infos retrieved', { brand: brand.name, type: 'Infos', action: 'retrieve', offset, limit });
       return res.status(200).send({ success: true, brandInfos });

@@ -1,5 +1,6 @@
 .article {
   height: 100vh;
+  max-width: 240px;
   border-left: 1px solid #dcdcdc;
   padding: 15px;
   flex: 1;
@@ -23,8 +24,6 @@
   }
 
   .article-title {
-    flex: 0 0 fit-content;
-
     a {
       font-size: 24px;
       font-weight: 600;
