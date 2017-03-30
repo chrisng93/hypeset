@@ -20,14 +20,13 @@
     flex: 5;
 
     .article {
-
       .article-image-container {
-        height: 200px;
+        height: 250px;
         text-align: center;
 
         .article-image {
+          max-width: 85%;
           min-width: 85%;
-          margin: 0 auto;
         }
       }
     }
