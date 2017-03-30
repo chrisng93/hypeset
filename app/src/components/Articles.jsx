@@ -36,18 +36,19 @@ export default class Articles extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (((nextProps.isFetchingAllArticles || nextProps.isFetchingOwnArticles)
-         || (this.props.isFetchingAllArticles || this.props.isFetchingOwnArticles)
+    if (((nextProps.isFetchingAllArticles || nextProps.isFetchingOwnArticles || nextProps.isFetchingBrandArticles)
+         || (this.props.isFetchingAllArticles || this.props.isFetchingOwnArticles || this.props.isFetchingBrandArticles)
          || (this.props.pathname === nextProps.pathname && !nextProps.brand)) && this.props.articles.length !== 0) {
       return;
     }
+    console.log(nextProps, this.props)
     let changeTab = this.props.type !== nextProps.type;
     this.setInitialArticles(nextProps.articles, changeTab);
   }
 
   setInitialArticles(articles = this.props.articles, changeTab = false) {
     const { visibleOffset, limit } = this.state;
-    if (!articles.length && !this.props.brand) {
+    if (!articles.length) {
       return;
     }
     let showUntil;
@@ -69,7 +70,6 @@ export default class Articles extends Component {
   retrieveArticles() {
     const { limit } = this.state;
     const { articles, isAuthenticated, token, brand, type, getAllArticles, getOwnArticles, getBrandArticles } = this.props;
-    console.log(brand, limit, type)
     if (brand) {
       getBrandArticles({ offset: articles.length, limit: 20, brand, type });
       return;

@@ -57,7 +57,7 @@ class AppContainer extends Component {
     const { isAuthenticated, token } = nextProps;
     const { getAllBrands, getAllNews, getAllSales, getUserBrands, getBrandsByPopularity, getOwnNews, getOwnSales } = this.props;
     const offset = 0;
-    const limit = 8;
+    const limit = 20;
     if (isAuthenticated) {
       getUserBrands({ token });
       getOwnNews({ token, offset, limit });

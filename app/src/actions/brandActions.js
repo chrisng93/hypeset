@@ -242,6 +242,9 @@ export function getBrandInfos(payload) {
         if (payload.type === 'sales') {
           json.brandInfos.brandNews = []
         }
+        if (payload.offset === 0) {
+          json.setNewInfos = true;
+        }
         return dispatch(getBrandInfosSuccess(json));
       })
       .catch((err) => {

@@ -36,10 +36,10 @@ function NewsContainer(props) {
     shouldFilter: true,
   };
   return (
-    <div className="news">
+    <section className="news">
       <h1><span>Curated News</span></h1>
       <Articles {...articlesProps} />
-    </div>
+    </section>
   );
 }
 

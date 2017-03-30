@@ -106,13 +106,22 @@ export default function brand(state = initialState, action) {
     case actionTypes.GET_BRAND_INFOS_FETCHING:
       return { ...state, isFetchingBrandInfos: true };
     case actionTypes.GET_BRAND_INFOS_SUCCESS:
+      let brandNews;
+      let brandSales;
+      if (payload.setNewInfos) {
+        brandNews = formatDates(payload.brandInfos.brandNews);
+        brandSales = formatDates(payload.brandInfos.brandSales);
+      } else {
+        brandNews = state.brandInfos.brandNews.concat(formatDates(payload.brandInfos.brandNews));
+        brandSales = state.brandInfos.brandSales.concat(formatDates(payload.brandInfos.brandSales));
+      }
       return {
         ...state,
         brandInfos: {
           brandName: payload.brandInfos.brandName,
           brandCondensedName: payload.brandInfos.brandCondensedName,
-          brandNews: state.brandInfos.brandNews.concat(formatDates(payload.brandInfos.brandNews)),
-          brandSales: state.brandInfos.brandSales.concat(formatDates(payload.brandInfos.brandSales)),
+          brandNews,
+          brandSales,
         },
         isFetchingBrandInfos: false,
         error: freshErrorState,
