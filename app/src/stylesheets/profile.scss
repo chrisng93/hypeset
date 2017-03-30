@@ -1,93 +1,43 @@
-.profile {
+.profile-container {
+  height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: row;
-  margin: 40px 100px 0 100px;
-
-  .profile-nav {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-
-    .profile-nav-user, .profile-nav-brands {
-      margin-bottom: 6px;
-      font-size: 24px;
-      font-weight: 400;
-    }
-  }
 
   .content {
     flex: 5;
+  }
 
-    label {
-      margin-bottom: 8px;
-      flex: 1;
+  label {
+    margin-bottom: 8px;
+    flex: 1;
 
-      .field {
-        min-width: 150px;
-        margin-right: 10px;
-        text-align: right;
-      }
-
-      .value {
-        width: 150px;
-        margin-right: auto;
-      }
+    .field {
+      min-width: 150px;
+      margin-right: 10px;
+      text-align: right;
+      font-weight: 600;
     }
 
-    button {
-      min-height: 30px;
+    .value {
       width: 150px;
-      background-color: #eeeeee;
-      border: 1px solid #dcdcdc;
-      border-radius: 3px;
-      font-size: 16px;
-      text-align: center;
+      margin-right: auto;
     }
+  }
 
-    .user-info {
-      display: flex;
-      flex-direction: column;
-      width: 400px;
-      height: 30px;
-      font-size: 20px;
-      margin-bottom: 12px;
-    }
+  button {
+    height: 35px;
+    width: 175px;
+    border: 1px solid #b0b0b0;
+    border-radius: 3px;
+    font-size: 22px;
+    margin-top: 5px;
+  }
 
-    .edit-user {
-      display: flex;
-      flex-direction: column;
-      width: 400px;
-      height: 30px;
-      font-size: 20px;
-      margin-bottom: 12px;
-
-      input {
-        min-height: 24px;
-        width: 150px;
-        border-radius: 3px;
-        font-size: 16px;
-      }
-
-      button {
-        margin-bottom: 8px;
-      }
-    }
-
-    .edit-brands {
-      display: flex;
-      flex-direction: row;
-
-      .edit-brands-add-dropdown {
-        li {
-          list-style-type: none;
-        }
-      }
-
-      .edit-brands-popular {
-        li {
-          list-style-type: none;
-        }
-      }
-    }
+  img {
+    max-height: 100%;
+    max-width: 75%;
+    margin-left: auto;
+    flex: 2;
   }
 }

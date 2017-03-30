@@ -1,5 +1,5 @@
 import React, { Component, PropTypes as T } from 'react';
-import ProfileNav from './ProfileNav';
+// import ProfileNav from './ProfileNav';
 import UserInfo from './UserInfo';
 
 const propTypes = {
@@ -51,14 +51,9 @@ export default class Profile extends Component {
   }
 
   render() {
-    const { routeToUserInfo, routeToEditBrands } = this.props;
-    const profileNavProps = { routeToUserInfo, routeToEditBrands };
     return (
       <section className="profile">
-        <ProfileNav {...profileNavProps} />
-        <section className="content">
-          {this.renderChild()}
-        </section>
+        {this.renderChild()}
       </section>
     );
   }

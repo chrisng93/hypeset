@@ -51,9 +51,8 @@ export default class SignIn extends Component {
     const { username, password, usernameError, passwordError } = this.state;
     return (
       <section className="sign-in">
-        {/*<img src={require('../../assets/intro-bg1.jpg')} className="bg" />*/}
         <section className="sign-in-container">
-          <h1>hypeset</h1>
+          <section className="sign-in-title"><h1>Sign in</h1></section>
           <form className="sign-in-form">
             <label className="sign-in-form-username">
               <input
@@ -78,6 +77,7 @@ export default class SignIn extends Component {
             <button type="button" onClick={() => onAuth({ username, password })}>Sign in</button>
           </form>
           <p>Don't have an account? <a className="link" onClick={routeToSignUp}>Sign up</a></p>
+          <img src={require('../../assets/intro-1.jpg')} />
         </section>
       </section>
     );

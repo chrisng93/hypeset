@@ -28,7 +28,8 @@ export default class EditUser extends Component {
     this.setState(updatedState);
   }
 
-  submitForm() {
+  submitForm(e) {
+    e.preventDefault();
     const { user, token, onEditUser } = this.props;
     const { password, firstName, lastName, email } = this.state;
     const updatedFields = { username: user.username };
@@ -51,43 +52,45 @@ export default class EditUser extends Component {
 
   render() {
     // TODO: message saying that you've successfully updated the user
-    // TODO: form validation
-    // TODO: error message handling
+    // TODO: form validation/error checking
     const { user, routeToProfile } = this.props;
     const { password, firstName, lastName, email } = this.state;
     return (
-      <form className="edit-user">
-        <label className="username">
-          <span className="field">Username:</span>
-          <span className="value">{user.username}</span>
-        </label>
-        <label className="password">
-          <span className="field">Password:</span>
-          <span className="value">
-            <input type="password" name="password" value={password} placeholder="**********" onChange={e => this.handleInputChange(e, 'password')} />
-          </span>
-        </label>
-        <label className="email">
-          <span className="field">Email:</span>
-          <span className="value">
-            <input type="email" name="email" value={email} placeholder={user.email} onChange={e => this.handleInputChange(e, 'email')} />
-          </span>
-        </label>
-        <label className="first-name">
-          <span className="field">First name:</span>
-          <span className="value">
-            <input type="text" name="first-name" value={firstName} placeholder={user.firstName} onChange={e => this.handleInputChange(e, 'firstName')} />
-          </span>
-        </label>
-        <label className="last-name">
-          <span className="field">Last name:</span>
-          <span className="value">
-            <input type="text" name="last-name" value={lastName} placeholder={user.lastName} onChange={e => this.handleInputChange(e, 'lastName')} />
-          </span>
-        </label>
-        <button onClick={this.submitForm}>Submit changes</button>
-        <button onClick={routeToProfile}>Cancel</button>
-      </form>
+      <section className="edit-user-container">
+        <form className="edit-user">
+          <label className="username" name="username">
+            <span className="field">Username:</span>
+            <span className="value">{user.username}</span>
+          </label>
+          <label className="password" name="password">
+            <span className="field">Password:</span>
+            <span className="value">
+              <input type="password" name="password" value={password} placeholder="**********" onChange={e => this.handleInputChange(e, 'password')} />
+            </span>
+          </label>
+          <label className="email" name="password">
+            <span className="field">Email:</span>
+            <span className="value">
+              <input type="email" name="email" value={email} placeholder={user.email} onChange={e => this.handleInputChange(e, 'email')} />
+            </span>
+          </label>
+          <label className="first-name" name="first-name">
+            <span className="field">First name:</span>
+            <span className="value">
+              <input type="text" name="first-name" value={firstName} placeholder={user.firstName} onChange={e => this.handleInputChange(e, 'firstName')} />
+            </span>
+          </label>
+          <label className="last-name" name="last-name">
+            <span className="field">Last name:</span>
+            <span className="value">
+              <input type="text" name="last-name" value={lastName} placeholder={user.lastName} onChange={e => this.handleInputChange(e, 'lastName')} />
+            </span>
+          </label>
+          <button onClick={(e) => this.submitForm(e)}>Submit</button>
+          <button onClick={routeToProfile}>Cancel</button>
+        </form>
+        <img src={require('../../assets/profile-2.jpg')} />
+      </section>
     );
   }
 }

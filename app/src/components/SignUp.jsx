@@ -68,9 +68,8 @@ export default class SignUp extends Component {
     const { username, password, email, usernameError, passwordError, emailError, emptyError } = this.state;
     return (
       <section className="sign-up">
-        {/*<img src={require('../../assets/intro-bg1.jpg')} className="bg" />*/}
         <section className="sign-up-container">
-          <h1>hypeset</h1>
+          <section className="sign-up-title"><h1>Sign up</h1></section>
           <form className="sign-up-form">
             <label className={`sign-up-form-username ${usernameError ? 'input-error' : ''}`}>
               <input
@@ -106,6 +105,7 @@ export default class SignUp extends Component {
             <button type="button" onClick={this.validateSignUp}>Sign Up</button>
           </form>
           <p>Already have an account? <a className="link" onClick={routeToSignIn}>Sign in</a></p>
+          <img src={require('../../assets/intro-2.jpg')} />
         </section>
       </section>
     );

@@ -50,10 +50,6 @@ export async function setTop20BrandsAndInfos() {
     for (let i = 0; i < top20Brands.length; i++) {
       const currBrand = top20Brands[i].Brand;
       top20BrandInfos[currBrand.condensedName] = await getInfoForBrand(currBrand.id);
-      console.log('setting info for brand', currBrand.condensedName)
-      if (currBrand.condensedName === 'adidas') {
-        console.log(top20BrandInfos['adidas'].brandNews)
-      }
       top20BrandInfos[currBrand.condensedName].name = currBrand.name;
     }
     await redisClient.set('top20Brands', JSON.stringify(top20Brands));

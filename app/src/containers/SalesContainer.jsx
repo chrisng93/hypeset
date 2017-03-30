@@ -36,7 +36,7 @@ function SalesContainer(props) {
   };
   return (
     <section className="sales">
-      <h1><span>Curated Sales</span></h1>
+      <section className="sales-title"><h1>Curated Sales</h1></section>
       <Articles {...articlesProps} />
     </section>
   );

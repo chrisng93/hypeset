@@ -1,0 +1,35 @@
+.edit-brands {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  overflow: scroll;
+
+  h1 {
+    margin: 24px 0;
+    font-size: 24px;
+  }
+
+  ul {
+    padding: 0;
+
+    li {
+      margin-bottom: 8px;
+      font-size: 18px;
+      list-style-type: none;
+    }
+  }
+
+  .edit-brands-add {
+    flex: 1;
+    overflow: scroll;
+  }
+
+  .edit-brands-popular {
+    flex: 1;
+  }
+
+  .edit-brands-following {
+    flex: 1;
+  }
+}

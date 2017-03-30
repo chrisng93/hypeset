@@ -1,0 +1,15 @@
+.user-info-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+
+  .user-info {
+    height: 300px;
+    margin-top: auto;
+    padding-bottom: 240px;
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+  }
+
+}

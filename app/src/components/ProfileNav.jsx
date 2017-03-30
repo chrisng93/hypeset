@@ -9,8 +9,13 @@ export default function ProfileNav(props) {
   const { routeToUserInfo, routeToEditBrands } = props;
   return (
     <ul className="profile-nav">
-      <a className="profile-nav-user" onClick={routeToUserInfo}>User</a>
-      <a className="profile-nav-brands" onClick={routeToEditBrands}>Brands</a>
+      <section className="profile-nav-title">
+        <h1>Profile</h1>
+        <ul className="profile-nav-tabs">
+          <li className="profile-nav-tabs-user" onClick={routeToUserInfo}>User</li>
+          <li className="profile-nav-tabs-brands" onClick={routeToEditBrands}>Brands</li>
+        </ul>
+      </section>
     </ul>
   );
 }

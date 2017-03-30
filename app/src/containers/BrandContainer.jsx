@@ -63,13 +63,13 @@ class BrandContainer extends Component {
   render() {
     return (
       <section className="brand">
-        <h1>
-          <span>{this.props.brandName}</span>
-          <ul className="brand-tabs">
-            <li className="brand-tabs-news" onClick={() => this.changeTabs('news')}>News</li>
-            <li className="brand-tabs-sales" onClick={() => this.changeTabs('sales')}>Sales</li>
+        <section className="brand-title">
+          <h1>{this.props.brandName}</h1>
+          <ul className="brand-title-tabs">
+            <li className="brand-title-tabs-news" onClick={() => this.changeTabs('news')}>News</li>
+            <li className="brand-title-tabs-sales" onClick={() => this.changeTabs('sales')}>Sales</li>
           </ul>
-        </h1>
+        </section>
         <section className={`brand-articles ${this.state.selected === 'news' ? 'news' : 'sales'}`}>
           {this.renderArticles()}
         </section>

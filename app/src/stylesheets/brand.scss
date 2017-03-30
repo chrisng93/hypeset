@@ -1,11 +1,10 @@
 .brand {
   height: 100vh;
-  width: 100vw;
-  max-width: 100%;
+  width: 100%;
   display: flex;
   flex-direction: row;
 
-  h1 {
+  .brand-title {
     padding: 0 0 120px 20px;
     display: flex;
     flex-direction: column;
@@ -13,11 +12,12 @@
     justify-content: flex-end;
     flex: 2;
 
-    span {
+    h1 {
+      margin: 0;
       font-size: 48px;
     }
 
-    .brand-tabs {
+    .brand-title-tabs {
       margin-bottom: 0;
       display: flex;
       flex-direction: row;

@@ -6,6 +6,7 @@ import * as actions from '../actions';
 import { userBrandsSelector, availableBrandsSelector, brandsByPopularitySelector } from '../selectors/brandSelectors';
 import { userSelector, tokenSelector } from '../selectors/userSelectors';
 import Profile from '../components/Profile';
+import ProfileNav from '../components/ProfileNav';
 
 const propTypes = {
   availableBrands: T.array.isRequired,
@@ -24,8 +25,15 @@ const propTypes = {
 };
 
 function ProfileContainer(props) {
+  const { routeToUserInfo, routeToEditBrands } = props;
+  const profileNavProps = { routeToUserInfo, routeToEditBrands };
   return (
-    <Profile {...props} />
+    <section className="profile-container">
+      <ProfileNav {...profileNavProps} />
+      <section className="content">
+        <Profile {...props} />
+      </section>
+    </section>
   );
 }
 

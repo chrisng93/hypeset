@@ -28,33 +28,27 @@ export default class EditBrands extends Component {
     return (
       <section className="edit-brands">
         <section className="edit-brands-add">
-          <h1>Add brands:</h1>
-          <ul className="edit-brands-add-dropdown">
+          <h1>Add brands</h1>
+          <ul>
             {availableBrands.map((brand, key) => {
               return (
-                <li key={key}>
-                  {brand.name}
-                  <button value="Add brand to favorites" onClick={() => addBrand({ token, brands: [brand.name] })} />
-                </li>
+                <li key={key} onClick={() => addBrand({ token, brands: [brand.name] })}>{brand.name}</li>
               );
             })}
           </ul>
         </section>
         <section className="edit-brands-popular">
-          <h1>Popular brands:</h1>
+          <h1>Popular brands</h1>
           <ul>
-            {popularBrands.map((brand, key) => <li key={key}>{brand.brandName}</li>)}
+            {popularBrands.map((brand, key) => <li key={key} onClick={() => addBrand({ token, brands: [brand.brandName] })}>{key+1}. {brand.brandName}</li>)}
           </ul>
         </section>
         <section className="edit-brands-following">
-          <h1>Following:</h1>
+          <h1>Following</h1>
           <ul>
             {userBrands.map((brand, key) => {
               return (
-                <li key={key}>
-                  {brand.name}
-                  <button value="Remove brand from favorites" onClick={() => removeBrand({ token, brands: [brand.name] })} />
-                </li>
+                <li key={key} onClick={() => removeBrand({ token, brands: [brand.name] })}>{brand.name}</li>
               );
             })}
           </ul>

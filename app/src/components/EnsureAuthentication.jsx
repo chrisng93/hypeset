@@ -19,9 +19,9 @@ export default class EnsureAuthentication extends Component {
     const { isAuthenticated, children } = this.props;
     if (isAuthenticated) {
       return (
-        <div>
+        <section className="ensure-authentication">
           {children}
-        </div>
+        </section>
       );
     }
     return null;

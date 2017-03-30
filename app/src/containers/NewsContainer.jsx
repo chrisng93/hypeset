@@ -37,7 +37,7 @@ function NewsContainer(props) {
   };
   return (
     <section className="news">
-      <h1><span>Curated News</span></h1>
+      <section className="news-title"><h1>Curated News</h1></section>
       <Articles {...articlesProps} />
     </section>
   );

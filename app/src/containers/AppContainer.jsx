@@ -89,7 +89,7 @@ class AppContainer extends Component {
             <h1 className="app-brand-title">hypeset</h1>
             <img className="app-hamburger" src={require('../../assets/hamburger.png')} />
           </section>
-          <ModalCheckContainer />
+          {/*<ModalCheckContainer />*/}
           {children}
         </section>
       </section>
@@ -115,7 +115,7 @@ function mapDispatchToProps(dispatch) {
     getOwnNews: bindActionCreators(actions.getOwnNews, dispatch),
     getOwnSales: bindActionCreators(actions.getOwnSales, dispatch),
     onLogout: bindActionCreators(actions.logout, dispatch),
-    routeToSignIn: bindActionCreators(actions.routeToSignInModal, dispatch),
+    routeToSignIn: () => dispatch(push('/signin')),
     routeToNews: () => dispatch(push('/news')),
     routeToSales: () => dispatch(push('/sales')),
     routeToBrands: () => dispatch(push('/brands')),
