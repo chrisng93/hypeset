@@ -9,7 +9,6 @@ import * as actions from '../actions';
 import { isAuthenticatedSelector, tokenSelector } from '../selectors/userSelectors';
 import { pathnameSelector } from '../selectors/routingSelectors';
 import Nav from '../components/Nav';
-import ModalCheckContainer from './ModalCheckContainer';
 
 const propTypes = {
   children: T.node.isRequired,
@@ -89,7 +88,6 @@ class AppContainer extends Component {
             <h1 className="app-brand-title">hypeset</h1>
             <img className="app-hamburger" src="https://s3-us-west-1.amazonaws.com/hypeset/hamburger.png" />
           </section>
-          {/*<ModalCheckContainer />*/}
           {children}
         </section>
       </section>

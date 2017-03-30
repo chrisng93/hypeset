@@ -26,27 +26,31 @@
       margin-top: -15px;
     }
 
+    label {
+      max-width: 150px;
+    }
+
     input {
       height: 30px;
       width: 150px;
+      margin-top: 15px;
       border: 1px solid #dcdcdc;
       border-radius: 3px;
       font-size: 20px;
       text-align: center;
-      margin-bottom: 15px;
     }
 
     button {
       height: 35px;
       width: 175px;
+      margin-top: 16px;
       border: 1px solid #b0b0b0;
       border-radius: 3px;
       font-size: 22px;
-      margin-top: 5px;
     }
   }
 
-  p {
+  .sign-up-route-sign-in {
     margin-right: -50px;
     flex: 1.5;
     align-self: flex-end;

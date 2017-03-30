@@ -16,6 +16,7 @@ export default class Nav extends Component {
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
+    this.onRouteLogout = this.onRouteLogout.bind(this);
   }
 
   onClick(routeToPage) {
@@ -23,8 +24,14 @@ export default class Nav extends Component {
     routeToPage();
   }
 
+  onRouteLogout() {
+    const { onClickNav, onLogout, token } = this.props;
+    onClickNav();
+    onLogout({ token });
+  }
+
   render() {
-    const { isAuthenticated, token, onLogout, routeToNews, routeToSales, routeToProfile, routeToBrands, routeToSignIn } = this.props;
+    const { isAuthenticated, routeToNews, routeToSales, routeToProfile, routeToBrands, routeToSignIn } = this.props;
     return (
       <nav>
         <ul className="nav-routes">
@@ -33,7 +40,7 @@ export default class Nav extends Component {
           <a className="nav-brands" onClick={() => this.onClick(routeToBrands)}>Brands</a>
           <a className={`nav-profile ${isAuthenticated ? '' : 'hidden'}`} onClick={() => this.onClick(routeToProfile)}>Profile</a>
           <a className={`login ${isAuthenticated ? 'hidden' : ''}`} onClick={() => this.onClick(routeToSignIn)}>Sign in</a>
-          <a className={`logout ${isAuthenticated ? '' : 'hidden'}`} onClick={() => this.onClick(onLogout({ token }))}>Sign out</a>
+          <a className={`logout ${isAuthenticated ? '' : 'hidden'}`} onClick={this.onRouteLogout}>Sign out</a>
         </ul>
       </nav>
     );

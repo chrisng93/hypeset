@@ -31,7 +31,7 @@ export default class SignUp extends Component {
     const { isAuthenticated, error, routeToNews, resetNews, resetSales } = nextProps;
     error.message === 'username must be unique' ? this.setState({ usernameError: true }) : this.setState({ usernameError: false });
     error.message === 'Validation isEmail failed' ? this.setState({ emailError: true }) : this.setState({ emailError: false });
-    error.message === '"Password must be at least 5 characters"' ? this.setState({ passwordError: true }) : this.setState({ passwordError: false });
+    error.message === 'Password must be at least 5 characters' ? this.setState({ passwordError: true }) : this.setState({ passwordError: false });
     if (isAuthenticated) {
       resetNews();
       resetSales();
@@ -104,7 +104,7 @@ export default class SignUp extends Component {
             {emptyError ? this.renderError('Please fill in all fields') : null}
             <button type="button" onClick={this.validateSignUp}>Sign Up</button>
           </form>
-          <p>Already have an account? <a className="link" onClick={routeToSignIn}>Sign in</a></p>
+          <p className="sign-up-route-sign-in">Already have an account? <a className="link" onClick={routeToSignIn}>Sign in</a></p>
           <img src="https://s3-us-west-1.amazonaws.com/hypeset/intro-1.jpg" />
         </section>
       </section>
