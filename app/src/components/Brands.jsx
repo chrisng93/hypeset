@@ -8,11 +8,6 @@ const propTypes = {
 };
 
 export default class Brands extends Component {
-  constructor(props) {
-    super(props);
-    this.renderBrand = this.renderBrand.bind(this);
-  }
-
   componentWillMount() {
     const { brands, getAllBrands } = this.props;
     if (!brands.length) {
