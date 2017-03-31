@@ -69,14 +69,14 @@ body {
   .app-nav {
     width: 0;
     height: 0;
-    -webkit-transition: width 1.5s;
-    transition: width 1.5s;
+    -webkit-transition: width 0.5s;
+    transition: width 0.5s;
   }
 
   .selected {
     width: 500px;
-    -webkit-transition: width 1.5s;
-    transition: width 1.5s;
+    -webkit-transition: width 0.5s;
+    transition: width 0.5s;
   }
 }
 
