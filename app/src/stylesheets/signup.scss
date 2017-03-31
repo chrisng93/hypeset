@@ -21,6 +21,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    flex: 2;
 
     .sign-up-form-username-input {
       margin-top: -15px;
@@ -38,6 +39,7 @@
       border-radius: 3px;
       font-size: 20px;
       text-align: center;
+      text-transform: lowercase;
     }
 
     button {
@@ -47,6 +49,7 @@
       border: 1px solid #b0b0b0;
       border-radius: 3px;
       font-size: 22px;
+      text-transform: lowercase;
     }
   }
 

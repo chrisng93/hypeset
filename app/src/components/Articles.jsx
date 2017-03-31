@@ -39,7 +39,8 @@ export default class Articles extends Component {
     if (((nextProps.isFetchingAllArticles || nextProps.isFetchingOwnArticles || nextProps.isFetchingBrandArticles)
          || (this.props.isFetchingAllArticles || this.props.isFetchingOwnArticles || this.props.isFetchingBrandArticles)
          || (this.props.pathname === nextProps.pathname && !nextProps.brand)
-         || (this.props.articles.length === nextProps.articles.length)) && this.props.articles.length !== 0) {
+         || (this.props.articles.length === nextProps.articles.length && this.props.type === nextProps.type))
+         && this.props.articles.length !== 0) {
       return;
     }
     let changeTab = this.props.type !== nextProps.type;
