@@ -28,6 +28,7 @@ export default class Articles extends Component {
     this.retrieveArticles = this.retrieveArticles.bind(this);
     this.onForwardPage = this.onForwardPage.bind(this);
     this.onBackPage = this.onBackPage.bind(this);
+    this.renderNoVisibleArticles = this.renderNoVisibleArticles.bind(this);
   }
 
   componentWillMount() {
@@ -105,12 +106,20 @@ export default class Articles extends Component {
     });
   }
 
+  renderNoVisibleArticles() {
+    if (!this.state.visible.length) {
+      return (<p className="articles-none-visible">No {this.props.type} to show</p>);
+    }
+    return null;
+  }
+
   render() {
     const { visible } = this.state;
     return (
       <article className="articles-container">
         <section className="articles">
           {visible.map((article, key) => <ArticleItem key={key} article={article} /> )}
+          {this.renderNoVisibleArticles()}
         </section>
         <section className="articles-nav">
           <img className="articles-nav-forward" src="https://s3-us-west-1.amazonaws.com/hypeset/forward-arrow.png" onClick={this.onForwardPage} />

@@ -4,6 +4,7 @@ const propTypes = {
   // don't have .isRequired because React doesn't recognize the props when you use React.cloneElement
   user: T.object,
   token: T.string,
+  error: T.object,
   onEditUser: T.func,
   routeToProfile: T.func,
 };
@@ -16,9 +17,18 @@ export default class EditUser extends Component {
       firstName: '',
       lastName: '',
       email: '',
+      emailError: false,
+      passwordError: false,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
+    this.renderError = this.renderError.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { error } = nextProps;
+    error.message === 'Validation isEmail failed' ? this.setState({ emailError: true }) : this.setState({ emailError: false });
+    error.message === 'Password must be at least 5 characters' ? this.setState({ passwordError: true }) : this.setState({ passwordError: false });
   }
 
   handleInputChange(e, field) {
@@ -50,11 +60,17 @@ export default class EditUser extends Component {
     this.setState({ password: '', firstName: '', lastName: '', email: '' });
   }
 
+  renderError(msg) {
+    return (
+      <p className="error">{msg}</p>
+    );
+  }
+
   render() {
     // TODO: message saying that you've successfully updated the user
     // TODO: form validation/error checking
     const { user, routeToProfile } = this.props;
-    const { password, firstName, lastName, email } = this.state;
+    const { password, firstName, lastName, email, emailError, passwordError } = this.state;
     return (
       <section className="edit-user-container">
         <form className="edit-user">
@@ -66,12 +82,14 @@ export default class EditUser extends Component {
             <span className="field">Password:</span>
             <span className="value">
               <input type="password" name="password" value={password} placeholder="**********" onChange={e => this.handleInputChange(e, 'password')} />
+              {passwordError ? this.renderError('Password must be at least 5 characters') : ''}
             </span>
           </label>
           <label className="email" name="password">
             <span className="field">Email:</span>
             <span className="value">
               <input type="email" name="email" value={email} placeholder={user.email} onChange={e => this.handleInputChange(e, 'email')} />
+              {emailError ? this.renderError('Invalid email') : ''}
             </span>
           </label>
           <label className="first-name" name="first-name">

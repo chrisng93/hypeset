@@ -9,6 +9,7 @@ const propTypes = {
   popularBrands: T.array.isRequired,
   token: T.string.isRequired,
   user: T.object.isRequired,
+  error: T.object.isRequired,
   onEditUser: T.func.isRequired,
   getAllBrands: T.func.isRequired,
   addBrand: T.func.isRequired,
@@ -27,9 +28,9 @@ export default class Profile extends Component {
 
   renderChild() {
     const { token, availableBrands, userBrands, popularBrands, getAllBrands, getBrandsByPopularity,
-      addBrand, removeBrand, user, onEditUser, routeToProfile, routeToEditUser, children } = this.props;
+      addBrand, removeBrand, user, error, onEditUser, routeToProfile, routeToEditUser, children } = this.props;
     const userInfoProps = { user, routeToEditUser };
-    const editUserProps = { user, token, onEditUser, routeToProfile };
+    const editUserProps = { user, token, error, onEditUser, routeToProfile };
     const editBrandProps = { token, availableBrands, userBrands, popularBrands, getAllBrands, getBrandsByPopularity, addBrand, removeBrand };
     const childrenWithProps = React.Children.map(children, (child) => {
       let childProps;

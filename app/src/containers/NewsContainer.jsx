@@ -11,6 +11,7 @@ const propTypes = {
   isAuthenticated: T.bool.isRequired,
   token: T.string.isRequired,
   pathname: T.string.isRequired,
+  type: T.string.isRequired,
   news: T.array.isRequired,
   newsBrands: T.array.isRequired,
   newsSites: T.array.isRequired,
@@ -33,7 +34,7 @@ function NewsContainer(props) {
     isFetchingOwnArticles: isFetchingOwnNews,
     getAllArticles: getAllNews,
     getOwnArticles: getOwnNews,
-    shouldFilter: true,
+    type: 'news',
   };
   return (
     <section className="news">

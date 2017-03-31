@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { push } from 'react-router-redux';
 import * as actions from '../actions';
 import { userBrandsSelector, availableBrandsSelector, brandsByPopularitySelector } from '../selectors/brandSelectors';
-import { userSelector, tokenSelector } from '../selectors/userSelectors';
+import { userSelector, tokenSelector, userErrorSelector } from '../selectors/userSelectors';
 import Profile from '../components/Profile';
 import ProfileNav from '../components/ProfileNav';
 
@@ -13,6 +13,7 @@ const propTypes = {
   userBrands: T.array.isRequired,
   popularBrands: T.array.isRequired,
   token: T.string.isRequired,
+  error: T.object.isRequired,
   user: T.object.isRequired,
   onEditUser: T.func.isRequired,
   getAllBrands: T.func.isRequired,
@@ -44,6 +45,7 @@ function mapStateToProps(state) {
     popularBrands: brandsByPopularitySelector(state),
     token: tokenSelector(state),
     user: userSelector(state),
+    error: userErrorSelector(state),
   };
 }
 

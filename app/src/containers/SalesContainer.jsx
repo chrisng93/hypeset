@@ -11,6 +11,7 @@ const propTypes = {
   isAuthenticated: T.bool.isRequired,
   token: T.string.isRequired,
   pathname: T.string.isRequired,
+  type: T.string.isRequired,
   sales: T.array.isRequired,
   salesBrands: T.array.isRequired,
   salesSites: T.array.isRequired,
@@ -33,6 +34,7 @@ function SalesContainer(props) {
     isFetchingOwnArticles: isFetchingOwnSales,
     getAllArticles: getAllSales,
     getOwnArticles: getOwnSales,
+    type: 'sales',
   };
   return (
     <section className="sales">
