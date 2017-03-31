@@ -13,7 +13,15 @@ export default class ArticleItem extends Component {
     return (
       <article className="article">
         <section className="article-brands">
-          {article.Brands ? article.Brands.map((brand, key) => <p key={key} className="article-brands-brand">{brand.name}</p>) : ''}
+          {article.Brands ? article.Brands.map((brand, key) => {
+            if (key === 0 || (key === 1 && article.Brands.length <= 2)) {
+              return <p key={key} className="article-brands-brand">{brand.name}</p>
+            }
+            if (key === 1 && article.Brands.length > 2) {
+              return <p key={key} className="article-brands-brand">{brand.name} ...</p>
+            }
+            return null;
+          }) : ''}
         </section>
         <p className="article-date">{article.date}</p>
         <h1 className="article-title"><a href={article.url} target="_blank">{article.title}</a></h1>
