@@ -4,6 +4,7 @@
   padding-left: 100px;
   display: flex;
   flex-direction: row;
+  color: #5f5f5f;
   overflow: scroll;
 
   h1 {
@@ -24,13 +25,23 @@
   .edit-brands-add {
     flex: 1;
     overflow: scroll;
-  }
 
-  .edit-brands-popular {
-    flex: 1;
+    span:hover {
+      color: #b0b0b0;
+      cursor: pointer;
+    }
   }
 
   .edit-brands-following {
     flex: 1;
+  }
+
+  .edit-brands-popular {
+    flex: 1;
+
+    span:hover {
+      color: #b0b0b0;
+      cursor: pointer;
+    }
   }
 }

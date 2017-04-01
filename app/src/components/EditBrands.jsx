@@ -24,7 +24,6 @@ export default class EditBrands extends Component {
 
   render() {
     const { availableBrands, userBrands, popularBrands, addBrand, removeBrand, token } = this.props;
-    // TODO: make dropdown with available brands
     return (
       <section className="edit-brands">
         <section className="edit-brands-add">
@@ -32,15 +31,9 @@ export default class EditBrands extends Component {
           <ul>
             {availableBrands.map((brand, key) => {
               return (
-                <li key={key} onClick={() => addBrand({ token, brands: [brand.name] })}>{brand.name}</li>
+                <li key={key}><span onClick={() => addBrand({ token, brands: [brand.name] })}>{brand.name}</span></li>
               );
             })}
-          </ul>
-        </section>
-        <section className="edit-brands-popular">
-          <h1>Popular brands</h1>
-          <ul>
-            {popularBrands.map((brand, key) => <li key={key} onClick={() => addBrand({ token, brands: [brand.brandName] })}>{key+1}. {brand.brandName}</li>)}
           </ul>
         </section>
         <section className="edit-brands-following">
@@ -51,6 +44,12 @@ export default class EditBrands extends Component {
                 <li key={key} onClick={() => removeBrand({ token, brands: [brand.name] })}>{brand.name}</li>
               );
             })}
+          </ul>
+        </section>
+        <section className="edit-brands-popular">
+          <h1>Popular brands</h1>
+          <ul>
+            {popularBrands.map((brand, key) => <li key={key}>{key+1}. <span onClick={() => addBrand({ token, brands: [brand.brandName] })}>{brand.brandName}</span></li>)}
           </ul>
         </section>
       </section>
