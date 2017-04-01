@@ -71,11 +71,27 @@ class AppContainer extends Component {
   }
 
   toggleNav() {
-    this.setState({ selected: !this.state.selected });
+    this.setState({
+      selected: !this.state.selected
+    }, () => {
+      const container = document.getElementsByClassName('app-container')[0];
+      let width;
+      this.state.selected ? width = 'calc(100vw + 500px)' : width = '100vw';
+      container.style.width = width;
+      if (!this.state.selected) {
+        container.style.transition = 'all 0.25s';
+      }
+    });
   }
 
   onClickNav() {
-    this.setState({ selected: false });
+    this.setState({
+      selected: false
+    }, () => {
+      const container = document.getElementsByClassName('app-container')[0];
+      container.style.width = '100vw';
+      container.style.transition = 'all 0.25s';
+    });
   }
 
   onLoad() {
@@ -91,7 +107,7 @@ class AppContainer extends Component {
           <section className={`app-nav ${this.state.selected ? 'selected' : ''}`}><Nav {...navProps} /></section>
           <section className="app-toggle-nav" onClick={this.toggleNav}>
             <h1 className="app-brand-title">hypeset</h1>
-            <img className="app-hamburger" src="https://s3-us-west-1.amazonaws.com/hypeset/hamburger.png" />
+            <img className="app-hamburger" src="https://s3-us-west-1.amazonaws.com/hypeset/hamburger-menu.png" />
           </section>
           {children}
         </section>

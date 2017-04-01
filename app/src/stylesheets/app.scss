@@ -33,6 +33,7 @@ body {
   width: 100vw;
   display: flex;
   flex-direction: row;
+  flex-shrink: 0;
 
   .app-toggle-nav {
     height: 100vh;
@@ -62,21 +63,21 @@ body {
 
   .app-toggle-nav:active {
     width: 35px;
-    -webkit-transition: width 0.5s;
-    transition: width 0.5s;
+    -webkit-transition: width 0.25s;
+    transition: width 0.25s;
   }
 
   .app-nav {
     width: 0;
     height: 0;
-    -webkit-transition: width 0.5s;
-    transition: width 0.5s;
+    -webkit-transition: width 0.25s;
+    transition: width 0.25s;
   }
 
   .selected {
     width: 500px;
-    -webkit-transition: width 0.5s;
-    transition: width 0.5s;
+    -webkit-transition: width 0.25s;
+    transition: width 0.25s;
   }
 }
 
