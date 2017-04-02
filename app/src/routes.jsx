@@ -10,7 +10,6 @@ import SalesContainer from './containers/SalesContainer';
 import BrandsContainer from './containers/BrandsContainer';
 import BrandContainer from './containers/BrandContainer';
 import ProfileContainer from './containers/ProfileContainer';
-import UserInfo from './components/UserInfo';
 import EditUser from './components/EditUser';
 import EditBrands from './components/EditBrands';
 

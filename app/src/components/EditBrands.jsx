@@ -67,7 +67,7 @@ export default class EditBrands extends Component {
           <ul>
             {userBrands.map((brand, key) => {
               return (
-                <li key={key} onClick={() => removeBrand({ token, brands: [brand.name] })}>
+                <li key={key}>
                   <button
                     className={`edit-brands-following-remove ${this.state.toggleRemove ? '' : 'hidden'}`}
                     onClick={() => removeBrand({ token, brands: [brand.name] })}

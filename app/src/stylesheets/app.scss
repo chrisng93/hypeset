@@ -19,6 +19,7 @@
 html *
 {
   font-family: 'Ubuntu', sans-serif;
+  cursor: default;
 }
 
 body {
@@ -111,6 +112,7 @@ button {
   font-weight: 300;
   color: #f5f5f5;
   text-transform: lowercase;
+  cursor: pointer;
 }
 
 .link {
