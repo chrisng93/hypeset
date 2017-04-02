@@ -33,6 +33,39 @@
 
   .edit-brands-following {
     flex: 1;
+
+    .edit-brands-following-title {
+      display: flex;
+      flex-direction: row;
+
+      .edit-brands-following-title-toggle {
+        width: 70px;
+        height: 30px;
+        margin: 0 0 0 20px;
+        align-self: center;
+        background-color: #ce0000;
+        font-size: 14px;
+      }
+    }
+
+    ul {
+      margin-top: 0;
+
+      li {
+        display: flex;
+        align-items: center;
+
+        .edit-brands-following-remove {
+          width: 20px;
+          height: 20px;
+          margin: 0 4px 0 0;
+          align-self: center;
+          background-color: #ce0000;
+          font-size: 12px;
+          text-align: center;
+        }
+      }
+    }
   }
 
   .edit-brands-popular {
