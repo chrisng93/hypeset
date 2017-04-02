@@ -67,6 +67,10 @@ body {
     transition: width 0.25s;
   }
 
+  .app-toggle-nav:hover {
+    cursor: default;
+  }
+
   .app-nav {
     width: 0;
     height: 0;
@@ -79,22 +83,34 @@ body {
     -webkit-transition: width 0.25s;
     transition: width 0.25s;
   }
+
+  .app-children {
+    width: 100%;
+    z-index: 1;
+  }
 }
 
-.bg {
-  // fill background
-  min-height: 100%;
-  min-width: 1024px;
+input {
+  height: 30px;
+  min-width: calc(100% - 2px);
+  max-width: calc(100% - 2px);
+  border: 1px solid #dcdcdc;
+  font-size: 20px;
+  font-weight: 300;
+  text-align: center;
+  text-transform: lowercase;
+}
 
-  // proportionate scaling
-  width: 100%;
-  height: auto;
-
-  // positioning
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
+button {
+  height: 30px;
+  width: calc(100% + 2px);
+  border: 1px solid #2c2c2c;
+  margin-left: 2px;
+  background-color: #2c2c2c;
+  font-size: 20px;
+  font-weight: 300;
+  color: #f5f5f5;
+  text-transform: lowercase;
 }
 
 .link {

@@ -24,6 +24,7 @@ export default class Articles extends Component {
       visibleOffset: 0,
       limit: 8,
     };
+    this.onKeyDown = this.onKeyDown.bind(this);
     this.setInitialArticles = this.setInitialArticles.bind(this);
     this.retrieveArticles = this.retrieveArticles.bind(this);
     this.onForwardPage = this.onForwardPage.bind(this);
@@ -33,6 +34,11 @@ export default class Articles extends Component {
 
   componentWillMount() {
     this.setInitialArticles();
+    document.addEventListener('keydown', this.onKeyDown)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKeyDown)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -45,6 +51,17 @@ export default class Articles extends Component {
     }
     let changeTab = this.props.type !== nextProps.type;
     this.setInitialArticles(nextProps.articles, changeTab);
+  }
+
+  onKeyDown(e) {
+    if (e.keyCode === 39) {
+      this.onForwardPage();
+      return;
+    }
+    if (e.keyCode === 37) {
+      this.onBackPage();
+      return;
+    }
   }
 
   setInitialArticles(articles = this.props.articles, changeTab = false) {

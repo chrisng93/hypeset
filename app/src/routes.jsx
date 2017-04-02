@@ -26,7 +26,7 @@ const routes = (
     <Route path="/profile" component={EnsureAuthenticationContainer}>
       <IndexRoute component={ProfileContainer} />
       <Route path="/profile" component={ProfileContainer}>
-        <IndexRoute component={UserInfo} />
+        <IndexRoute component={EditUser} />
         <Route path="/profile/edit" component={EditUser} />
         <Route path="/profile/brands" component={EditBrands} />
       </Route>

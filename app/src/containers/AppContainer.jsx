@@ -106,10 +106,10 @@ class AppContainer extends Component {
         <section className="app-container">
           <section className={`app-nav ${this.state.selected ? 'selected' : ''}`}><Nav {...navProps} /></section>
           <section className="app-toggle-nav" onClick={this.toggleNav}>
-            <h1 className="app-brand-title">hypeset</h1>
+            <h1 className="app-brand-title">Hypeset</h1>
             <img className="app-hamburger" src="https://s3-us-west-1.amazonaws.com/hypeset/hamburger-menu.png" />
           </section>
-          {children}
+          <section className="app-children">{children}</section>
         </section>
       </section>
     );

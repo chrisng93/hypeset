@@ -6,10 +6,31 @@
   .user-info {
     height: 300px;
     margin-top: auto;
+    margin-right: 40px;
     padding-bottom: 240px;
     display: flex;
     flex-direction: column;
     font-size: 20px;
+
+    label {
+      display: flex;
+
+      .field {
+        margin-left: -40px;
+        flex: 1;
+      }
+
+      .value {
+        flex: 3;
+      }
+    }
+
+    button {
+      width: 100%;
+    }
   }
 
+  img {
+
+  }
 }

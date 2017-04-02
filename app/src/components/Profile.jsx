@@ -1,6 +1,6 @@
 import React, { Component, PropTypes as T } from 'react';
 // import ProfileNav from './ProfileNav';
-import UserInfo from './UserInfo';
+import EditUser from './EditUser';
 
 const propTypes = {
   children: T.node,
@@ -47,7 +47,7 @@ export default class Profile extends Component {
       return (childrenWithProps);
     }
     return (
-      <UserInfo {...userInfoProps} />
+      <EditUser {...editUserProps} />
     );
   }
 

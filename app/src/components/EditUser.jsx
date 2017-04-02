@@ -67,47 +67,39 @@ export default class EditUser extends Component {
   }
 
   render() {
-    // TODO: message saying that you've successfully updated the user
-    // TODO: form validation/error checking
-    const { user, routeToProfile } = this.props;
+    const { user } = this.props;
     const { password, firstName, lastName, email, emailError, passwordError } = this.state;
     return (
       <section className="edit-user-container">
         <form className="edit-user">
           <label className="username" name="username">
-            <span className="field">Username:</span>
             <span className="value">{user.username}</span>
           </label>
           <label className="password" name="password">
-            <span className="field">Password:</span>
             <span className="value">
               <input type="password" name="password" value={password} placeholder="**********" onChange={e => this.handleInputChange(e, 'password')} />
               {passwordError ? this.renderError('Password must be at least 5 characters') : ''}
             </span>
           </label>
           <label className="email" name="password">
-            <span className="field">Email:</span>
             <span className="value">
               <input type="email" name="email" value={email} placeholder={user.email} onChange={e => this.handleInputChange(e, 'email')} />
               {emailError ? this.renderError('Invalid email') : ''}
             </span>
           </label>
           <label className="first-name" name="first-name">
-            <span className="field">First name:</span>
             <span className="value">
               <input type="text" name="first-name" value={firstName} placeholder={user.firstName} onChange={e => this.handleInputChange(e, 'firstName')} />
             </span>
           </label>
           <label className="last-name" name="last-name">
-            <span className="field">Last name:</span>
             <span className="value">
               <input type="text" name="last-name" value={lastName} placeholder={user.lastName} onChange={e => this.handleInputChange(e, 'lastName')} />
             </span>
           </label>
           <button onClick={(e) => this.submitForm(e)}>Submit</button>
-          <button onClick={routeToProfile}>Cancel</button>
         </form>
-        <img src="https://s3-us-west-1.amazonaws.com/hypeset/profile-2.jpg" />
+        <img src="https://s3-us-west-1.amazonaws.com/hypeset/profile-1.jpg" />
       </section>
     );
   }
