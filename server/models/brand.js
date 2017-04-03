@@ -39,9 +39,8 @@ module.exports = (sequelize, DataTypes) => {
             if (found) {
               return found;
             }
-            let brand;
+            const brand = this.create({ name, condensedName });
             if (isNew) {
-              brand = this.create({ name, condensedName });
               retrieveNews([name], true);
               retrieveSales([name], true);
               setRedisKeys();

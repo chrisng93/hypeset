@@ -57,6 +57,6 @@ export async function retrieveNews(availableBrands, newBrand = false) {
     }
     logger.debug('Finished inserting news into database', { type: 'News', action: 'finish insert' });
   } catch(err) {
-    logger.error('Error retrieving news', { type: 'News', action: 'retrieve', err: JSON.stringify(err) });
+    logger.error('Error retrieving news', { type: 'News', action: 'retrieve', err: JSON.stringify(err.message) });
   }
 }

@@ -71,6 +71,6 @@ export async function retrieveRedditFmfSales(r, sales = [], latestSaleDate, avai
     }
     return sales;
   } catch(err) {
-    logger.error('Error retrieving sales from Reddit', { type: 'Sale', action: 'retrieve', site: 'Reddit', err: JSON.stringify(err) });
+    logger.error('Error retrieving sales from Reddit', { type: 'Sale', action: 'retrieve', site: 'Reddit', err: JSON.stringify(err.message) });
   }
 }

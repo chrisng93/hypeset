@@ -28,7 +28,7 @@ export async function parseGrailedSpecificArticles(type, articles, availableBran
     }
     return validArticles;
   } catch(err) {
-    logger.error('Error parsing Grailed articles', { type: 'News', action: 'parse', site: 'Grailed', err: JSON.stringify(err) });
+    logger.error('Error parsing Grailed articles', { type: 'News', action: 'parse', site: 'Grailed', err: JSON.stringify(err.message) });
   }
 }
 

@@ -36,6 +36,6 @@ export async function retrieveSales(availableBrands, newBrand = false) {
     }
     logger.debug('Finished inserting sales into database', { type: 'Sale', action: 'finish insert' });
   } catch(err) {
-    logger.error('Error retrieving sales', { type: 'Sale', action: 'retrieve', err: JSON.stringify(err) });
+    logger.error('Error retrieving sales', { type: 'Sale', action: 'retrieve', err: JSON.stringify(err.message) });
   }
 }

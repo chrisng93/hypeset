@@ -38,6 +38,6 @@ export async function retrieveBrands() {
     }
     logger.debug('Finished inserting brand popularities into database', { type: 'BrandPopularities', action: 'finish insert' });
   } catch(err) {
-    logger.error('Error retrieving brands', { type: 'Brands', action: 'retrieve', err: JSON.stringify(err) });
+    logger.error('Error retrieving brands', { type: 'Brands', action: 'retrieve', err: JSON.stringify(err.message) });
   }
 }

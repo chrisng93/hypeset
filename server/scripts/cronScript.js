@@ -17,7 +17,7 @@ export default function runScripts() {
     onTick,
     start: true,
     // TODO: uncomment when deploy
-    // runOnInit: true,
+    runOnInit: true,
   });
   job.start();
 };
@@ -36,7 +36,7 @@ async function onTick() {
     await setRedisKeys();
     scriptLogger.debug('Finished web scraping scripts', { action: 'finish' });
   } catch(err) {
-    scriptLogger.error('Error with web scraping scripts', { err: JSON.stringify(err) });
+    scriptLogger.error('Error with web scraping scripts', { err: JSON.stringify(err.message) });
   }
 }
 

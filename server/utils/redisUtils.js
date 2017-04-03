@@ -16,7 +16,7 @@ export async function setRedisKeys() {
     await setTop20BrandsAndInfos();
     await setAllBrands();
   } catch(err) {
-    redisLogger.error('Error setting Redis keys', { err: JSON.stringify(err) });
+    redisLogger.error('Error setting Redis keys', { err: JSON.stringify(err.message) });
   }
 }
 
@@ -25,7 +25,7 @@ export async function setTop40News() {
     const top40News = await m.Info.findAll(createInfoQuery('News'));
     await redisClient.set('top40News', JSON.stringify(top40News));
   } catch(err) {
-    redisLogger.error('Error setting Redis top 40 news cache', { err: JSON.stringify(err) });
+    redisLogger.error('Error setting Redis top 40 news cache', { err: JSON.stringify(err.message) });
   }
 }
 
@@ -34,7 +34,7 @@ export async function setTop40Sales() {
     const top40Sales = await m.Info.findAll(createInfoQuery('Sale'));
     await redisClient.set('top40Sales', JSON.stringify(top40Sales));
   } catch(err) {
-    redisLogger.error('Error setting Redis top 40 sales cache', { err: JSON.stringify(err) });
+    redisLogger.error('Error setting Redis top 40 sales cache', { err: JSON.stringify(err.message) });
   }
 }
 
@@ -55,7 +55,7 @@ export async function setTop20BrandsAndInfos() {
     await redisClient.set('top20Brands', JSON.stringify(top20Brands));
     await redisClient.set('top20BrandInfos', JSON.stringify(top20BrandInfos));
   } catch(err) {
-    redisLogger.error('Error setting Redis top 20 brands and brand infos caches', { err: JSON.stringify(err) });
+    redisLogger.error('Error setting Redis top 20 brands and brand infos caches', { err: JSON.stringify(err.message) });
   }
 }
 
@@ -64,7 +64,7 @@ export async function setAllBrands() {
     const allBrands = await m.Brand.findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] }, order: [[m.sequelize.fn('lower', m.sequelize.col('name')), 'ASC']] });
     await redisClient.set('allBrands', JSON.stringify(allBrands));
   } catch(err) {
-    redisLogger.error('Error setting Redis all brands cache', { err: JSON.stringify(err) });
+    redisLogger.error('Error setting Redis all brands cache', { err: JSON.stringify(err.message) });
   }
 }
 

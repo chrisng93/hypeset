@@ -18,7 +18,6 @@ let sequelize;
 const pgConnectionString = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`;
 
 pg.connect(pgConnectionString, (dbConnectError, client) => {
-  // const baseTables = ['brand', 'info', 'site', 'user'];
   if (dbConnectError) {
     logger.error('Error connecting to Postgres', { action: 'connect', err: JSON.stringify(dbConnectError) });
     throw new Error(`Error connecting to Postgres: ${JSON.stringify(dbConnectError)}`);
@@ -29,44 +28,49 @@ pg.connect(pgConnectionString, (dbConnectError, client) => {
     if (createDbError && createDbError.code === '42P04') logger.debug('Database already exists', { action: 'attempted create' });
     if (!createDbError) logger.debug('Database created', { action: 'create' });
 
-    sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
-      host: DB_HOST,
-      port: DB_PORT,
-      dialect: 'postgres',
-      logging: false,
-    });
+    client.query(`CREATE USER ${DB_USER} SUPERUSER PASSWORD ${DB_PASSWORD}`, (createRoleError) => {
+      if (createRoleError) logger.debug('User already exists', { action: 'attempted create' });
+      if (!createRoleError) logger.debug('User created', { action: 'create' });
 
-    fs.readdirSync(__dirname)
-      .filter(file => (file.indexOf('.') !== 0) && (file !== basename))
-      .forEach((file) => {
-        if (file.slice(-3) !== '.js') return;
-        const model = sequelize['import'](path.join(__dirname, file));
-        db[model.name] = model;
+      sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
+        host: DB_HOST,
+        port: DB_PORT,
+        dialect: 'postgres',
+        logging: false,
       });
 
-    Object.keys(db).forEach((modelName) => {
-      if (db[modelName].associate) {
-        db[modelName].associate(db);
-      }
-    });
+      fs.readdirSync(__dirname)
+        .filter(file => (file.indexOf('.') !== 0) && (file !== basename))
+        .forEach((file) => {
+          if (file.slice(-3) !== '.js') return;
+          const model = sequelize['import'](path.join(__dirname, file));
+          db[model.name] = model;
+        });
 
-    db.sequelize = sequelize;
-    db.Sequelize = Sequelize;
-
-    sequelize
-      .sync()
-      .then(() => {
-        // populate table with Grailed and Hypebeast sites
-        db.Site.findOrCreate({ where: { name: 'Grailed' }, defaults: { name: 'Grailed', url: process.env.GRAILED_URL } });
-        db.Site.findOrCreate({ where: { name: 'Hypebeast' }, defaults: { name: 'Hypebeast', url: process.env.HYPEBEAST_URL } });
-        db.Site.findOrCreate({ where: { name: 'Reddit' }, defaults: { name: 'Reddit', url: process.env.REDDIT_URL } });
-
-        // create admin
-        db.User.findOrCreate({ where: { role: 'Admin' }, defaults: { username: process.env.ADMIN_USERNAME, password: process.env.ADMIN_PASSWORD, role: 'Admin' } });
-      })
-      .catch((err) => {
-        logger.warn('Error syncing Postgres models', { action: 'sync', err: JSON.stringify(err) });
+      Object.keys(db).forEach((modelName) => {
+        if (db[modelName].associate) {
+          db[modelName].associate(db);
+        }
       });
+
+      db.sequelize = sequelize;
+      db.Sequelize = Sequelize;
+
+      sequelize
+        .sync()
+        .then(() => {
+          // populate table with Grailed and Hypebeast sites
+          db.Site.findOrCreate({ where: { name: 'Grailed' }, defaults: { name: 'Grailed', url: process.env.GRAILED_URL } });
+          db.Site.findOrCreate({ where: { name: 'Hypebeast' }, defaults: { name: 'Hypebeast', url: process.env.HYPEBEAST_URL } });
+          db.Site.findOrCreate({ where: { name: 'Reddit' }, defaults: { name: 'Reddit', url: process.env.REDDIT_URL } });
+
+          // create admin
+          db.User.findOrCreate({ where: { role: 'Admin' }, defaults: { username: process.env.ADMIN_USERNAME, password: process.env.ADMIN_PASSWORD, role: 'Admin' } });
+        })
+        .catch((err) => {
+          logger.warn('Error syncing Postgres models', { action: 'sync', err: JSON.stringify(err) });
+        });
+    });
   });
 });
 

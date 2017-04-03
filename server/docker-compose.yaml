@@ -1,0 +1,27 @@
+version: "3.0"
+services:
+  web:
+    build: .
+#    restart: always
+    volumes:
+      - .:/hypeset-backend/
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+  redis:
+    image: redis
+    volumes:
+      - "/var/lib/redis:/var/lib/redis"
+    ports:
+      - "6379:6379"
+  postgres:
+    image: postgres
+    volumes:
+          - "/var/lib/postgresql/data:/var/lib/postgresql/data"
+    ports:
+          - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=admin
+      - POSTGRES_DATABASE=hypeset

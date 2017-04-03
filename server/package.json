@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Backend for Hypeset",
   "scripts": {
-    "start": "babel-node app.js --presets es2015,stage-2",
+    "start": "babel-node app.js --presets es2015,stage-2 --max_old_space_size=4096",
     "dev": "nodemon app.js --exec babel-node --presets es2015,stage-2 --max_old_space_size=4096"
   },
   "author": "Chris Ng",
