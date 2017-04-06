@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Frontend for Hypeset",
   "scripts": {
-    "build": "webpack -p --config webpack.config.babel.js --progress --profile --colors",
+    "build": "webpack -p --config webpack.production.config.js --progress --profile --colors",
     "dev": "webpack-dev-server --progress --profile --colors",
     "start": "node server.js"
   },

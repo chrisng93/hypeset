@@ -13,7 +13,7 @@ const app = express();
 
 const isProduction = config.NODE_ENV === 'production';
 const HOST = config.HOST;
-const PORT = isProduction ? config.PORT : 3000;
+const PORT = isProduction ? config.PORT : 8888;
 const publicPath = path.resolve(__dirname, 'public');
 
 // point to our static assets
