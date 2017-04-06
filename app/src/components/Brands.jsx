@@ -39,7 +39,7 @@ export default class Brands extends Component {
   render() {
     return (
       <section className="brands-container">
-        <h1><span>Curated Brands</span></h1>
+        <section className="brands-title"><h1>Curated Brands</h1></section>
         <section className="brands">
           <ul className="brands-list">
             {this.renderBrandList()}
