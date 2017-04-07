@@ -6,13 +6,11 @@ const path = require('path');
 const httpProxy = require('http-proxy');
 const config = require('./src/constants/config.js');
 
-const proxy = httpProxy.createProxyServer({
-  changeOrigin: true,
-});
+const proxy = httpProxy.createProxyServer();
 const app = express();
 
 const isProduction = config.NODE_ENV === 'production';
-const HOST = config.HOST;
+// const HOST = config.HOST;
 const PORT = isProduction ? config.PORT : 8888;
 const publicPath = path.resolve(__dirname, 'public');
 
@@ -22,11 +20,12 @@ app.use(express.static(publicPath));
 if (!isProduction) {
   const bundle = require('./server/bundle.js');
   bundle();
-
-  app.all('/build/*', (req, res) => {
-    proxy.web(req, res, { target: `${HOST}:${PORT}` });
-  });
 }
+
+app.all('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+  // proxy.web(req, res, { target: `${HOST}:${PORT}`, prependPath: true });
+});
 
 proxy.on('error', (err) => console.log(`Could not connect to proxy: ${err}`));
 

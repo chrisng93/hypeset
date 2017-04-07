@@ -1,0 +1,48 @@
+version: "2.1"
+services:
+  app:
+    build: ./app
+    restart: always
+    image: webpack
+    depends_on:
+      - server
+    volumes:
+      - .:/hypeset-frontend/
+    ports:
+      - "8888:8888"
+
+  server:
+    build: ./server
+    restart: always
+    volumes:
+      - .:/hypeset-backend/
+    env_file:
+      - ./server/.env
+    links:
+      - postgres:postgres
+      - redis:redis
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - "8000:8000"
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=hypeset
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:latest
+    restart: always
+    volumes:
+      - ./data/redis:/var/lib/redisql/data
+    ports:
+      - "6379:6379"

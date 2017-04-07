@@ -14,5 +14,5 @@ COPY . /usr/src/hypeset-frontend/
 
 EXPOSE 8888
 
-RUN webpack -p --config webpack.production.config.js
+RUN webpack -p --config webpack.production.config.js --progress --profile --colors
 CMD npm start

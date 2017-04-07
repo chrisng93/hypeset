@@ -29,7 +29,7 @@ app.get('/*', (req, res) => {
 
 const logger = winston.loggers.get('app');
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT, '0.0.0.0', () => {
   logger.info(`Listening on ${process.env.PORT}..`);
 
   require('./scripts/cronScript');

@@ -15,6 +15,6 @@ RUN npm install
 COPY . /usr/src/hypeset-backend
 
 # Expose port
-EXPOSE 8000 6379 5432
+EXPOSE 8000
 
 CMD npm start

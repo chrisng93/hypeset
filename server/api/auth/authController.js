@@ -8,10 +8,6 @@ import redisClient from '../../db/redis';
 import { checkForSequelizeErrors } from '../../utils/apiUtils';
 const logger = winston.loggers.get('auth');
 
-import { retrieveSales } from '../../scripts/sales/retrieveSales';
-import { retrieveBrands } from '../../scripts/brands/retrieveBrands';
-import { retrieveNews } from '../../scripts/news/retrieveNews';
-
 async function authenticate(req, res) {
   const { username, password } = req.body;
   try {
@@ -53,24 +49,6 @@ async function logout(req, res) {
 }
 
 async function forgot(req, res) {
-
 }
 
-async function test(req, res) {
-  try {
-    // await retrieveBrands();
-    // const brandModels = await m.Brand.findAll();
-    // const availableBrands = brandModels.map(model => model.name);
-    // await retrieveNews(availableBrands);
-    // await retrieveSales(availableBrands);
-    // const sales = await m.Info.findAll({ where: { type: 'Sale' }, include: [m.Brand] });
-    // for (let i = 0; i < sales.length; i++) {
-    //   sales[i].destroy();
-    // }
-  } catch(err) {
-    console.log(err)
-  }
-  res.send()
-}
-
-module.exports = { authenticate, logout, forgot, test };
+module.exports = { authenticate, logout, forgot };

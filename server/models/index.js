@@ -13,10 +13,10 @@ const db = {};
 const basename = path.basename(module.filename);
 const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } = process.env;
 
-// create or connect to postgres db
-let sequelize;
-const pgConnectionString = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/postgres`;
+const pgConnectionString = process.env.NODE_ENV === 'production' ? '5432/tcp' : `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:5432/${DB_NAME}`;
+logger.info(pgConnectionString)
 
+// create or connect to postgres db
 pg.connect(pgConnectionString, (dbConnectError, client) => {
   if (dbConnectError) {
     logger.error('Error connecting to Postgres', { action: 'connect', err: JSON.stringify(dbConnectError) });
@@ -32,7 +32,7 @@ pg.connect(pgConnectionString, (dbConnectError, client) => {
       if (createRoleError) logger.debug('User already exists', { action: 'attempted create' });
       if (!createRoleError) logger.debug('User created', { action: 'create' });
 
-      sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
+      const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
         host: DB_HOST,
         port: DB_PORT,
         dialect: 'postgres',

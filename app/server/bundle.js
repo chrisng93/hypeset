@@ -7,14 +7,9 @@ const path = require('path');
 const fs = require('fs');
 const webpackConfig = require('../webpack.config.js');
 const config = require('../src/constants/config.js');
-const mainPath = path.resolve(__dirname, '..', 'src', 'index.jsx');
 
 let HOST;
-if (config.HOST.indexOf('localhost') === -1 && config.HOST) {
-  HOST = config.HOST;
-} else {
-  HOST = '127.0.0.1';
-}
+(config.HOST.indexOf('localhost') === -1 && config.HOST) ? HOST = config.HOST : HOST = '127.0.0.1';
 const PORT = config.PORT || 8888;
 
 module.exports = () => {
@@ -35,6 +30,7 @@ module.exports = () => {
     hot: true,
     quiet: false,
     noInfo: true,
+    historyApiFallback: true,
     stats: {
       colors: true,
     },
