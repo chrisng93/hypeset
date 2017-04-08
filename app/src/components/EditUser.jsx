@@ -128,7 +128,7 @@ export default class EditUser extends Component {
             Submit
           </button>
         </form>
-        <img src={`${process.env.S3_URL}//profile-1.jpg`} />
+        <img src={`${process.env.S3_URL}/profile-1.jpg`} />
       </section>
     );
   }

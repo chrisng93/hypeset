@@ -8,7 +8,7 @@ export default class ArticleItem extends Component {
   render() {
     const { article } = this.props;
     if (!article.imgUrl) {
-      article.imgUrl = `${process.env.S3_URL}//sale-default.png`;
+      article.imgUrl = `${process.env.S3_URL}/sale-default.png`;
     }
     return (
       <article className="article">

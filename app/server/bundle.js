@@ -8,8 +8,7 @@ const fs = require('fs');
 const webpackConfig = require('../webpack.config.js');
 const config = require('../src/constants/config.js');
 
-let HOST;
-(config.HOST.indexOf('localhost') === -1 && config.HOST) ? HOST = config.HOST : HOST = '127.0.0.1';
+const HOST = (config.HOST.indexOf('localhost') === -1 && config.HOST) ? config.HOST : '127.0.0.1';
 const PORT = config.PORT || 8888;
 
 module.exports = () => {

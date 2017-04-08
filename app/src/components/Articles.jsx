@@ -149,12 +149,12 @@ export default class Articles extends Component {
         <section className="articles-nav">
           <img
             className="articles-nav-forward"
-            src={`${process.env.S3_URL}//forward-arrow.png`}
+            src={`${process.env.S3_URL}/forward-arrow.png`}
             onClick={this.onForwardPage}
           />
           <img
             className="articles-nav-backward"
-            src={`${process.env.S3_URL}//backward-arrow.png`}
+            src={`${process.env.S3_URL}/backward-arrow.png`}
             onClick={this.onBackPage}
           />
         </section>
