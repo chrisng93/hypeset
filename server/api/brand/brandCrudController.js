@@ -13,7 +13,6 @@ async function createBrand(req, res) {
     logger.debug('Brand created', { brand: brand.name, action: 'create' });
     res.status(201).send({ success: true, brand });
   } catch(err) {
-    console.log(err)
     const message = checkForSequelizeErrors(err);
     logger.warn('Error creating brand', { brand: req.body.name,  action: 'create', err: message });
     res.status(500).send({ success: false, message });
@@ -23,7 +22,7 @@ async function createBrand(req, res) {
 async function retrieveAllBrands(req, res) {
   try {
     const cachedAllBrands = await redisClient.getAsync('allBrands');
-    if (cachedAllBrands) {
+    if (cachedAllBrands && JSON.parse(cachedAllBrands).length) {
       logger.debug('All brands retrieved from Redis cache', { action: 'retrieve' });
       return res.status(200).send({ success: true, brands: JSON.parse(cachedAllBrands) });
     }

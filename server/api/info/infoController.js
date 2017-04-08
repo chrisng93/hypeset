@@ -35,7 +35,7 @@ async function retrieveNews(req, res) {
   limit ? limit = parseInt(limit) : limit = 20;
   try {
     let cachedNews = await redisClient.getAsync('top40News');
-    if (cachedNews && ((offset === 0 && limit === 20) || (offset === 20 && limit === 20))) {
+    if (cachedNews && ((offset === 0 && limit === 20) || (offset === 20 && limit === 20)) && JSON.parse(cachedNews).length) {
       offset === 0 && limit === 20 ? cachedNews = JSON.parse(cachedNews).slice(0, 20) : cachedNews = JSON.parse(cachedNews).slice(20);
       logger.info('News retrieved from Redis cache', { type: 'News', action: 'retrieve', offset, limit });
       return res.status(200).send({ success: true, news: cachedNews });
@@ -57,7 +57,7 @@ async function retrieveSales(req, res) {
   limit ? limit = parseInt(limit) : limit = 20;
   try {
     let cachedSales = await redisClient.getAsync('top40Sales');
-    if (cachedSales && ((offset === 0 && limit === 20) || (offset === 20 && limit === 20))) {
+    if (cachedSales && ((offset === 0 && limit === 20) || (offset === 20 && limit === 20)) && JSON.parse(cachedSales).length) {
       offset === 0 && limit === 20 ? cachedSales = JSON.parse(cachedSales).slice(0, 20) : cachedSales = JSON.parse(cachedSales).slice(20);
       logger.info('Sales retrieved from Redis cache', { type: 'Sale', action: 'retrieve', offset, limit });
       return res.status(200).send({ success: true, sales: cachedSales });
@@ -69,48 +69,6 @@ async function retrieveSales(req, res) {
   } catch(err) {
     const message = checkForSequelizeErrors(err);
     logger.warn('Error retrieving sales', { type: 'Sale', action: 'retrieve', offset, limit, err: message });
-    res.status(500).send({ success: false, message });
-  }
-}
-
-async function updateCache(type, info, res) {
-  try {
-    let cachedInfos = await redisClient.getAsync(`top40${type}`);
-    cachedInfos = JSON.parse(cachedInfos);
-    for (let i = 0; i < cachedInfos.length; i++) {
-      if (cachedInfos[i].id.toString() === info.id) {
-        cachedInfos[i] = info;
-      }
-    }
-    await redisClient.set(`top40${type}`, JSON.stringify(cachedInfos));
-  } catch(err) {
-    const message = checkForSequelizeErrors(err);
-    logger.warn('Error updating Redis cache', { action: 'update cache', err: message });
-    res.status(500).send({ success: false, message });
-  }
-}
-
-async function resetCache(type, info, res) {
-  try {
-    const deleteInfo = await m.Info.find({ where: { id: info.id } });
-    deleteInfo.destroy();
-
-    const query = {
-      attributes: { exclude: ['createdAt', 'updatedAt'] },
-      where: { type: info.type },
-      include: [
-        { model: m.Brand, attributes: ['name'] },
-        { model: m.Site, attributes: ['name'] },
-      ],
-      order: 'date DESC',
-      limit: 40,
-      offset: 0,
-    };
-    const cachedInfos = await m.Info.findAll(query);
-    await redisClient.set(`top40${type}`, JSON.stringify(cachedInfos));
-  } catch(err) {
-    const message = checkForSequelizeErrors(err);
-    logger.warn('Error resetting Redis cache', { action: 'reset cache', err: message });
     res.status(500).send({ success: false, message });
   }
 }

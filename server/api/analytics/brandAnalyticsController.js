@@ -10,7 +10,7 @@ const logger = winston.loggers.get('analyticsApi');
 async function retrieveBrandsByPopularity(req, res) {
   try {
     const cachedTopBrands = await redisClient.getAsync('top20Brands');
-    if (cachedTopBrands) {
+    if (cachedTopBrands && JSON.parse(cachedTopBrands).length) {
       logger.debug('Brands by popularity retrieved from Redis cache', { action: 'retrieve' });
       return res.status(200).send({ success: true, brandsByPopularity: JSON.parse(cachedTopBrands) });
     }
