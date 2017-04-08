@@ -38,7 +38,6 @@
 - React-Router-Redux
 - SASS
 
-
 ##### Back End:
 - Node
 - Express
@@ -47,6 +46,13 @@
 - Redis
 - Cheerio
 - Cron
+
+#### Deployment:
+- Docker, Docker Compose
+- Digital Ocean
+
+#### File Hosting:
+- Amazon S3
 
 
 ## Contributing

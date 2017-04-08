@@ -1,9 +1,8 @@
-version: '2'
+version: "2.1"
 services:
   app:
     image: chrisng93/hypeset-frontend
     restart: always
-    image: webpack
     depends_on:
       - server
     volumes:
