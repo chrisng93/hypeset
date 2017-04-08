@@ -1,7 +1,7 @@
 version: "2.1"
 services:
   app:
-    image: chrisng93/hypeset-frontend
+    image: chrisng93/hypeset-frontend:latest
     restart: always
     depends_on:
       - server
@@ -11,7 +11,7 @@ services:
       - "8888:8888"
 
   server:
-    image: chrisng93/hypeset-backend
+    image: chrisng93/hypeset-backend:latest
     restart: always
     volumes:
       - .:/hypeset-backend/
