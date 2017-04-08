@@ -10,7 +10,6 @@ const proxy = httpProxy.createProxyServer();
 const app = express();
 
 const isProduction = config.NODE_ENV === 'production';
-// const HOST = config.HOST;
 const PORT = isProduction ? config.PORT : 8888;
 const publicPath = path.resolve(__dirname, 'public');
 
@@ -24,7 +23,6 @@ if (!isProduction) {
 
 app.all('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
-  // proxy.web(req, res, { target: `${HOST}:${PORT}`, prependPath: true });
 });
 
 proxy.on('error', (err) => console.log(`Could not connect to proxy: ${err}`));

@@ -13,7 +13,7 @@ let HOST;
 const PORT = config.PORT || 8888;
 
 module.exports = () => {
-  let bundleStart = null;
+  let bundleStart;
   const compiler = webpack(webpackConfig);
 
   compiler.plugin('compile', () => {

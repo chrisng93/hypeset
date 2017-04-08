@@ -3,6 +3,7 @@ import React, { Component, PropTypes as T } from 'react';
 const propTypes = {
   brands: T.array.isRequired,
   brandsByGrouping: T.object.isRequired,
+
   getAllBrands: T.func.isRequired,
   routeToBrandPage: T.func.isRequired,
 };
@@ -22,7 +23,9 @@ export default class Brands extends Component {
         const brandsInGrouping = brandsByGrouping[key];
         return (
           <section key={key} className="brands-list-grouping">
-            <h1>{key}</h1>
+            <h1>
+              {key}
+            </h1>
             <section className="brands-list-grouping-brands">
               {brandsInGrouping.map((brand, key) =>
                 <section key={key} className="brands-list-grouping-brands-brand">
@@ -39,7 +42,11 @@ export default class Brands extends Component {
   render() {
     return (
       <section className="brands-container">
-        <section className="brands-title"><h1>Curated Brands</h1></section>
+        <section className="brands-title">
+          <h1>
+            Curated Brands
+          </h1>
+        </section>
         <section className="brands">
           <ul className="brands-list">
             {this.renderBrandList()}

@@ -8,7 +8,7 @@ export default class ArticleItem extends Component {
   render() {
     const { article } = this.props;
     if (!article.imgUrl) {
-      article.imgUrl = 'https://s3-us-west-1.amazonaws.com/hypeset/sale-default.png';
+      article.imgUrl = `${process.env.S3_URL}//sale-default.png`;
     }
     return (
       <article className="article">
@@ -23,12 +23,18 @@ export default class ArticleItem extends Component {
             return null;
           }) : ''}
         </section>
-        <p className="article-date">{article.date}</p>
-        <h1 className="article-title"><a href={article.url} target="_blank">{article.title}</a></h1>
+        <p className="article-date">
+          {article.date}
+        </p>
+        <h1 className="article-title">
+          <a href={article.url} target="_blank">{article.title}</a>
+        </h1>
         <section className="article-image-container">
           <img className="article-image" src={article.imgUrl} />
         </section>
-        <p className="article-blurb">{article.blurb}</p>
+        <p className="article-blurb">
+          {article.blurb}
+        </p>
       </article>
     );
   }

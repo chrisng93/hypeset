@@ -7,14 +7,14 @@ import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux';
 import * as actions from '../actions';
 import { isAuthenticatedSelector, tokenSelector } from '../selectors/userSelectors';
-import { pathnameSelector } from '../selectors/routingSelectors';
 import Nav from '../components/Nav';
 
 const propTypes = {
   children: T.node.isRequired,
+
   isAuthenticated: T.bool.isRequired,
   token: T.string.isRequired,
-  pathname: T.string.isRequired,
+
   getAllBrands: T.func.isRequired,
   getAllNews: T.func.isRequired,
   getAllSales: T.func.isRequired,
@@ -43,7 +43,7 @@ class AppContainer extends Component {
   }
 
   componentWillMount() {
-    this.getData(false);
+    this.getData({ isAuthenticated: false });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -54,31 +54,28 @@ class AppContainer extends Component {
   }
 
   getData(nextProps) {
-    const { isAuthenticated, token } = nextProps;
-    const { getAllBrands, getAllNews, getAllSales, getUserBrands, getBrandsByPopularity, getOwnNews, getOwnSales } = this.props;
     const offset = 0;
     const limit = 20;
-    if (isAuthenticated) {
-      getUserBrands({ token });
-      getOwnNews({ token, offset, limit });
-      getOwnSales({ token, offset, limit });
+    if (nextProps.isAuthenticated) {
+      this.props.getUserBrands({ token: nextProps.token });
+      this.props.getOwnNews({ token: nextProps.token, offset, limit });
+      this.props.getOwnSales({ token: nextProps.token, offset, limit });
     } else {
-      getAllNews({ offset, limit });
-      getAllSales({ offset, limit });
+      this.props.getAllNews({ offset, limit });
+      this.props.getAllSales({ offset, limit });
     }
-    getBrandsByPopularity({ limit: 20 });
-    getAllBrands();
+    this.props.getBrandsByPopularity({ limit: 20 });
+    this.props.getAllBrands();
   }
 
   toggleNav() {
     this.setState({
       selected: !this.state.selected
     }, () => {
+      const { selected } = this.state;
       const container = document.getElementsByClassName('app-container')[0];
-      let width;
-      this.state.selected ? width = 'calc(100vw + 500px)' : width = '100vw';
-      container.style.width = width;
-      if (!this.state.selected) {
+      container.style.width = selected ? 'calc(100vw + 500px)' : '100vw';
+      if (!selected) {
         container.style.transition = 'all 0.25s';
       }
     });
@@ -99,17 +96,25 @@ class AppContainer extends Component {
   }
 
   render() {
-    const { children, isAuthenticated, token, pathname, onLogout, routeToNews, routeToSales, routeToProfile, routeToBrands, routeToSignIn } = this.props;
-    const navProps = { isAuthenticated, token, pathname, onLogout, routeToNews, routeToSales, routeToProfile, routeToBrands, routeToSignIn, onClickNav: this.onClickNav };
+    const { children, isAuthenticated, token, onLogout, routeToNews, routeToSales,
+      routeToProfile, routeToBrands, routeToSignIn } = this.props;
+    const navProps = { isAuthenticated, token, onLogout, routeToNews, routeToSales,
+      routeToProfile, routeToBrands, routeToSignIn, onClickNav: this.onClickNav };
     return(
       <section id="app" onLoad={this.onLoad}>
         <section className="app-container">
-          <section className={`app-nav ${this.state.selected ? 'selected' : ''}`}><Nav {...navProps} /></section>
-          <section className="app-toggle-nav" onClick={this.toggleNav}>
-            <h1 className="app-brand-title">Hypeset</h1>
-            <img className="app-hamburger" src="https://s3-us-west-1.amazonaws.com/hypeset/hamburger-menu.png" />
+          <section className={`app-nav ${this.state.selected ? 'selected' : ''}`}>
+            <Nav {...navProps} />
           </section>
-          <section className="app-children">{children}</section>
+          <section className="app-toggle-nav" onClick={this.toggleNav}>
+            <h1 className="app-brand-title">
+              Hypeset
+            </h1>
+            <img className="app-hamburger" src={`${process.env.S3_URL}/hamburger-menu.png`} />
+          </section>
+          <section className="app-children">
+            {children}
+          </section>
         </section>
       </section>
     );
@@ -120,7 +125,6 @@ function mapStateToProps(state) {
   return {
     isAuthenticated: isAuthenticatedSelector(state),
     token: tokenSelector(state),
-    pathname: pathnameSelector(state),
   };
 }
 

@@ -66,19 +66,4 @@ module.exports = {
   GET_OWN_SALES_FAILURE: 'GET_OWN_SALES_FAILURE',
   // reset sales
   RESET_SALES: 'RESET_SALES',
-
-  // routeToSignInModal
-  ROUTE_TO_SIGN_IN_MODAL: 'ROUTE_TO_SIGN_IN_MODAL',
-  // exitSignInModal
-  EXIT_SIGN_IN_MODAL: 'EXIT_SIGN_IN_MODAL',
-  // routeToSignUpModal
-  ROUTE_TO_SIGN_UP_MODAL: 'ROUTE_TO_SIGN_UP_MODAL',
-  // exitSignUpModal
-  EXIT_SIGN_UP_MODAL: 'EXIT_SIGN_UP_MODAL',
-  // routeToSignedOutModal
-  ROUTE_TO_SIGNED_OUT_MODAL: 'ROUTE_TO_SIGNED_OUT_MODAL',
-  // exitSignedOutModal
-  EXIT_SIGNED_OUT_MODAL: 'EXIT_SIGNED_OUT_MODAL',
-  // reset modals
-  EXIT_ALL_MODALS: 'EXIT_ALL_MODALS'
 };

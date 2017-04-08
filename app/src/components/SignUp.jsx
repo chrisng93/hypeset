@@ -3,6 +3,7 @@ import React, { Component, PropTypes as T } from 'react';
 const propTypes = {
   isAuthenticated: T.bool.isRequired,
   error: T.object,
+
   onSignUp: T.func.isRequired,
   routeToNews: T.func.isRequired,
   routeToSignIn: T.func.isRequired,
@@ -69,7 +70,11 @@ export default class SignUp extends Component {
     return (
       <section className="sign-up">
         <section className="sign-up-container">
-          <section className="sign-up-title"><h1>Sign up</h1></section>
+          <section className="sign-up-title">
+            <h1>
+              Sign up
+            </h1>
+          </section>
           <form className="sign-up-form">
             <label className={`sign-up-form-username ${usernameError ? 'input-error' : ''}`}>
               <input
@@ -102,10 +107,14 @@ export default class SignUp extends Component {
               {emailError ? this.renderError('Invalid email') : null}
             </label>
             {emptyError ? this.renderError('Please fill in all fields') : null}
-            <button type="button" onClick={this.validateSignUp}>Sign Up</button>
+            <button type="button" onClick={this.validateSignUp}>
+              Sign Up
+            </button>
           </form>
-          <p className="sign-up-route-sign-in">Already have an account? <a className="link" onClick={routeToSignIn}>Sign in</a></p>
-          <img src="https://s3-us-west-1.amazonaws.com/hypeset/intro-1.jpg" />
+          <p className="sign-up-route-sign-in">
+            Already have an account? <a className="link" onClick={routeToSignIn}>Sign in</a>
+          </p>
+          <img src={`${process.env.S3_URL}/intro-1.jpg`} />
         </section>
       </section>
     );

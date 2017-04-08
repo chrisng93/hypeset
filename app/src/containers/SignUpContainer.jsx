@@ -11,6 +11,7 @@ import SignUp from '../components/SignUp';
 const propTypes = {
   isAuthenticated: T.bool.isRequired,
   error: T.object,
+
   onSignUp: T.func.isRequired,
   routeToSignIn: T.func.isRequired,
   routeToNews: T.func.isRequired,

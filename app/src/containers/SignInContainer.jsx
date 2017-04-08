@@ -11,6 +11,7 @@ import SignIn from '../components/SignIn';
 const propTypes = {
   isAuthenticated: T.bool.isRequired,
   error: T.object,
+
   onAuth: T.func.isRequired,
   routeToSignUp: T.func.isRequired,
   routeToNews: T.func.isRequired,

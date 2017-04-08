@@ -15,19 +15,20 @@ const propTypes = {
   token: T.string.isRequired,
   error: T.object.isRequired,
   user: T.object.isRequired,
-  onEditUser: T.func.isRequired,
+
   getAllBrands: T.func.isRequired,
+  getBrandsByPopularity: T.func.isRequired,
   addBrand: T.func.isRequired,
   removeBrand: T.func.isRequired,
+  onEditUser: T.func.isRequired,
   routeToProfile: T.func.isRequired,
-  routeToUserInfo: T.func.isRequired,
   routeToEditUser: T.func.isRequired,
   routeToEditBrands: T.func.isRequired,
 };
 
 function ProfileContainer(props) {
-  const { routeToUserInfo, routeToEditBrands } = props;
-  const profileNavProps = { routeToUserInfo, routeToEditBrands };
+  const { routeToEditUser, routeToEditBrands } = props;
+  const profileNavProps = { routeToEditUser, routeToEditBrands };
   return (
     <section className="profile-container">
       <ProfileNav {...profileNavProps} />
@@ -57,7 +58,6 @@ function mapDispatchToProps(dispatch) {
     removeBrand: bindActionCreators(actions.removeBrand, dispatch),
     onEditUser: bindActionCreators(actions.editUser, dispatch),
     routeToProfile: () => dispatch(push('/profile')),
-    routeToUserInfo: () => dispatch(push('/profile')),
     routeToEditUser: () => dispatch(push('/profile/edit')),
     routeToEditBrands: () => dispatch(push('/profile/brands')),
   };

@@ -9,6 +9,7 @@ import Brands from '../components/Brands';
 const propTypes = {
   brands: T.array.isRequired,
   brandsByGrouping: T.object.isRequired,
+
   getAllBrands: T.func.isRequired,
   routeToBrandPage: T.func.isRequired,
 };

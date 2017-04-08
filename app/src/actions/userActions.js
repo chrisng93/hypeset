@@ -6,7 +6,6 @@ import * as actionTypes from '../constants/actionTypes.js';
 import { actionApiCall, createHeaders } from '../utils/requestUtils';
 import { resetSales } from './salesActions';
 import { resetNews } from './newsActions';
-import { exitAllModals } from './modalActions';
 
 function authFetching() {
   return {
@@ -103,7 +102,6 @@ export function auth(payload) {
         if (!json.success) {
           return dispatch(authFailure(json));
         }
-        dispatch(exitAllModals());
         return dispatch(authSuccess(json));
       })
       .catch((err) => {
@@ -128,7 +126,6 @@ export function signUp(payload) {
         if (!json.success) {
           return dispatch(signUpFailure(json));
         }
-        dispatch(exitAllModals());
         return dispatch(signUpSuccess(json));
       })
       .catch((err) => {

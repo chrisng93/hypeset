@@ -39,6 +39,7 @@ module.exports = {
         HOST: JSON.stringify(config.HOST),
         PORT: JSON.stringify(config.PORT),
         API_URL: JSON.stringify(config.API_URL),
+        S3_URL: JSON.stringify(config.S3_URL),
       },
     }),
   ],

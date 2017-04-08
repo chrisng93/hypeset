@@ -6,6 +6,7 @@ const propTypes = {
   userBrands: T.array,
   popularBrands: T.array,
   token: T.string,
+
   getAllBrands: T.func,
   addBrand: T.func,
   removeBrand: T.func,
@@ -48,25 +49,28 @@ export default class EditBrands extends Component {
     return (
       <section className="edit-brands">
         <section className="edit-brands-add">
-          <h1>Add brands</h1>
+          <h1>
+            Add brands
+          </h1>
           <ul>
-            {availableBrands.map((brand, key) => {
-              return (
+            {availableBrands.map((brand, key) =>
                 <li key={key}>
                   <span onClick={() => this.onAddBrand(brand.name)}>{brand.name}</span>
                 </li>
-              );
-            })}
+            )}
           </ul>
         </section>
         <section className="edit-brands-following">
           <section className="edit-brands-following-title">
-            <h1>Following</h1>
-            <button className="edit-brands-following-title-toggle" onClick={this.toggleRemoveBrands}>Remove</button>
+            <h1>
+              Following
+            </h1>
+            <button className="edit-brands-following-title-toggle" onClick={this.toggleRemoveBrands}>
+              Remove
+            </button>
           </section>
           <ul>
-            {userBrands.map((brand, key) => {
-              return (
+            {userBrands.map((brand, key) =>
                 <li key={key}>
                   <button
                     className={`edit-brands-following-remove ${this.state.toggleRemove ? '' : 'hidden'}`}
@@ -74,17 +78,20 @@ export default class EditBrands extends Component {
                   >x</button>
                   {brand.name}
                 </li>
-              );
-            })}
+            )}
           </ul>
         </section>
         <section className="edit-brands-popular">
-          <h1>Popular brands</h1>
+          <h1>
+            Popular brands
+          </h1>
           <ul>
             {popularBrands.map((brand, key) =>
-              <li key={key}>
-                {key+1}. <span onClick={() => this.onAddBrand(brand.brandName)}>{brand.brandName}</span>
-              </li>)}
+                <li key={key}>
+                  {key + 1}. <span
+                  onClick={() => this.onAddBrand(brand.brandName)}>{brand.brandName}</span>
+                </li>
+            )}
           </ul>
         </section>
       </section>

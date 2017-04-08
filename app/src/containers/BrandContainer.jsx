@@ -2,7 +2,8 @@ import React, { Component, PropTypes as T } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from '../actions';
-import { brandNameSelector, brandCondensedNameSelector, brandNewsSelector, brandSalesSelector, isFetchingBrandInfosSelector } from '../selectors/brandSelectors';
+import { brandNameSelector, brandCondensedNameSelector, brandNewsSelector,
+  brandSalesSelector, isFetchingBrandInfosSelector } from '../selectors/brandSelectors';
 import Articles from '../components/Articles';
 
 const propTypes = {
@@ -11,6 +12,7 @@ const propTypes = {
   brandNews: T.array.isRequired,
   brandSales: T.array.isRequired,
   isFetchingBrandInfos: T.bool,
+
   getBrandInfos: T.func,
   resetBrandInfos: T.func,
 };
@@ -18,7 +20,7 @@ const propTypes = {
 class BrandContainer extends Component {
   constructor(props) {
     super(props);
-    this.state ={
+    this.state = {
       selected: 'news',
     };
     this.changeTabs = this.changeTabs.bind(this);
@@ -26,15 +28,18 @@ class BrandContainer extends Component {
   }
 
   componentWillMount() {
-    this.props.getBrandInfos({ brand: this.props.params.brand, offset: 0, limit: 20 });
+    const { getBrandInfos, params } = this.props;
+    getBrandInfos({ brand: params.brand, offset: 0, limit: 20 });
   }
 
   componentWillUnmount() {
-    this.props.resetBrandInfos();
+    const { resetBrandInfos } = this.props;
+    resetBrandInfos();
   }
 
   changeTabs(tab) {
-    if (this.state.selected !== tab) {
+    const { selected } = this.state;
+    if (selected !== tab) {
       this.setState({ selected: tab });
     }
   }
@@ -61,16 +66,24 @@ class BrandContainer extends Component {
   }
 
   render() {
+    const { selected } = this.state;
+    const { brandName } = this.props;
     return (
       <section className="brand">
         <section className="brand-title">
-          <h1>{this.props.brandName}</h1>
+          <h1>
+            {brandName}
+          </h1>
           <ul className="brand-title-tabs">
-            <li className="brand-title-tabs-news" onClick={() => this.changeTabs('news')}>News</li>
-            <li className="brand-title-tabs-sales" onClick={() => this.changeTabs('sales')}>Sales</li>
+            <li className="brand-title-tabs-news" onClick={() => this.changeTabs('news')}>
+              News
+            </li>
+            <li className="brand-title-tabs-sales" onClick={() => this.changeTabs('sales')}>
+              Sales
+            </li>
           </ul>
         </section>
-        <section className={`brand-articles ${this.state.selected === 'news' ? 'news' : 'sales'}`}>
+        <section className={`brand-articles ${selected === 'news' ? 'news' : 'sales'}`}>
           {this.renderArticles()}
         </section>
       </section>

@@ -3,6 +3,7 @@ import React, { Component, PropTypes as T } from 'react';
 const propTypes = {
   isAuthenticated: T.bool.isRequired,
   error: T.object,
+
   onAuth: T.func.isRequired,
   routeToSignUp: T.func.isRequired,
   routeToNews: T.func.isRequired,
@@ -42,7 +43,9 @@ export default class SignIn extends Component {
 
   renderError(message) {
     return (
-      <p className="error">{message}</p>
+      <p className="error">
+        {message}
+      </p>
     );
   }
 
@@ -52,7 +55,11 @@ export default class SignIn extends Component {
     return (
       <section className="sign-in">
         <section className="sign-in-container">
-          <section className="sign-in-title"><h1>Sign in</h1></section>
+          <section className="sign-in-title">
+            <h1>
+              Sign in
+            </h1>
+          </section>
           <form className="sign-in-form">
             <label className="sign-in-form-username">
               <input
@@ -74,10 +81,14 @@ export default class SignIn extends Component {
               />
               {passwordError ? this.renderError('Incorrect password') : null}
             </label>
-            <button type="button" onClick={() => onAuth({ username, password })}>Sign in</button>
+            <button type="button" onClick={() => onAuth({ username, password })}>
+              Sign in
+            </button>
           </form>
-          <p>Don't have an account? <a className="link" onClick={routeToSignUp}>Sign up</a></p>
-          <img src="https://s3-us-west-1.amazonaws.com/hypeset/intro-2.jpg" />
+          <p>
+            Don't have an account? <a className="link" onClick={routeToSignUp}>Sign up</a>
+          </p>
+          <img src={`${process.env.S3_URL}/intro-2.jpg`} />
         </section>
       </section>
     );

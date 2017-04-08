@@ -1,9 +1,10 @@
-import React, { Component, PropTypes as T } from 'react';
+import React, { PropTypes as T } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from '../actions';
 import { isAuthenticatedSelector, tokenSelector } from '../selectors/userSelectors';
-import { newsSelector, newsBrandsSelector, newsSitesSelector, isFetchingAllNewsSelector, isFetchingOwnNewsSelector } from '../selectors/newsSelectors';
+import { newsSelector, newsBrandsSelector, newsSitesSelector, isFetchingAllNewsSelector,
+  isFetchingOwnNewsSelector } from '../selectors/newsSelectors';
 import { pathnameSelector } from '../selectors/routingSelectors';
 import Articles from '../components/Articles';
 
@@ -16,12 +17,14 @@ const propTypes = {
   newsSites: T.array.isRequired,
   isFetchingAllNews: T.bool.isRequired,
   isFetchingOwnNews: T.bool.isRequired,
+
   getAllNews: T.func.isRequired,
   getOwnNews: T.func.isRequired,
 };
 
 function NewsContainer(props) {
-  const { isAuthenticated, token, pathname, news, newsBrands, newsSites, isFetchingAllNews, isFetchingOwnNews, getAllNews, getOwnNews } = props;
+  const { isAuthenticated, token, pathname, news, newsBrands, newsSites, isFetchingAllNews,
+    isFetchingOwnNews, getAllNews, getOwnNews } = props;
   const articlesProps = {
     isAuthenticated,
     token,
@@ -37,7 +40,11 @@ function NewsContainer(props) {
   };
   return (
     <section className="news">
-      <section className="news-title"><h1>Curated News</h1></section>
+      <section className="news-title">
+        <h1>
+          Curated News
+        </h1>
+      </section>
       <Articles {...articlesProps} />
     </section>
   );

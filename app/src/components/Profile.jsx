@@ -1,5 +1,4 @@
 import React, { Component, PropTypes as T } from 'react';
-// import ProfileNav from './ProfileNav';
 import EditUser from './EditUser';
 
 const propTypes = {
@@ -10,13 +9,12 @@ const propTypes = {
   token: T.string.isRequired,
   user: T.object.isRequired,
   error: T.object.isRequired,
+
   onEditUser: T.func.isRequired,
   getAllBrands: T.func.isRequired,
   addBrand: T.func.isRequired,
   removeBrand: T.func.isRequired,
   routeToProfile: T.func.isRequired,
-  routeToUserInfo: T.func.isRequired,
-  routeToEditUser: T.func.isRequired,
   routeToEditBrands: T.func.isRequired,
 };
 
@@ -28,18 +26,14 @@ export default class Profile extends Component {
 
   renderChild() {
     const { token, availableBrands, userBrands, popularBrands, getAllBrands, getBrandsByPopularity,
-      addBrand, removeBrand, user, error, onEditUser, routeToProfile, routeToEditUser, children } = this.props;
-    const userInfoProps = { user, routeToEditUser };
+      addBrand, removeBrand, user, error, onEditUser, routeToProfile, children } = this.props;
     const editUserProps = { user, token, error, onEditUser, routeToProfile };
-    const editBrandProps = { token, availableBrands, userBrands, popularBrands, getAllBrands, getBrandsByPopularity, addBrand, removeBrand };
+    const editBrandProps = { token, availableBrands, userBrands, popularBrands, getAllBrands,
+      getBrandsByPopularity, addBrand, removeBrand };
+
     const childrenWithProps = React.Children.map(children, (child) => {
-      let childProps;
       const componentName = child.type.name;
-      if (componentName === 'EditUser') {
-        childProps = editUserProps;
-      } else {
-        childProps = editBrandProps;
-      }
+      const childProps = componentName === 'EditUser' ? editUserProps : editBrandProps;
       return React.cloneElement(child, childProps);
     });
 

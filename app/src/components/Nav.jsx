@@ -3,7 +3,7 @@ import React, { Component, PropTypes as T } from 'react';
 const propTypes = {
   isAuthenticated: T.bool.isRequired,
   token: T.string.isRequired,
-  pathname: T.string.isRequired,
+
   onLogout: T.func.isRequired,
   routeToNews: T.func.isRequired,
   routeToSales: T.func.isRequired,

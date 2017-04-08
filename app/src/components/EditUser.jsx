@@ -5,6 +5,7 @@ const propTypes = {
   user: T.object,
   token: T.string,
   error: T.object,
+
   onEditUser: T.func,
   routeToProfile: T.func,
 };
@@ -62,7 +63,9 @@ export default class EditUser extends Component {
 
   renderError(msg) {
     return (
-      <p className="error">{msg}</p>
+      <p className="error">
+        {msg}
+      </p>
     );
   }
 
@@ -77,29 +80,55 @@ export default class EditUser extends Component {
           </label>
           <label className="password" name="password">
             <span className="value">
-              <input type="password" name="password" value={password} placeholder="**********" onChange={e => this.handleInputChange(e, 'password')} />
+              <input
+                type="password"
+                name="password"
+                value={password}
+                placeholder="**********"
+                onChange={e => this.handleInputChange(e, 'password')}
+              />
               {passwordError ? this.renderError('Password must be at least 5 characters') : ''}
             </span>
           </label>
           <label className="email" name="password">
             <span className="value">
-              <input type="email" name="email" value={email} placeholder={user.email} onChange={e => this.handleInputChange(e, 'email')} />
+              <input
+                type="email"
+                name="email"
+                value={email}
+                placeholder={user.email || 'email'}
+                onChange={e => this.handleInputChange(e, 'email')}
+              />
               {emailError ? this.renderError('Invalid email') : ''}
             </span>
           </label>
           <label className="first-name" name="first-name">
             <span className="value">
-              <input type="text" name="first-name" value={firstName} placeholder={user.firstName} onChange={e => this.handleInputChange(e, 'firstName')} />
+              <input
+                type="text"
+                name="first-name"
+                value={firstName}
+                placeholder={user.firstName || 'first name'}
+                onChange={e => this.handleInputChange(e, 'firstName')}
+              />
             </span>
           </label>
           <label className="last-name" name="last-name">
             <span className="value">
-              <input type="text" name="last-name" value={lastName} placeholder={user.lastName} onChange={e => this.handleInputChange(e, 'lastName')} />
+              <input
+                type="text"
+                name="last-name"
+                value={lastName}
+                placeholder={user.lastName || 'last name'}
+                onChange={e => this.handleInputChange(e, 'lastName')}
+              />
             </span>
           </label>
-          <button onClick={(e) => this.submitForm(e)}>Submit</button>
+          <button onClick={(e) => this.submitForm(e)}>
+            Submit
+          </button>
         </form>
-        <img src="https://s3-us-west-1.amazonaws.com/hypeset/profile-1.jpg" />
+        <img src={`${process.env.S3_URL}//profile-1.jpg`} />
       </section>
     );
   }

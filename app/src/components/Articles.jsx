@@ -10,6 +10,7 @@ const propTypes = {
   isFetchingAllArticles: T.bool,
   isFetchingOwnArticles: T.bool,
   isFetchingBrandArticles: T.bool,
+
   getAllArticles: T.func,
   getOwnArticles: T.func,
   getBrandArticles: T.func,
@@ -125,8 +126,14 @@ export default class Articles extends Component {
   }
 
   renderNoVisibleArticles() {
-    if (!this.state.visible.length) {
-      return (<p className="articles-none-visible">No {this.props.type} to show</p>);
+    const { visible } = this.state;
+    const { type } = this.props;
+    if (!visible.length) {
+      return (
+        <p className="articles-none-visible">
+          No {type} to show
+        </p>
+      );
     }
     return null;
   }
@@ -140,8 +147,16 @@ export default class Articles extends Component {
           {this.renderNoVisibleArticles()}
         </section>
         <section className="articles-nav">
-          <img className="articles-nav-forward" src="https://s3-us-west-1.amazonaws.com/hypeset/forward-arrow.png" onClick={this.onForwardPage} />
-          <img className="articles-nav-backward" src="https://s3-us-west-1.amazonaws.com/hypeset/backward-arrow.png" onClick={this.onBackPage} />
+          <img
+            className="articles-nav-forward"
+            src={`${process.env.S3_URL}//forward-arrow.png`}
+            onClick={this.onForwardPage}
+          />
+          <img
+            className="articles-nav-backward"
+            src={`${process.env.S3_URL}//backward-arrow.png`}
+            onClick={this.onBackPage}
+          />
         </section>
       </article>
     );

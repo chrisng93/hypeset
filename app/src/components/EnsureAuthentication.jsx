@@ -4,6 +4,7 @@ const propTypes = {
   children: T.node.isRequired,
   isAuthenticated: T.bool.isRequired,
   rehydrated: T.bool.isRequired,
+
   routeToNews: T.func.isRequired,
 };
 
