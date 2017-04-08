@@ -7,7 +7,9 @@ import winston from 'winston';
 
 const logger = winston.loggers.get('redis');
 
-const client = Promise.promisifyAll(redis.createClient({ host: 'redis' }));
+const client = process.env.NODE_ENV === 'production' ?
+  Promise.promisifyAll(redis.createClient({ host: 'redis' })) :
+  Promise.promisifyAll(redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST));
 
 client.on('connect', () => logger.info('Connected to Redis', { action: 'connect' }));
 
