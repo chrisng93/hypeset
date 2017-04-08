@@ -13,7 +13,8 @@ const logger = createLogger({
 });
 const router = routerMiddleware(browserHistory);
 
-const createStoreWithMiddleware = compose(applyMiddleware(thunk, router, logger), autoRehydrate())(createStore);
+const middleware = process.env.NODE_ENV === 'production' ? applyMiddleware(thunk, router) : applyMiddleware(thunk, router, logger);
+const createStoreWithMiddleware = compose(middleware, autoRehydrate())(createStore);
 
 export default function configureStore(initialState) {
   return createStoreWithMiddleware(rootReducer, initialState);
