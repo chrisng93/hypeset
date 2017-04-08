@@ -61,7 +61,10 @@ export async function setTop20BrandsAndInfos() {
 
 export async function setAllBrands() {
   try {
-    const allBrands = await m.Brand.findAll({ attributes: { exclude: ['createdAt', 'updatedAt'] }, order: [[m.sequelize.fn('lower', m.sequelize.col('name')), 'ASC']] });
+    const allBrands = await m.Brand.findAll({
+      attributes: { exclude: ['createdAt', 'updatedAt'] },
+      order: [[m.sequelize.fn('lower', m.sequelize.col('name')), 'ASC']],
+    });
     await redisClient.set('allBrands', JSON.stringify(allBrands));
   } catch(err) {
     redisLogger.error('Error setting Redis all brands cache', { err: JSON.stringify(err.message) });

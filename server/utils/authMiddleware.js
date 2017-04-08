@@ -19,7 +19,8 @@ const checkPathAgainstUnsecured = (unsecured, path) => {
 };
 
 export const checkPath = (req, res, next) => {
-  const unsecuredGets = ['/auth', '/api/brand', '/api/brand/*', '/api/analytics/brand/popularity', '/api/site', '/api/user/*', '/api/news', '/api/sales', '/api/brand/info'];
+  const unsecuredGets = ['/auth', '/api/brand', '/api/brand/*', '/api/analytics/brand/popularity',
+    '/api/site', '/api/user/*', '/api/news', '/api/sales', '/api/brand/info'];
   const unsecuredPosts = ['/auth', '/api/user'];
 
   if ((req.method === 'POST' && checkPathAgainstUnsecured(unsecuredPosts, req.path) >= 0) ||

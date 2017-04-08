@@ -27,26 +27,43 @@ module.exports = (sequelize, DataTypes) => {
         Brand.hasMany(m.BrandPopularity, { onDelete: 'SET NULL' });
       },
       findById: function(id) {
-        return this.find({ attributes: { include: ['name'], exclude: ['createdAt', 'updatedAt'] }, where: { id } });
+        return this.find({
+          attributes: {
+            include: ['name'],
+            exclude: ['createdAt', 'updatedAt'],
+          },
+          where: { id },
+        });
       },
       findByName: function(name) {
-        return this.find({ attributes: { include: ['name'], exclude: ['createdAt', 'updatedAt'] }, where: { name: { $iLike: name } } });
+        return this.find({
+          attributes: {
+            include: ['name'],
+            exclude: ['createdAt', 'updatedAt'],
+          },
+          where: { name: { $iLike: name } },
+        });
       },
       checkOrCreate: function(name, isNew = false) {
         const condensedName = condenseAll(name).toLowerCase();
-        return this.find({ attributes: { include: ['name'], exclude: ['createdAt', 'updatedAt'] }, where: { condensedName } })
-          .then((found) => {
-            if (found) {
-              return found;
-            }
-            const brand = this.create({ name, condensedName });
-            if (isNew) {
-              retrieveNews([name], true);
-              retrieveSales([name], true);
-              setRedisKeys();
-            }
-            return brand;
-          });
+        return this.find({
+          attributes: {
+            include: ['name'],
+            exclude: ['createdAt', 'updatedAt'],
+          },
+          where: { condensedName },
+        }).then((found) => {
+          if (found) {
+            return found;
+          }
+          const brand = this.create({ name, condensedName });
+          if (isNew) {
+            retrieveNews([name], true);
+            retrieveSales([name], true);
+            setRedisKeys();
+          }
+          return brand;
+        });
       },
     },
   });
