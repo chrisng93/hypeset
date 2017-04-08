@@ -70,18 +70,24 @@ export function getAllNews(payload) {
 
 export function getOwnNews(payload) {
   return (dispatch) => {
-    const body = {
-      url: `${process.env.API_URL}/api/me/news?offset=${payload.offset}&limit=${payload.limit}`,
-      options: {
-        method: 'GET',
-        headers: createHeaders(payload.token),
-      },
-      onFetching: getOwnNewsFetching,
-      onSuccess: getOwnNewsSuccess,
-      onFailure: getOwnNewsFailure,
-      errorMessage: 'Error getting own news',
-      dispatch,
+    dispatch(getOwnNewsFetching());
+    const options = {
+      method: 'GET',
+      headers: createHeaders(payload.token),
     };
-    return actionApiCall(body);
+
+    return fetch(`${process.env.API_URL}/api/me/news?offset=${payload.offset}&limit=${payload.limit}`, options)
+      .then(response => response.json())
+      .then((json) => {
+        if (!json.success) {
+          return dispatch(getOwnNewsFailure(json));
+        }
+        json.replace = payload.replace;
+        return dispatch(getOwnNewsSuccess(json));
+      })
+      .catch((err) => {
+        console.error(`Error getting own news: ${err}`);
+        return dispatch(getOwnNewsFailure(err));
+      });
   };
 }

@@ -35,9 +35,10 @@ export default function news(state = initialState, action) {
     case actionTypes.GET_OWN_NEWS_FETCHING:
       return { ...state, isFetchingOwnNews: true };
     case actionTypes.GET_OWN_NEWS_SUCCESS:
+      const news = payload.replace ? formatDates(payload.news) : state.news.concat(formatDates(payload.news));
       return {
         ...state,
-        news: state.news.concat(formatDates(payload.news)),
+        news,
         isFetchingOwnNews: false,
         error: freshErrorState,
       };

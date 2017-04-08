@@ -73,10 +73,10 @@ export default class Articles extends Component {
     let showUntil;
     let visibleArray;
     if (changeTab) {
-      showUntil = limit / 2;
+      showUntil = Math.min(limit / 2, articles.length);
       visibleArray = articles.slice(0, showUntil);
     } else {
-      showUntil = visibleOffset + (limit / 2);
+      showUntil = Math.min(visibleOffset + (limit / 2), articles.length);
       visibleArray = articles.slice(visibleOffset, showUntil);
     }
     this.setState({
@@ -88,6 +88,7 @@ export default class Articles extends Component {
   retrieveArticles() {
     const { articles, isAuthenticated, token, brand, type, getAllArticles, getOwnArticles, getBrandArticles } = this.props;
     if (brand) {
+      console.log('getting brand articles', articles.length, brand, type)
       getBrandArticles({ offset: articles.length, limit: 20, brand, type });
       return;
     }

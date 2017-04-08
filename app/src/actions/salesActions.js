@@ -70,18 +70,24 @@ export function getAllSales(payload) {
 
 export function getOwnSales(payload) {
   return (dispatch) => {
-    const body = {
-      url: `${process.env.API_URL}/api/me/sales?offset=${payload.offset}&limit=${payload.limit}`,
-      options: {
-        method: 'GET',
-        headers: createHeaders(payload.token),
-      },
-      onFetching: getOwnSalesFetching,
-      onSuccess: getOwnSalesSuccess,
-      onFailure: getOwnSalesFailure,
-      errorMessage: 'Error getting own sales',
-      dispatch,
+    dispatch(getOwnSalesFetching());
+    const options = {
+      method: 'GET',
+      headers: createHeaders(payload.token),
     };
-    return actionApiCall(body);
+
+    return fetch(`${process.env.API_URL}/api/me/sales?offset=${payload.offset}&limit=${payload.limit}`, options)
+      .then(response => response.json())
+      .then((json) => {
+        if (!json.success) {
+          return dispatch(getOwnSalesFailure(json));
+        }
+        json.replace = payload.replace;
+        return dispatch(getOwnSalesSuccess(json));
+      })
+      .catch((err) => {
+        console.error(`Error getting own sales: ${err}`);
+        return dispatch(getOwnSalesFailure(err));
+      });
   };
 }

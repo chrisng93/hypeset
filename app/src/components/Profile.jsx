@@ -14,6 +14,8 @@ const propTypes = {
   getAllBrands: T.func.isRequired,
   addBrand: T.func.isRequired,
   removeBrand: T.func.isRequired,
+  getOwnNews: T.func.isRequired,
+  getOwnSales: T.func.isRequired,
   routeToProfile: T.func.isRequired,
   routeToEditBrands: T.func.isRequired,
 };
@@ -26,10 +28,10 @@ export default class Profile extends Component {
 
   renderChild() {
     const { token, availableBrands, userBrands, popularBrands, getAllBrands, getBrandsByPopularity,
-      addBrand, removeBrand, user, error, onEditUser, routeToProfile, children } = this.props;
+      addBrand, removeBrand, getOwnNews, getOwnSales, user, error, onEditUser, routeToProfile, children } = this.props;
     const editUserProps = { user, token, error, onEditUser, routeToProfile };
     const editBrandProps = { token, availableBrands, userBrands, popularBrands, getAllBrands,
-      getBrandsByPopularity, addBrand, removeBrand };
+      getBrandsByPopularity, addBrand, removeBrand, getOwnNews, getOwnSales };
 
     const childrenWithProps = React.Children.map(children, (child) => {
       const componentName = child.type.name;

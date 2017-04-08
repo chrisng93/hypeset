@@ -35,9 +35,10 @@ export default function sales(state = initialState, action) {
     case actionTypes.GET_OWN_SALES_FETCHING:
       return { ...state, isFetchingOwnSales: true };
     case actionTypes.GET_OWN_SALES_SUCCESS:
+      const sales = payload.replace ? formatDates(payload.sales) : state.sales.concat(formatDates(payload.sales));
       return {
         ...state,
-        sales: state.sales.concat(formatDates(payload.sales)),
+        sales,
         isFetchingOwnSales: false,
         error: freshErrorState,
       };

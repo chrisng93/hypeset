@@ -10,6 +10,8 @@ const propTypes = {
   getAllBrands: T.func,
   addBrand: T.func,
   removeBrand: T.func,
+  getOwnNews: T.func,
+  getOwnSales: T.func,
 };
 
 export default class EditBrands extends Component {
@@ -30,6 +32,12 @@ export default class EditBrands extends Component {
     if (!popularBrands.length) {
       getBrandsByPopularity({ limit: 20 });
     }
+  }
+
+  componentWillUnmount() {
+    const { token, getOwnNews, getOwnSales } = this.props;
+    getOwnNews({ token, offset: 0, limit: 20, replace: true });
+    getOwnSales({ token, offset: 0, limit: 20, replace: true });
   }
 
   onAddBrand(brandName) {
