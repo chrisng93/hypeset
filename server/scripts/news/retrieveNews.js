@@ -13,8 +13,8 @@ const logger = winston.loggers.get('scripts');
 export async function retrieveNews(availableBrands, newBrand = false) {
   try {
     const latestNews = await m.Info.find({ where: { type: 'News' }, order: 'date DESC' });
-    let latestNewsDate;
-    (latestNews && !newBrand) ? latestNewsDate = latestNews.date : latestNewsDate = moment().subtract(30, 'days');
+    const daysBefore = process.env.NODE_ENV === 'production' ? 365 : 30;
+    const latestNewsDate = (latestNews && !newBrand) ? latestNews.date : moment().subtract(daysBefore, 'days');
     const grailed = await m.Site.find({ where: { name: 'Grailed' } });
     const hypebeast = await m.Site.find({ where: { name: 'Hypebeast' } });
 

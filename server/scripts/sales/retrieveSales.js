@@ -12,8 +12,8 @@ const logger = winston.loggers.get('scripts');
 export async function retrieveSales(availableBrands, newBrand = false) {
   try {
     const latestSale = await m.Info.find({ where: { type: 'Sale' }, order: 'date DESC' });
-    let latestSaleDate;
-    (latestSale && !newBrand) ? latestSaleDate = latestSale.date : latestSaleDate = moment().subtract(30, 'days');
+    const daysBefore = process.env.NODE_ENV === 'production' ? 365 : 30;
+    const latestSaleDate = (latestSale && !newBrand) ? latestSale.date : moment().subtract(daysBefore, 'days');
     const reddit = await m.Site.find({ where: { name: 'Reddit' } });
 
     const r = new snoowrap({
