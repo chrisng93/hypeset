@@ -1,4 +1,4 @@
-# Fitomo Frontend
+# hypeset Frontend
 
 
 ## Table of Contents
