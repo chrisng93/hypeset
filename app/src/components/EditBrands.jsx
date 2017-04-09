@@ -1,3 +1,7 @@
+/**
+ * Stateless component for editing user's brands
+ */
+
 import React, { Component, PropTypes as T } from 'react';
 
 const propTypes = {

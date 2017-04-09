@@ -1,3 +1,7 @@
+/**
+ * Aggregate actions
+ */
+
 import { auth, signUp, logout, editUser } from './userActions';
 import { getAllBrands, getUserBrands, getBrandsByPopularity, addBrand, removeBrand, getBrandInfos, resetBrandInfos } from './brandActions';
 import { getAllNews, getOwnNews } from './newsActions';

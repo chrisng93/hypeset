@@ -1,3 +1,7 @@
+/**
+ * Stateless component for profile
+ */
+
 import React, { Component, PropTypes as T } from 'react';
 import EditUser from './EditUser';
 

@@ -1,3 +1,7 @@
+/**
+ * Stateful container for news
+ */
+
 import React, { PropTypes as T } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';

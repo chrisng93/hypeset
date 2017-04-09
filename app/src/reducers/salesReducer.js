@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/19/17.
+ * Create sales reducer
  */
+
 import * as actionTypes from '../constants/actionTypes';
 import { formatDates } from '../utils/dateUtils';
 

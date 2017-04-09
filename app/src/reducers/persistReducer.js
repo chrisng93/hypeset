@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/28/17.
+ * Create persist reducer
  */
+
 const initialState = {
   rehydrated: false,
 };

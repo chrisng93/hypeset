@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/28/17.
+ * Create selectors for persist store
  */
+
 import { createSelector } from 'reselect';
 
 const persistStateSelector = state => state.persist;

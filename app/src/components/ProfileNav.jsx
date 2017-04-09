@@ -1,3 +1,7 @@
+/**
+ * Stateless component for profile navigation
+ */
+
 import React, { Component, PropTypes as T } from 'react';
 
 const propTypes = {

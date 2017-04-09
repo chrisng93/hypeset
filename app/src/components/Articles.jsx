@@ -1,3 +1,7 @@
+/**
+ * Stateless component for articles (used by news/sales/brand containers)
+ */
+
 import React, { Component, PropTypes as T } from 'react';
 import ArticleItem from './ArticleItem';
 

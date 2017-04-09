@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/15/17.
+ * Create selectors for news store
  */
+
 import { createSelector } from 'reselect';
 import { isAuthenticatedSelector } from './userSelectors';
 import { userBrandsSelector } from './brandSelectors';

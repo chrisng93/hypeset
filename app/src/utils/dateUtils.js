@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/19/17.
+ * Date formatting utils
  */
+
 import moment from 'moment';
 
 const readableDate = (date) => {

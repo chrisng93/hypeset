@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/15/17.
+ * Create news reducer
  */
+
 import * as actionTypes from '../constants/actionTypes';
 import { formatDates } from '../utils/dateUtils';
 

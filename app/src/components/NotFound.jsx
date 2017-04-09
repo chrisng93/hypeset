@@ -1,3 +1,7 @@
+/**
+ * Stateless component for not found page
+ */
+
 import React, { PropTypes as T } from 'react';
 
 const propTypes = {

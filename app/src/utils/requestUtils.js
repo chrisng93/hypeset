@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/14/17.
+ * Utils for API calls
  */
+
 import * as actions from '../actions';
 import * as actionTypes from '../constants/actionTypes';
 

@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 4/5/17.
+ * Handle bundling for development work
  */
+
 const webpack = require('webpack');
 const webpackDevServer = require('webpack-dev-server');
 const path = require('path');

@@ -1,3 +1,7 @@
+/**
+ * Stateful container for not found page
+ */
+
 import React, { PropTypes as T } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';

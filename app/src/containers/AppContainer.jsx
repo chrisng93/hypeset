@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/20/17.
+ * Stateful container for entire app
  */
+
 import React, { Component, PropTypes as T } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'

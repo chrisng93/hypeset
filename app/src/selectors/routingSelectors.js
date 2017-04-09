@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/14/17.
+ * Create selectors for routing store
  */
+
 import { createSelector } from 'reselect'
 
 const routingStateSelector = state => state.routing;

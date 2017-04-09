@@ -1,3 +1,7 @@
+/**
+ * Stateless component for editing user info
+ */
+
 import React, { Component, PropTypes as T } from 'react';
 
 const propTypes = {

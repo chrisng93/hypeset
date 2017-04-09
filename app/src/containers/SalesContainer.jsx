@@ -1,3 +1,7 @@
+/**
+ * Stateful container for sales
+ */
+
 import React, { Component, PropTypes as T } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';

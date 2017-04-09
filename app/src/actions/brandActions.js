@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/14/17.
+ * Actions (primarily API calls) for brands
  */
+
 import * as actionTypes from '../constants/actionTypes.js';
 import { actionApiCall, createHeaders } from '../utils/requestUtils';
 

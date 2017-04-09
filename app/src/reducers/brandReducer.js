@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/14/17.
+ * Create brand reducer
  */
+
 import * as actionTypes from '../constants/actionTypes';
 import { formatDates } from '../utils/dateUtils';
 

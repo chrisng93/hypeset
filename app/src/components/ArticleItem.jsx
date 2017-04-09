@@ -1,3 +1,7 @@
+/**
+ * Stateless component for singular article item
+ */
+
 import React, { Component, PropTypes as T } from 'react';
 
 const propTypes = {

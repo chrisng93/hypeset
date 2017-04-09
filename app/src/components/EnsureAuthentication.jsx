@@ -1,3 +1,7 @@
+/**
+ * Stateless component for components requiring authentication
+ */
+
 import React, { Component, PropTypes as T } from 'react';
 
 const propTypes = {

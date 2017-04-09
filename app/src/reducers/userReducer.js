@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/12/17.
+ * Create user reducer
  */
+
 import * as actionTypes from '../constants/actionTypes';
 
 const freshErrorState = { status: false, message: '' };

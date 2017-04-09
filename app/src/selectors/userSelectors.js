@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/14/17.
+ * Create selectors for user store 
  */
+
 import { createSelector } from 'reselect'
 
 const userStateSelector = state => state.user;

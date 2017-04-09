@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/14/17.
+ * Create selectors for brand store
  */
+
 import { createSelector } from 'reselect';
 
 const brandStateSelector = state => state.brand;

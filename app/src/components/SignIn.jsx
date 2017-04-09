@@ -1,3 +1,7 @@
+/**
+ * Stateless component for sign in
+ */
+
 import React, { Component, PropTypes as T } from 'react';
 
 const propTypes = {

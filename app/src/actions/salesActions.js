@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/19/17.
+ * Actions (primarily API calls) for sales
  */
+
 import * as actionTypes from '../constants/actionTypes.js';
 import { actionApiCall, createHeaders } from '../utils/requestUtils';
 

@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/19/17.
+ * Actions (primarily API calls) for users
  */
+
 import { push } from 'react-router-redux';
 import * as actionTypes from '../constants/actionTypes.js';
 import { actionApiCall, createHeaders } from '../utils/requestUtils';
