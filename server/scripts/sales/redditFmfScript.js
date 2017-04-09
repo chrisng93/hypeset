@@ -1,5 +1,5 @@
 /**
- * Created by chrisng on 2/22/17.
+ * Script to grab relevant sales from Reddit
  */
 
 import request from 'request';

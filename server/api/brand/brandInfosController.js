@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/21/17.
+ * Route handler for brand-specific news/sales
  */
+
 import winston from 'winston';
 import m from '../../models';
 import redisClient from '../../db/redis';

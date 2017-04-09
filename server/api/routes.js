@@ -1,3 +1,7 @@
+/**
+ * Aggregate routes
+ */
+
 import authRouter from './auth';
 import userRouter from './user';
 import brandRouter from './brand';

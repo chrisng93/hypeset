@@ -1,3 +1,7 @@
+/**
+ * Define UserBrand join table
+ */
+
 module.exports = (sequelize, DataTypes) => {
   const UserBrand = sequelize.define('UserBrand', {
     UserId: {

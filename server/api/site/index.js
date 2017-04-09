@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/12/17.
+ * Define /api/site routes
  */
+
 import express from 'express';
 import siteCrudController from './siteCrudController';
 

@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/12/17.
+ * Authentication middleware for requests
  */
+
 import jwt from 'jsonwebtoken';
 import winston from 'winston';
 import redisClient from '../db/redis';

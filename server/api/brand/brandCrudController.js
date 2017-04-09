@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/12/17.
+ * Brand CRUD
  */
+
 import winston from 'winston';
 import m from '../../models';
 import redisClient from '../../db/redis';

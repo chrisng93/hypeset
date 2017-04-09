@@ -1,3 +1,7 @@
+/**
+ * Define InfoUser join table
+ */
+
 module.exports = (sequelize, DataTypes) => {
   const InfoUser = sequelize.define('InfoUser', {
     InfoId: {

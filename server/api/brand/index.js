@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/12/17.
+ * Define /api/brand routes
  */
+
 import express from 'express';
 import brandCrudController from './brandCrudController';
 import brandInfosController from './brandInfosController';

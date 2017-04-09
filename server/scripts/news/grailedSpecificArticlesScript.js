@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/13/17.
+ * Parse specific Grailed articles that are published often (Weekend Reading, Grail Fits, Staff Picks)
  */
+
 import request from 'request';
 import cheerio from 'cheerio';
 import winston from 'winston';

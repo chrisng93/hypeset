@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/15/17.
+ * Define /api/me routes
  */
+
 import express from 'express';
 import meBrandController from './meBrandController';
 import meInfoController from './meInfoController';

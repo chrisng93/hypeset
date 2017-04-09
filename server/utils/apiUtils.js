@@ -1,5 +1,5 @@
 /**
- * Created by chrisng on 3/25/17.
+ * Utility functions for APIs
  */
 
 export const checkForSequelizeErrors = (err) => {

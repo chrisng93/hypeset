@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/15/17.
+ * Retrieve brand and brand popularities from Grailed
  */
+
 import winston from 'winston';
 import m from '../../models';
 import { parseHbxDesigners } from './hbxDesignersScript';

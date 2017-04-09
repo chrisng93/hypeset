@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/23/17.
+ * Create loggers
  */
+
 const logLevel = process.env.LOG_LEVEL;
 
 module.exports = (winston) => {

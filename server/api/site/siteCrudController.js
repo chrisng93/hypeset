@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/12/17.
+ * Site CRUD
  */
+
 import winston from 'winston';
 import m from '../../models';
 import { checkForSequelizeErrors } from '../../utils/apiUtils';

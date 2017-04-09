@@ -1,5 +1,5 @@
 /**
- * Created by chrisng on 3/12/17.
+ * Connect to Postgres, create tables from models, and create sites/admin account
  */
 
 import fs from 'fs';

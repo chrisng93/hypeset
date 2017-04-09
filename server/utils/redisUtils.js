@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/26/17.
+ * Utils for Redis caching
  */
+
 import winston from 'winston';
 import m from '../models';
 import redisClient from '../db/redis';

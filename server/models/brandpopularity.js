@@ -1,3 +1,7 @@
+/**
+ * Define BrandPopularity model
+ */
+
 module.exports = (sequelize, DataTypes) => {
   const BrandPopularity = sequelize.define('BrandPopularity', {
     BrandId: {

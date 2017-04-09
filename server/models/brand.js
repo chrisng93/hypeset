@@ -1,3 +1,7 @@
+/**
+ * Define Brand model
+ */
+
 import { isUnique } from '../utils/databaseUtils';
 import { condenseAll } from '../utils/scriptUtils';
 import { retrieveNews } from '../scripts/news/retrieveNews';

@@ -1,3 +1,7 @@
+/**
+ * Define Site model
+ */
+
 module.exports = (sequelize, DataTypes) => {
   const Site = sequelize.define('Site', {
     name: {

@@ -1,3 +1,7 @@
+/**
+ * Middleware for requests
+ */
+
 import bodyParser from 'body-parser';
 
 module.exports = (app) => {

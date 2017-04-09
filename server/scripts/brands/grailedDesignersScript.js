@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/15/17.
+ * Script to grab all designers (and their # of current sales) sold on Grailed
  */
+
 import request from 'request';
 import cheerio from 'cheerio';
 

@@ -1,3 +1,7 @@
+/**
+ * Define Info model
+ */
+
 module.exports = (sequelize, DataTypes) => {
   const TYPES = ['News', 'Sale'];
 

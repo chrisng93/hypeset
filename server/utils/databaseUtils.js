@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/14/17.
+ * Utils for database
  */
+
 import m from '../models';
 
 export const isUnique = (modelName, field) => {

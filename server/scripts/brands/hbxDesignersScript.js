@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/15/17.
+ * Script to grab all designers sold on HBX
  */
+
 import request from 'request';
 import cheerio from 'cheerio';
 

@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/13/17.
+ * Utils for web scraping scripts
  */
+
 import moment from 'moment';
 
 export const condenseAll = string => string.replace(/[^a-z0-9]/gi, '');

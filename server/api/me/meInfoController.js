@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/15/17.
+ * Route handlers for news/sales relating to a user
  */
+
 import winston from 'winston';
 import m from '../../models';
 import { checkForSequelizeErrors } from '../../utils/apiUtils';

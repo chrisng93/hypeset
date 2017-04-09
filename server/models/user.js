@@ -1,3 +1,7 @@
+/**
+ * Define User model
+ */
+
 import bcrypt from 'bcrypt-nodejs';
 
 module.exports = (sequelize, DataTypes) => {

@@ -1,5 +1,5 @@
 /**
- * Created by chrisng on 3/13/17.
+ * Retrieve news from Grailed and Hypebeast and insert into db
  */
 import moment from 'moment';
 import winston from 'winston';

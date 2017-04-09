@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 2/22/17.
+ * Script for grabbing relevant news from Hypebeast
  */
+
 import request from 'request';
 import cheerio from 'cheerio';
 import moment from 'moment';

@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/20/17.
+ * Define /api/sales routes
  */
+
 import express from 'express';
 import infoController from '../infoController';
 

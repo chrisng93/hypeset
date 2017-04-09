@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/16/17.
+ * Cron job to grab news/sales and reset Redis cahce
  */
+
 import winston from 'winston';
 const CronJob = require('cron').CronJob;
 import m from '../models';

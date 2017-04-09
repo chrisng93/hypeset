@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/12/17.
+ * User CRUD
  */
+
 import jwt from 'jsonwebtoken';
 import winston from 'winston';
 import m from '../../models';

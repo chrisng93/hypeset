@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/19/17.
+ * Retrieve sales from Reddit and insert into database
  */
+
 import moment from 'moment';
 import snoowrap from 'snoowrap';
 import winston from 'winston';

@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/13/17.
+ * Script to grab relevant articles from Grailed
  */
+
 import request from 'request';
 import cheerio from 'cheerio';
 import moment from 'moment';

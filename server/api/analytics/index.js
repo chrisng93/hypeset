@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/12/17.
+ * Define /api/analytics routes
  */
+
 import express from 'express';
 import brandAnalyticsController from './brandAnalyticsController';
 

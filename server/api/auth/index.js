@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/12/17.
+ * Define /auth routes
  */
+
 import express from 'express';
 import authController from './authController';
 

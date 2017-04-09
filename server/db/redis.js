@@ -1,6 +1,7 @@
 /**
- * Created by chrisng on 3/20/17.
+ * Create Redis client
  */
+
 import redis from 'redis';
 import Promise from 'bluebird';
 import winston from 'winston';
