@@ -48,7 +48,7 @@
 - Cron
 
 #### Deployment:
-- Docker, Docker Compose
+- Docker
 - Digital Ocean
 
 #### File Hosting:
