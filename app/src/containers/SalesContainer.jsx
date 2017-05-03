@@ -5,6 +5,7 @@
 import React, { Component, PropTypes as T } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { push } from 'react-router-redux';
 import * as actions from '../actions';
 import { isAuthenticatedSelector, tokenSelector } from '../selectors/userSelectors';
 import { salesSelector, salesBrandsSelector, salesSitesSelector, isFetchingAllSalesSelector,
@@ -22,13 +23,14 @@ const propTypes = {
   isFetchingAllSales: T.bool.isRequired,
   isFetchingOwnSales: T.bool.isRequired,
 
-  getAllSales: T.func.isRequired,
-  getOwnSales: T.func.isRequired,
+  getAllSales: T.func,
+  getOwnSales: T.func,
+  routeToBrandPage: T.func,
 };
 
 function SalesContainer(props) {
   const { isAuthenticated, token, pathname, sales, salesBrands, salesSites, isFetchingAllSales,
-    isFetchingOwnSales, getAllSales, getOwnSales } = props;
+    isFetchingOwnSales, getAllSales, getOwnSales, routeToBrandPage } = props;
   const articlesProps = {
     isAuthenticated,
     token,
@@ -40,6 +42,7 @@ function SalesContainer(props) {
     isFetchingOwnArticles: isFetchingOwnSales,
     getAllArticles: getAllSales,
     getOwnArticles: getOwnSales,
+    routeToBrandPage,
     type: 'sales',
   };
   return (
@@ -71,6 +74,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getAllSales: bindActionCreators(actions.getAllSales, dispatch),
     getOwnSales: bindActionCreators(actions.getOwnSales, dispatch),
+    routeToBrandPage: (brand) => dispatch(push(`/brands/${brand}`)),
   };
 }
 

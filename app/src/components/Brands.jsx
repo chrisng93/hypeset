@@ -8,8 +8,8 @@ const propTypes = {
   brands: T.array.isRequired,
   brandsByGrouping: T.object.isRequired,
 
-  getAllBrands: T.func.isRequired,
-  routeToBrandPage: T.func.isRequired,
+  getAllBrands: T.func,
+  routeToBrandPage: T.func,
 };
 
 export default class Brands extends Component {

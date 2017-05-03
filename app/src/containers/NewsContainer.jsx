@@ -5,6 +5,7 @@
 import React, { PropTypes as T } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { push } from 'react-router-redux';
 import * as actions from '../actions';
 import { isAuthenticatedSelector, tokenSelector } from '../selectors/userSelectors';
 import { newsSelector, newsBrandsSelector, newsSitesSelector, isFetchingAllNewsSelector,
@@ -22,13 +23,14 @@ const propTypes = {
   isFetchingAllNews: T.bool.isRequired,
   isFetchingOwnNews: T.bool.isRequired,
 
-  getAllNews: T.func.isRequired,
-  getOwnNews: T.func.isRequired,
+  getAllNews: T.func,
+  getOwnNews: T.func,
+  routeToBrandPage: T.func,
 };
 
 function NewsContainer(props) {
   const { isAuthenticated, token, pathname, news, newsBrands, newsSites, isFetchingAllNews,
-    isFetchingOwnNews, getAllNews, getOwnNews } = props;
+    isFetchingOwnNews, getAllNews, getOwnNews, routeToBrandPage } = props;
   const articlesProps = {
     isAuthenticated,
     token,
@@ -40,6 +42,7 @@ function NewsContainer(props) {
     isFetchingOwnArticles: isFetchingOwnNews,
     getAllArticles: getAllNews,
     getOwnArticles: getOwnNews,
+    routeToBrandPage,
     type: 'news',
   };
   return (
@@ -71,6 +74,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getAllNews: bindActionCreators(actions.getAllNews, dispatch),
     getOwnNews: bindActionCreators(actions.getOwnNews, dispatch),
+    routeToBrandPage: (brand) => dispatch(push(`/brands/${brand}`)),
   };
 }
 

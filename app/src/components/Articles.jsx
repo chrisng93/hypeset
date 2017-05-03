@@ -18,6 +18,7 @@ const propTypes = {
   getAllArticles: T.func,
   getOwnArticles: T.func,
   getBrandArticles: T.func,
+  routeToBrandPage: T.func,
   type: T.string,
 };
 
@@ -92,7 +93,6 @@ export default class Articles extends Component {
   retrieveArticles() {
     const { articles, isAuthenticated, token, brand, type, getAllArticles, getOwnArticles, getBrandArticles } = this.props;
     if (brand) {
-      console.log('getting brand articles', articles.length, brand, type)
       getBrandArticles({ offset: articles.length, limit: 20, brand, type });
       return;
     }
@@ -145,10 +145,11 @@ export default class Articles extends Component {
 
   render() {
     const { visible } = this.state;
+    const { routeToBrandPage } = this.props;
     return (
       <article className="articles-container">
         <section className="articles">
-          {visible.map((article, key) => <ArticleItem key={key} article={article} /> )}
+          {visible.map((article, key) => <ArticleItem key={key} article={article} routeToBrandPage={routeToBrandPage} /> )}
           {this.renderNoVisibleArticles()}
         </section>
         <section className="articles-nav">

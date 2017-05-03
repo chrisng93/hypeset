@@ -11,7 +11,6 @@ const buildPath = path.resolve(__dirname, 'public', 'build');
 
 module.exports = {
   entry: mainPath,
-  devtool: 'source-map',
   output: {
     path: buildPath,
     filename: 'bundle.js',

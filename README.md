@@ -37,6 +37,8 @@
 - React-Router
 - React-Router-Redux
 - SASS
+- Reselect
+- Webpack
 
 ##### Back End:
 - Node
@@ -53,6 +55,9 @@
 
 #### File Hosting:
 - Amazon S3
+
+#### APIs:
+- Reddit
 
 
 ## Contributing
