@@ -32,7 +32,7 @@ export default class Brands extends Component {
             </h1>
             <section className="brands-list-grouping-brands">
               {brandsInGrouping.map((brand, key) =>
-                <section key={key} className="brands-list-grouping-brands-brand">
+                <section key={brand.id} className="brands-list-grouping-brands-brand">
                   <span onClick={() => routeToBrandPage(brand.condensedName)}>{brand.name}</span>
                 </section>
               )}

@@ -23,7 +23,7 @@ export default function ArticleItem({ article, routeToBrandPage }) {
           if (key === 0 || (key === 1 && article.Brands.length <= 2)) {
             return (
               <p
-                key={key}
+                key={brand.id}
                 className="article-brands-brand"
                 onClick={routeToBrandPage ? () => routeToBrandPage(condenseAll(brand.name)) : null}
               >
@@ -34,7 +34,7 @@ export default function ArticleItem({ article, routeToBrandPage }) {
           if (key === 1 && article.Brands.length > 2) {
             return (
               <p
-                key={key}
+                key={brand.id}
                 className="article-brands-brand"
                 onClick={routeToBrandPage ? () => routeToBrandPage(condenseAll(brand.name)) : null}
               >

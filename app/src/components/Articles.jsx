@@ -149,7 +149,7 @@ export default class Articles extends Component {
     return (
       <article className="articles-container">
         <section className="articles">
-          {visible.map((article, key) => <ArticleItem key={key} article={article} routeToBrandPage={routeToBrandPage} /> )}
+          {visible.map((article, key) => <ArticleItem key={article.id} article={article} routeToBrandPage={routeToBrandPage} /> )}
           {this.renderNoVisibleArticles()}
         </section>
         <section className="articles-nav">

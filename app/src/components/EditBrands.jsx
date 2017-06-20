@@ -66,7 +66,7 @@ export default class EditBrands extends Component {
           </h1>
           <ul>
             {availableBrands.map((brand, key) =>
-                <li key={key}>
+                <li key={brand.id}>
                   <span onClick={() => this.onAddBrand(brand.name)}>{brand.name}</span>
                 </li>
             )}
@@ -83,11 +83,13 @@ export default class EditBrands extends Component {
           </section>
           <ul>
             {userBrands.map((brand, key) =>
-                <li key={key}>
+                <li key={brand.id}>
                   <button
                     className={`edit-brands-following-remove ${this.state.toggleRemove ? '' : 'hidden'}`}
                     onClick={() => removeBrand({ token, brands: [brand.name] })}
-                  >x</button>
+                  >
+                    x
+                  </button>
                   {brand.name}
                 </li>
             )}
@@ -99,7 +101,7 @@ export default class EditBrands extends Component {
           </h1>
           <ul>
             {popularBrands.map((brand, key) =>
-                <li key={key}>
+                <li key={brand.id}>
                   {key + 1}. <span
                   onClick={() => this.onAddBrand(brand.brandName)}>{brand.brandName}</span>
                 </li>

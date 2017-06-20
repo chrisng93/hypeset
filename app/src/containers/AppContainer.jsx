@@ -48,10 +48,9 @@ class AppContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.isAuthenticated === this.props.isAuthenticated) {
-      return;
+    if (nextProps.isAuthenticated !== this.props.isAuthenticated) {
+      this.getData(nextProps);
     }
-    this.getData(nextProps);
   }
 
   getData(nextProps) {
