@@ -7,10 +7,18 @@ import cheerio from 'cheerio';
 import moment from 'moment';
 import { findBrands, findClass, findTag, formatDate } from '../../utils/scriptUtils';
 
-export async function parseGrailedArticles(articles, availableBrands, page = 1, latestArticleDate, grailedId) {
-  return new Promise((resolve) => {
+export async function parseGrailedArticles(articles, availableBrands, page = 1, latestArticleDate, grailedId, tries = 1) {
+  return new Promise((resolve, reject) => {
     let continueParsing = true;
     request(`${process.env.GRAILED_URL}/drycleanonly?page=${page}`, (err, res) => {
+      if (!res) {
+        if (tries <= 5) {
+          resolve(parseGrailedArticles(articles, availableBrands, page + 1, latestArticleDate, grailedId, tries + 1));
+          return;
+        }
+        articles.length ? resolve(articles) : reject(articles);
+        return;
+      }
       const $ = cheerio.load(res.body);
       $('.tertiary-articles-row').each((rowIndex, row) => {
         const article = {};
@@ -43,7 +51,7 @@ export async function parseGrailedArticles(articles, availableBrands, page = 1, 
         }
       });
       if (continueParsing) {
-        resolve(parseGrailedArticles(articles, availableBrands, page + 1, latestArticleDate, grailedId));
+        resolve(parseGrailedArticles(articles, availableBrands, page + 1, latestArticleDate, grailedId, tries));
       }
       resolve(articles);
     });

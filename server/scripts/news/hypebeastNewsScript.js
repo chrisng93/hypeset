@@ -7,10 +7,18 @@ import cheerio from 'cheerio';
 import moment from 'moment';
 import { findBrands } from '../../utils/scriptUtils';
 
-export async function parseHypebeastNews(articles = [], availableBrands, page = 1, latestArticleDate, hypebeastId) {
-  return new Promise((resolve) => {
+export async function parseHypebeastNews(articles = [], availableBrands, page = 1, latestArticleDate, hypebeastId, tries = 1) {
+  return new Promise((resolve, reject) => {
     let continueParsing = true;
     request(`${process.env.HYPEBEAST_URL}/news/page/${page}`, (err, res) => {
+      if (!res) {
+        if (tries <= 5) {
+          resolve(parseHypebeastNews(articles, availableBrands, page, latestArticleDate, hypebeastId, tries + 1));
+          return;
+        }
+        resolve(articles);
+        return;
+      }
       const $ = cheerio.load(res.body);
       $('.post-box').each((postIndex, post) => {
         const category = $(`#${post.attribs.id} .category`)[0];
@@ -50,7 +58,7 @@ export async function parseHypebeastNews(articles = [], availableBrands, page = 
         }
       });
       if (continueParsing) {
-        resolve(parseHypebeastNews(articles, availableBrands, page + 1, latestArticleDate, hypebeastId));
+        resolve(parseHypebeastNews(articles, availableBrands, page + 1, latestArticleDate, hypebeastId, tries));
       }
       resolve(articles);
     });

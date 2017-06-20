@@ -6,8 +6,16 @@ import request from 'request';
 import cheerio from 'cheerio';
 
 export async function parseGrailedDesigners(tries = 1) {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     request(`${process.env.GRAILED_URL}/designers`, (err, res) => {
+      if (!res) {
+        if (tries <= 5) {
+          resolve(parseGrailedDesigners(tries + 1));
+          return;
+        }
+        reject({ brandNames: [], brandPopularity: [] });
+        return;
+      }
       const $ = cheerio.load(res.body);
       const scripts = $('script');
       const designerScript = $(scripts[3]).text();
@@ -20,7 +28,7 @@ export async function parseGrailedDesigners(tries = 1) {
         if (tries <= 5) {
           resolve(parseGrailedDesigners(tries + 1));
         }
-        resolve({ brandNames: [], brandPopularity: [] });
+        reject({ brandNames: [], brandPopularity: [] });
       }
     });
   });

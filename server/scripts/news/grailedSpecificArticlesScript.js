@@ -33,9 +33,17 @@ export async function parseGrailedSpecificArticles(type, articles, availableBran
   }
 }
 
-async function parseWeekendReadingArticle(article, availableBrands) {
-  return new Promise((resolve) => {
+async function parseWeekendReadingArticle(article, availableBrands, tries = 1) {
+  return new Promise((resolve, reject) => {
     request(article.url, (err, res) => {
+      if (!res) {
+        if (tries <= 5) {
+          resolve(parseWeekendReadingArticle(article, availableBrands, tries + 1));
+          return;
+        }
+        reject();
+        return;
+      }
       const $ = cheerio.load(res.body);
       const root = $('.article-wrapper')[0];
       const links = findTag(root, 'a');
@@ -53,19 +61,27 @@ async function parseWeekendReadingArticle(article, availableBrands) {
 }
 
 async function parseGrailFitsArticle(article, availableBrands) {
-  return new Promise((resolve) => {
-    parseDataListings(article, '.listings', availableBrands, resolve);
+  return new Promise((resolve, reject) => {
+    parseDataListings(article, '.listings', availableBrands, resolve, reject);
   });
 }
 
 async function parseStaffPicksArticle(article, availableBrands) {
-  return new Promise((resolve) => {
-    parseDataListings(article, '.listings', availableBrands, resolve);
+  return new Promise((resolve, reject) => {
+    parseDataListings(article, '.listings', availableBrands, resolve, reject);
   })
 }
 
-const parseDataListings = (article, classSelector, availableBrands, resolve) => {
+const parseDataListings = (article, classSelector, availableBrands, resolve, reject, tries = 1) => {
   request(article.url, (err, res) => {
+    if (!res) {
+      if (tries <= 5) {
+        resolve(parseDataListings(article, classSelector, availableBrands, resolve, reject, tries + 1));
+        return;
+      }
+      reject();
+      return;
+    }
     const $ = cheerio.load(res.body);
     const validBrands = [];
     $(classSelector).each((listingIndex, listing) => {
@@ -79,7 +95,7 @@ const parseDataListings = (article, classSelector, availableBrands, resolve) => 
       });
     });
     article.brands = validBrands;
-    validBrands.length > 0 ? resolve(article) : resolve(null);
+    validBrands.length > 0 ? resolve(article) : reject();
   });
 };
 
