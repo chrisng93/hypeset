@@ -1,5 +1,5 @@
 /**
- * Stateless component for components requiring authentication
+ * "Dumb" component for components requiring authentication
  */
 
 import React, { Component, PropTypes as T } from 'react';

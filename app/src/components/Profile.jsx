@@ -1,5 +1,5 @@
 /**
- * Stateless component for profile
+ * "Dumb" component for profile
  */
 
 import React, { Component, PropTypes as T } from 'react';

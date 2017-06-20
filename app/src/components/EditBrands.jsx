@@ -1,5 +1,5 @@
 /**
- * Stateless component for editing user's brands
+ * "Dumb" component for editing user's brands
  */
 
 import React, { Component, PropTypes as T } from 'react';

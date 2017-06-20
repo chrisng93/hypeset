@@ -1,5 +1,5 @@
 /**
- * Stateless component for singular article item
+ * "Dumb" component for singular article item
  */
 
 import React, { PropTypes as T } from 'react';

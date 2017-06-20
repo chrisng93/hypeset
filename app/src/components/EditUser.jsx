@@ -1,5 +1,5 @@
 /**
- * Stateless component for editing user info
+ * "Dumb" component for editing user info
  */
 
 import React, { Component, PropTypes as T } from 'react';

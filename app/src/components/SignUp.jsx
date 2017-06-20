@@ -1,5 +1,5 @@
 /**
- * Stateless component for sign up
+ * "Dumb" component for sign up
  */
 
 import React, { Component, PropTypes as T } from 'react';

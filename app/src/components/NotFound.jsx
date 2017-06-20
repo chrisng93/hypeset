@@ -1,5 +1,5 @@
 /**
- * Stateless component for not found page
+ * "Dumb" component for not found page
  */
 
 import React, { PropTypes as T } from 'react';

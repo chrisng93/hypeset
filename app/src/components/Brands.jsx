@@ -1,5 +1,5 @@
 /**
- * Stateless component for brands
+ * "Dumb" component for brands
  */
 
 import React, { Component, PropTypes as T } from 'react';

@@ -1,5 +1,5 @@
 /**
- * Stateless component for articles (used by news/sales/brand containers)
+ * "Dumb" component for articles (used by news/sales/brand containers)
  */
 
 import React, { Component, PropTypes as T } from 'react';
