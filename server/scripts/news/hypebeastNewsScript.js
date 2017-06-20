@@ -57,7 +57,7 @@ export async function parseHypebeastNews(articles = [], availableBrands, page = 
           }
         }
       });
-      if (continueParsing) {
+      if (continueParsing && $('.post-box').length) {
         resolve(parseHypebeastNews(articles, availableBrands, page + 1, latestArticleDate, hypebeastId, tries));
       }
       resolve(articles);

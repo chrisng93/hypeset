@@ -13,7 +13,7 @@ export async function parseGrailedArticles(articles, availableBrands, page = 1, 
     request(`${process.env.GRAILED_URL}/drycleanonly?page=${page}`, (err, res) => {
       if (!res) {
         if (tries <= 5) {
-          resolve(parseGrailedArticles(articles, availableBrands, page + 1, latestArticleDate, grailedId, tries + 1));
+          resolve(parseGrailedArticles(articles, availableBrands, page, latestArticleDate, grailedId, tries + 1));
           return;
         }
         articles.length ? resolve(articles) : reject(articles);
@@ -30,6 +30,7 @@ export async function parseGrailedArticles(articles, availableBrands, page = 1, 
         article.url = `${process.env.GRAILED_URL}${endpoint}`;
         article.imgUrl = findClass(row, 'hero')[0].attribs.src;
         article.blurb = findClass(row, 'subtitle')[0].children[0].data.trim();
+        console.log(article.title)
 
         // separate parsing for weekend reading, the best #grailfits of the week, and staff picks
         const titleWords = article.title.split(' ');
@@ -50,7 +51,7 @@ export async function parseGrailedArticles(articles, availableBrands, page = 1, 
           continueParsing = false;
         }
       });
-      if (continueParsing) {
+      if (continueParsing && $('.tertiary-articles-row').length) {
         resolve(parseGrailedArticles(articles, availableBrands, page + 1, latestArticleDate, grailedId, tries));
       }
       resolve(articles);
