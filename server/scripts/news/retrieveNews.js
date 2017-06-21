@@ -29,27 +29,29 @@ export async function retrieveNews(availableBrands, newBrand = false) {
     logger.debug('Started parsing Hypebeast news', { type: 'News', site: 'Hypebeast', action: 'start parse' });
     const hypebeastNews = await parseHypebeastNews([], availableBrands, 1, latestNewsDate, hypebeast.id);
     logger.debug('Finished parsing Hypebeast news', { type: 'News', site: 'Hypebeast', action: 'finish parse' });
+
     logger.debug('Started parsing Grailed articles', { type: 'News', site: 'Grailed', action: 'start parse' });
     const grailedArticles = await parseGrailedArticles(initialGrailedState, availableBrands, 1, latestNewsDate, grailed.id);
     logger.debug('Finished parsing Grailed articles', { type: 'News', site: 'Grailed', action: 'finish parse' });
+
     logger.debug('Started parsing Grailed Weekend Reading', { type: 'News', site: 'Grailed', action: 'start parse' });
     const grailedWeekendReading = await parseGrailedSpecificArticles('Weekend Reading', grailedArticles.weekendReading, availableBrands);
     logger.debug('Finished parsing Grailed Weekend Reading', { type: 'News', site: 'Grailed', action: 'finish parse' });
+
     logger.debug('Started parsing Grailed Grail Fits', { type: 'News', site: 'Grailed', action: 'start parse' });
     const grailedGrailFits = await parseGrailedSpecificArticles('Grail Fits', grailedArticles.grailFits, availableBrands);
     logger.debug('Finished parsing Grailed Grail Fits', { type: 'News', site: 'Grailed', action: 'finish parse' });
+
     logger.debug('Started parsing Grailed Staff Picks', { type: 'News', site: 'Grailed', action: 'start parse' });
     const grailedStaffPicks = await parseGrailedSpecificArticles('Staff Picks', grailedArticles.staffPicks, availableBrands);
     logger.debug('Finished parsing Grailed Staff Picks', { type: 'News', site: 'Grailed', action: 'finish parse' });
+
     const allNews = hypebeastNews.concat(grailedArticles.news).concat(grailedWeekendReading).concat(grailedGrailFits).concat(grailedStaffPicks);
     logger.debug('Finished retrieving news', { type: 'News', action: 'finish retrieve' });
 
     for (let i = 0; i < allNews.length; i++) {
       const curr = allNews[i];
-      let news = await m.Info.find({ where: { url: curr.url } });
-      if (!news) {
-        news = await m.Info.create({ ...curr, type: 'News' });
-      }
+      const news = await m.Info.updateOrCreate(curr, 'News');
       for (let j = 0; j < curr.brands.length; j++) {
         const brand = await m.Brand.findByName(curr.brands[j]);
         news.addBrand(brand);

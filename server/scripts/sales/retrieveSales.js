@@ -29,9 +29,10 @@ export async function retrieveSales(availableBrands, newBrand = false) {
     logger.debug('Finished retrieving Reddit sales', { type: 'Sale', site: 'Reddit', action: 'finish retrieve' });
 
     for (let i = 0; i < sales.length; i++) {
-      const sale = await m.Info.updateOrCreate(sales[i], 'Sale');
-      for (let j = 0; j < sales[i].brands.length; j++) {
-        const brand = await m.Brand.findByName(sales[i].brands[j]);
+      const curr = sales[i];
+      const sale = await m.Info.updateOrCreate(curr, 'Sale');
+      for (let j = 0; j < curr.brands.length; j++) {
+        const brand = await m.Brand.findByName(curr.brands[j]);
         sale.addBrand(brand);
       }
     }

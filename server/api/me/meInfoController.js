@@ -32,8 +32,8 @@ async function getOwnInfo(user, type, offset, limit, res) {
 
 async function getOwnNews(req, res) {
   let { offset, limit } = req.query;
-  offset ? offset = parseInt(offset) : offset = 0;
-  limit ? limit = parseInt(limit) : limit = 20;
+  offset = offset ? parseInt(offset) : 0;
+  limit = limit ? parseInt(limit) : 20;
   try {
     const user = await m.User.find({ where: { id: req.user.id }, include: [{ model: m.Brand }] });
     const news = await getOwnInfo(user, 'News', offset, limit, res);
@@ -48,8 +48,8 @@ async function getOwnNews(req, res) {
 
 async function getOwnSales(req, res) {
   let { offset, limit } = req.query;
-  offset ? offset = parseInt(offset) : offset = 0;
-  limit ? limit = parseInt(limit) : limit = 20;
+  offset = offset ? parseInt(offset) : 0;
+  limit = limit ? parseInt(limit) : 20;
   try {
     const user = await m.User.find({ where: { id: req.user.id }, include: [{ model: m.Brand }] });
     const sales = await getOwnInfo(user, 'Sale', offset, limit, res);

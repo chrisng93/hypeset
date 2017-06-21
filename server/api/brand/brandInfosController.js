@@ -27,32 +27,16 @@ function createBrandInfoQuery(type, brandId, offset, limit) {
 async function retrieveBrandInfos(req, res) {
   const { name } = req.params;
   let { offset, limit } = req.query;
-  offset ? offset = parseInt(offset) : offset = 0;
-  limit ? limit = parseInt(limit) : limit = 20;
+  offset = offset ? parseInt(offset) : 0;
+  limit = limit ? parseInt(limit) : 20;
+
   try {
     let cachedTopBrands = await redisClient.getAsync('top20Brands');
     cachedTopBrands = JSON.parse(cachedTopBrands) || [];
-    const topBrandCondensedNames = cachedTopBrands.map(brandModel => brandModel.Brand.condensedName);
-    let index = topBrandCondensedNames.indexOf(name);
-
-    if (index < 0 || offset !== 0 || limit !== 20) {
-      const brand = await m.Brand.find({ attributes: ['id', 'name', 'condensedName'], where: { condensedName: name } });
-      const newsQuery = createBrandInfoQuery('News', brand.id, offset, limit);
-      const salesQuery = createBrandInfoQuery('Sale', brand.id, offset, limit);
-      const brandNews = await m.Info.findAll(newsQuery) || {};
-      const brandSales = await m.Info.findAll(salesQuery) || {};
-      const brandInfos = {
-        brandName: brand.name,
-        brandCondensedName: brand.condensedName,
-        brandNews: brandNews || [],
-        brandSales: brandSales || [],
-      };
-      logger.debug('Brand infos retrieved', { brand: brand.name, type: 'Infos', action: 'retrieve', offset, limit });
-      return res.status(200).send({ success: true, brandInfos });
-    }
-
     let brandInfo = await redisClient.getAsync('top20BrandInfos');
-    if (offset === 0 && limit === 20 && brandInfo) {
+    const topBrandCondensedNames = cachedTopBrands.map(brandModel => brandModel.Brand.condensedName);
+
+    if (offset === 0 && limit === 20 && brandInfo && topBrandCondensedNames.indexOf(name) > -1) {
       brandInfo = JSON.parse(brandInfo);
       const info = brandInfo[name];
       const brandInfos = {
@@ -64,6 +48,20 @@ async function retrieveBrandInfos(req, res) {
       logger.debug('Brand infos retrieved from Redis cache', { brand: brandInfos.name, type: 'Infos', action: 'retrieve', offset, limit });
       return res.status(200).send({ success: true, brandInfos });
     }
+
+    const brand = await m.Brand.find({ attributes: ['id', 'name', 'condensedName'], where: { condensedName: name } });
+    const newsQuery = createBrandInfoQuery('News', brand.id, offset, limit);
+    const salesQuery = createBrandInfoQuery('Sale', brand.id, offset, limit);
+    const brandNews = await m.Info.findAll(newsQuery) || [];
+    const brandSales = await m.Info.findAll(salesQuery) || [];
+    const brandInfos = {
+      brandName: brand.name,
+      brandCondensedName: brand.condensedName,
+      brandNews: brandNews || [],
+      brandSales: brandSales || [],
+    };
+    logger.debug('Brand infos retrieved', { brand: brand.name, type: 'Infos', action: 'retrieve', offset, limit });
+    return res.status(200).send({ success: true, brandInfos });
   } catch(err) {
     const message = checkForSequelizeErrors(err);
     logger.warn('Error retrieving brand infos', { brand: name, type: 'Infos', action: 'retrieve', offset, limit, err: message });

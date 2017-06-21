@@ -32,12 +32,12 @@ export async function getInfo(type, offset, limit, res) {
 
 async function retrieveNews(req, res) {
   let { offset, limit } = req.query;
-  offset ? offset = parseInt(offset) : offset = 0;
-  limit ? limit = parseInt(limit) : limit = 20;
+  offset = offset ? parseInt(offset) : 0;
+  limit = limit ? parseInt(limit) : 20;
   try {
     let cachedNews = await redisClient.getAsync('top40News');
     if (cachedNews && ((offset === 0 && limit === 20) || (offset === 20 && limit === 20)) && JSON.parse(cachedNews).length) {
-      offset === 0 && limit === 20 ? cachedNews = JSON.parse(cachedNews).slice(0, 20) : cachedNews = JSON.parse(cachedNews).slice(20);
+      cachedNews = offset === 0 && limit === 20 ? JSON.parse(cachedNews).slice(0, 20) : JSON.parse(cachedNews).slice(20);
       logger.info('News retrieved from Redis cache', { type: 'News', action: 'retrieve', offset, limit });
       return res.status(200).send({ success: true, news: cachedNews });
     }
@@ -54,12 +54,12 @@ async function retrieveNews(req, res) {
 
 async function retrieveSales(req, res) {
   let { offset, limit } = req.query;
-  offset ? offset = parseInt(offset) : offset = 0;
-  limit ? limit = parseInt(limit) : limit = 20;
+  offset = offset ? parseInt(offset) : 0;
+  limit = limit ? parseInt(limit) : 20;
   try {
     let cachedSales = await redisClient.getAsync('top40Sales');
     if (cachedSales && ((offset === 0 && limit === 20) || (offset === 20 && limit === 20)) && JSON.parse(cachedSales).length) {
-      offset === 0 && limit === 20 ? cachedSales = JSON.parse(cachedSales).slice(0, 20) : cachedSales = JSON.parse(cachedSales).slice(20);
+      cachedSales = offset === 0 && limit === 20 ? JSON.parse(cachedSales).slice(0, 20) : JSON.parse(cachedSales).slice(20);
       logger.info('Sales retrieved from Redis cache', { type: 'Sale', action: 'retrieve', offset, limit });
       return res.status(200).send({ success: true, sales: cachedSales });
     }
