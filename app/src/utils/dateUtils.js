@@ -4,9 +4,7 @@
 
 import moment from 'moment';
 
-const readableDate = (date) => {
-  return moment(date, 'YYYY-MM-DD').format('MMMM Do, YYYY');
-};
+const readableDate = (date) => moment(date, 'YYYY-MM-DD').format('MMMM Do, YYYY');
 
 export const formatDates = (array) => {
   return array.map((item) => {

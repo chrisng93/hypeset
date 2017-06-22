@@ -8,8 +8,7 @@ import { bindActionCreators } from 'redux';
 import { push } from 'react-router-redux';
 import * as actions from '../actions';
 import { isAuthenticatedSelector, tokenSelector } from '../selectors/userSelectors';
-import { salesSelector, salesBrandsSelector, salesSitesSelector, isFetchingAllSalesSelector,
-  isFetchingOwnSalesSelector } from '../selectors/salesSelectors';
+import { salesSelector, isFetchingAllSalesSelector, isFetchingOwnSalesSelector } from '../selectors/salesSelectors';
 import { pathnameSelector } from '../selectors/routingSelectors';
 import Articles from '../components/Articles';
 
@@ -29,15 +28,13 @@ const propTypes = {
 };
 
 function SalesContainer(props) {
-  const { isAuthenticated, token, pathname, sales, salesBrands, salesSites, isFetchingAllSales,
+  const { isAuthenticated, token, pathname, sales, isFetchingAllSales,
     isFetchingOwnSales, getAllSales, getOwnSales, routeToBrandPage } = props;
   const articlesProps = {
     isAuthenticated,
     token,
     pathname,
     articles: sales,
-    articlesBrands: salesBrands,
-    articlesSites: salesSites,
     isFetchingAllArticles: isFetchingAllSales,
     isFetchingOwnArticles: isFetchingOwnSales,
     getAllArticles: getAllSales,
@@ -63,8 +60,6 @@ function mapStateToProps(state) {
     token: tokenSelector(state),
     pathname: pathnameSelector(state),
     sales: salesSelector(state),
-    salesBrands: salesBrandsSelector(state),
-    salesSites: salesSitesSelector(state),
     isFetchingOwnSales: isFetchingOwnSalesSelector(state),
     isFetchingAllSales: isFetchingAllSalesSelector(state),
   };

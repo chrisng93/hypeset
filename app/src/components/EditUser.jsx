@@ -128,7 +128,7 @@ export default class EditUser extends Component {
               />
             </span>
           </label>
-          <button onClick={(e) => this.submitForm(e)}>
+          <button onClick={e => this.submitForm(e)}>
             Submit
           </button>
         </form>

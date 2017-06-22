@@ -30,7 +30,6 @@ export async function parseGrailedArticles(articles, availableBrands, page = 1, 
         article.url = `${process.env.GRAILED_URL}${endpoint}`;
         article.imgUrl = findClass(row, 'hero')[0].attribs.src;
         article.blurb = findClass(row, 'subtitle')[0].children[0].data.trim();
-        console.log(article.title)
 
         // separate parsing for weekend reading, the best #grailfits of the week, and staff picks
         const titleWords = article.title.split(' ');
