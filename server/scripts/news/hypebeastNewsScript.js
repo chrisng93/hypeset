@@ -26,7 +26,7 @@ export async function parseHypebeastNews(articles = [], availableBrands, page = 
           const article = {};
           article.SiteId = hypebeastId;
           article.title = post.attribs['data-title'];
-          article.url = post.attribs['data-permalink'];
+          article.url = `https:${post.attribs['data-permalink']}`;
 
           if (article.title && article.url) {
             const brands = findBrands(article.title, availableBrands);
