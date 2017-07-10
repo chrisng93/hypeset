@@ -2,7 +2,6 @@ version: "2.1"
 services:
   app:
     build: ./app
-#    image: chrisng93/hypeset-frontend:latest
     restart: always
     depends_on:
       - server
@@ -13,7 +12,6 @@ services:
 
   server:
     build: ./server
-#    image: chrisng93/hypeset-backend:latest
     restart: always
     volumes:
       - .:/hypeset-backend/
