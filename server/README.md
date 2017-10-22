@@ -21,7 +21,12 @@
 
 #### 2. Install and run databases
 
-  Install Postgres and Redis locally and run them in separate terminal windows
+  1. Install Postgres and Redis locally and run them in separate terminal windows
+  2. Go into Postgres CLI and create the database using the following command:
+  
+  ```
+    CREATE DATABASE (database);
+  ```
 
 #### 3. Run the application
 
