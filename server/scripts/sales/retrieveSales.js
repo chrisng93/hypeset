@@ -10,7 +10,7 @@ import { retrieveRedditFmfSales } from './redditFmfScript';
 
 const logger = winston.loggers.get('scripts');
 
-export async function retrieveSales(availableBrands, newBrand = false) {
+export const retrieveSales = async (availableBrands, newBrand = false) => {
   try {
     const latestSale = await m.Info.find({ where: { type: 'Sale' }, order: 'date DESC' });
     const daysBefore = process.env.NODE_ENV === 'production' ? 365 : 30;
@@ -40,4 +40,4 @@ export async function retrieveSales(availableBrands, newBrand = false) {
   } catch(err) {
     logger.error('Error retrieving sales', { type: 'Sale', action: 'retrieve', err: JSON.stringify(err.message) });
   }
-}
+};

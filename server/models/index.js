@@ -13,7 +13,7 @@ const db = {};
 const basename = path.basename(module.filename);
 const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } = process.env;
 
-const pgConnectionString = process.env.NODE_ENV === 'production' ? `postgres://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}` : `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:5432/${DB_NAME}`;
+const pgConnectionString = process.env.NODE_ENV === 'production' ? `postgres://postgres:5432/${DB_NAME}` : `postgres://${DB_HOST}:5432/${DB_NAME}`;
 
 // create or connect to postgres db
 pg.connect(pgConnectionString, (dbConnectError, client) => {

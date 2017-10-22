@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   User.beforeValidate((user) => {
-    if (user.password.length < 5) {
+    if (user.password && user.password.length < 5) {
       return sequelize.Promise.reject('Password must be at least 5 characters');
     }
     user.password = user.generateHash(user.password);
